@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -12,6 +12,13 @@
     <RootNamespace>Dal</RootNamespace>
 
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="Dal\DalOrder.cs" />
+    <Compile Include="Dal\DalOrderItem.cs" />
+    <Compile Include="Dal\DalProduct.cs" />
+    <Compile Include="Dal\DataSource.cs" />
+  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\DalFacade\DalFacade.csproj" />

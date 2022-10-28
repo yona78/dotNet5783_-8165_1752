@@ -1,45 +1,46 @@
 ﻿
 namespace Dal;
-
 internal static class DataSource
 {
-    static Random rnd = new Random();
+
+
+    static readonly Random rnd = new Random();
     static internal DalOrder[] orders = new DalOrder[100];
-    int maxOrder = 100;
+    static int maxOrder = 100;
     static internal DalProduct[] products = new DalProduct[50];
-    int maxProducts = 50;
+    static int maxProducts = 50;
     static internal DalOrderItem[] OrderItems = new DalOrderItem[200];
-    int maxOrderItems = 200;
+    static int maxOrderItems = 200;
 
     static DataSource()
     {
         s_Initialize();
     }
 
-    static void addOrder(DalOrder newOrder)
+    private static void addOrder(DalOrder newOrder)
     {
         if(Config.AmountOrders+ 1< maxOrder)
         {
-            orders[Config.AmountOrder] = newOrder;
+            orders[Config.AmountOrders] = newOrder;
             Config.AmountOrders++;
         }
     }
 
-    static void addProduct(DalProduct newProduct)
+    private static void addProduct(DalProduct newProduct)
     {
-        if (Config.AmountProduct + 1 < maxProducts)
+        if (Config.AmountProducts + 1 < maxProducts)
         {
-            orders[Config.AmountProducts] = newProduct;
+            products[Config.AmountProducts] = newProduct;
             Config.AmountProducts++;
         }
     }
 
-    static void addOrdersItem(DalOrdersItem newOrdersItem)
+    private static void addOrdersItem(DalOrderItem newOrderItem)
     {
-        if (Config.AmountOrderItem + 1 < maxOrdersItems)
+        if (Config.AmountOrderItems + 1 < maxOrderItems)
         {
-            orders[Config.AmountOrderItem] = newOrdersItem;
-            Config.AmountOrderItem++;
+            OrderItems[Config.AmountOrderItems] = newOrderItem;
+            Config.AmountOrderItems++;
         }
     }
 
@@ -59,10 +60,10 @@ internal static class DataSource
     internal class Config
     {
 
-        static internal int AmountOrder = 0;
-        static internal int AmountOrderItem = 0;
-        static internal int AmountProduct = 0;
-        static internal int IdCreation = 0;
+        static internal int AmountOrders = 0;
+        static internal int AmountOrderItems = 0;
+        static internal int AmountProducts = 0;
+        static internal int IdCreations = 0;
 
         s_Initialize();
     }

@@ -2,7 +2,7 @@
 
 using System.Data;
 
-namespace DO;
+namespace DO2;
 
 public struct Order
 {
