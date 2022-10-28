@@ -1,6 +1,6 @@
 ﻿
 
-namespace DO2;
+namespace DO;
 
 public struct OrderItem
 {

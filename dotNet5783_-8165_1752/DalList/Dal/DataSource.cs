@@ -1,4 +1,4 @@
-﻿
+﻿using DO;
 namespace Dal;
 internal static class DataSource
 {
@@ -65,6 +65,7 @@ internal static class DataSource
         static internal int AmountProducts = 0;
         static internal int IdCreations = 0;
 
+        
         s_Initialize();
     }
 }
