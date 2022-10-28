@@ -31,7 +31,7 @@ public class DalOrderItem
     }
 
     // The special functions i was asked to add
-    public OrderItem getOrderItem(Order order, Product product)
+    public OrderItem getOrderItem(int idOfOrder, int idOfProduct)
     {
         return new OrderItem();
     }

@@ -1,4 +1,6 @@
 ﻿using DO;
+using System.ComponentModel;
+
 namespace Dal;
 internal static class DataSource
 {
@@ -12,6 +14,8 @@ internal static class DataSource
     static internal DalOrderItem[] OrderItems = new DalOrderItem[200];
     static int maxOrderItems = 200;
 
+
+
     static DataSource()
     {
         s_Initialize();
@@ -19,29 +23,21 @@ internal static class DataSource
 
     private static void addOrder(DalOrder newOrder)
     {
-        if(Config.AmountOrders+ 1< maxOrder)
-        {
-            orders[Config.AmountOrders] = newOrder;
-            Config.AmountOrders++;
-        }
+
+        orders[Config.AmountOrders] = newOrder;
+        Config.AmountOrders++;
     }
 
     private static void addProduct(DalProduct newProduct)
     {
-        if (Config.AmountProducts + 1 < maxProducts)
-        {
-            products[Config.AmountProducts] = newProduct;
-            Config.AmountProducts++;
-        }
+        products[Config.AmountProducts] = newProduct;
+        Config.AmountProducts++;
     }
 
     private static void addOrdersItem(DalOrderItem newOrderItem)
     {
-        if (Config.AmountOrderItems + 1 < maxOrderItems)
-        {
-            OrderItems[Config.AmountOrderItems] = newOrderItem;
-            Config.AmountOrderItems++;
-        }
+        OrderItems[Config.AmountOrderItems] = newOrderItem;
+        Config.AmountOrderItems++;
     }
 
     static void s_Initialize()
@@ -51,10 +47,10 @@ internal static class DataSource
         const int OrderInit = 20;
         const int OrderItemslInit = 40;
         for (int i = 0; i < ProductInit; i++)
-            DalProduct X = new DalProduct;
-            {
-                Id = RandomGen.Next(100000, 999999),
-            };
+        {
+            DalProduct X = new DalProduct();
+            Id = RandomGen.Next(100000, 999999),
+            }
     }
 
     internal class Config
@@ -65,7 +61,10 @@ internal static class DataSource
         static internal int AmountProducts = 0;
         static internal int IdCreations = 0;
 
-        
-        s_Initialize();
+        private static int LastIndexOrder = 0;
+        private static int LastIndexOrderItems= 0;
+
+        public int getLastIndexOrder { get => LastIndexOrder++; }
+        public int getLastIndexOrderItems { get => LastIndexOrderItems++; }
     }
 }
