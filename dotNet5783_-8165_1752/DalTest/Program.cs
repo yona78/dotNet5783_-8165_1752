@@ -115,10 +115,31 @@ namespace Program
                 switch (choiceInSubSwitch)
                 {
                     case "a":
+                        Product help = new Product();
+                        Console.WriteLine("Enter id of the product");
+                        help.ID = int.Parse(Console.ReadLine());
+                        Console.WriteLine("Enter name of the product");
+                        help.Name = Console.ReadLine();
+                        Console.WriteLine("Enter price of the product");
+                        help.Price = double.Parse(Console.ReadLine());
+                        Console.WriteLine("Enter amount of the product");
+                        help.InStock = int.Parse(Console.ReadLine());
+                        Console.WriteLine("Enter category of the product");
+                        Console.WriteLine(Enums.Category
+                        help.Category = Console.ReadLine();
                         break;
                     case "b":
+                        Console.WriteLine("Enter id of the product");
+                        int id = int.Parse(Console.ReadLine());
+                        Product got = dalProduct.getProduct(id);
+                        Console.WriteLine(got.ToString());
                         break;
                     case "c":
+                        Product [] array = dalProduct.getDataOfProduct();
+                        foreach (Product item in array)
+                        {
+                            Console.WriteLine(item.);
+                        }
                         break;
                     case "d":
                         Product help = new Product();
@@ -133,9 +154,26 @@ namespace Program
                         Console.WriteLine("Enter category of the product");
                         Console.WriteLine(Enums.Category
                         help.Category = Console.ReadLine();
-                        DalProduct.updateProduct(help);
+                        try
+                        {
+                            dalProduct.updateProduct(help);
+                        }
+                        catch (InvalidCastException msgError)
+                        {
+                            Console.WriteLine(msgError.Message);
+                        }
                         break;
                     case "e":
+                        Console.WriteLine("Enter id of the product you want to delete");
+                        int id = int.Parse(Console.ReadLine());
+                        try
+                        {
+                            dalProduct.deleteProduct(id);
+                        }
+                        catch (InvalidCastException msgError)
+                        {
+                            Console.WriteLine(msgError.Message);
+                        }
                         break;
                     default:
                         Console.WriteLine("Invalid choice");
