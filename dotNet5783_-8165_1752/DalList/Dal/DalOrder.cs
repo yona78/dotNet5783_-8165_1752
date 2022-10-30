@@ -7,17 +7,17 @@ public class DalOrder
     public DalOrder() { }
     public int addOrder(Order newOrder)
     {
-        if(DataSource.Config.FirstIndexOrders == DataSource.maxOrder)
+        if(DataSource.Config.FirstIndexOrders == DataSource.maxOrders)
             throw new Exception("array is full");
-        for (int i = 0; i < DataSource.maxOrder; i++)
+        for (int i = 0; i < DataSource.maxOrders; i++)
         {
             if (DataSource.orders[i].ID == newOrder.ID)
                 throw new Exception("order already exist");
         }
         DataSource.orders[DataSource.Config.FirstIndexOrders] = newOrder;
-        int newFirstIndexOrders = DataSource.maxOrder;
+        int newFirstIndexOrders = DataSource.maxOrders;
         int cpyFirstIndexOrders = DataSource.Config.FirstIndexOrders;
-        for (int i = DataSource.Config.FirstIndexOrders; i < DataSource.maxOrder; i++)
+        for (int i = DataSource.Config.FirstIndexOrders; i < DataSource.maxOrders; i++)
         {
             if (DataSource.orders[i].ID == 0)
             {
@@ -30,7 +30,7 @@ public class DalOrder
     }
     public Order getOrder(int id)
     {
-        for (int i = 0; i < DataSource.maxOrder; i++)
+        for (int i = 0; i < DataSource.maxOrders; i++)
         {
             if (DataSource.orders[i].ID == id)
                 return DataSource.orders[i];
@@ -43,7 +43,7 @@ public class DalOrder
     }
     public void deleteOrder(int id)
     {
-        for (int i = 0; i < DataSource.maxOrder; i++)
+        for (int i = 0; i < DataSource.maxOrders; i++)
         {
             if (DataSource.orders[i].ID == id)
             {
@@ -55,7 +55,7 @@ public class DalOrder
     }
     public void updateOrder(Order newOrder)
     {
-        for (int i = 0; i < DataSource.maxOrder; i++)
+        for (int i = 0; i < DataSource.maxOrders; i++)
         {
             if (DataSource.orders[i].ID == newOrder.ID)
             {

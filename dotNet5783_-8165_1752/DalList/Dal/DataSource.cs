@@ -5,7 +5,7 @@ internal static class DataSource
 
     static readonly Random rnd = new Random();
     static internal Order[] orders = new Order[100];
-    public static int maxOrder = 100;
+    public static int maxOrders = 100;
     static internal Product[] products = new Product[50];
     public static int maxProducts = 50;
     static internal OrderItem[] orderItems = new OrderItem[200];
