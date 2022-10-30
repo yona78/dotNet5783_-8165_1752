@@ -8,14 +8,15 @@ namespace Program
 {
     class Program
     {
-        private DalOrder dalOrder = new DalOrder();
-        private DalOrderItem dalOrderItem = new DalOrderItem();
-        private DalProduct dalProduct = new DalProduct();
+         private DalOrder dalOrder = new DalOrder();
+         private DalOrderItem dalOrderItem = new DalOrderItem();
+         private DalProduct dalProduct = new DalProduct();
         static void Main()
         {
             
             int choice = 0;
-            do {
+            do
+            {
                 Console.WriteLine("Welcoome to Yona's and Avishai's shop, you might choose to do some things on our shop." +
                     "0 for exit" +
                     "1 for Order" +
@@ -38,9 +39,9 @@ namespace Program
                         break;
                 }
             } while (choice != 0);
-    
+
         }
-        static void OrderOption() 
+        static void OrderOption()
         {
             string choiceInSubSwitch = "x";
 
@@ -50,18 +51,38 @@ namespace Program
                    "c for getting a data of an order" +
                    "d for updating an order" +
                    "e for deleting an order");
+            string CustomerName, CustomerEmail, CustomerAdrress;
+            DateTime OrderDate, ShipDate, DeliveryrDate;
+            DalOrder newDalOrder = new DalOrder();
+
             choiceInSubSwitch = Console.ReadLine();
             try
             {
-                choiceInSubSwitch switch
+                switch (choiceInSubSwitch)
                 {
-                    "a" => ,
-                    "b" => ,
-                    "b" => ,
-                    "d" => ,
-                    "e" => ,
-                                    => Console.WriteLine("Invalid choice");
-                            };
+                    case "a":
+                        Console.Write("please enter CustomerName: ");
+                        CustomerName = Console.ReadLine();
+                        Console.Write("please enter CustomerEmail: ");
+                        CustomerEmail = Console.ReadLine();
+                        Console.Write("please enter CustomerAdrress: ");
+                        CustomerAdrress = Console.ReadLine();
+                        DalOrder order = new DalOrder();
+                        order.ID = 
+                        dalOrder.addOrder(order);
+                        break;
+                    case "b":
+                        break;
+                    case "c":
+                        break;
+                    case "d":
+                        break;
+                    case "e":
+                        break;
+                    default:
+                        Console.WriteLine("Invalid choice");
+                        break;
+                };
             }
             catch (InvalidCastException msgError)
             {
