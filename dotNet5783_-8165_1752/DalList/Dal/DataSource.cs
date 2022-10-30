@@ -34,7 +34,7 @@ internal static class DataSource
 
     private static void addOrdersItem(OrderItem newOrderItem)
     {
-        OrderItems[Config.AmountOrderItems] = newOrderItem;
+        orderItems[Config.AmountOrderItems] = newOrderItem;
         Config.AmountOrderItems++;
     }
 
