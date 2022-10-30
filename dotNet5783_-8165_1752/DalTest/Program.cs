@@ -4,6 +4,7 @@ using DO;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.ComponentModel;
 using System.Data.Common;
 using System.Diagnostics;
 
@@ -54,7 +55,7 @@ namespace Program
                    "c for getting a data of an order" +
                    "d for updating an order" +
                    "e for deleting an order");
-                  choiceInSubSwitch = Console.ReadLine();
+            choiceInSubSwitch = Console.ReadLine();
 
             switch (choiceInSubSwitch)
             {
@@ -174,25 +175,37 @@ namespace Program
             switch (choiceInSubSwitch)
             {
                 case "a":
-                    Product help = new Product();
+                    Product productToAdd = new Product();
                     Console.WriteLine("Enter id of the product: ");
-                    help.ID = int.Parse(Console.ReadLine());
+                    productToAdd.ID = int.Parse(Console.ReadLine());
                     Console.WriteLine("Enter name of the product: ");
-                    help.Name = Console.ReadLine();
+                    productToAdd.Name = Console.ReadLine();
                     Console.WriteLine("Enter price of the product: ");
-                    help.Price = double.Parse(Console.ReadLine());
+                    productToAdd.Price = double.Parse(Console.ReadLine());
                     Console.WriteLine("Enter amount of the product: ");
-                    help.InStock = int.Parse(Console.ReadLine());
+                    productToAdd.InStock = int.Parse(Console.ReadLine());
                     Console.WriteLine("Enter category of the product: ");
-                    Console.WriteLine(Enums.Category
-
-                    help.Category = Console.ReadLine();
+                    productToAdd.Category = (Enums.Category)Enums.Category.Parse(typeof(Enums.Category), Console.ReadLine());
+                    try
+                    {
+                        Console.WriteLine("id of new product: " + dalProduct.addProduct(productToAdd));
+                    }
+                    catch (InvalidCastException msgError)
+                    {
+                        Console.WriteLine(msgError.Message);
+                    }
                     break;
                 case "b":
                     Console.WriteLine("Enter id of the product: ");
                     int id = int.Parse(Console.ReadLine());
-                    Product got = dalProduct.getProduct(id);
-                    Console.WriteLine(got);
+                    try
+                    {
+                        Console.WriteLine(dalProduct.getProduct(id));
+                    }
+                    catch (InvalidCastException msgError)
+                    {
+                        Console.WriteLine(msgError.Message);
+                    }
                     break;
                 case "c":
                     Product[] array = dalProduct.getDataOfProduct();
@@ -212,9 +225,7 @@ namespace Program
                     Console.WriteLine("Enter amount of the product: ");
                     productToUpdate.InStock = int.Parse(Console.ReadLine());
                     Console.WriteLine("Enter category of the product: ");
-                    Console.WriteLine(Enums.Category
-
-                    productToUpdate.Category = Console.ReadLine();
+                    productToUpdate.Category = (Enums.Category)Enums.Category.Parse(typeof(Enums.Category), Console.ReadLine());
                     try
                     {
                         dalProduct.updateProduct(productToUpdate);
