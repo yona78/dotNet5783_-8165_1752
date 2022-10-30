@@ -7,7 +7,7 @@ public class DalOrderItem
 
     public int addOrderItem(OrderItem newOrderItem)
     {
-
+        newOrderItem.OrderItemID = DataSource.Config.getLastIndexOrderItems;
         if (DataSource.Config.FirstIndexOrderItems == DataSource.maxOrderItems)
             throw new Exception("array is full");
         for (int i = 0; i < DataSource.maxOrderItems; i++)

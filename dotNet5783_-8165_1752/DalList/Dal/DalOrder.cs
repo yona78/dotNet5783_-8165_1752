@@ -7,6 +7,7 @@ public class DalOrder
     public DalOrder() { }
     public int addOrder(Order newOrder)
     {
+        newOrder.ID = DataSource.Config.getLastIndexOrder;
         if(DataSource.Config.FirstIndexOrders == DataSource.maxOrders)
             throw new Exception("array is full");
         for (int i = 0; i < DataSource.maxOrders; i++)

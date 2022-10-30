@@ -1,5 +1,6 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using Dal;
+using DO;
 using System;
 using System.Collections.Specialized;
 using System.Data.Common;
@@ -8,12 +9,12 @@ namespace Program
 {
     class Program
     {
-         private DalOrder dalOrder = new DalOrder();
-         private DalOrderItem dalOrderItem = new DalOrderItem();
-         private DalProduct dalProduct = new DalProduct();
+        static private DalOrder dalOrder = new DalOrder();
+        static private DalOrderItem dalOrderItem = new DalOrderItem();
+        static private DalProduct dalProduct = new DalProduct();
         static void Main()
         {
-            
+
             int choice = 0;
             do
             {
@@ -67,9 +68,17 @@ namespace Program
                         CustomerEmail = Console.ReadLine();
                         Console.Write("please enter CustomerAdrress: ");
                         CustomerAdrress = Console.ReadLine();
-                        DalOrder order = new DalOrder();
-                        order.ID = 
-                        dalOrder.addOrder(order);
+                        OrderDate = DateTime.Now;
+                        ShipDate = DateTime.MinValue;
+                        DeliveryrDate = DateTime.MinValue;
+                        Order order = new Order();
+                        order.CustomerName = CustomerName;
+                        order.CustomerEmail = CustomerEmail;
+                        order.CustomerAdrress = CustomerAdrress;
+                        order.OrderDate = OrderDate;
+                        order.ShipDate = ShipDate;
+                        order.DeliveryrDate = DeliveryrDate;
+                        Console.WriteLine("id of new order: "+dalOrder.addOrder(order));
                         break;
                     case "b":
                         break;
