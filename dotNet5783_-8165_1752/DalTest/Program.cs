@@ -2,6 +2,7 @@
 using Dal;
 using DO;
 using System;
+using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Data.Common;
 
@@ -225,23 +226,25 @@ namespace Program
                         
                         break;
                     case "b":
-                        Console.Write("please enter me an id: ");
-                        int id = Console.Read();
-                        Console.WriteLine(dalOrder.getOrder(id));
+                        Console.Write("please enter me an id of OrderItem: ");
+                        int idForOrderItem = int.Parse(Console.ReadLine());
+                        Console.WriteLine(dalOrderItem.getOrderItem(idForOrderItem));
                         break;
                     case "c":
-                        Order[] array = dalOrder.getDataOfOrder();
-                        foreach (Order item in array)
+                        OrderItem[] array = dalOrderItem.getDataOfOrderItem();
+                        foreach (OrderItem item in array)
                         {
                             Console.WriteLine(item);
                         }
                         break;
                     case "d":
-                        Console.Write("please enter me an id: ");
-                        int idToDelete = int.Parse(Console.ReadLine());
+                        Console.Write("please enter me an id of order: ");
+                        int idToDeleteOrder = int.Parse(Console.ReadLine());
+                        Console.Write("please enter me an id of product: ");
+                        int idToDeleteProdcut = int.Parse(Console.ReadLine());
                         try
                         {
-                            dalOrder.deleteOrder(idToDelete);
+                            dalOrderItem.deleteOrderItem(idToDeleteOrder,idToDeleteProdcut);
                         }
                         catch (InvalidCastException msgError)
                         {
@@ -249,6 +252,23 @@ namespace Program
                         }
                         break;
                     case "e":
+
+                        break;
+                    case "f":
+                        Console.Write("please enter me an id of order: ");
+                        int idForOrder = int.Parse(Console.ReadLine());
+                        Console.Write("please enter me an id of product: ");
+                        int idForProduct = int.Parse(Console.ReadLine());
+                        Console.WriteLine(dalOrderItem.getOrderItem(idForOrder,idForProduct));
+                        break;
+                    case "g":
+                        Console.Write("please enter me an id: ");
+                        int idForList = int.Parse(Console.ReadLine());
+                        List<OrderItem> ret = dalOrderItem.getDataOfOrderItem(idForList);
+                        foreach (OrderItem item in ret)
+                        {
+                            Console.WriteLine(item);
+                        }
                         break;
                     default:
                         Console.WriteLine("Invalid choice");
