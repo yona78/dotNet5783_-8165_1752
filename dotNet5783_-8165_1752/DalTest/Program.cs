@@ -86,9 +86,23 @@ namespace Program
                         Console.WriteLine(dalOrder.getOrder(id));
                         break;
                     case "c":
-
+                        Order[] array = dalOrder.getDataOfOrder();
+                        foreach (Order item in array)
+                        {
+                            Console.WriteLine(item);
+                        }
                         break;
                     case "d":
+                        Console.Write("please enter me an id: ");
+                        int idToDelete = int.Parse(Console.ReadLine());
+                        try
+                        {
+                            dalOrder.deleteOrder(idToDelete);
+                        }
+                        catch (InvalidCastException msgError)
+                        {
+                            Console.WriteLine(msgError.Message);
+                        }
                         break;
                     case "e":
                         break;
@@ -136,13 +150,13 @@ namespace Program
                         Console.WriteLine("Enter id of the product");
                         int id = int.Parse(Console.ReadLine());
                         Product got = dalProduct.getProduct(id);
-                        Console.WriteLine(got.ToString());
+                        Console.WriteLine(got);
                         break;
                     case "c":
                         Product [] array = dalProduct.getDataOfProduct();
                         foreach (Product item in array)
                         {
-                            Console.WriteLine(item.);
+                            Console.WriteLine(item);
                         }
                         break;
                     case "d":
@@ -169,10 +183,10 @@ namespace Program
                         break;
                     case "e":
                         Console.WriteLine("Enter id of the product you want to delete");
-                        int id = int.Parse(Console.ReadLine());
+                        int idGot = int.Parse(Console.ReadLine());
                         try
                         {
-                            dalProduct.deleteProduct(id);
+                            dalProduct.deleteProduct(idGot);
                         }
                         catch (InvalidCastException msgError)
                         {
@@ -205,17 +219,41 @@ namespace Program
             choiceInSubSwitch = Console.ReadLine();
             try
             {
-                choiceInSubSwitch switch
+                switch (choiceInSubSwitch)
                 {
-                    "a" => ,
-                    "b" => ,
-                    "b" => ,
-                    "d" => ,
-                    "e" => ,
-                    "f" => ,
-                    "g" => ,
-                                    => Console.WriteLine("Invalid choice");
-                            };
+                    case "a":
+                        
+                        break;
+                    case "b":
+                        Console.Write("please enter me an id: ");
+                        int id = Console.Read();
+                        Console.WriteLine(dalOrder.getOrder(id));
+                        break;
+                    case "c":
+                        Order[] array = dalOrder.getDataOfOrder();
+                        foreach (Order item in array)
+                        {
+                            Console.WriteLine(item);
+                        }
+                        break;
+                    case "d":
+                        Console.Write("please enter me an id: ");
+                        int idToDelete = int.Parse(Console.ReadLine());
+                        try
+                        {
+                            dalOrder.deleteOrder(idToDelete);
+                        }
+                        catch (InvalidCastException msgError)
+                        {
+                            Console.WriteLine(msgError.Message);
+                        }
+                        break;
+                    case "e":
+                        break;
+                    default:
+                        Console.WriteLine("Invalid choice");
+                        break;
+                }
             }
             catch (InvalidCastException msgError)
             {
