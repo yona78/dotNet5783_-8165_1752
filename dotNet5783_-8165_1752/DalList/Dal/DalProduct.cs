@@ -36,9 +36,9 @@ public class DalProduct
         }
         throw new Exception("product couldn't be found");
     }
-    public string getDataOfProduct()
+    public Product[] getDataOfProduct()
     {
-        return this.ToString();
+        return DataSource.products;
     }
     public void deleteProduct(int id)
     {
