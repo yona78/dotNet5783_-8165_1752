@@ -21,11 +21,11 @@ namespace Program
             int choice = 0;
             do
             {
-                Console.WriteLine("Welcoome to Yona's and Avishai's shop, you might choose to do some things on our shop." +
-                    "0 for exit" +
-                    "1 for Order" +
-                    "2 for Product" +
-                    "3 OrderItem");
+                Console.WriteLine(@"Welcoome to Yona's and Avishai's shop, you might choose to do some things on our shop.
+                    0 for exit
+                    1 for Order
+                    2 for Product
+                    3 OrderItem");
                 choice = Convert.ToInt32(Console.ReadLine());
                 switch (choice)
                 {
@@ -49,12 +49,12 @@ namespace Program
         {
             string choiceInSubSwitch = "x";
 
-            Console.WriteLine("you chose: Order" +
-                   "a for adding a new order" +
-                   "b for getting an order by its id" +
-                   "c for getting a data of an order" +
-                   "d for updating an order" +
-                   "e for deleting an order");
+            Console.WriteLine(@"you chose: Order
+                   a for adding a new order
+                   b for getting an order by its id
+                   c for getting a data of an order
+                   d for updating an order
+                   e for deleting an order");
             choiceInSubSwitch = Console.ReadLine();
 
             switch (choiceInSubSwitch)
@@ -164,12 +164,12 @@ namespace Program
         {
             string choiceInSubSwitch = "x";
 
-            Console.WriteLine("you chose: Product" +
-                   "a for adding a new product" +
-                   "b for getting an product by its id" +
-                   "c for getting a data of an product" +
-                   "d for updating an product" +
-                   "e for deleting an product");
+            Console.WriteLine(@"you chose: Product
+                   a for adding a new product
+                   b for getting an product by its id
+                   c for getting a data of an product
+                   d for updating an product
+                   e for deleting an product");
             choiceInSubSwitch = Console.ReadLine();
 
             switch (choiceInSubSwitch)
@@ -185,6 +185,14 @@ namespace Program
                     Console.WriteLine("Enter amount of the product: ");
                     productToAdd.InStock = int.Parse(Console.ReadLine());
                     Console.WriteLine("Enter category of the product: ");
+                    Console.WriteLine(@"Optinal Categories
+                    Dresses,
+                    Shirts,
+                    Hats,
+                    Shoes, 
+                    Socks, 
+                    Skirts,
+                    Coats");
                     productToAdd.Category = (Enums.Category)Enums.Category.Parse(typeof(Enums.Category), Console.ReadLine());
                     try
                     {
