@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Data.Common;
+using System.Diagnostics;
 
 namespace Program
 {
@@ -53,69 +54,109 @@ namespace Program
                    "c for getting a data of an order" +
                    "d for updating an order" +
                    "e for deleting an order");
-            string CustomerName, CustomerEmail, CustomerAdrress;
-            DateTime OrderDate, ShipDate, DeliveryrDate;
-            DalOrder newDalOrder = new DalOrder();
+                  choiceInSubSwitch = Console.ReadLine();
 
-            choiceInSubSwitch = Console.ReadLine();
-            try
+            switch (choiceInSubSwitch)
             {
-                switch (choiceInSubSwitch)
-                {
-                    case "a":
-                        Console.Write("please enter CustomerName: ");
-                        CustomerName = Console.ReadLine();
-                        Console.Write("please enter CustomerEmail: ");
-                        CustomerEmail = Console.ReadLine();
-                        Console.Write("please enter CustomerAdrress: ");
-                        CustomerAdrress = Console.ReadLine();
-                        OrderDate = DateTime.Now;
-                        ShipDate = DateTime.MinValue;
-                        DeliveryrDate = DateTime.MinValue;
-                        Order order = new Order();
-                        order.CustomerName = CustomerName;
-                        order.CustomerEmail = CustomerEmail;
-                        order.CustomerAdrress = CustomerAdrress;
-                        order.OrderDate = OrderDate;
-                        order.ShipDate = ShipDate;
-                        order.DeliveryrDate = DeliveryrDate;
-                        Console.WriteLine("id of new order: "+dalOrder.addOrder(order));
-                        break;
-                    case "b":
-                        Console.Write("please enter me an id: ");
-                        int id = Console.Read();
+                case "a":
+                    string CustomerName, CustomerEmail, CustomerAdrress;
+                    DateTime OrderDate, ShipDate, DeliveryrDate;
+                    DalOrder newDalOrder = new DalOrder();
+                    Console.Write("please enter CustomerName: ");
+                    CustomerName = Console.ReadLine();
+                    Console.Write("please enter CustomerEmail: ");
+                    CustomerEmail = Console.ReadLine();
+                    Console.Write("please enter CustomerAdrress: ");
+                    CustomerAdrress = Console.ReadLine();
+                    OrderDate = DateTime.Now;
+                    ShipDate = DateTime.MinValue;
+                    DeliveryrDate = DateTime.MinValue;
+                    Order orderToAdd = new Order();
+                    orderToAdd.CustomerName = CustomerName;
+                    orderToAdd.CustomerEmail = CustomerEmail;
+                    orderToAdd.CustomerAdrress = CustomerAdrress;
+                    orderToAdd.OrderDate = OrderDate;
+                    orderToAdd.ShipDate = ShipDate;
+                    orderToAdd.DeliveryrDate = DeliveryrDate;
+                    try
+                    {
+                        Console.WriteLine("id of new order: " + dalOrder.addOrder(orderToAdd));
+                    }
+                    catch (InvalidCastException msgError)
+                    {
+                        Console.WriteLine(msgError.Message);
+                    }
+                    break;
+                case "b":
+                    Console.Write("please enter me an id: ");
+                    int id = Console.Read();
+                    try
+                    {
                         Console.WriteLine(dalOrder.getOrder(id));
-                        break;
-                    case "c":
+                    }
+                    catch (InvalidCastException msgError)
+                    {
+                        Console.WriteLine(msgError.Message);
+                    }
+                    break;
+                case "c":
+                    try
+                    {
                         Order[] array = dalOrder.getDataOfOrder();
+
                         foreach (Order item in array)
                         {
                             Console.WriteLine(item);
                         }
-                        break;
-                    case "d":
-                        Console.Write("please enter me an id: ");
-                        int idToDelete = int.Parse(Console.ReadLine());
-                        try
-                        {
-                            dalOrder.deleteOrder(idToDelete);
-                        }
-                        catch (InvalidCastException msgError)
-                        {
-                            Console.WriteLine(msgError.Message);
-                        }
-                        break;
-                    case "e":
-                        break;
-                    default:
-                        Console.WriteLine("Invalid choice");
-                        break;
-                }
+                    }
+                    catch (InvalidCastException msgError)
+                    {
+                        Console.WriteLine(msgError.Message);
+                    }
+                    break;
+                case "d":
+                    Console.Write("please enter CustomerName: ");
+                    CustomerName = Console.ReadLine();
+                    Console.Write("please enter CustomerEmail: ");
+                    CustomerEmail = Console.ReadLine();
+                    Console.Write("please enter CustomerAdrress: ");
+                    CustomerAdrress = Console.ReadLine();
+                    OrderDate = DateTime.Now;
+                    ShipDate = DateTime.MinValue;
+                    DeliveryrDate = DateTime.MinValue;
+                    Order orderToUpdate = new Order();
+                    orderToUpdate.CustomerName = CustomerName;
+                    orderToUpdate.CustomerEmail = CustomerEmail;
+                    orderToUpdate.CustomerAdrress = CustomerAdrress;
+                    orderToUpdate.OrderDate = OrderDate;
+                    orderToUpdate.ShipDate = ShipDate;
+                    orderToUpdate.DeliveryrDate = DeliveryrDate;
+                    try
+                    {
+                        dalOrder.updateOrder(orderToUpdate);
+                    }
+                    catch (InvalidCastException msgError)
+                    {
+                        Console.WriteLine(msgError.Message);
+                    }
+                    break;
+                case "e":
+                    Console.Write("please enter me an id: ");
+                    int idToDelete = int.Parse(Console.ReadLine());
+                    try
+                    {
+                        dalOrder.deleteOrder(idToDelete);
+                    }
+                    catch (InvalidCastException msgError)
+                    {
+                        Console.WriteLine(msgError.Message);
+                    }
+                    break;
+                default:
+                    Console.WriteLine("Invalid choice");
+                    break;
             }
-            catch (InvalidCastException msgError)
-            {
-                Console.WriteLine(msgError.Message);
-            }
+
         }
 
         static void ProductOption()
@@ -129,80 +170,77 @@ namespace Program
                    "d for updating an product" +
                    "e for deleting an product");
             choiceInSubSwitch = Console.ReadLine();
-            try
+
+            switch (choiceInSubSwitch)
             {
-                switch (choiceInSubSwitch)
-                {
-                    case "a":
-                        Product help = new Product();
-                        Console.WriteLine("Enter id of the product");
-                        help.ID = int.Parse(Console.ReadLine());
-                        Console.WriteLine("Enter name of the product");
-                        help.Name = Console.ReadLine();
-                        Console.WriteLine("Enter price of the product");
-                        help.Price = double.Parse(Console.ReadLine());
-                        Console.WriteLine("Enter amount of the product");
-                        help.InStock = int.Parse(Console.ReadLine());
-                        Console.WriteLine("Enter category of the product");
-                        Console.WriteLine(Enums.Category
-                        help.Category = Console.ReadLine();
-                        break;
-                    case "b":
-                        Console.WriteLine("Enter id of the product");
-                        int id = int.Parse(Console.ReadLine());
-                        Product got = dalProduct.getProduct(id);
-                        Console.WriteLine(got);
-                        break;
-                    case "c":
-                        Product [] array = dalProduct.getDataOfProduct();
-                        foreach (Product item in array)
-                        {
-                            Console.WriteLine(item);
-                        }
-                        break;
-                    case "d":
-                        Product help = new Product();
-                        Console.WriteLine("Enter id of the product");
-                        help.ID = int.Parse(Console.ReadLine());
-                        Console.WriteLine("Enter name of the product");
-                        help.Name = Console.ReadLine();
-                        Console.WriteLine("Enter price of the product");
-                        help.Price = double.Parse(Console.ReadLine());
-                        Console.WriteLine("Enter amount of the product");
-                        help.InStock = int.Parse(Console.ReadLine());
-                        Console.WriteLine("Enter category of the product");
-                        Console.WriteLine(Enums.Category
-                        help.Category = Console.ReadLine();
-                        try
-                        {
-                            dalProduct.updateProduct(help);
-                        }
-                        catch (InvalidCastException msgError)
-                        {
-                            Console.WriteLine(msgError.Message);
-                        }
-                        break;
-                    case "e":
-                        Console.WriteLine("Enter id of the product you want to delete");
-                        int idGot = int.Parse(Console.ReadLine());
-                        try
-                        {
-                            dalProduct.deleteProduct(idGot);
-                        }
-                        catch (InvalidCastException msgError)
-                        {
-                            Console.WriteLine(msgError.Message);
-                        }
-                        break;
-                    default:
-                        Console.WriteLine("Invalid choice");
-                        break;
-                }
+                case "a":
+                    Product help = new Product();
+                    Console.WriteLine("Enter id of the product: ");
+                    help.ID = int.Parse(Console.ReadLine());
+                    Console.WriteLine("Enter name of the product: ");
+                    help.Name = Console.ReadLine();
+                    Console.WriteLine("Enter price of the product: ");
+                    help.Price = double.Parse(Console.ReadLine());
+                    Console.WriteLine("Enter amount of the product: ");
+                    help.InStock = int.Parse(Console.ReadLine());
+                    Console.WriteLine("Enter category of the product: ");
+                    Console.WriteLine(Enums.Category
+
+                    help.Category = Console.ReadLine();
+                    break;
+                case "b":
+                    Console.WriteLine("Enter id of the product: ");
+                    int id = int.Parse(Console.ReadLine());
+                    Product got = dalProduct.getProduct(id);
+                    Console.WriteLine(got);
+                    break;
+                case "c":
+                    Product[] array = dalProduct.getDataOfProduct();
+                    foreach (Product item in array)
+                    {
+                        Console.WriteLine(item);
+                    }
+                    break;
+                case "d":
+                    Product productToUpdate = new Product();
+                    Console.WriteLine("Enter id of the product: ");
+                    productToUpdate.ID = int.Parse(Console.ReadLine());
+                    Console.WriteLine("Enter name of the product: ");
+                    productToUpdate.Name = Console.ReadLine();
+                    Console.WriteLine("Enter price of the product: ");
+                    productToUpdate.Price = double.Parse(Console.ReadLine());
+                    Console.WriteLine("Enter amount of the product: ");
+                    productToUpdate.InStock = int.Parse(Console.ReadLine());
+                    Console.WriteLine("Enter category of the product: ");
+                    Console.WriteLine(Enums.Category
+
+                    productToUpdate.Category = Console.ReadLine();
+                    try
+                    {
+                        dalProduct.updateProduct(productToUpdate);
+                    }
+                    catch (InvalidCastException msgError)
+                    {
+                        Console.WriteLine(msgError.Message);
+                    }
+                    break;
+                case "e":
+                    Console.WriteLine("Enter id of the product you want to delete");
+                    int idGot = int.Parse(Console.ReadLine());
+                    try
+                    {
+                        dalProduct.deleteProduct(idGot);
+                    }
+                    catch (InvalidCastException msgError)
+                    {
+                        Console.WriteLine(msgError.Message);
+                    }
+                    break;
+                default:
+                    Console.WriteLine("Invalid choice");
+                    break;
             }
-            catch (InvalidCastException msgError)
-            {
-                Console.WriteLine(msgError.Message);
-            }
+
         }
 
         static void OrderItemOption()
@@ -218,67 +256,100 @@ namespace Program
                    "f for getting an orderItem by order and product" +
                    "g for getting the data of an order by its id");
             choiceInSubSwitch = Console.ReadLine();
-            try
-            {
-                switch (choiceInSubSwitch)
-                {
-                    case "a":
-                        
-                        break;
-                    case "b":
-                        Console.Write("please enter me an id of OrderItem: ");
-                        int idForOrderItem = int.Parse(Console.ReadLine());
-                        Console.WriteLine(dalOrderItem.getOrderItem(idForOrderItem));
-                        break;
-                    case "c":
-                        OrderItem[] array = dalOrderItem.getDataOfOrderItem();
-                        foreach (OrderItem item in array)
-                        {
-                            Console.WriteLine(item);
-                        }
-                        break;
-                    case "d":
-                        Console.Write("please enter me an id of order: ");
-                        int idToDeleteOrder = int.Parse(Console.ReadLine());
-                        Console.Write("please enter me an id of product: ");
-                        int idToDeleteProdcut = int.Parse(Console.ReadLine());
-                        try
-                        {
-                            dalOrderItem.deleteOrderItem(idToDeleteOrder,idToDeleteProdcut);
-                        }
-                        catch (InvalidCastException msgError)
-                        {
-                            Console.WriteLine(msgError.Message);
-                        }
-                        break;
-                    case "e":
 
-                        break;
-                    case "f":
-                        Console.Write("please enter me an id of order: ");
-                        int idForOrder = int.Parse(Console.ReadLine());
-                        Console.Write("please enter me an id of product: ");
-                        int idForProduct = int.Parse(Console.ReadLine());
-                        Console.WriteLine(dalOrderItem.getOrderItem(idForOrder,idForProduct));
-                        break;
-                    case "g":
-                        Console.Write("please enter me an id: ");
-                        int idForList = int.Parse(Console.ReadLine());
-                        List<OrderItem> ret = dalOrderItem.getDataOfOrderItem(idForList);
-                        foreach (OrderItem item in ret)
-                        {
-                            Console.WriteLine(item);
-                        }
-                        break;
-                    default:
-                        Console.WriteLine("Invalid choice");
-                        break;
-                }
-            }
-            catch (InvalidCastException msgError)
+            switch (choiceInSubSwitch)
             {
-                Console.WriteLine(msgError.Message);
+                case "a":
+                    Console.Write("please enter ProductID: ");
+                    int ProductID = int.Parse(Console.ReadLine());
+                    Console.Write("please enter OrderID: ");
+                    int OrderID = int.Parse(Console.ReadLine());
+                    Console.Write("please enter Price: ");
+                    double Price = double.Parse(Console.ReadLine());
+                    Console.Write("please enter Amount: ");
+                    int Amount = int.Parse(Console.ReadLine());
+                    OrderItem orderItemToAdd = new OrderItem();
+
+                    orderItemToAdd.ProductID = ProductID;
+                    orderItemToAdd.OrderID = OrderID;
+                    orderItemToAdd.Price = Price;
+                    orderItemToAdd.Amount = Amount;
+                    try
+                    {
+                        Console.WriteLine("id of new orderItem: " + dalOrderItem.addOrderItem(orderItemToAdd));
+                    }
+                    catch (InvalidCastException msgError)
+                    {
+                        Console.WriteLine(msgError.Message);
+                    }
+
+                    break;
+                case "b":
+                    Console.Write("please enter me an id of OrderItem: ");
+                    int idForOrderItem = int.Parse(Console.ReadLine());
+                    Console.WriteLine(dalOrderItem.getOrderItem(idForOrderItem));
+                    break;
+                case "c":
+                    OrderItem[] array = dalOrderItem.getDataOfOrderItem();
+                    foreach (OrderItem item in array)
+                    {
+                        Console.WriteLine(item);
+                    }
+                    break;
+                case "d":
+                    OrderItem orderItemToUpdate = new OrderItem();
+                    Console.Write("please enter OrderItemID: ");
+                    orderItemToUpdate.OrderItemID = int.Parse(Console.ReadLine());
+                    Console.Write("please enter ProductID: ");
+                    orderItemToUpdate.ProductID = int.Parse(Console.ReadLine());
+                    Console.Write("please enter Price: ");
+                    orderItemToUpdate.Price = double.Parse(Console.ReadLine());
+                    Console.Write("please enter Amount: ");
+                    orderItemToUpdate.Amount = int.Parse(Console.ReadLine());
+                    try
+                    {
+                        dalOrderItem.updateOrderItem(orderItemToUpdate);
+                    }
+                    catch (InvalidCastException msgError)
+                    {
+                        Console.WriteLine(msgError.Message);
+                    }
+                    break;
+                case "e":
+                    Console.Write("please enter me an id of order: ");
+                    int idToDeleteOrder = int.Parse(Console.ReadLine());
+                    Console.Write("please enter me an id of product: ");
+                    int idToDeleteProdcut = int.Parse(Console.ReadLine());
+                    try
+                    {
+                        dalOrderItem.deleteOrderItem(idToDeleteOrder, idToDeleteProdcut);
+                    }
+                    catch (InvalidCastException msgError)
+                    {
+                        Console.WriteLine(msgError.Message);
+                    }
+                    break;
+                case "f":
+                    Console.Write("please enter me an id of order: ");
+                    int idForOrder = int.Parse(Console.ReadLine());
+                    Console.Write("please enter me an id of product: ");
+                    int idForProduct = int.Parse(Console.ReadLine());
+                    Console.WriteLine(dalOrderItem.getOrderItem(idForOrder, idForProduct));
+                    break;
+                case "g":
+                    Console.Write("please enter me an id: ");
+                    int idForList = int.Parse(Console.ReadLine());
+                    List<OrderItem> ret = dalOrderItem.getDataOfOrderItem(idForList);
+                    foreach (OrderItem item in ret)
+                    {
+                        Console.WriteLine(item);
+                    }
+                    break;
+                default:
+                    Console.WriteLine("Invalid choice");
+                    break;
             }
+
         }
     }
 }
