@@ -81,8 +81,12 @@ namespace Program
                         Console.WriteLine("id of new order: "+dalOrder.addOrder(order));
                         break;
                     case "b":
+                        Console.Write("please enter me an id: ");
+                        int id = Console.Read();
+                        Console.WriteLine(dalOrder.getOrder(id));
                         break;
                     case "c":
+
                         break;
                     case "d":
                         break;
