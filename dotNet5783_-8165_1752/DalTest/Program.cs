@@ -91,7 +91,7 @@ namespace Program
                     default:
                         Console.WriteLine("Invalid choice");
                         break;
-                };
+                }
             }
             catch (InvalidCastException msgError)
             {
@@ -112,15 +112,35 @@ namespace Program
             choiceInSubSwitch = Console.ReadLine();
             try
             {
-                choiceInSubSwitch switch
+                switch (choiceInSubSwitch)
                 {
-                    "a" => ,
-                    "b" => ,
-                    "b" => ,
-                    "d" => ,
-                    "e" => ,
-                                    => Console.WriteLine("Invalid choice");
-                            };
+                    case "a":
+                        break;
+                    case "b":
+                        break;
+                    case "c":
+                        break;
+                    case "d":
+                        Product help = new Product();
+                        Console.WriteLine("Enter id of the product");
+                        help.ID = int.Parse(Console.ReadLine());
+                        Console.WriteLine("Enter name of the product");
+                        help.Name = Console.ReadLine();
+                        Console.WriteLine("Enter price of the product");
+                        help.Price = double.Parse(Console.ReadLine());
+                        Console.WriteLine("Enter amount of the product");
+                        help.InStock = int.Parse(Console.ReadLine());
+                        Console.WriteLine("Enter category of the product");
+                        Console.WriteLine(Enums.Category
+                        help.Category = Console.ReadLine();
+                        DalProduct.updateProduct(help);
+                        break;
+                    case "e":
+                        break;
+                    default:
+                        Console.WriteLine("Invalid choice");
+                        break;
+                }
             }
             catch (InvalidCastException msgError)
             {
