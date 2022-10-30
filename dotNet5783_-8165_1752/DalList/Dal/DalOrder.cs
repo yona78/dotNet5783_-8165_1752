@@ -37,9 +37,9 @@ public class DalOrder
         }
         throw new Exception("order couldn't be found");
     }
-    public string getDataOfOrder()
+    public Order[] getDataOfOrder()
     {
-        return this.ToString();
+        return DataSource.orders;
     }
     public void deleteOrder(int id)
     {
