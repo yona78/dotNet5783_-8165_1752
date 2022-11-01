@@ -42,18 +42,24 @@ public class DalProduct
     }
     public void deleteProduct(int id)
     {
+        bool found = false;
         for (int i = 0; i < DataSource.maxProducts; i++)
         {
             if (DataSource.products[i].ID == id)
             {
                 DataSource.products[i] = new Product();
                 DataSource.Config.FirstIndexProducts = i;
+                found = true;
             }
         }
-        throw new Exception("product couldn't be found");
+        if(!found)
+        {
+             throw new Exception("product couldn't be found");
+        }
     }
     public void updateProduct(Product newProduct)
     {
+        bool found = false;
         for (int i = 0; i < DataSource.maxProducts; i++)
         {
             if (DataSource.products[i].ID == newProduct.ID)
@@ -62,10 +68,14 @@ public class DalProduct
                 DataSource.products[i].Price = newProduct.Price;
                 DataSource.products[i].Category = newProduct.Category;
                 DataSource.products[i].InStock = newProduct.InStock;
+                found = true;
                 break;
             }
         }
-        throw new Exception("product couldn't be found");
+        if(!found)
+        {
+             throw new Exception("product couldn't be found");
+        }
     }
 
 }

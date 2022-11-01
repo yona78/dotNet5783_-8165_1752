@@ -104,7 +104,7 @@ namespace Program
                         {
                             Console.WriteLine("id of new order: " + dalOrder.addOrder(orderToAdd));
                         }
-                        catch (InvalidCastException msgError)
+                        catch (Exception msgError)
                         {
                             Console.WriteLine(msgError.Message);
                         }
@@ -122,7 +122,7 @@ namespace Program
                         {
                             Console.WriteLine(dalOrder.getOrder(id));
                         }
-                        catch (InvalidCastException msgError)
+                        catch (Exception msgError)
                         {
                             Console.WriteLine(msgError.Message);
                         }
@@ -134,15 +134,27 @@ namespace Program
 
                             foreach (Order item in array)
                             {
-                                Console.WriteLine(item);
+                                if(item.ID!=0)
+                                {
+                                    Console.WriteLine(item);
+                                }
                             }
                         }
-                        catch (InvalidCastException msgError)
+                        catch (Exception msgError)
                         {
                             Console.WriteLine(msgError.Message);
                         }
                         break;
                     case 'd':
+                        Console.Write("please enter ID to update");
+                        int idToUpdate;
+                        do
+                        {
+                            Console.Write("please enter me an id: ");
+                            validInput = int.TryParse(Console.ReadLine(), out idToUpdate);
+                            if (!validInput)
+                                Console.WriteLine("please enter a valid input");
+                        } while (!validInput);
                         Console.Write("please enter CustomerName (first name only): ");
                         CustomerName = Console.ReadLine();
                         Console.Write("please enter CustomerEmail (format: example@gmail.com): ");
@@ -153,6 +165,7 @@ namespace Program
                         ShipDate = DateTime.MinValue;
                         DeliveryrDate = DateTime.MinValue;
                         Order orderToUpdate = new Order();
+                        orderToUpdate.ID = idToUpdate;
                         orderToUpdate.CustomerName = CustomerName;
                         orderToUpdate.CustomerEmail = CustomerEmail;
                         orderToUpdate.CustomerAdrress = CustomerAdrress;
@@ -163,7 +176,7 @@ namespace Program
                         {
                             dalOrder.updateOrder(orderToUpdate);
                         }
-                        catch (InvalidCastException msgError)
+                        catch (Exception msgError)
                         {
                             Console.WriteLine(msgError.Message);
                         }
@@ -181,7 +194,7 @@ namespace Program
                         {
                             dalOrder.deleteOrder(id);
                         }
-                        catch (InvalidCastException msgError)
+                        catch (Exception msgError)
                         {
                             Console.WriteLine(msgError.Message);
                         }
@@ -269,7 +282,7 @@ namespace Program
                         {
                             Console.WriteLine("id of new product: " + dalProduct.addProduct(productToAdd));
                         }
-                        catch (InvalidCastException msgError)
+                        catch (Exception msgError)
                         {
                             Console.WriteLine(msgError.Message);
                         }
@@ -286,7 +299,7 @@ namespace Program
                         {
                             Console.WriteLine(dalProduct.getProduct(id));
                         }
-                        catch (InvalidCastException msgError)
+                        catch (Exception msgError)
                         {
                             Console.WriteLine(msgError.Message);
                         }
@@ -295,7 +308,10 @@ namespace Program
                         Product[] array = dalProduct.getDataOfProduct();
                         foreach (Product item in array)
                         {
-                            Console.WriteLine(item);
+                            if(item.ID!=0)
+                            {
+                                Console.WriteLine(item);
+                            }
                         }
                         break;
                     case 'd':
@@ -346,7 +362,7 @@ namespace Program
                         {
                             dalProduct.updateProduct(productToUpdate);
                         }
-                        catch (InvalidCastException msgError)
+                        catch (Exception msgError)
                         {
                             Console.WriteLine(msgError.Message);
                         }
@@ -363,7 +379,7 @@ namespace Program
                         {
                             dalProduct.deleteProduct(id);
                         }
-                        catch (InvalidCastException msgError)
+                        catch (Exception msgError)
                         {
                             Console.WriteLine(msgError.Message);
                         }
@@ -387,14 +403,14 @@ namespace Program
 
                 do
                 {
-                    Console.WriteLine("you chose: OrderItem" +
-                   "a ==> for adding a new orderItem" +
-                   "b ==> for getting an orderItem by its id" +
-                   "c ==> for getting a data of an orderItem" +
-                   "d ==> for updating an orderItem" +
-                   "e ==> for deleting an orderItem" +
-                   "f ==> for getting an orderItem by order and product" +
-                   "g ==> for getting the data of an order by its id");
+                    Console.WriteLine(@"you chose: OrderItem 
+                   a ==> for adding a new orderItem 
+                   b ==> for getting an orderItem by its id
+                   c ==> for getting a data of an orderItem
+                   d ==> for updating an orderItem 
+                   e ==> for deleting an orderItem
+                   f ==> for getting an orderItem by order and product
+                   g ==> for getting the data of an order by its id");
 
                     validInput = char.TryParse(Console.ReadLine(), out choiceInSubSwitch);
                     if (!validInput)
@@ -448,7 +464,7 @@ namespace Program
                         {
                             Console.WriteLine("id of new orderItem: " + dalOrderItem.addOrderItem(orderItemToAdd));
                         }
-                        catch (InvalidCastException msgError)
+                        catch (Exception msgError)
                         {
                             Console.WriteLine(msgError.Message);
                         }
@@ -463,13 +479,23 @@ namespace Program
                                 Console.WriteLine("please enter a valid input");
                         } while (!validInput);
                         int idForOrderItem = id;
-                        Console.WriteLine(dalOrderItem.getOrderItem(idForOrderItem));
+                        try
+                        {
+                            Console.WriteLine(dalOrderItem.getOrderItem(idForOrderItem));
+                        }
+                        catch (Exception msgError)
+                        {
+                            Console.WriteLine(msgError.Message);
+                        }
                         break;
                     case 'c':
                         OrderItem[] array = dalOrderItem.getDataOfOrderItem();
                         foreach (OrderItem item in array)
                         {
-                            Console.WriteLine(item);
+                            if(item.OrderItemID!= 0)
+                            {
+                               Console.WriteLine(item);
+                            }
                         }
                         break;
                     case 'd':
@@ -515,7 +541,7 @@ namespace Program
                         {
                             dalOrderItem.updateOrderItem(orderItemToUpdate);
                         }
-                        catch (InvalidCastException msgError)
+                        catch (Exception msgError)
                         {
                             Console.WriteLine(msgError.Message);
                         }
@@ -541,7 +567,7 @@ namespace Program
                         {
                             dalOrderItem.deleteOrderItem(idToDeleteOrder, idToDeleteProdcut);
                         }
-                        catch (InvalidCastException msgError)
+                        catch (Exception msgError)
                         {
                             Console.WriteLine(msgError.Message);
                         }
@@ -563,7 +589,14 @@ namespace Program
                                 Console.WriteLine("please enter a valid input");
                         } while (!validInput);
                         int idForProduct = id;
-                        Console.WriteLine(dalOrderItem.getOrderItem(idForOrder, idForProduct));
+                        try
+                        { 
+                            Console.WriteLine(dalOrderItem.getOrderItem(idForOrder, idForProduct));
+                        }
+                        catch (Exception msgError)
+                        {
+                            Console.WriteLine(msgError.Message);
+                        }
                         break;
                     case 'g':
                         do
@@ -574,10 +607,17 @@ namespace Program
                                 Console.WriteLine("please enter a valid input");
                         } while (!validInput);
                         int idForList = id;
-                        List<OrderItem> ret = dalOrderItem.getDataOfOrderItem(idForList);
-                        foreach (OrderItem item in ret)
+                        try 
+                        { 
+                            List<OrderItem> ret = dalOrderItem.getDataOfOrderItem(idForList);
+                            foreach (OrderItem item in ret)
+                            {
+                                Console.WriteLine(item);
+                            }
+                        }
+                        catch (Exception msgError)
                         {
-                            Console.WriteLine(item);
+                            Console.WriteLine(msgError.Message);
                         }
                         break;
                     default:

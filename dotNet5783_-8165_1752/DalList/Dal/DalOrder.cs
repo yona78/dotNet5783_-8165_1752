@@ -44,18 +44,25 @@ public class DalOrder
     }
     public void deleteOrder(int id)
     {
+        bool found = false;
         for (int i = 0; i < DataSource.maxOrders; i++)
         {
             if (DataSource.orders[i].ID == id)
             {
                 DataSource.orders[i] = new Order();
                 DataSource.Config.FirstIndexOrders = i;
+                found = true;
             }
         }
-        throw new Exception("order couldn't be found");
+        if(!found)
+        {
+            throw new Exception("order couldn't be found");
+        }
+          
     }
     public void updateOrder(Order newOrder)
     {
+        bool found= false;
         for (int i = 0; i < DataSource.maxOrders; i++)
         {
             if (DataSource.orders[i].ID == newOrder.ID)
@@ -66,10 +73,14 @@ public class DalOrder
                 DataSource.orders[i].OrderDate = newOrder.OrderDate;
                 DataSource.orders[i].ShipDate = newOrder.ShipDate;
                 DataSource.orders[i].DeliveryrDate = newOrder.DeliveryrDate;
+                found= true;
                 break;
             }
         }
-        throw new Exception("order couldn't be found");
+        if(!found)
+        {
+            throw new Exception("order couldn't be found");
+        }
     }
 
 }
