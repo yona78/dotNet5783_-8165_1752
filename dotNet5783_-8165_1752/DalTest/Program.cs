@@ -37,6 +37,8 @@ namespace Program
                 } while (!validInput);
                 switch (choice)
                 {
+                    case 0:
+                        break;
                     case 1:
                         OrderOption();
                         break;

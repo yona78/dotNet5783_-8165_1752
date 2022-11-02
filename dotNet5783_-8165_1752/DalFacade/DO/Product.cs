@@ -10,9 +10,10 @@ public struct Product
     public Enums.Category Category { set; get; }
     public int InStock { set; get; }
     public override string ToString() => $@"
-       Product ID={ID}: {Name},
-       category - {Category}
-    	Price: {Price}
-    	Amount in stock: {InStock}
+       Product ID: {ID}
+       Name: {Name}
+       category: {Category}
+       Price: {Price}
+       Amount in stock: {InStock}
     ";
 }

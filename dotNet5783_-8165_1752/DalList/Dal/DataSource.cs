@@ -110,7 +110,7 @@ internal static class DataSource
         }
         for (int i = 0; i < OrderInit; i++)
         {
-            Order order = new Order { ID = Config.getLastIndexOrder, CustomerName = customerNames[rnd.Next(10)], CustomerEmail = customerNames[rnd.Next(10)] + rnd.Next(1000) + "@gmail.com", CustomerAdrress = rnd.Next(100) + " " + streets[rnd.Next(10)] + " Street '\t' " + rnd.Next(1000000, 9999999) + " " + cities[rnd.Next(5)] + " '\t' Israel", OrderDate = orderDates[i], ShipDate = shipDataDates[i], DeliveryrDate = deliveryDataDates[i] };
+            Order order = new Order { ID = Config.getLastIndexOrder, CustomerName = customerNames[rnd.Next(10)], CustomerEmail = customerNames[rnd.Next(10)] + rnd.Next(1000) + "@gmail.com", CustomerAdrress = rnd.Next(100) + " " + streets[rnd.Next(10)] + " Street \t" + rnd.Next(1000000, 9999999) + " " + cities[rnd.Next(5)] + " \t Israel", OrderDate = orderDates[i], ShipDate = shipDataDates[i], DeliveryrDate = deliveryDataDates[i] };
             addOrder(order);
         }
 

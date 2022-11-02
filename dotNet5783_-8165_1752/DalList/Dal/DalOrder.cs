@@ -27,7 +27,7 @@ public class DalOrder
             }
         }
         DataSource.Config.FirstIndexOrders = newFirstIndexOrders;
-        return cpyFirstIndexOrders;
+        return newFirstIndexOrders;
     }
     public Order getOrder(int id)
     {
