@@ -47,10 +47,10 @@ internal static class DataSource
         /// Products initializetion
         int[] arrayOfRandomNumbersForProducts = new int[ProductInit];
         /// the next code will check whether there are duplicate Id's
-        bool checkForDuplicateId = false;
+        bool checkForDuplicateId = true;
         do
         {
-            checkForDuplicateId = false;
+            checkForDuplicateId = true;
             for (int i = 0; i < ProductInit; i++)
             {
                 arrayOfRandomNumbersForProducts[i] = rnd.Next(100000, 999999);
@@ -60,7 +60,10 @@ internal static class DataSource
                 int currentId = arrayOfRandomNumbersForProducts[i];
                 for (int j = i + 1; j < ProductInit; j++)
                 {
-                    checkForDuplicateId = checkForDuplicateId || (arrayOfRandomNumbersForProducts[j] == currentId);
+                    if(arrayOfRandomNumbersForProducts[j] == currentId)
+                    {
+                        checkForDuplicateId = false;
+                    }
                 }
             }
         } while (!checkForDuplicateId);

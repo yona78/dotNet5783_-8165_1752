@@ -7,33 +7,58 @@ public class DalOrderItem
 
     public int addOrderItem(OrderItem newOrderItem)
     {
-        newOrderItem.OrderItemID = DataSource.Config.getLastIndexOrderItems;
         if (DataSource.Config.FirstIndexOrderItems == DataSource.maxOrderItems)
             throw new Exception("array is full");
+        bool found = false;
+        for(int i = 0; i < DataSource.maxOrders; i++)
+        {
+            if (DataSource.orders[i].ID==newOrderItem.OrderID)
+            {
+                found = true;
+                break;
+            }
+        }
+        if(!found)
+        {
+            throw new Exception("order not exist");
+        }
+        found = false;
+        for(int i = 0; i < DataSource.maxProducts; i++)
+        {
+            if (DataSource.products[i].ID ==newOrderItem.ProductID)
+            {
+                found= true;
+                break;
+            }
+        }
+        if(!found)
+        {
+            throw new Exception("product not exist");
+        }
+        newOrderItem.OrderItemID = DataSource.Config.getLastIndexOrderItems;
         for (int i = 0; i < DataSource.maxOrderItems; i++)
         {
-            if (DataSource.orderItems[i].OrderID == newOrderItem.OrderID && DataSource.orderItems[i].OrderItemID == newOrderItem.OrderItemID)
-                throw new Exception("order already exist");
+            if (DataSource.orderItems[i].OrderID==newOrderItem.OrderID &&DataSource.orderItems[i].ProductID==newOrderItem.ProductID)
+                throw new Exception("orderItem already exist");
         }
         DataSource.orderItems[DataSource.Config.FirstIndexOrderItems] = newOrderItem;
         int newFirstIndexOrderItems = DataSource.maxOrderItems;
-        int cpyFirstIndexOrderItems = DataSource.Config.FirstIndexOrderItems;
         for (int i = DataSource.Config.FirstIndexOrderItems; i < DataSource.maxOrderItems; i++)
         {
-            if (DataSource.orderItems[i].OrderID == 0 && DataSource.orderItems[i].OrderItemID == 0)
+            if (DataSource.orderItems[i].OrderItemID==0)
             {
                 newFirstIndexOrderItems = i;
                 break;
             }
         }
-        DataSource.Config.FirstIndexOrders = newFirstIndexOrderItems;
-        return cpyFirstIndexOrderItems;
+        DataSource.Config.FirstIndexOrderItems = newFirstIndexOrderItems;
+        return newOrderItem.OrderItemID;
     }
     public OrderItem getOrderItem(int idOrder, int idProduct)
     {
         for (int i = 0; i < DataSource.maxOrderItems; i++)
         {
-            if (DataSource.orderItems[i].OrderID == idOrder &&DataSource.orderItems[i].OrderItemID==idProduct)
+            if (DataSource.orderItems[i].OrderID == idOrder &&DataSource.orderItems[i].ProductID==idProduct)
                 return DataSource.orderItems[i];
         }
         throw new Exception("order couldn't be found");
@@ -43,24 +68,57 @@ public class DalOrderItem
 
         return DataSource.orderItems;
     }
-    public void deleteOrderItem(int idOrder, int idProduct)
+    public void deleteOrderItem(int idOrderItem)
     {
+        bool found = false;
         for (int i = 0; i < DataSource.maxOrderItems; i++)
         {
-            if (DataSource.orderItems[i].OrderID == idOrder && DataSource.orderItems[i].ProductID==idProduct)
+            if (DataSource.orderItems[i].OrderItemID==idOrderItem)
             {
+                found = true;
                 DataSource.orderItems[i] = new OrderItem();
                 DataSource.Config.FirstIndexOrderItems = i;
             }
         }
-        throw new Exception("order couldn't be found");
+        if(!found)
+        {
+            throw new Exception("order couldn't be found");
+        }
     }
     public void updateOrderItem(OrderItem newOrderItem)
     {
-        for (int i = 0; i < DataSource.maxOrders; i++)
+        bool found = false;
+        for(int i = 0; i < DataSource.maxOrders; i++)
         {
-            if (DataSource.orderItems[i].OrderID == newOrderItem.OrderID && DataSource.orderItems[i].OrderItemID == newOrderItem.OrderItemID)
+            if (DataSource.orders[i].ID==newOrderItem.OrderID)
             {
+                found = true;
+                break;
+            }
+        }
+        if(!found)
+        {
+            throw new Exception("order not exist");
+        }
+        found = false;
+        for(int i = 0; i < DataSource.maxProducts; i++)
+        {
+            if (DataSource.products[i].ID ==newOrderItem.ProductID)
+            {
+                found= true;
+                break;
+            }
+        }
+        if(!found)
+        {
+            throw new Exception("product not exist");
+        }
+        found = false;
+        for (int i = 0; i < DataSource.maxOrderItems; i++)
+        {
+            if (DataSource.orderItems[i].OrderItemID==newOrderItem.OrderItemID)
+            {
+                found=true;
                 DataSource.orderItems[i].OrderID = newOrderItem.OrderID;
                 DataSource.orderItems[i].ProductID = newOrderItem.ProductID;
                 DataSource.orderItems[i].Amount = newOrderItem.Amount;
@@ -68,7 +126,10 @@ public class DalOrderItem
                 break;
             }
         }
+        if(!found)
+        {
         throw new Exception("order couldn't be found");
+        }
     }
 
     // The special functions i was asked to add

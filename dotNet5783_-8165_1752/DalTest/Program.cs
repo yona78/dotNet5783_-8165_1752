@@ -501,6 +501,14 @@ namespace Program
                     case 'd':
                         do
                         {
+                            Console.Write("please enter OrderItemID: ");
+                            validInput = int.TryParse(Console.ReadLine(), out id);
+                            if (!validInput)
+                                Console.WriteLine("please enter a valid input");
+                        } while (!validInput);
+                        int OrderItemIdUpdate = id;
+                        do
+                        {
                             Console.Write("please enter ProductID: ");
                             validInput = int.TryParse(Console.ReadLine(), out id);
                             if (!validInput)
@@ -533,6 +541,7 @@ namespace Program
                         int amountOrdetItemUpdate = amount;
 
                         OrderItem orderItemToUpdate = new OrderItem();
+                        orderItemToUpdate.OrderItemID= OrderItemIdUpdate;
                         orderItemToUpdate.ProductID = productIdUpdate;
                         orderItemToUpdate.OrderID = orderIdUpdate;
                         orderItemToUpdate.Price = priceOrderItemUpdate;
@@ -549,23 +558,15 @@ namespace Program
                     case 'e':
                         do
                         {
-                            Console.Write("please enter me an id of order: ");
+                            Console.Write("please enter me an id of orderItem: ");
                             validInput = int.TryParse(Console.ReadLine(), out id);
                             if (!validInput)
                                 Console.WriteLine("please enter a valid input");
                         } while (!validInput);
-                        int idToDeleteOrder = id;
-                        do
-                        {
-                            Console.Write("please enter me an id of product: ");
-                            validInput = int.TryParse(Console.ReadLine(), out id);
-                            if (!validInput)
-                                Console.WriteLine("please enter a valid input");
-                        } while (!validInput);
-                        int idToDeleteProdcut = id;
+                        int idToDelete = id;
                         try
                         {
-                            dalOrderItem.deleteOrderItem(idToDeleteOrder, idToDeleteProdcut);
+                            dalOrderItem.deleteOrderItem(idToDelete);
                         }
                         catch (Exception msgError)
                         {
