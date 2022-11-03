@@ -4,12 +4,13 @@ namespace DO;
 
 public struct Enums
 {
-    public enum Category { 
+    public enum Category
+    {
         Dresses,
         Shirts,
         Hats,
-        Shoes, 
-        Socks, 
+        Shoes,
+        Socks,
         Skirts,
         Coats
     }

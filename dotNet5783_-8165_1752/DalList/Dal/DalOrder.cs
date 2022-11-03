@@ -5,81 +5,81 @@ namespace Dal;
 public class DalOrder
 {
     public DalOrder() { }
-    public int addOrder(Order newOrder)
+    public int AddOrder(Order newOrder) 
     {
-        int amountOfOrders = DataSource.Config.FirstIndexOrders;
-        if( amountOfOrders== DataSource.maxOrders)
+        int amountOfOrders = DataSource.Config.firstIndexOrders;
+        if (amountOfOrders == DataSource.maxOrders)
             throw new Exception("array is full");
-        newOrder.ID = DataSource.Config.getLastIndexOrder;
+        newOrder.ID = DataSource.Config.GetLastIndexOrder;
         for (int i = 0; i < DataSource.maxOrders; i++)
         {
-            if (DataSource.orders[i].ID == newOrder.ID)
-            { 
+            if (DataSource._orders[i].ID == newOrder.ID)
+            {
                 throw new Exception("order already exist");
             }
         }
-        DataSource.orders[DataSource.Config.FirstIndexOrders] = newOrder;
+        DataSource._orders[DataSource.Config.firstIndexOrders] = newOrder;
         int newFirstIndexOrders = DataSource.maxOrders;
-        for (int i = DataSource.Config.FirstIndexOrders; i < DataSource.maxOrders; i++)
+        for (int i = DataSource.Config.firstIndexOrders; i < DataSource.maxOrders; i++)
         {
-            if (DataSource.orders[i].ID == 0)
+            if (DataSource._orders[i].ID == 0)
             {
                 newFirstIndexOrders = i;
                 break;
             }
         }
-        DataSource.Config.FirstIndexOrders = newFirstIndexOrders;
+        DataSource.Config.firstIndexOrders = newFirstIndexOrders;
         return newOrder.ID;
     }
-    public Order getOrder(int id)
+    public Order GetOrder(int id)
     {
         for (int i = 0; i < DataSource.maxOrders; i++)
         {
-            if (DataSource.orders[i].ID == id)
-                return DataSource.orders[i];
+            if (DataSource._orders[i].ID == id)
+                return DataSource._orders[i];
         }
         throw new Exception("order couldn't be found");
     }
-    public Order[] getDataOfOrder()
+    public Order[] GetDataOfOrder()
     {
-        return DataSource.orders;
+        return DataSource._orders;
     }
-    public void deleteOrder(int id)
+    public void DeleteOrder(int id)
     {
         bool found = false;
         for (int i = 0; i < DataSource.maxOrders; i++)
         {
-            if (DataSource.orders[i].ID == id)
+            if (DataSource._orders[i].ID == id)
             {
-                DataSource.orders[i] = new Order();
-                DataSource.Config.FirstIndexOrders = i;
+                DataSource._orders[i] = new Order();
+                DataSource.Config.firstIndexOrders = i;
                 found = true;
             }
         }
-        if(!found)
+        if (!found)
         {
             throw new Exception("order couldn't be found");
         }
-          
+
     }
-    public void updateOrder(Order newOrder)
+    public void UpdateOrder(Order newOrder)
     {
-        bool found= false;
+        bool found = false;
         for (int i = 0; i < DataSource.maxOrders; i++)
         {
-            if (DataSource.orders[i].ID == newOrder.ID)
+            if (DataSource._orders[i].ID == newOrder.ID)
             {
-                DataSource.orders[i].CustomerName = newOrder.CustomerName;
-                DataSource.orders[i].CustomerEmail = newOrder.CustomerEmail;
-                DataSource.orders[i].CustomerAdrress = newOrder.CustomerAdrress;
-                DataSource.orders[i].OrderDate = newOrder.OrderDate;
-                DataSource.orders[i].ShipDate = newOrder.ShipDate;
-                DataSource.orders[i].DeliveryrDate = newOrder.DeliveryrDate;
-                found= true;
+                DataSource._orders[i].CustomerName = newOrder.CustomerName;
+                DataSource._orders[i].CustomerEmail = newOrder.CustomerEmail;
+                DataSource._orders[i].CustomerAdrress = newOrder.CustomerAdrress;
+                DataSource._orders[i].OrderDate = newOrder.OrderDate;
+                DataSource._orders[i].ShipDate = newOrder.ShipDate;
+                DataSource._orders[i].DeliveryrDate = newOrder.DeliveryrDate;
+                found = true;
                 break;
             }
         }
-        if(!found)
+        if (!found)
         {
             throw new Exception("order couldn't be found");
         }

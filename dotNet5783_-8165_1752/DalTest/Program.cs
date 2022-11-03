@@ -12,9 +12,9 @@ namespace Program
 {
     class Program
     {
-        static private DalOrder dalOrder = new DalOrder();
-        static private DalOrderItem dalOrderItem = new DalOrderItem();
-        static private DalProduct dalProduct = new DalProduct();
+        static private DalOrder _dalOrder = new DalOrder();
+        static private DalOrderItem _dalOrderItem = new DalOrderItem();
+        static private DalProduct _dalProduct = new DalProduct();
 
         static void Main()
         {
@@ -59,7 +59,7 @@ namespace Program
         {
             char choiceInSubSwitch = 'x';
             bool validInput = true;
-            bool didSomethingInThisSession;
+            bool didSomethingInThisSession = false;
 
             do
             {
@@ -83,28 +83,28 @@ namespace Program
                 switch (choiceInSubSwitch)
                 {
                     case 'a':
-                        string CustomerName, CustomerEmail, CustomerAdrress;
-                        DateTime OrderDate, ShipDate, DeliveryrDate;
+                        string customerName, customerEmail, customerAdrress;
+                        DateTime orderDate, shipDate, deliveryrDate;
                         DalOrder newDalOrder = new DalOrder();
                         Console.Write("please enter CustomerName (first name only): ");
-                        CustomerName = Console.ReadLine();
+                        customerName = Console.ReadLine();
                         Console.Write("please enter CustomerEmail (format: example@gmail.com): ");
-                        CustomerEmail = Console.ReadLine();
-                        Console.Write("please enter CustomerAdrress (format: ): ");
-                        CustomerAdrress = Console.ReadLine();
-                        OrderDate = DateTime.Now;
-                        ShipDate = DateTime.MinValue;
-                        DeliveryrDate = DateTime.MinValue;
+                        customerEmail = Console.ReadLine();
+                        Console.Write("please enter CustomerAdrress (format: (number of apartment) (name of street) Street       (Zip number) (name of city)       Israel): "); 
+                        customerAdrress = Console.ReadLine();
+                        orderDate = DateTime.Now;
+                        shipDate = DateTime.MinValue;
+                        deliveryrDate = DateTime.MinValue;
                         Order orderToAdd = new Order();
-                        orderToAdd.CustomerName = CustomerName;
-                        orderToAdd.CustomerEmail = CustomerEmail;
-                        orderToAdd.CustomerAdrress = CustomerAdrress;
-                        orderToAdd.OrderDate = OrderDate;
-                        orderToAdd.ShipDate = ShipDate;
-                        orderToAdd.DeliveryrDate = DeliveryrDate;
+                        orderToAdd.CustomerName = customerName;
+                        orderToAdd.CustomerEmail = customerEmail;
+                        orderToAdd.CustomerAdrress = customerAdrress;
+                        orderToAdd.OrderDate = orderDate;
+                        orderToAdd.ShipDate = shipDate;
+                        orderToAdd.DeliveryrDate = deliveryrDate;
                         try
                         {
-                            Console.WriteLine("id of new order: " + dalOrder.addOrder(orderToAdd));
+                            Console.WriteLine("id of new order: " + _dalOrder.AddOrder(orderToAdd));
                         }
                         catch (Exception msgError)
                         {
@@ -122,7 +122,7 @@ namespace Program
 
                         try
                         {
-                            Console.WriteLine(dalOrder.getOrder(id));
+                            Console.WriteLine(_dalOrder.GetOrder(id));
                         }
                         catch (Exception msgError)
                         {
@@ -132,11 +132,11 @@ namespace Program
                     case 'c':
                         try
                         {
-                            Order[] array = dalOrder.getDataOfOrder();
+                            Order[] array = _dalOrder.GetDataOfOrder();
 
                             foreach (Order item in array)
                             {
-                                if(item.ID!=0)
+                                if (item.ID != 0)
                                 {
                                     Console.WriteLine(item);
                                 }
@@ -158,25 +158,25 @@ namespace Program
                                 Console.WriteLine("please enter a valid input");
                         } while (!validInput);
                         Console.Write("please enter CustomerName (first name only): ");
-                        CustomerName = Console.ReadLine();
+                        customerName = Console.ReadLine();
                         Console.Write("please enter CustomerEmail (format: example@gmail.com): ");
-                        CustomerEmail = Console.ReadLine();
+                        customerEmail = Console.ReadLine();
                         Console.Write("please enter CustomerAdrress: ");
-                        CustomerAdrress = Console.ReadLine();
-                        OrderDate = DateTime.Now;
-                        ShipDate = DateTime.MinValue;
-                        DeliveryrDate = DateTime.MinValue;
+                        customerAdrress = Console.ReadLine();
+                        orderDate = DateTime.Now;
+                        shipDate = DateTime.MinValue;
+                        deliveryrDate = DateTime.MinValue;
                         Order orderToUpdate = new Order();
                         orderToUpdate.ID = idToUpdate;
-                        orderToUpdate.CustomerName = CustomerName;
-                        orderToUpdate.CustomerEmail = CustomerEmail;
-                        orderToUpdate.CustomerAdrress = CustomerAdrress;
-                        orderToUpdate.OrderDate = OrderDate;
-                        orderToUpdate.ShipDate = ShipDate;
-                        orderToUpdate.DeliveryrDate = DeliveryrDate;
+                        orderToUpdate.CustomerName = customerName;
+                        orderToUpdate.CustomerEmail = customerEmail;
+                        orderToUpdate.CustomerAdrress = customerAdrress;
+                        orderToUpdate.OrderDate = orderDate;
+                        orderToUpdate.ShipDate = shipDate;
+                        orderToUpdate.DeliveryrDate = deliveryrDate;
                         try
                         {
-                            dalOrder.updateOrder(orderToUpdate);
+                            _dalOrder.UpdateOrder(orderToUpdate);
                         }
                         catch (Exception msgError)
                         {
@@ -194,7 +194,7 @@ namespace Program
 
                         try
                         {
-                            dalOrder.deleteOrder(id);
+                            _dalOrder.DeleteOrder(id);
                         }
                         catch (Exception msgError)
                         {
@@ -282,7 +282,7 @@ namespace Program
                         productToAdd.Category = category;
                         try
                         {
-                            Console.WriteLine("id of new product: " + dalProduct.addProduct(productToAdd));
+                            Console.WriteLine("id of new product: " + _dalProduct.AddProduct(productToAdd));
                         }
                         catch (Exception msgError)
                         {
@@ -299,7 +299,7 @@ namespace Program
                         } while (!validInput);
                         try
                         {
-                            Console.WriteLine(dalProduct.getProduct(id));
+                            Console.WriteLine(_dalProduct.GetProduct(id));
                         }
                         catch (Exception msgError)
                         {
@@ -307,10 +307,10 @@ namespace Program
                         }
                         break;
                     case 'c':
-                        Product[] array = dalProduct.getDataOfProduct();
+                        Product[] array = _dalProduct.GetDataOfProduct();
                         foreach (Product item in array)
                         {
-                            if(item.ID!=0)
+                            if (item.ID != 0)
                             {
                                 Console.WriteLine(item);
                             }
@@ -362,7 +362,7 @@ namespace Program
                         productToUpdate.Category = category;
                         try
                         {
-                            dalProduct.updateProduct(productToUpdate);
+                            _dalProduct.UpdateProduct(productToUpdate);
                         }
                         catch (Exception msgError)
                         {
@@ -379,7 +379,7 @@ namespace Program
                         } while (!validInput);
                         try
                         {
-                            dalProduct.deleteProduct(id);
+                            _dalProduct.DeleteProduct(id);
                         }
                         catch (Exception msgError)
                         {
@@ -464,7 +464,7 @@ namespace Program
                         orderItemToAdd.Amount = amountOrdetItem;
                         try
                         {
-                            Console.WriteLine("id of new orderItem: " + dalOrderItem.addOrderItem(orderItemToAdd));
+                            Console.WriteLine("id of new orderItem: " + _dalOrderItem.AddOrderItem(orderItemToAdd));
                         }
                         catch (Exception msgError)
                         {
@@ -483,7 +483,7 @@ namespace Program
                         int idForOrderItem = id;
                         try
                         {
-                            Console.WriteLine(dalOrderItem.getOrderItem(idForOrderItem));
+                            Console.WriteLine(_dalOrderItem.GetOrderItem(idForOrderItem));
                         }
                         catch (Exception msgError)
                         {
@@ -491,12 +491,12 @@ namespace Program
                         }
                         break;
                     case 'c':
-                        OrderItem[] array = dalOrderItem.getDataOfOrderItem();
+                        OrderItem[] array = _dalOrderItem.GetDataOfOrderItem();
                         foreach (OrderItem item in array)
                         {
-                            if(item.OrderItemID!= 0)
+                            if (item.OrderItemID != 0)
                             {
-                               Console.WriteLine(item);
+                                Console.WriteLine(item);
                             }
                         }
                         break;
@@ -543,14 +543,14 @@ namespace Program
                         int amountOrdetItemUpdate = amount;
 
                         OrderItem orderItemToUpdate = new OrderItem();
-                        orderItemToUpdate.OrderItemID= OrderItemIdUpdate;
+                        orderItemToUpdate.OrderItemID = OrderItemIdUpdate;
                         orderItemToUpdate.ProductID = productIdUpdate;
                         orderItemToUpdate.OrderID = orderIdUpdate;
                         orderItemToUpdate.Price = priceOrderItemUpdate;
                         orderItemToUpdate.Amount = amountOrdetItemUpdate;
                         try
                         {
-                            dalOrderItem.updateOrderItem(orderItemToUpdate);
+                            _dalOrderItem.UpdateOrderItem(orderItemToUpdate);
                         }
                         catch (Exception msgError)
                         {
@@ -568,7 +568,7 @@ namespace Program
                         int idToDelete = id;
                         try
                         {
-                            dalOrderItem.deleteOrderItem(idToDelete);
+                            _dalOrderItem.DeleteOrderItem(idToDelete);
                         }
                         catch (Exception msgError)
                         {
@@ -593,8 +593,8 @@ namespace Program
                         } while (!validInput);
                         int idForProduct = id;
                         try
-                        { 
-                            Console.WriteLine(dalOrderItem.getOrderItem(idForOrder, idForProduct));
+                        {
+                            Console.WriteLine(_dalOrderItem.GetOrderItem(idForOrder, idForProduct));
                         }
                         catch (Exception msgError)
                         {
@@ -610,9 +610,9 @@ namespace Program
                                 Console.WriteLine("please enter a valid input");
                         } while (!validInput);
                         int idForList = id;
-                        try 
-                        { 
-                            List<OrderItem> ret = dalOrderItem.getDataOfOrderItem(idForList);
+                        try
+                        {
+                            List<OrderItem> ret = _dalOrderItem.GetDataOfOrderItem(idForList);
                             foreach (OrderItem item in ret)
                             {
                                 Console.WriteLine(item);

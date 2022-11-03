@@ -3,12 +3,12 @@ namespace Dal;
 internal static class DataSource
 {
 
-    static readonly Random rnd = new Random();
-    static internal Order[] orders = new Order[100];
+    static readonly Random _rnd = new Random();
+    static internal Order[] _orders = new Order[100];
     public static int maxOrders = 100;
-    static internal Product[] products = new Product[50];
+    static internal Product[] _products = new Product[50];
     public static int maxProducts = 50;
-    static internal OrderItem[] orderItems = new OrderItem[200];
+    static internal OrderItem[] _orderItems = new OrderItem[200];
     public static int maxOrderItems = 200;
 
 
@@ -21,46 +21,45 @@ internal static class DataSource
     private static void addOrder(Order newOrder)
     {
 
-        orders[Config.FirstIndexOrders] = newOrder;
-        Config.FirstIndexOrders++;
+        _orders[Config.firstIndexOrders] = newOrder;
+        Config.firstIndexOrders++;
     }
 
     private static void addProduct(Product newProduct)
     {
-        products[Config.FirstIndexProducts] = newProduct;
-        Config.FirstIndexProducts++;
+        _products[Config.firstIndexProducts] = newProduct;
+        Config.firstIndexProducts++;
     }
 
     private static void addOrdersItem(OrderItem newOrderItem)
     {
-        orderItems[Config.FirstIndexOrderItems] = newOrderItem;
-        Config.FirstIndexOrderItems++;
+        _orderItems[Config.firstIndexOrderItems] = newOrderItem;
+        Config.firstIndexOrderItems++;
     }
 
     static void s_Initialize()
     {
         /// constant for loop limit - right programing rules 
-        const int ProductInit = 10;
-        const int OrderInit = 20;
-        const int OrderItemsInit = 40;
+        const int productInit = 10;
+        const int orderInit = 20;
 
         /// Products initializetion
-        int[] arrayOfRandomNumbersForProducts = new int[ProductInit];
+        int[] arrayOfRandomNumbersForProducts = new int[productInit];
         /// the next code will check whether there are duplicate Id's
         bool checkForDuplicateId = true;
         do
         {
             checkForDuplicateId = true;
-            for (int i = 0; i < ProductInit; i++)
+            for (int i = 0; i < productInit; i++)
             {
-                arrayOfRandomNumbersForProducts[i] = rnd.Next(100000, 999999);
+                arrayOfRandomNumbersForProducts[i] = _rnd.Next(100000, 999999);
             }
-            for (int i = 0; i < ProductInit; i++)
+            for (int i = 0; i < productInit; i++)
             {
                 int currentId = arrayOfRandomNumbersForProducts[i];
-                for (int j = i + 1; j < ProductInit; j++)
+                for (int j = i + 1; j < productInit; j++)
                 {
-                    if(arrayOfRandomNumbersForProducts[j] == currentId)
+                    if (arrayOfRandomNumbersForProducts[j] == currentId)
                     {
                         checkForDuplicateId = false;
                     }
@@ -94,43 +93,43 @@ internal static class DataSource
         /// Orders initializetion
         string[] customerNames = new string[10] { "Yossi", "Chaim", "David", "Ariel", "Yona", "Avishai", "Binyamin", "Noam", "Ori", "Moshe" };
         string[] cities = new string[5] { "Jerusalem", "Tel Aviv", "Haifa", "Beer Sheva", "Petah Tiqwa" };
-        string[] streets = new string[10] { "Arlozoroff", "Balfour", "Begin", "Ben Gurion", "Ben Yehuda", "Bialik", "Herzl", "Ibn Gabirol", "Jabotinsky", "Herzl\r\n" };
+        string[] streets = new string[10] { "Arlozoroff", "Balfour", "Begin", "Ben Gurion", "Ben Yehuda", "Bialik", "Herzl", "Ibn Gabirol", "Jabotinsky", "Herzl" };
 
-        DateTime[] orderDates = new DateTime[OrderInit];
-        DateTime[] shipDataDates = new DateTime[OrderInit];
-        DateTime[] deliveryDataDates = new DateTime[OrderInit];
-        for (int i = 0; i < OrderInit; i++)
+        DateTime[] orderDates = new DateTime[orderInit];
+        DateTime[] shipDataDates = new DateTime[orderInit];
+        DateTime[] deliveryDataDates = new DateTime[orderInit];
+        for (int i = 0; i < orderInit; i++)
         {
-            TimeSpan duration = new TimeSpan(-rnd.Next(50, 200), rnd.Next(24), rnd.Next(60), rnd.Next(60));
+            TimeSpan duration = new TimeSpan(-_rnd.Next(50, 200), _rnd.Next(24), _rnd.Next(60), _rnd.Next(60));
             orderDates[i] = DateTime.Now.Add(duration);
-            duration = new TimeSpan(rnd.Next(20, 45), rnd.Next(24), rnd.Next(60), rnd.Next(60));
+            duration = new TimeSpan(_rnd.Next(20, 45), _rnd.Next(24), _rnd.Next(60), _rnd.Next(60));
             shipDataDates[i] = orderDates[i].Add(duration);
             if (i % 5 == 0 || i % 4 == 0 || i % 3 == 0) // thats equal to 60% from all of the orders
             {
-                duration = new TimeSpan(rnd.Next(2, 18), rnd.Next(24), rnd.Next(60), rnd.Next(60));
+                duration = new TimeSpan(_rnd.Next(2, 18), _rnd.Next(24), _rnd.Next(60), _rnd.Next(60));
                 shipDataDates[i] = orderDates[i].Add(duration);
             }
         }
-        for (int i = 0; i < OrderInit; i++)
+        for (int i = 0; i < orderInit; i++)
         {
-            Order order = new Order { ID = Config.getLastIndexOrder, CustomerName = customerNames[rnd.Next(10)], CustomerEmail = customerNames[rnd.Next(10)] + rnd.Next(1000) + "@gmail.com", CustomerAdrress = rnd.Next(100) + " " + streets[rnd.Next(10)] + " Street \t" + rnd.Next(1000000, 9999999) + " " + cities[rnd.Next(5)] + " \t Israel", OrderDate = orderDates[i], ShipDate = shipDataDates[i], DeliveryrDate = deliveryDataDates[i] };
+            Order order = new Order { ID = Config.GetLastIndexOrder, CustomerName = customerNames[_rnd.Next(10)], CustomerEmail = customerNames[_rnd.Next(10)] + _rnd.Next(1000) + "@gmail.com", CustomerAdrress = _rnd.Next(100) + " " + streets[_rnd.Next(10)] + " Street \t" + _rnd.Next(1000000, 9999999) + " " + cities[_rnd.Next(5)] + " \t Israel", OrderDate = orderDates[i], ShipDate = shipDataDates[i], DeliveryrDate = deliveryDataDates[i] };
             addOrder(order);
         }
 
         /// OrderItems initializetion
-        for (int i = 0; i < OrderInit; i++)
+        for (int i = 0; i < orderInit; i++)
         {
             /// checking whether there are enught items from the spiecific product
-            int productInOrder = rnd.Next(ProductInit);
-            int amountOfItems = rnd.Next(1, 4);
+            int productInOrder = _rnd.Next(productInit);
+            int amountOfItems = _rnd.Next(1, 4);
             if (i % 4 == 0) /// by this way, i insure that there would be at least 40 items. because 5*4 = 20 + 15*1 = 35. however, in the 15 other loops it's between 1 to 4, so it very likely it would be bigger than 20. 
             {
                 amountOfItems = 4;
                 do
                 {
-                    if (products[productInOrder].InStock == 0)
-                        productInOrder = rnd.Next(ProductInit);
-                } while (products[productInOrder].InStock <= amountOfItems || products[productInOrder].InStock == 0);
+                    if (_products[productInOrder].InStock == 0)
+                        productInOrder = _rnd.Next(productInit);
+                } while (_products[productInOrder].InStock <= amountOfItems || _products[productInOrder].InStock == 0);
 
             }
 
@@ -138,16 +137,16 @@ internal static class DataSource
             {
                 do
                 {
-                    while (products[productInOrder].InStock <= amountOfItems && products[productInOrder].InStock != 0)
-                        amountOfItems = rnd.Next(1, 4);
-                    if (products[productInOrder].InStock == 0)
-                        productInOrder = rnd.Next(ProductInit);
-                } while (products[productInOrder].InStock <= amountOfItems || products[productInOrder].InStock == 0);
+                    while (_products[productInOrder].InStock <= amountOfItems && _products[productInOrder].InStock != 0)
+                        amountOfItems = _rnd.Next(1, 4);
+                    if (_products[productInOrder].InStock == 0)
+                        productInOrder = _rnd.Next(productInit);
+                } while (_products[productInOrder].InStock <= amountOfItems || _products[productInOrder].InStock == 0);
             }
             /// now i chose the product and the num of items that will be in this order
 
-            OrderItem orderItem = new OrderItem { OrderItemID = Config.getLastIndexOrderItems, ProductID = products[productInOrder].ID, OrderID = orders[i].ID, Price = products[productInOrder].Price, Amount = amountOfItems };
-            products[productInOrder].InStock -= amountOfItems;
+            OrderItem orderItem = new OrderItem { OrderItemID = Config.GetLastIndexOrderItems, ProductID = _products[productInOrder].ID, OrderID = _orders[i].ID, Price = _products[productInOrder].Price, Amount = amountOfItems };
+            _products[productInOrder].InStock -= amountOfItems;
             addOrdersItem(orderItem);
         }
 
@@ -156,14 +155,14 @@ internal static class DataSource
 
     internal class Config
     {
-        static internal int FirstIndexOrders = 0;
-        static internal int FirstIndexProducts = 0;
-        static internal int FirstIndexOrderItems = 0;
+        static internal int firstIndexOrders = 0;
+        static internal int firstIndexProducts = 0;
+        static internal int firstIndexOrderItems = 0;
 
-        private static int LastIndexOrder = 0;
-        private static int LastIndexOrderItems = 0;
+        private static int lastIndexOrder = 0;
+        private static int lastIndexOrderItems = 0;
 
-        public static int getLastIndexOrder { get => LastIndexOrder++; }
-        public static int getLastIndexOrderItems { get => LastIndexOrderItems++; }
+        public static int GetLastIndexOrder { get => lastIndexOrder++; }
+        public static int GetLastIndexOrderItems { get => lastIndexOrderItems++; }
     }
 }
