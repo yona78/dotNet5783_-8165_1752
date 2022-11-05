@@ -265,8 +265,8 @@ namespace Program
                         } while (!validInput);
                         productToAdd.InStock = amount;
                         do
-                        {
-                            Console.Write(@"Optinal Categories:
+                        { /// in the future, there would be a loop here that prints all the posible categories, because we might want to add more categories.
+                            Console.Write(@"Optinal Categories: 
                             Dresses,
                             Shirts,
                             Hats,

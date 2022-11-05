@@ -132,7 +132,7 @@ public class DalOrderItem
         }
     }
 
-    // The special functions i was asked to add
+    // The special functions we were asked to add
     public OrderItem GetOrderItem(int id)
     {
         for (int i = 0; i < DataSource.maxOrderItems; i++)

@@ -1,4 +1,5 @@
 ﻿
+/// not a special thing, regular abstract class.
 
 namespace DO;
 

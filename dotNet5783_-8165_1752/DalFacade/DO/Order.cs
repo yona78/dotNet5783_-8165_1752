@@ -1,5 +1,5 @@
 ﻿
-
+/// not a special thing, regular abstract class.
 using System.Data;
 
 namespace DO;
