@@ -282,7 +282,7 @@ namespace Program
                         productToAdd.Category = category;
                         try
                         {
-                            Console.WriteLine("id of new product: " + _dalProduct.AddProduct(productToAdd));
+                            Console.WriteLine("index of new product: " + _dalProduct.AddProduct(productToAdd));
                         }
                         catch (Exception msgError)
                         {
