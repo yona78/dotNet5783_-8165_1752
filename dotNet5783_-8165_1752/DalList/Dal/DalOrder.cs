@@ -1,11 +1,13 @@
 ﻿using DO;
 
 namespace Dal;
-
+/// <summary>
+/// public class for implemention of order 
+/// </summary>
 public class DalOrder
 {
     public DalOrder() { }
-    public int AddOrder(Order newOrder) 
+    public int AddOrder(Order newOrder) // func that adds an order to the array of orders, and return its id 
     {
         int curEmptyOrder = DataSource.Config.firstIndexOrders; // check whether it is possible to add this new order
         if (curEmptyOrder == DataSource.maxOrders)
@@ -31,7 +33,7 @@ public class DalOrder
         DataSource.Config.firstIndexOrders = newFirstIndexOrder;
         return newOrder.ID;
     }
-    public Order GetOrder(int id)
+    public Order GetOrder(int id) // func that reutrns order by its id
     {
         for (int i = 0; i < DataSource.maxOrders; i++) // looking for the order with the specified id
         {
@@ -40,11 +42,11 @@ public class DalOrder
         }
         throw new Exception("order couldn't be found");
     }
-    public Order[] GetDataOfOrder()
+    public Order[] GetDataOfOrder() // func that returns all of the orders
     {
         return DataSource._orders;
     }
-    public void DeleteOrder(int id)
+    public void DeleteOrder(int id) // func that deletes order from the array
     {
         bool found = false;
         for (int i = 0; i < DataSource.maxOrders; i++)
@@ -62,7 +64,7 @@ public class DalOrder
         }
 
     }
-    public void UpdateOrder(Order newOrder)
+    public void UpdateOrder(Order newOrder) // func that updates an order in his array
     {
         bool found = false;
         for (int i = 0; i < DataSource.maxOrders; i++)

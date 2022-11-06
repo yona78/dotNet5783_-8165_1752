@@ -1,11 +1,13 @@
 ﻿using DO;
 namespace Dal;
-
+/// <summary>
+/// public class for implemention of orderItem
+/// </summary>
 public class DalOrderItem
 {
     public DalOrderItem() { }
 
-    public int AddOrderItem(OrderItem newOrderItem)
+    public int AddOrderItem(OrderItem newOrderItem) // func that adds an orderItem to the array of orderItems, and return its id
     {
         if (DataSource.Config.firstIndexOrderItems == DataSource.maxOrderItems) // checks if the arr is full
             throw new Exception("array is full");
@@ -54,7 +56,7 @@ public class DalOrderItem
         DataSource.Config.firstIndexOrderItems = newFirstIndexOrderItems;
         return newOrderItem.OrderItemID; // return the id of the orderItem we added
     }
-    public OrderItem GetOrderItem(int idOrder, int idProduct)
+    public OrderItem GetOrderItem(int idOrder, int idProduct) // func that reutrns orderItem by its order and product ids
     {
         for (int i = 0; i < DataSource.maxOrderItems; i++) // returns an orderItem by its product id and its order id
         {
@@ -63,11 +65,11 @@ public class DalOrderItem
         }
         throw new Exception("order couldn't be found");
     }
-    public OrderItem[] GetDataOfOrderItem()
+    public OrderItem[] GetDataOfOrderItem() // func that returns all of the orderItems
     {
         return DataSource._orderItems;
     } 
-    public void DeleteOrderItem(int idOrderItem)
+    public void DeleteOrderItem(int idOrderItem) // func that deletes orderItem from the array
     {
         bool found = false;
         for (int i = 0; i < DataSource.maxOrderItems; i++) // checks if the order item exists
@@ -84,7 +86,7 @@ public class DalOrderItem
             throw new Exception("orderItem couldn't be found");
         }
     }
-    public void UpdateOrderItem(OrderItem newOrderItem)
+    public void UpdateOrderItem(OrderItem newOrderItem) // func that updates an orderItem in his array
     {
         bool found = false;
         for (int i = 0; i < DataSource.maxOrders; i++) // checks if the order exists
@@ -132,7 +134,7 @@ public class DalOrderItem
     }
 
     // The special functions we were asked to add
-    public OrderItem GetOrderItem(int id)
+    public OrderItem GetOrderItem(int id) // func that return orderItem by its id 
     {
         for (int i = 0; i < DataSource.maxOrderItems; i++) // returns an orderItem by its id
         {
@@ -141,7 +143,7 @@ public class DalOrderItem
         }
         throw new Exception("orderItem couldn't be found");
     }
-    public List<OrderItem> GetDataOfOrderItem(int idOfOrder)
+    public List<OrderItem> GetDataOfOrderItem(int idOfOrder) // func that returns all the orderItems from the specific order
     {
         List<OrderItem> ret = new List<OrderItem>(); // we use list because we don't know the what is the size of the structre we will need to use.
         for (int i = 0; i < DataSource.maxOrderItems; i++) // returns a list of all of the orderItems from the specific order, whose id was given to us.

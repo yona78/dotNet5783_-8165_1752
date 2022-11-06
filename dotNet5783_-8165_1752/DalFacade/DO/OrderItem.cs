@@ -2,7 +2,9 @@
 /// not a special thing, regular abstract class.
 
 namespace DO;
-
+/// <summary>
+/// public struct for abstract orderItem class
+/// </summary>
 public struct OrderItem
 {
     public int OrderItemID { set; get; }

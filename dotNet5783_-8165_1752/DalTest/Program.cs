@@ -1,5 +1,4 @@
-﻿// See https://aka.ms/new-console-template for more information
-using Dal;
+﻿using Dal;
 using DO;
 
 namespace Program
@@ -17,7 +16,7 @@ namespace Program
             int choice = 0;
             do
             {
-                do
+                do // you will see this do_ while loop every time we will use TryParse...
                 {
 
                     Console.WriteLine(@"Welcoome to Yona's and Avishai's shop, you might choose to do some things on our shop.
@@ -49,7 +48,7 @@ namespace Program
             } while (choice != 0);
 
         }
-        static void OrderOption()
+        static void OrderOption() // order option
         {
             char choiceInSubSwitch = 'x';
             bool validInput = true;
@@ -76,7 +75,7 @@ namespace Program
 
                 switch (choiceInSubSwitch)
                 {
-                    case 'a':
+                    case 'a': // addOrder option
                         string customerName, customerEmail, customerAdrress;
                         DateTime orderDate, shipDate, deliveryrDate;
                         DalOrder newDalOrder = new DalOrder();
@@ -105,7 +104,7 @@ namespace Program
                             Console.WriteLine(msgError.Message);
                         }
                         break;
-                    case 'b':
+                    case 'b': // getting order by its id option
                         do
                         {
                             Console.Write("please enter me an id: ");
@@ -123,7 +122,7 @@ namespace Program
                             Console.WriteLine(msgError.Message);
                         }
                         break;
-                    case 'c':
+                    case 'c': // print all orders option
                         try
                         {
                             Order[] array = _dalOrder.GetDataOfOrder();
@@ -141,7 +140,7 @@ namespace Program
                             Console.WriteLine(msgError.Message);
                         }
                         break;
-                    case 'd':
+                    case 'd': // update order option
                         Console.Write("please enter ID to update");
                         int idToUpdate;
                         do
@@ -177,7 +176,7 @@ namespace Program
                             Console.WriteLine(msgError.Message);
                         }
                         break;
-                    case 'e':
+                    case 'e': // delete order option
                         do
                         {
                             Console.Write("please enter me an id: ");
@@ -202,7 +201,7 @@ namespace Program
                 }
             } while (!didSomethingInThisSession);
         }
-        static void ProductOption()
+        static void ProductOption() // product option
         {
             char choiceInSubSwitch = 'x';
             bool validInput = true;
@@ -229,7 +228,7 @@ namespace Program
                 int amount;
                 switch (choiceInSubSwitch)
                 {
-                    case 'a':
+                    case 'a': // add product option
                         Enums.Category category;
                         Product productToAdd = new Product();
                         do
@@ -283,7 +282,7 @@ namespace Program
                             Console.WriteLine(msgError.Message);
                         }
                         break;
-                    case 'b':
+                    case 'b': // getting product by its id option
                         do
                         {
                             Console.Write("Enter id of the product: ");
@@ -300,7 +299,7 @@ namespace Program
                             Console.WriteLine(msgError.Message);
                         }
                         break;
-                    case 'c':
+                    case 'c': // print all products option
                         Product[] array = _dalProduct.GetDataOfProduct();
                         foreach (Product item in array)
                         {
@@ -310,7 +309,7 @@ namespace Program
                             }
                         }
                         break;
-                    case 'd':
+                    case 'd': // update product option
                         Product productToUpdate = new Product();
                         do
                         {
@@ -339,7 +338,7 @@ namespace Program
                         } while (!validInput);
                         productToUpdate.InStock = amount;
                         do
-                        {
+                        { /// in the future, there would be a loop here that prints all the posible categories, because we might want to add more categories.
                             Console.Write(@"Optinal Categories:
                             Dresses,
                             Shirts,
@@ -363,7 +362,7 @@ namespace Program
                             Console.WriteLine(msgError.Message);
                         }
                         break;
-                    case 'e':
+                    case 'e': // delete product option
                         do
                         {
                             Console.Write("Enter the id of the product you want to delete: ");
@@ -387,7 +386,7 @@ namespace Program
                 }
             } while (!didSomethingInThisSession);
         }
-        static void OrderItemOption()
+        static void OrderItemOption() // orderItem option
         {
             char choiceInSubSwitch = 'x';
             bool validInput = true;
@@ -417,7 +416,7 @@ namespace Program
                 int amount;
                 switch (choiceInSubSwitch)
                 {
-                    case 'a':
+                    case 'a': // add orderItem option
                         do
                         {
                             Console.Write("please enter ProductID: ");
@@ -466,7 +465,7 @@ namespace Program
                         }
 
                         break;
-                    case 'b':
+                    case 'b': // get orderItem by its id option
                         do
                         {
                             Console.Write("please enter me an id of OrderItem: ");
@@ -484,7 +483,7 @@ namespace Program
                             Console.WriteLine(msgError.Message);
                         }
                         break;
-                    case 'c':
+                    case 'c': // print all orderItem option
                         OrderItem[] array = _dalOrderItem.GetDataOfOrderItem();
                         foreach (OrderItem item in array)
                         {
@@ -494,7 +493,7 @@ namespace Program
                             }
                         }
                         break;
-                    case 'd':
+                    case 'd': // update orderItem option
                         do
                         {
                             Console.Write("please enter OrderItemID: ");
@@ -551,7 +550,7 @@ namespace Program
                             Console.WriteLine(msgError.Message);
                         }
                         break;
-                    case 'e':
+                    case 'e': // delete orderItem option
                         do
                         {
                             Console.Write("please enter me an id of orderItem: ");
@@ -569,7 +568,7 @@ namespace Program
                             Console.WriteLine(msgError.Message);
                         }
                         break;
-                    case 'f':
+                    case 'f': // get order item by its product id and order id
                         do
                         {
                             Console.Write("please enter me an id of order: ");
@@ -595,7 +594,7 @@ namespace Program
                             Console.WriteLine(msgError.Message);
                         }
                         break;
-                    case 'g':
+                    case 'g': // get all order items from specific order by its id option
                         do
                         {
                             Console.Write("please enter me an id: ");

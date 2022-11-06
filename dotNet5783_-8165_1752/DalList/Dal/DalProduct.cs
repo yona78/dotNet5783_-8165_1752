@@ -1,10 +1,12 @@
 ﻿using DO;
 namespace Dal;
-
+/// <summary>
+/// public class for implemention of product 
+/// </summary>
 public class DalProduct
 {
     public DalProduct() { }
-    public int AddProduct(Product newProduct)
+    public int AddProduct(Product newProduct) // func that adds an product to the array of products, and return its id
     {
         if (DataSource.Config.firstIndexProducts == DataSource.maxProducts)
             throw new Exception("array is full");
@@ -26,7 +28,7 @@ public class DalProduct
         DataSource.Config.firstIndexProducts = newFirstIndexProducts;
         return newProduct.ID;
     }
-    public Product GetProduct(int id)
+    public Product GetProduct(int id) // func that reutrns product by its id
     {
         for (int i = 0; i < DataSource.maxProducts; i++) // the loop checks whether this prodcut is exist or not
         {
@@ -35,11 +37,11 @@ public class DalProduct
         }
         throw new Exception("product couldn't be found");
     }
-    public Product[] GetDataOfProduct()
+    public Product[] GetDataOfProduct() // func that returns all of the products
     {
         return DataSource._products;
     }
-    public void DeleteProduct(int id)
+    public void DeleteProduct(int id) // func that deletes product from the array
     {
         bool found = false;
         for (int i = 0; i < DataSource.maxProducts; i++) // looks for the product with the specific id
@@ -56,7 +58,7 @@ public class DalProduct
             throw new Exception("product couldn't be found");
         }
     }
-    public void UpdateProduct(Product newProduct)
+    public void UpdateProduct(Product newProduct) // func that updates product in his array
     {
         bool found = false;
         for (int i = 0; i < DataSource.maxProducts; i++) // if the specific product is found, it does a deep copy

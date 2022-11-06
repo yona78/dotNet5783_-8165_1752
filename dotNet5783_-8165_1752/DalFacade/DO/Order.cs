@@ -3,7 +3,9 @@
 using System.Data;
 
 namespace DO;
-
+/// <summary>
+/// public struct for abstract order class
+/// </summary>
 public struct Order
 {
     public int ID { set; get; }
