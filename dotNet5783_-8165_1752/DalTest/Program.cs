@@ -1,12 +1,6 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using Dal;
 using DO;
-using System;
-using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.ComponentModel;
-using System.Data.Common;
-using System.Diagnostics;
 
 namespace Program
 {

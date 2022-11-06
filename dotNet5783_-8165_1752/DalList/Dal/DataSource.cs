@@ -3,37 +3,36 @@ namespace Dal;
 internal static class DataSource
 {
 
-    static readonly Random _rnd = new Random();
+    static readonly Random _rnd = new Random(); // neccesery initlization for the initilization of the data structures. 
     static internal Order[] _orders = new Order[100];
-    public static int maxOrders = 100;
+    public static int maxOrders = 100; // we will use it in the functions of each class
     static internal Product[] _products = new Product[50];
-    public static int maxProducts = 50;
+    public static int maxProducts = 50; // we will use it in the functions of each class
     static internal OrderItem[] _orderItems = new OrderItem[200];
-    public static int maxOrderItems = 200;
+    public static int maxOrderItems = 200; // we will use it in the functions of each class
 
 
 
-    static DataSource()
+    static DataSource() // the constructor calls this func.
     {
         s_Initialize();
     }
 
     private static void addOrder(Order newOrder)
     {
-
-        _orders[Config.firstIndexOrders] = newOrder;
+        _orders[Config.firstIndexOrders] = newOrder;  // this func promotes the first index of empty place in the array of the orders by one, and adds the new order 
         Config.firstIndexOrders++;
     }
 
     private static void addProduct(Product newProduct)
     {
-        _products[Config.firstIndexProducts] = newProduct;
+        _products[Config.firstIndexProducts] = newProduct;  // this func promotes the first index of empty place in the array of the products by one, and adds the new product
         Config.firstIndexProducts++;
     }
 
     private static void addOrdersItem(OrderItem newOrderItem)
     {
-        _orderItems[Config.firstIndexOrderItems] = newOrderItem;
+        _orderItems[Config.firstIndexOrderItems] = newOrderItem;  // this func promotes the first index of empty place in the array of the orderItems by one, and adds the new orderItem
         Config.firstIndexOrderItems++;
     }
 
@@ -45,7 +44,7 @@ internal static class DataSource
 
         /// Products initializetion
         int[] arrayOfRandomNumbersForProducts = new int[productInit];
-        /// the next code will check whether there are duplicate Id's
+        /// the next code will check whether there are duplicate Ids
         bool checkForDuplicateId = true;
         do
         {
@@ -155,14 +154,14 @@ internal static class DataSource
 
     internal class Config
     {
-        static internal int firstIndexOrders = 0;
-        static internal int firstIndexProducts = 0;
-        static internal int firstIndexOrderItems = 0;
+        static internal int firstIndexOrders = 0; // the first index in the array of orders where it is empty.
+        static internal int firstIndexProducts = 0; // the first index in the array of products where it is empty.
+        static internal int firstIndexOrderItems = 0; // the first index in the array of orderItems where it is empty.
 
-        private static int lastIndexOrder = 0;
-        private static int lastIndexOrderItems = 0;
+        private static int lastIndexOrder = 0; // the last index in the array of orders who isn't empty
+        private static int lastIndexOrderItems = 0;// the last index in the array of orderItems who isn't empty
 
-        public static int GetLastIndexOrder { get => lastIndexOrder++; }
-        public static int GetLastIndexOrderItems { get => lastIndexOrderItems++; }
+        public static int GetLastIndexOrder { get => lastIndexOrder++; } // simple get attribute to lastIndexOrder
+        public static int GetLastIndexOrderItems { get => lastIndexOrderItems++; } // simple get attribute to lastIndexOrderItems
     }
 }

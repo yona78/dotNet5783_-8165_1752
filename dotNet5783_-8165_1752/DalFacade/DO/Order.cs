@@ -19,8 +19,8 @@ public struct Order
        CustomerEmail: {CustomerEmail}
        CustomerAdress: {CustomerAdrress}
        OrderDate: {OrderDate}
-       ShipData: {ShipDate}
-       DeliveryrData: {DeliveryrDate}
+       ShipDate: {ShipDate}
+       DeliveryrDate: {DeliveryrDate}
     ";
 
 }
