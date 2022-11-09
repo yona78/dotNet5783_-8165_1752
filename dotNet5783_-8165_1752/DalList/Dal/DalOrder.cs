@@ -25,7 +25,7 @@ public class DalOrder
     }
     public Order GetOrder(int id) // func that reutrns order by its id
     {
-        for (int i = 0; i < DataSource.maxOrders; i++) // looking for the order with the specified id
+        for (int i = 0; i < DataSource._orders.Count(); i++) // looking for the order with the specified id
         {
             if (DataSource._orders[i].ID == id)
                 return DataSource._orders[i];
@@ -39,7 +39,7 @@ public class DalOrder
     public void DeleteOrder(int id) // func that deletes order from the array
     {
         bool found = false;
-        for (int i = 0; i < DataSource.maxOrders; i++)
+        for (int i = 0; i < DataSource._orders.Count(); i++)
         {
             if (DataSource._orders[i].ID == id) // deleting only if it has the same id.
             {
@@ -56,12 +56,12 @@ public class DalOrder
     public void UpdateOrder(Order newOrder) // func that updates an order in his array
     {
         bool found = false;
-        for (int i = 0; i < DataSource.maxOrders; i++)
+        for (int i = 0; i < DataSource._orders.Count(); i++)
         {
             if (DataSource._orders[i].ID == newOrder.ID) // if the specified order is found, we do a deep copy.
             {
                 DataSource._orders.RemoveAt(i);
-                DataSource._orders.Add(newOrder);
+                DataSource._orders.Insert(i, newOrder);
                 found = true;
                 break;
             }
