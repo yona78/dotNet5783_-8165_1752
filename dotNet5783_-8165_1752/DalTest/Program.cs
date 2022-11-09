@@ -83,7 +83,7 @@ namespace Program
                         customerName = Console.ReadLine();
                         Console.Write("please enter CustomerEmail (format: example@gmail.com): ");
                         customerEmail = Console.ReadLine();
-                        Console.Write("please enter CustomerAdrress (format: (number of apartment) (name of street) Street       (Zip number) (name of city)       Israel): ");
+                        Console.Write("please enter CustomerAdrress (format: (number of apartment) (name of street) Street       (Zip number) (name of city)       Israel): "); 
                         customerAdrress = Console.ReadLine();
                         orderDate = DateTime.Now;
                         shipDate = DateTime.MinValue;
