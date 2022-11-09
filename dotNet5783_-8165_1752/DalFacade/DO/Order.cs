@@ -1,9 +1,11 @@
 ﻿
-
+/// not a special thing, regular abstract class.
 using System.Data;
 
 namespace DO;
-
+/// <summary>
+/// public struct for abstract order class
+/// </summary>
 public struct Order
 {
     public int ID { set; get; }
@@ -19,8 +21,8 @@ public struct Order
        CustomerEmail: {CustomerEmail}
        CustomerAdress: {CustomerAdrress}
        OrderDate: {OrderDate}
-       ShipData: {ShipDate}
-       DeliveryrData: {DeliveryrDate}
+       ShipDate: {ShipDate}
+       DeliveryrDate: {DeliveryrDate}
     ";
 
 }

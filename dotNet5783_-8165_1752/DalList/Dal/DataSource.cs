@@ -1,43 +1,45 @@
 ﻿using DO;
 namespace Dal;
+/// <summary>
+/// static class for having the real dataSource we are going to work with 
+/// </summary>
 internal static class DataSource
 {
 
-    static readonly Random _rnd = new Random();
+    static readonly Random _rnd = new Random(); // neccesery initlizetion for the initilizetion of the data structures. 
     static internal Order[] _orders = new Order[100];
-    public static int maxOrders = 100;
+    public static int maxOrders = 100; // we will use it in the functi0ns of each class
     static internal Product[] _products = new Product[50];
-    public static int maxProducts = 50;
+    public static int maxProducts = 50; // we will use it in the functions of each class
     static internal OrderItem[] _orderItems = new OrderItem[200];
-    public static int maxOrderItems = 200;
+    public static int maxOrderItems = 200; // we will use it in the functions of each class
 
 
 
-    static DataSource()
+    static DataSource() // the constructor calls this func.
     {
         s_Initialize();
     }
 
-    private static void addOrder(Order newOrder)
+    private static void addOrder(Order newOrder) // func that gets new order and add it to the array of orders
     {
-
-        _orders[Config.firstIndexOrders] = newOrder;
+        _orders[Config.firstIndexOrders] = newOrder;  // this func promotes the first index of empty place in the array of the orders by one, and adds the new order 
         Config.firstIndexOrders++;
     }
 
-    private static void addProduct(Product newProduct)
+    private static void addProduct(Product newProduct) // func that gets new product and add it to the array of products
     {
-        _products[Config.firstIndexProducts] = newProduct;
+        _products[Config.firstIndexProducts] = newProduct;  // this func promotes the first index of empty place in the array of the products by one, and adds the new product
         Config.firstIndexProducts++;
     }
 
-    private static void addOrdersItem(OrderItem newOrderItem)
+    private static void addOrdersItem(OrderItem newOrderItem) // func that gets new orderItem and add it to the array of orderItems
     {
-        _orderItems[Config.firstIndexOrderItems] = newOrderItem;
+        _orderItems[Config.firstIndexOrderItems] = newOrderItem;  // this func promotes the first index of empty place in the array of the orderItems by one, and adds the new orderItem
         Config.firstIndexOrderItems++;
     }
 
-    static void s_Initialize()
+    static void s_Initialize() // func that initialize the first data
     {
         /// constant for loop limit - right programing rules 
         const int productInit = 10;
@@ -45,29 +47,30 @@ internal static class DataSource
 
         /// Products initializetion
         int[] arrayOfRandomNumbersForProducts = new int[productInit];
-        /// the next code will check whether there are duplicate Id's
-        bool checkForDuplicateId = true;
+        /// the next code will check whether there are duplicate IDs, it also generates random valuse to each product id
+        bool checkForDuplicateId = false;
         do
         {
-            checkForDuplicateId = true;
-            for (int i = 0; i < productInit; i++)
+            checkForDuplicateId = false;
+            for (int i = 0; i < productInit; i++) // generates random values to each product
             {
                 arrayOfRandomNumbersForProducts[i] = _rnd.Next(100000, 999999);
             }
-            for (int i = 0; i < productInit; i++)
+            for (int i = 0; i < productInit; i++) // for each product in the array
             {
-                int currentId = arrayOfRandomNumbersForProducts[i];
-                for (int j = i + 1; j < productInit; j++)
+                int currentId = arrayOfRandomNumbersForProducts[i]; // saving the curID
+                for (int j = i + 1; j < productInit; j++) // for each product we didn't check yet
                 {
-                    if (arrayOfRandomNumbersForProducts[j] == currentId)
+                    if (arrayOfRandomNumbersForProducts[j] == currentId) // it means there is different product with the same id.
                     {
-                        checkForDuplicateId = false;
+                        checkForDuplicateId = true;
                     }
                 }
             }
-        } while (!checkForDuplicateId);
+        } while (checkForDuplicateId);
         /// there must be one product with empty amount (InStock=0)
         Product product;
+        // initilzetion with random data
         product = new Product { ID = arrayOfRandomNumbersForProducts[0], Name = "Black coat", Category = Enums.Category.Coats, InStock = 50, Price = 399.99 };
         addProduct(product);
         product = new Product { ID = arrayOfRandomNumbersForProducts[1], Name = "Winter dress", Category = Enums.Category.Dresses, InStock = 30, Price = 150 };
@@ -93,26 +96,26 @@ internal static class DataSource
         /// Orders initializetion
         string[] customerNames = new string[10] { "Yossi", "Chaim", "David", "Ariel", "Yona", "Avishai", "Binyamin", "Noam", "Ori", "Moshe" };
         string[] cities = new string[5] { "Jerusalem", "Tel Aviv", "Haifa", "Beer Sheva", "Petah Tiqwa" };
-        string[] streets = new string[10] { "Arlozoroff", "Balfour", "Begin", "Ben Gurion", "Ben Yehuda", "Bialik", "Herzl", "Ibn Gabirol", "Jabotinsky", "Herzl" };
+        string[] streets = new string[10] { "Arlozoroff", "Balfour", "Begin", "Ben Gurion", "Ben Yehuda", "Bialik", "Herzl", "Ibn Gabirol", "Jabotinsky", "HaTe'ena" };
 
         DateTime[] orderDates = new DateTime[orderInit];
-        DateTime[] shipDataDates = new DateTime[orderInit];
-        DateTime[] deliveryDataDates = new DateTime[orderInit];
+        DateTime[] shipDateDates = new DateTime[orderInit];
+        DateTime[] deliveryDateDates = new DateTime[orderInit];
         for (int i = 0; i < orderInit; i++)
         {
-            TimeSpan duration = new TimeSpan(-_rnd.Next(50, 200), _rnd.Next(24), _rnd.Next(60), _rnd.Next(60));
-            orderDates[i] = DateTime.Now.Add(duration);
-            duration = new TimeSpan(_rnd.Next(20, 45), _rnd.Next(24), _rnd.Next(60), _rnd.Next(60));
-            shipDataDates[i] = orderDates[i].Add(duration);
+            TimeSpan duration = new TimeSpan(-_rnd.Next(50, 200), _rnd.Next(24), _rnd.Next(60), _rnd.Next(60)); // taking random duration between 50 to 200 days from now
+            orderDates[i] = DateTime.Now.Add(duration); // the day of the add of the order, it's from now to 50-200 day ago
+            duration = new TimeSpan(_rnd.Next(20, 45), _rnd.Next(24), _rnd.Next(60), _rnd.Next(60)); // taking random duration between 20 to 45 days from now
+            shipDateDates[i] = orderDates[i].Add(duration); // the day of the ship of the order, it's from now to 20-45 day ago
             if (i % 5 == 0 || i % 4 == 0 || i % 3 == 0) // thats equal to 60% from all of the orders
             {
-                duration = new TimeSpan(_rnd.Next(2, 18), _rnd.Next(24), _rnd.Next(60), _rnd.Next(60));
-                shipDataDates[i] = orderDates[i].Add(duration);
+                duration = new TimeSpan(_rnd.Next(2, 18), _rnd.Next(24), _rnd.Next(60), _rnd.Next(60)); // taking random duration between 2 to 18 days from now
+                deliveryDateDates[i] = orderDates[i].Add(duration); // the day of the delivery of the order, it's from now to 2-18 day ago
             }
         }
         for (int i = 0; i < orderInit; i++)
         {
-            Order order = new Order { ID = Config.GetLastIndexOrder, CustomerName = customerNames[_rnd.Next(10)], CustomerEmail = customerNames[_rnd.Next(10)] + _rnd.Next(1000) + "@gmail.com", CustomerAdrress = _rnd.Next(100) + " " + streets[_rnd.Next(10)] + " Street \t" + _rnd.Next(1000000, 9999999) + " " + cities[_rnd.Next(5)] + " \t Israel", OrderDate = orderDates[i], ShipDate = shipDataDates[i], DeliveryrDate = deliveryDataDates[i] };
+            Order order = new Order { ID = Config.GetLastIndexOrder, CustomerName = customerNames[_rnd.Next(10)], CustomerEmail = customerNames[_rnd.Next(10)] + _rnd.Next(1000) + "@gmail.com", CustomerAdrress = _rnd.Next(100) + " " + streets[_rnd.Next(10)] + " Street \t" + _rnd.Next(1000000, 9999999) + " " + cities[_rnd.Next(5)] + "\t Israel", OrderDate = orderDates[i], ShipDate = shipDateDates[i], DeliveryrDate = deliveryDateDates[i] }; // we use a clean format
             addOrder(order);
         }
 
@@ -129,11 +132,11 @@ internal static class DataSource
                 {
                     if (_products[productInOrder].InStock == 0)
                         productInOrder = _rnd.Next(productInit);
-                } while (_products[productInOrder].InStock <= amountOfItems || _products[productInOrder].InStock == 0);
+                } while (_products[productInOrder].InStock <= amountOfItems || _products[productInOrder].InStock == 0); // i can't add a number of amount itmes if there is no such num of items in the store...
 
             }
 
-            else
+            else // i can choose random product, and random amount of orders, as long it is possible
             {
                 do
                 {
@@ -146,23 +149,23 @@ internal static class DataSource
             /// now i chose the product and the num of items that will be in this order
 
             OrderItem orderItem = new OrderItem { OrderItemID = Config.GetLastIndexOrderItems, ProductID = _products[productInOrder].ID, OrderID = _orders[i].ID, Price = _products[productInOrder].Price, Amount = amountOfItems };
-            _products[productInOrder].InStock -= amountOfItems;
+            _products[productInOrder].InStock -= amountOfItems; // if someone orders 4 items from specific product, i will save this items for him. 
             addOrdersItem(orderItem);
         }
 
 
     }
 
-    internal class Config
+    internal class Config // internal class for configuration staff
     {
-        static internal int firstIndexOrders = 0;
-        static internal int firstIndexProducts = 0;
-        static internal int firstIndexOrderItems = 0;
+        static internal int firstIndexOrders = 0; // the first index in the array of orders where it is empty.
+        static internal int firstIndexProducts = 0; // the first index in the array of products where it is empty.
+        static internal int firstIndexOrderItems = 0; // the first index in the array of orderItems where it is empty.
 
-        private static int lastIndexOrder = 0;
-        private static int lastIndexOrderItems = 0;
+        private static int lastIndexOrder = 0; // the last index in the array of orders who isn't empty
+        private static int lastIndexOrderItems = 0;// the last index in the array of orderItems who isn't empty
 
-        public static int GetLastIndexOrder { get => lastIndexOrder++; }
-        public static int GetLastIndexOrderItems { get => lastIndexOrderItems++; }
+        public static int GetLastIndexOrder { get => lastIndexOrder++; } // simple get attribute to lastIndexOrder
+        public static int GetLastIndexOrderItems { get => lastIndexOrderItems++; } // simple get attribute to lastIndexOrderItems
     }
 }

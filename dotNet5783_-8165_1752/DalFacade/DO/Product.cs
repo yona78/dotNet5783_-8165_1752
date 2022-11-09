@@ -1,7 +1,10 @@
 ﻿
+/// not a special thing, regular abstract class.
 
 namespace DO;
-
+/// <summary>
+/// public struct for abstract product class
+/// </summary>
 public struct Product
 {
     public int ID { set; get; }

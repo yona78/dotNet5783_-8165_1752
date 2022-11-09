@@ -1,17 +1,19 @@
 ﻿using DO;
 
 namespace Dal;
-
+/// <summary>
+/// public class for implemention of order 
+/// </summary>
 public class DalOrder
 {
     public DalOrder() { }
-    public int AddOrder(Order newOrder) 
+    public int AddOrder(Order newOrder) // func that adds an order to the array of orders, and return its id 
     {
-        int amountOfOrders = DataSource.Config.firstIndexOrders;
-        if (amountOfOrders == DataSource.maxOrders)
+        int curEmptyOrder = DataSource.Config.firstIndexOrders; // check whether it is possible to add this new order
+        if (curEmptyOrder == DataSource.maxOrders)
             throw new Exception("array is full");
         newOrder.ID = DataSource.Config.GetLastIndexOrder;
-        for (int i = 0; i < DataSource.maxOrders; i++)
+        for (int i = 0; i < DataSource.maxOrders; i++) // very simple loop that checks whether the order is already exist.
         {
             if (DataSource._orders[i].ID == newOrder.ID)
             {
@@ -19,55 +21,55 @@ public class DalOrder
             }
         }
         DataSource._orders[DataSource.Config.firstIndexOrders] = newOrder;
-        int newFirstIndexOrders = DataSource.maxOrders;
-        for (int i = DataSource.Config.firstIndexOrders; i < DataSource.maxOrders; i++)
+        int newFirstIndexOrder = DataSource.maxOrders;
+        for (int i = DataSource.Config.firstIndexOrders; i < DataSource.maxOrders; i++) // checks what is the next empty place in the arr.
         {
             if (DataSource._orders[i].ID == 0)
             {
-                newFirstIndexOrders = i;
+                newFirstIndexOrder = i;
                 break;
             }
         }
-        DataSource.Config.firstIndexOrders = newFirstIndexOrders;
+        DataSource.Config.firstIndexOrders = newFirstIndexOrder;
         return newOrder.ID;
     }
-    public Order GetOrder(int id)
+    public Order GetOrder(int id) // func that reutrns order by its id
     {
-        for (int i = 0; i < DataSource.maxOrders; i++)
+        for (int i = 0; i < DataSource.maxOrders; i++) // looking for the order with the specified id
         {
             if (DataSource._orders[i].ID == id)
                 return DataSource._orders[i];
         }
         throw new Exception("order couldn't be found");
     }
-    public Order[] GetDataOfOrder()
+    public Order[] GetDataOfOrder() // func that returns all of the orders
     {
         return DataSource._orders;
     }
-    public void DeleteOrder(int id)
+    public void DeleteOrder(int id) // func that deletes order from the array
     {
         bool found = false;
         for (int i = 0; i < DataSource.maxOrders; i++)
         {
-            if (DataSource._orders[i].ID == id)
+            if (DataSource._orders[i].ID == id) // deleting only if it has the same id.
             {
                 DataSource._orders[i] = new Order();
                 DataSource.Config.firstIndexOrders = i;
                 found = true;
             }
         }
-        if (!found)
+        if (!found) // checks if the speicifed order was found
         {
             throw new Exception("order couldn't be found");
         }
 
     }
-    public void UpdateOrder(Order newOrder)
+    public void UpdateOrder(Order newOrder) // func that updates an order in his array
     {
         bool found = false;
         for (int i = 0; i < DataSource.maxOrders; i++)
         {
-            if (DataSource._orders[i].ID == newOrder.ID)
+            if (DataSource._orders[i].ID == newOrder.ID) // if the specified order is found, we do a deep copy.
             {
                 DataSource._orders[i].CustomerName = newOrder.CustomerName;
                 DataSource._orders[i].CustomerEmail = newOrder.CustomerEmail;
@@ -81,7 +83,7 @@ public class DalOrder
         }
         if (!found)
         {
-            throw new Exception("order couldn't be found");
+            throw new Exception("order couldn't be found"); // checks if the speicifed order was found
         }
     }
 
