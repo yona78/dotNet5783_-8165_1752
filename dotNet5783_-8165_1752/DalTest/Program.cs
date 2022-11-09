@@ -125,7 +125,7 @@ namespace Program
                     case 'c': // print all orders option
                         try
                         {
-                            Order[] array = _dalOrder.GetDataOfOrder();
+                            List<Order> array = _dalOrder.GetDataOfOrder();
 
                             foreach (Order item in array)
                             {
@@ -300,7 +300,7 @@ namespace Program
                         }
                         break;
                     case 'c': // print all products option
-                        Product[] array = _dalProduct.GetDataOfProduct();
+                        List<Product> array = _dalProduct.GetDataOfProduct();
                         foreach (Product item in array)
                         {
                             if (item.ID != 0)
@@ -484,7 +484,7 @@ namespace Program
                         }
                         break;
                     case 'c': // print all orderItem option
-                        OrderItem[] array = _dalOrderItem.GetDataOfOrderItem();
+                        List<OrderItem> array = _dalOrderItem.GetDataOfOrderItem();
                         foreach (OrderItem item in array)
                         {
                             if (item.OrderItemID != 0)

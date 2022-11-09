@@ -9,28 +9,18 @@ public class DalOrder
     public DalOrder() { }
     public int AddOrder(Order newOrder) // func that adds an order to the array of orders, and return its id 
     {
-        int curEmptyOrder = DataSource.Config.firstIndexOrders; // check whether it is possible to add this new order
+        int curEmptyOrder = DataSource._orders.Count(); // check whether it is possible to add this new order
         if (curEmptyOrder == DataSource.maxOrders)
             throw new Exception("array is full");
         newOrder.ID = DataSource.Config.GetLastIndexOrder;
-        for (int i = 0; i < DataSource.maxOrders; i++) // very simple loop that checks whether the order is already exist.
+        for (int i = 0; i < curEmptyOrder; i++) // very simple loop that checks whether the order is already exist.
         {
             if (DataSource._orders[i].ID == newOrder.ID)
             {
                 throw new Exception("order already exist");
             }
         }
-        DataSource._orders[DataSource.Config.firstIndexOrders] = newOrder;
-        int newFirstIndexOrder = DataSource.maxOrders;
-        for (int i = DataSource.Config.firstIndexOrders; i < DataSource.maxOrders; i++) // checks what is the next empty place in the arr.
-        {
-            if (DataSource._orders[i].ID == 0)
-            {
-                newFirstIndexOrder = i;
-                break;
-            }
-        }
-        DataSource.Config.firstIndexOrders = newFirstIndexOrder;
+        DataSource._orders.Add(newOrder);
         return newOrder.ID;
     }
     public Order GetOrder(int id) // func that reutrns order by its id
@@ -42,7 +32,7 @@ public class DalOrder
         }
         throw new Exception("order couldn't be found");
     }
-    public Order[] GetDataOfOrder() // func that returns all of the orders
+    public List<Order> GetDataOfOrder() // func that returns all of the orders
     {
         return DataSource._orders;
     }
@@ -53,8 +43,7 @@ public class DalOrder
         {
             if (DataSource._orders[i].ID == id) // deleting only if it has the same id.
             {
-                DataSource._orders[i] = new Order();
-                DataSource.Config.firstIndexOrders = i;
+                DataSource._orders.RemoveAt(i);
                 found = true;
             }
         }
@@ -71,12 +60,8 @@ public class DalOrder
         {
             if (DataSource._orders[i].ID == newOrder.ID) // if the specified order is found, we do a deep copy.
             {
-                DataSource._orders[i].CustomerName = newOrder.CustomerName;
-                DataSource._orders[i].CustomerEmail = newOrder.CustomerEmail;
-                DataSource._orders[i].CustomerAdrress = newOrder.CustomerAdrress;
-                DataSource._orders[i].OrderDate = newOrder.OrderDate;
-                DataSource._orders[i].ShipDate = newOrder.ShipDate;
-                DataSource._orders[i].DeliveryrDate = newOrder.DeliveryrDate;
+                DataSource._orders.RemoveAt(i);
+                DataSource._orders.Add(newOrder);
                 found = true;
                 break;
             }

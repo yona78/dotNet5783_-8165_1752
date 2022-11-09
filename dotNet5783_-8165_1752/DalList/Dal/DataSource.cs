@@ -7,11 +7,11 @@ internal static class DataSource
 {
 
     static readonly Random _rnd = new Random(); // neccesery initlizetion for the initilizetion of the data structures. 
-    static internal Order[] _orders = new Order[100];
+    static internal List<Order> _orders = new List<Order>();
     public static int maxOrders = 100; // we will use it in the functi0ns of each class
-    static internal Product[] _products = new Product[50];
+    static internal List<Product> _products = new List<Product>();
     public static int maxProducts = 50; // we will use it in the functions of each class
-    static internal OrderItem[] _orderItems = new OrderItem[200];
+    static internal List<OrderItem> _orderItems = new List<OrderItem>();
     public static int maxOrderItems = 200; // we will use it in the functions of each class
 
 
@@ -23,20 +23,17 @@ internal static class DataSource
 
     private static void addOrder(Order newOrder) // func that gets new order and add it to the array of orders
     {
-        _orders[Config.firstIndexOrders] = newOrder;  // this func promotes the first index of empty place in the array of the orders by one, and adds the new order 
-        Config.firstIndexOrders++;
+        _orders.Add(newOrder);  // this func promotes the first index of empty place in the array of the orders by one, and adds the new order 
     }
 
     private static void addProduct(Product newProduct) // func that gets new product and add it to the array of products
     {
-        _products[Config.firstIndexProducts] = newProduct;  // this func promotes the first index of empty place in the array of the products by one, and adds the new product
-        Config.firstIndexProducts++;
+        _products.Add(newProduct);  // this func promotes the first index of empty place in the array of the products by one, and adds the new product
     }
 
     private static void addOrdersItem(OrderItem newOrderItem) // func that gets new orderItem and add it to the array of orderItems
     {
-        _orderItems[Config.firstIndexOrderItems] = newOrderItem;  // this func promotes the first index of empty place in the array of the orderItems by one, and adds the new orderItem
-        Config.firstIndexOrderItems++;
+        _orderItems.Add(newOrderItem);  // this func promotes the first index of empty place in the array of the orderItems by one, and adds the new orderItem
     }
 
     static void s_Initialize() // func that initialize the first data
@@ -149,7 +146,7 @@ internal static class DataSource
             /// now i chose the product and the num of items that will be in this order
 
             OrderItem orderItem = new OrderItem { OrderItemID = Config.GetLastIndexOrderItems, ProductID = _products[productInOrder].ID, OrderID = _orders[i].ID, Price = _products[productInOrder].Price, Amount = amountOfItems };
-            _products[productInOrder].InStock -= amountOfItems; // if someone orders 4 items from specific product, i will save this items for him. 
+            //int sum = _products[productInOrder].InStock - amountOfItems; // if someone orders 4 items from specific product, i will save this items for him. 
             addOrdersItem(orderItem);
         }
 
@@ -158,13 +155,8 @@ internal static class DataSource
 
     internal class Config // internal class for configuration staff
     {
-        static internal int firstIndexOrders = 0; // the first index in the array of orders where it is empty.
-        static internal int firstIndexProducts = 0; // the first index in the array of products where it is empty.
-        static internal int firstIndexOrderItems = 0; // the first index in the array of orderItems where it is empty.
-
         private static int lastIndexOrder = 0; // the last index in the array of orders who isn't empty
         private static int lastIndexOrderItems = 0;// the last index in the array of orderItems who isn't empty
-
         public static int GetLastIndexOrder { get => lastIndexOrder++; } // simple get attribute to lastIndexOrder
         public static int GetLastIndexOrderItems { get => lastIndexOrderItems++; } // simple get attribute to lastIndexOrderItems
     }
