@@ -1,16 +1,16 @@
 ﻿using DO;
+using DalApi;
 namespace Dal;
 /// <summary>
 /// public class for implemention of orderItem
 /// </summary>
-public class DalOrderItem
+internal class DalOrderItem : IOrderItem
 {
-    public DalOrderItem() { }
-
-    public int AddOrderItem(OrderItem newOrderItem) // func that adds an orderItem to the array of orderItems, and return its id
+    public DalOrderItem() { }  
+    public int Add<OrderItem>(DO.OrderItem newOrderItem) // func that adds an orderItem to the array of orderItems, and return its id
     {
         if (DataSource._orderItems.Count == DataSource.maxOrderItems) // checks if the arr is full
-            throw new Exception("array is full");
+            throw new ExceptionListIsFull();
         bool found = false;
         for (int i = 0; i < DataSource._orderItems.Count(); i++) // looks if  there is such an order
         {
@@ -21,9 +21,8 @@ public class DalOrderItem
             }
         }
         if (!found)
-        {
-            throw new Exception("order doesn't exist");
-        }
+            throw new ExceptionObjectCouldNotBeFound("order");
+
         found = false;
         for (int i = 0; i < DataSource._orderItems.Count(); i++)// looks if  there is such an product
         {
@@ -34,33 +33,32 @@ public class DalOrderItem
             }
         }
         if (!found)
-        {
-            throw new Exception("product doesn't exist");
-        }
+            throw new ExceptionObjectCouldNotBeFound("product");
+
         newOrderItem.OrderItemID = DataSource.Config.GetLastIndexOrderItems;
         for (int i = 0; i < DataSource._orderItems.Count(); i++)
         {
             if (DataSource._orderItems[i].OrderID == newOrderItem.OrderID && DataSource._orderItems[i].ProductID == newOrderItem.ProductID) // because we can't add a new orderItem to the same product and product id, if there is already one there. 
-                throw new Exception("orderItem already exist");
+                throw new ExceptionObjectAlreadyExist("orderItem");
         }
         DataSource._orderItems.Add(newOrderItem);
         int newFirstIndexOrderItems = DataSource.maxOrderItems; // updates the new first index orderItems.
         return newOrderItem.OrderItemID; // return the id of the orderItem we added
     }
-    public OrderItem GetOrderItem(int idOrder, int idProduct) // func that reutrns orderItem by its order and product ids
+    public DO.OrderItem Get<OrderItem>(int idOrder, int idProduct) // func that reutrns orderItem by its order and product ids
     {
         for (int i = 0; i < DataSource._orderItems.Count(); i++) // returns an orderItem by its product id and its order id
         {
             if (DataSource._orderItems[i].OrderID == idOrder && DataSource._orderItems[i].ProductID == idProduct)
                 return DataSource._orderItems[i];
         }
-        throw new Exception("order couldn't be found");
+        throw new ExceptionObjectCouldNotBeFound("order");
     }
-    public List<OrderItem> GetDataOfOrderItem() // func that returns all of the orderItems
+    public List<DO.OrderItem> GetDataOf<OrderItem>() // func that returns all of the orderItems
     {
         return DataSource._orderItems;
-    } 
-    public void DeleteOrderItem(int idOrderItem) // func that deletes orderItem from the array
+    }
+    public void Delete<OrderItem>(int idOrderItem) // func that deletes orderItem from the array
     {
         bool found = false;
         for (int i = 0; i < DataSource._orderItems.Count(); i++) // checks if the order item exists
@@ -72,11 +70,9 @@ public class DalOrderItem
             }
         }
         if (!found)
-        {
-            throw new Exception("orderItem couldn't be found");
-        }
+            throw new ExceptionObjectCouldNotBeFound("orderItem");
     }
-    public void UpdateOrderItem(OrderItem newOrderItem) // func that updates an orderItem in his array
+    public void Update<OrderItem>(DO.OrderItem newOrderItem) // func that updates an orderItem in his array
     {
         bool found = false;
         for (int i = 0; i < DataSource._orderItems.Count(); i++) // checks if the order exists
@@ -88,9 +84,8 @@ public class DalOrderItem
             }
         }
         if (!found)
-        {
-            throw new Exception("order doesn't exist");
-        }
+            throw new ExceptionObjectCouldNotBeFound("order");
+
         found = false;
         for (int i = 0; i < DataSource._orderItems.Count(); i++) // checks if the product exists
         {
@@ -101,9 +96,8 @@ public class DalOrderItem
             }
         }
         if (!found)
-        {
-            throw new Exception("product doesn't exist");
-        }
+            throw new ExceptionObjectCouldNotBeFound("product");
+
         found = false;
         for (int i = 0; i < DataSource._orderItems.Count(); i++)
         {
@@ -115,10 +109,8 @@ public class DalOrderItem
                 break;
             }
         }
-        if (!found) // otherwise, the order item couldn't be found.
-        {
-            throw new Exception("orderItem couldn't be found");
-        }
+        if (!found) // otherwise, the order itemcouldn't be found.
+            throw new ExceptionObjectCouldNotBeFound("orderItem");
     }
 
     // The special functions we were asked to add
@@ -129,7 +121,7 @@ public class DalOrderItem
             if (DataSource._orderItems[i].OrderItemID == id)
                 return DataSource._orderItems[i];
         }
-        throw new Exception("orderItem couldn't be found");
+        throw new ExceptionObjectCouldNotBeFound("orderItem");
     }
     public List<OrderItem> GetDataOfOrderItem(int idOfOrder) // func that returns all the orderItems from the specific order
     {

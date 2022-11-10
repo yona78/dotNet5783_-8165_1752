@@ -1,42 +1,42 @@
 ﻿using DO;
+using DalApi;
 
 namespace Dal;
 /// <summary>
 /// public class for implemention of order 
 /// </summary>
-public class DalOrder
+internal class DalOrder : IOrder
 {
     public DalOrder() { }
-    public int AddOrder(Order newOrder) // func that adds an order to the array of orders, and return its id 
+    public int Add<Order>(DO.Order newOrder) // func that adds an order to the array of orders, and return its id 
     {
         int curEmptyOrder = DataSource._orders.Count(); // check whether it is possible to add this new order
         if (curEmptyOrder == DataSource.maxOrders)
-            throw new Exception("array is full");
+            throw new ExceptionListIsFull();
         newOrder.ID = DataSource.Config.GetLastIndexOrder;
         for (int i = 0; i < curEmptyOrder; i++) // very simple loop that checks whether the order is already exist.
         {
             if (DataSource._orders[i].ID == newOrder.ID)
-            {
-                throw new Exception("order already exist");
-            }
+                throw new ExceptionObjectAlreadyExist("order");
+
         }
         DataSource._orders.Add(newOrder);
         return newOrder.ID;
     }
-    public Order GetOrder(int id) // func that reutrns order by its id
+    public DO.Order Get<Order>(int id) // func that reutrns order by its id
     {
         for (int i = 0; i < DataSource._orders.Count(); i++) // looking for the order with the specified id
         {
             if (DataSource._orders[i].ID == id)
                 return DataSource._orders[i];
         }
-        throw new Exception("order couldn't be found");
+        throw new ExceptionObjectCouldNotBeFound("order");
     }
-    public List<Order> GetDataOfOrder() // func that returns all of the orders
+    public List<DO.Order> GetDataOf<Order>() // func that returns all of the orders
     {
         return DataSource._orders;
     }
-    public void DeleteOrder(int id) // func that deletes order from the array
+    public void Delete<Order>(int id) // func that deletes order from the array
     {
         bool found = false;
         for (int i = 0; i < DataSource._orders.Count(); i++)
@@ -48,12 +48,11 @@ public class DalOrder
             }
         }
         if (!found) // checks if the speicifed order was found
-        {
-            throw new Exception("order couldn't be found");
-        }
+            throw new ExceptionObjectCouldNotBeFound("order");
+
 
     }
-    public void UpdateOrder(Order newOrder) // func that updates an order in his array
+    public void Update<Order>(DO.Order newOrder) // func that updates an order in his array
     {
         bool found = false;
         for (int i = 0; i < DataSource._orders.Count(); i++)
@@ -67,9 +66,7 @@ public class DalOrder
             }
         }
         if (!found)
-        {
-            throw new Exception("order couldn't be found"); // checks if the speicifed order was found
-        }
+            throw new ExceptionObjectCouldNotBeFound("order"); // checks if the speicifed order was found 
     }
 
 }

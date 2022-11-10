@@ -93,7 +93,7 @@ internal static class DataSource
         /// Orders initializetion
         string[] customerNames = new string[10] { "Yossi", "Chaim", "David", "Ariel", "Yona", "Avishai", "Binyamin", "Noam", "Ori", "Moshe" };
         string[] cities = new string[5] { "Jerusalem", "Tel Aviv", "Haifa", "Beer Sheva", "Petah Tiqwa" };
-        string[] streets = new string[10] { "Arlozoroff", "Balfour", "Begin", "Ben Gurion", "Ben Yehuda", "Bialik", "Herzl", "Ibn Gabirol", "Jabotinsky","HaTe'ena"};
+        string[] streets = new string[10] { "Arlozoroff", "Balfour", "Begin", "Ben Gurion", "Ben Yehuda", "Bialik", "Herzl", "Ibn Gabirol", "Jabotinsky", "HaTe'ena" };
 
         DateTime[] orderDates = new DateTime[orderInit];
         DateTime[] shipDateDates = new DateTime[orderInit];
@@ -113,7 +113,7 @@ internal static class DataSource
         for (int i = 0; i < orderInit; i++)
         {
             Order order = new Order { ID = Config.GetLastIndexOrder, CustomerName = customerNames[_rnd.Next(10)], CustomerEmail = customerNames[_rnd.Next(10)] + _rnd.Next(1000) + "@gmail.com", CustomerAdrress = _rnd.Next(100) + " " + streets[_rnd.Next(10)] + " Street \t" + _rnd.Next(1000000, 9999999) + " " + cities[_rnd.Next(5)] + "\t Israel", OrderDate = orderDates[i], ShipDate = shipDateDates[i], DeliveryrDate = deliveryDateDates[i] }; // we use a clean format
-            addOrder(order); 
+            addOrder(order);
         }
 
         /// OrderItems initializetion

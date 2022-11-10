@@ -2,7 +2,7 @@
 using System;
 
 namespace DalApi;
-public interface IOrder: ICrud <Order>
+public interface IProduct : ICrud<Product>
 {
-
+ 
 }

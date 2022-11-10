@@ -14,6 +14,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include="Dal\DalList.cs" />
     <Compile Include="Dal\DalOrder.cs" />
     <Compile Include="Dal\DalOrderItem.cs" />
     <Compile Include="Dal\DalProduct.cs" />
