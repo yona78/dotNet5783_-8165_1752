@@ -7,7 +7,7 @@ namespace Dal;
 internal class DalOrderItem : IOrderItem
 {
     public DalOrderItem() { }  
-    public int Add<OrderItem>(DO.OrderItem newOrderItem) // func that adds an orderItem to the array of orderItems, and return its id
+    public int Add(OrderItem newOrderItem) // func that adds an orderItem to the array of orderItems, and return its id
     {
         if (DataSource._orderItems.Count == DataSource.maxOrderItems) // checks if the arr is full
             throw new ExceptionListIsFull();
@@ -45,20 +45,20 @@ internal class DalOrderItem : IOrderItem
         int newFirstIndexOrderItems = DataSource.maxOrderItems; // updates the new first index orderItems.
         return newOrderItem.OrderItemID; // return the id of the orderItem we added
     }
-    public DO.OrderItem Get<OrderItem>(int idOrder, int idProduct) // func that reutrns orderItem by its order and product ids
+    public OrderItem Get(int id) // func that return orderItem by its id 
     {
-        for (int i = 0; i < DataSource._orderItems.Count(); i++) // returns an orderItem by its product id and its order id
+        for (int i = 0; i < DataSource._orderItems.Count(); i++) // returns an orderItem by its id
         {
-            if (DataSource._orderItems[i].OrderID == idOrder && DataSource._orderItems[i].ProductID == idProduct)
+            if (DataSource._orderItems[i].OrderItemID == id)
                 return DataSource._orderItems[i];
         }
-        throw new ExceptionObjectCouldNotBeFound("order");
+        throw new ExceptionObjectCouldNotBeFound("orderItem");
     }
-    public List<DO.OrderItem> GetDataOf<OrderItem>() // func that returns all of the orderItems
+    public IEnumerable<OrderItem> GetDataOf() // func that returns all of the orderItems
     {
         return DataSource._orderItems;
     }
-    public void Delete<OrderItem>(int idOrderItem) // func that deletes orderItem from the array
+    public void Delete(int idOrderItem) // func that deletes orderItem from the array
     {
         bool found = false;
         for (int i = 0; i < DataSource._orderItems.Count(); i++) // checks if the order item exists
@@ -72,7 +72,7 @@ internal class DalOrderItem : IOrderItem
         if (!found)
             throw new ExceptionObjectCouldNotBeFound("orderItem");
     }
-    public void Update<OrderItem>(DO.OrderItem newOrderItem) // func that updates an orderItem in his array
+    public void Update(OrderItem newOrderItem) // func that updates an orderItem in his array
     {
         bool found = false;
         for (int i = 0; i < DataSource._orderItems.Count(); i++) // checks if the order exists
@@ -114,16 +114,16 @@ internal class DalOrderItem : IOrderItem
     }
 
     // The special functions we were asked to add
-    public OrderItem GetOrderItem(int id) // func that return orderItem by its id 
+    public OrderItem GetOrderItem(int idOrder, int idProduct) // func that reutrns orderItem by its order and product ids
     {
-        for (int i = 0; i < DataSource._orderItems.Count(); i++) // returns an orderItem by its id
+        for (int i = 0; i < DataSource._orderItems.Count(); i++) // returns an orderItem by its product id and its order id
         {
-            if (DataSource._orderItems[i].OrderItemID == id)
+            if (DataSource._orderItems[i].OrderID == idOrder && DataSource._orderItems[i].ProductID == idProduct)
                 return DataSource._orderItems[i];
         }
-        throw new ExceptionObjectCouldNotBeFound("orderItem");
+        throw new ExceptionObjectCouldNotBeFound("order");
     }
-    public List<OrderItem> GetDataOfOrderItem(int idOfOrder) // func that returns all the orderItems from the specific order
+    public IEnumerable<OrderItem> GetDataOfOrderItem(int idOfOrder) // func that returns all the orderItems from the specific order
     {
         List<OrderItem> ret = new List<OrderItem>(); // we use list because we don't know the what is the size of the structre we will need to use.
         for (int i = 0; i < DataSource._orderItems.Count(); i++) // returns a list of all of the orderItems from the specific order, whose id was given to us.

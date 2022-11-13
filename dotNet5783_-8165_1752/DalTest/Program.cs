@@ -1,13 +1,17 @@
 ﻿using Dal;
+using DalApi;
 using DO;
 
 namespace Program
 {
+
     class Program
     {
-        static private DalOrder _dalOrder = new DalOrder();
-        static private DalOrderItem _dalOrderItem = new DalOrderItem();
-        static private DalProduct _dalProduct = new DalProduct();
+        IDal dalList = new DalList();
+        
+        // static private DalOrder _dalOrder = new DalOrder();
+        // static private DalOrderItem _dalOrderItem = new DalOrderItem();
+        // static private DalProduct _dalProduct = new DalProduct();
 
         static void Main()
         {
@@ -125,7 +129,7 @@ namespace Program
                     case 'c': // print all orders option
                         try
                         {
-                            List<Order> array = _dalOrder.GetDataOfOrder();
+                            IEnumerable<Order> array = _dalOrder.GetDataOfOrder();
 
                             foreach (Order item in array)
                             {
@@ -300,7 +304,7 @@ namespace Program
                         }
                         break;
                     case 'c': // print all products option
-                        List<Product> array = _dalProduct.GetDataOfProduct();
+                        IEnumerable<Product> array = _dalProduct.GetDataOfProduct();
                         foreach (Product item in array)
                         {
                             if (item.ID != 0)
@@ -476,7 +480,7 @@ namespace Program
                         int idForOrderItem = id;
                         try
                         {
-                            Console.WriteLine(_dalOrderItem.GetOrderItem(idForOrderItem));
+                            Console.WriteLine(_dalOrderItem.Get(idForOrderItem));
                         }
                         catch (Exception msgError)
                         {
@@ -484,7 +488,7 @@ namespace Program
                         }
                         break;
                     case 'c': // print all orderItem option
-                        List<OrderItem> array = _dalOrderItem.GetDataOfOrderItem();
+                        IEnumerable<OrderItem> array = _dalOrderItem.GetDataOfOrderItem();
                         foreach (OrderItem item in array)
                         {
                             if (item.OrderItemID != 0)
@@ -605,7 +609,7 @@ namespace Program
                         int idForList = id;
                         try
                         {
-                            List<OrderItem> ret = _dalOrderItem.GetDataOfOrderItem(idForList);
+                            IEnumerable<OrderItem> ret = _dalOrderItem.GetDataOfOrderItem(idForList);
                             foreach (OrderItem item in ret)
                             {
                                 Console.WriteLine(item);

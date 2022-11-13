@@ -8,7 +8,7 @@ namespace Dal;
 internal class DalOrder : IOrder
 {
     public DalOrder() { }
-    public int Add<Order>(DO.Order newOrder) // func that adds an order to the array of orders, and return its id 
+    public int Add(Order newOrder) // func that adds an order to the array of orders, and return its id 
     {
         int curEmptyOrder = DataSource._orders.Count(); // check whether it is possible to add this new order
         if (curEmptyOrder == DataSource.maxOrders)
@@ -23,7 +23,7 @@ internal class DalOrder : IOrder
         DataSource._orders.Add(newOrder);
         return newOrder.ID;
     }
-    public DO.Order Get<Order>(int id) // func that reutrns order by its id
+    public Order Get(int id) // func that reutrns order by its id
     {
         for (int i = 0; i < DataSource._orders.Count(); i++) // looking for the order with the specified id
         {
@@ -32,11 +32,11 @@ internal class DalOrder : IOrder
         }
         throw new ExceptionObjectCouldNotBeFound("order");
     }
-    public List<DO.Order> GetDataOf<Order>() // func that returns all of the orders
+    public IEnumerable<Order> GetDataOf() // func that returns all of the orders
     {
         return DataSource._orders;
     }
-    public void Delete<Order>(int id) // func that deletes order from the array
+    public void Delete(int id) // func that deletes order from the array
     {
         bool found = false;
         for (int i = 0; i < DataSource._orders.Count(); i++)
@@ -52,7 +52,7 @@ internal class DalOrder : IOrder
 
 
     }
-    public void Update<Order>(DO.Order newOrder) // func that updates an order in his array
+    public void Update(Order newOrder) // func that updates an order in his array
     {
         bool found = false;
         for (int i = 0; i < DataSource._orders.Count(); i++)
