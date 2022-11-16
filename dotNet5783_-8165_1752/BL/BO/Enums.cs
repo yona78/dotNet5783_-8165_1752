@@ -1,28 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace BO
+﻿
+namespace BO;
+/// <summary>
+///  public struct for all the enums in the project 
+/// </summary>
+public struct Enums
 {
-
-    public struct Enums
+    public enum Category
     {
-        public enum Category
-        {
-            Dresses,
-            Shirts,
-            Hats,
-            Shoes,
-            Socks,
-            Skirts,
-            Coats
-        }
-
+        Dresses,
+        Shirts,
+        Hats,
+        Shoes,
+        Socks,
+        Skirts,
+        Coats
     }
-    public struct OrderStatus
+
+    public enum Status
     {
-
+        Confirmed,
+        Sent,
+        Arrived
     }
+
 }

@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 namespace BO;
 public class ProductForList
 {
+    public ProductForList() { }
+    public ProductForList(int id, string name, double price, Enums.Category category)   { ID = id; Name = name;Price = price;Category = category; ; } 
         public int ID { get; set; }
         public string Name { get; set; }
         public double Price { get; set; }

@@ -3,7 +3,7 @@ using System.Security.Principal;
 
 namespace BlApi
 {
-    internal class IBl
+    public interface IBl
     {
         public IProduct Product { get; }
         public IOrder Order { get; }
