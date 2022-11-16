@@ -7,7 +7,7 @@ namespace Program
 
     class Program
     {
-        IDal dalList = new DalList();
+        static IDal dalList = new DalList();
         
         // static private DalOrder _dalOrder = new DalOrder();
         // static private DalOrderItem _dalOrderItem = new DalOrderItem();
@@ -16,7 +16,6 @@ namespace Program
         static void Main()
         {
             bool validInput = true;
-
             int choice = 0;
             do
             {
@@ -82,7 +81,6 @@ namespace Program
                     case 'a': // addOrder option
                         string customerName, customerEmail, customerAdrress;
                         DateTime orderDate, shipDate, deliveryrDate;
-                        DalOrder newDalOrder = new DalOrder();
                         Console.Write("please enter CustomerName (first name only): ");
                         customerName = Console.ReadLine();
                         Console.Write("please enter CustomerEmail (format: example@gmail.com): ");
@@ -101,7 +99,7 @@ namespace Program
                         orderToAdd.DeliveryrDate = deliveryrDate;
                         try
                         {
-                            Console.WriteLine("id of new order: " + _dalOrder.AddOrder(orderToAdd));
+                            Console.WriteLine("id of new order: " + dalList.Order.Add(orderToAdd));
                         }
                         catch (Exception msgError)
                         {
@@ -119,7 +117,7 @@ namespace Program
 
                         try
                         {
-                            Console.WriteLine(_dalOrder.GetOrder(id));
+                            Console.WriteLine(dalList.Order.Get(id));
                         }
                         catch (Exception msgError)
                         {
@@ -129,7 +127,7 @@ namespace Program
                     case 'c': // print all orders option
                         try
                         {
-                            IEnumerable<Order> array = _dalOrder.GetDataOfOrder();
+                            IEnumerable<Order> array = dalList.Order.GetDataOf();
 
                             foreach (Order item in array)
                             {
@@ -173,7 +171,7 @@ namespace Program
                         orderToUpdate.DeliveryrDate = deliveryrDate;
                         try
                         {
-                            _dalOrder.UpdateOrder(orderToUpdate);
+                            dalList.Order.Update(orderToUpdate);
                         }
                         catch (Exception msgError)
                         {
@@ -191,7 +189,7 @@ namespace Program
 
                         try
                         {
-                            _dalOrder.DeleteOrder(id);
+                            dalList.Order.Delete(id);
                         }
                         catch (Exception msgError)
                         {
@@ -279,7 +277,7 @@ namespace Program
                         productToAdd.Category = category;
                         try
                         {
-                            Console.WriteLine("index of new product: " + _dalProduct.AddProduct(productToAdd));
+                            Console.WriteLine("index of new product: " + dalList.Product.Add(productToAdd));
                         }
                         catch (Exception msgError)
                         {
@@ -296,7 +294,7 @@ namespace Program
                         } while (!validInput);
                         try
                         {
-                            Console.WriteLine(_dalProduct.GetProduct(id));
+                            Console.WriteLine(dalList.Product.Get(id));
                         }
                         catch (Exception msgError)
                         {
@@ -304,7 +302,7 @@ namespace Program
                         }
                         break;
                     case 'c': // print all products option
-                        IEnumerable<Product> array = _dalProduct.GetDataOfProduct();
+                        IEnumerable<Product> array = dalList.Product.GetDataOf();
                         foreach (Product item in array)
                         {
                             if (item.ID != 0)
@@ -359,7 +357,7 @@ namespace Program
                         productToUpdate.Category = category;
                         try
                         {
-                            _dalProduct.UpdateProduct(productToUpdate);
+                            dalList.Product.Update(productToUpdate);
                         }
                         catch (Exception msgError)
                         {
@@ -376,7 +374,7 @@ namespace Program
                         } while (!validInput);
                         try
                         {
-                            _dalProduct.DeleteProduct(id);
+                            dalList.Product.Delete(id);
                         }
                         catch (Exception msgError)
                         {
@@ -461,7 +459,7 @@ namespace Program
                         orderItemToAdd.Amount = amountOrdetItem;
                         try
                         {
-                            Console.WriteLine("id of new orderItem: " + _dalOrderItem.AddOrderItem(orderItemToAdd));
+                            Console.WriteLine("id of new orderItem: " + dalList.OrderItem.Add(orderItemToAdd));
                         }
                         catch (Exception msgError)
                         {
@@ -480,7 +478,7 @@ namespace Program
                         int idForOrderItem = id;
                         try
                         {
-                            Console.WriteLine(_dalOrderItem.Get(idForOrderItem));
+                            Console.WriteLine(dalList.OrderItem.Get(idForOrderItem));
                         }
                         catch (Exception msgError)
                         {
@@ -488,7 +486,7 @@ namespace Program
                         }
                         break;
                     case 'c': // print all orderItem option
-                        IEnumerable<OrderItem> array = _dalOrderItem.GetDataOfOrderItem();
+                        IEnumerable<OrderItem> array = dalList.OrderItem.GetDataOf();
                         foreach (OrderItem item in array)
                         {
                             if (item.OrderItemID != 0)
@@ -547,7 +545,7 @@ namespace Program
                         orderItemToUpdate.Amount = amountOrdetItemUpdate;
                         try
                         {
-                            _dalOrderItem.UpdateOrderItem(orderItemToUpdate);
+                            dalList.OrderItem.Update(orderItemToUpdate);
                         }
                         catch (Exception msgError)
                         {
@@ -565,7 +563,7 @@ namespace Program
                         int idToDelete = id;
                         try
                         {
-                            _dalOrderItem.DeleteOrderItem(idToDelete);
+                            dalList.OrderItem.Delete(idToDelete);
                         }
                         catch (Exception msgError)
                         {
@@ -591,7 +589,7 @@ namespace Program
                         int idForProduct = id;
                         try
                         {
-                            Console.WriteLine(_dalOrderItem.GetOrderItem(idForOrder, idForProduct));
+                            Console.WriteLine(dalList.OrderItem.GetOrderItem(idForOrder, idForProduct));
                         }
                         catch (Exception msgError)
                         {
@@ -609,7 +607,7 @@ namespace Program
                         int idForList = id;
                         try
                         {
-                            IEnumerable<OrderItem> ret = _dalOrderItem.GetDataOfOrderItem(idForList);
+                            IEnumerable<OrderItem> ret = dalList.OrderItem.GetDataOfOrderItem(idForList);
                             foreach (OrderItem item in ret)
                             {
                                 Console.WriteLine(item);
