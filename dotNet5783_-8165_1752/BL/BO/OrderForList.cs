@@ -1,26 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
+﻿using DO;
 
-namespace BO
+namespace BO;
+public class OrderForList
 {
-    public class OrderForList
-    {
-        public int ID { get; set; }
-        public string CustomerName { get; set; }
-        public OrderStatus Status { get; set; }
-        public int AmountOfItems { get; set; }
-        public double TotalPrice { get; set; }
-        public override string ToString() => $@"
-       Order ID: {ID}
-       Customer name: {CustomerName}
-       Order status: {Status}
-       Amount: {AmountOfItems}
-       Total price: {TotalPrice}
+    public int ID { set; get; }
+    public string CustomerName { set; get; }
+    public Enums.Status OrderStatus { set; get; }
+    public int AmountOfItems { set; get; }
+    public double TotelPrice { set; get; }
+
+    public override string ToString() => $@"
+       ID:{ID}
+       CustomerName: {CustomerName}
+       Status: {OrderStatus}
+       Amount of Items: {AmountOfItems}
+       TotelPrice: {TotelPrice}
     ";
-    }
+
 }

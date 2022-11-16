@@ -8,7 +8,8 @@ namespace BO
 { // i should initalize these classes
 
     public class ExceptionListIsFull : Exception // maybe the list is full, and you're trying to push more objects into it
-    {
+{
+    internal class Exceptions
         public override string Message { get => "ERROR, list is full"; }
     }
 

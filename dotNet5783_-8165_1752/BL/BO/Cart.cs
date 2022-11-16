@@ -1,25 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using DO;
 
-namespace BO
+namespace BO;
+public class Cart
 {
-    public class Cart
-    {
-        public string CustomerName { get; set; }
-        public string CustomerEmail { get; set; }
-        public string CustomerAddress { get; set; }
-        public OrderItem Items { get; set; }
-        public double TotalPrice { get; set; }
-        public override string ToString() => $@"
-       Customer name: {CustomerName}
-       Customer email: {CustomerEmail}
-       Customer address: {CustomerAddress}
+    public string CustomerName { set; get; }
+    public string CustomerEmail { set; get; }
+    public string CustomerAdress { set; get; }
+    public List<OrderItem> Items { set; get; }
+    public double TotelPrice { set; get; }
+
+    public override string ToString() => $@"
+       CustomerName: {CustomerName}
+       CustomerEmail: {CustomerEmail}
+       CustomerAdress: {CustomerAdress}
        Items: {Items}
-       Total price: {TotalPrice}
+       TotelPrice: {TotelPrice}
     ";
-    }
+
 }
-}
+

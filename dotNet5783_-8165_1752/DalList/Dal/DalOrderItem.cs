@@ -12,7 +12,7 @@ internal class DalOrderItem : IOrderItem
         if (DataSource._orderItems.Count == DataSource.maxOrderItems) // checks if the arr is full
             throw new ExceptionListIsFull();
         bool found = false;
-        for (int i = 0; i < DataSource._orderItems.Count(); i++) // looks if  there is such an order
+        for (int i = 0; i < DataSource._orders.Count(); i++) // looks if  there is such an order
         {
             if (DataSource._orders[i].ID == newOrderItem.OrderID)
             {
@@ -24,7 +24,7 @@ internal class DalOrderItem : IOrderItem
             throw new ExceptionObjectCouldNotBeFound("order");
 
         found = false;
-        for (int i = 0; i < DataSource._orderItems.Count(); i++)// looks if  there is such an product
+        for (int i = 0; i < DataSource._products.Count(); i++)// looks if  there is such an product
         {
             if (DataSource._products[i].ID == newOrderItem.ProductID)
             {
@@ -42,7 +42,6 @@ internal class DalOrderItem : IOrderItem
                 throw new ExceptionObjectAlreadyExist("orderItem");
         }
         DataSource._orderItems.Add(newOrderItem);
-        int newFirstIndexOrderItems = DataSource.maxOrderItems; // updates the new first index orderItems.
         return newOrderItem.OrderItemID; // return the id of the orderItem we added
     }
     public OrderItem Get(int id) // func that return orderItem by its id 
