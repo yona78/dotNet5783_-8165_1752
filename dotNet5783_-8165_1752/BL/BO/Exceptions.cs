@@ -13,14 +13,22 @@ namespace BO;
         public override string Message { get => "ERROR, list is full"; }
     }
 */
-    public class ExceptionLogicObjectCouldNotBeFound : Exception // the object you're looking for couldn't be found
+    public class ExceptionObjectCouldNotBeFoundInDataBase : Exception // the dataBase object you're looking for couldn't be found
     {
         string nameOfObject;
-        public ExceptionLogicObjectCouldNotBeFound(string msg) { nameOfObject = msg; }
+        public ExceptionObjectCouldNotBeFoundInDataBase(string msg) { nameOfObject = msg; }
         public override string Message { get => String.Format("ERROR, {0} couldn't be find", nameOfObject); }
 
     }
+public class ExceptionDataInvalid : Exception // the data you gave me is invalid
+{
+    string nameOfObject;
+    public ExceptionDataInvalid(string msg) { nameOfObject = msg; }
+    public override string Message { get => String.Format("ERROR, {0} couldn't be find", nameOfObject); }
+
+}
 /*
+ * 
     public class ExceptionObjectAlreadyExist : Exception // the object you're trying to add is already exist
     {
         string nameOfObject;

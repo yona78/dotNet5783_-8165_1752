@@ -5,7 +5,7 @@ namespace BO;
 /// </summary>
 public struct Enums
 {
-    public enum Category
+    public enum Category // categories of products
     {
         Dresses,
         Shirts,
@@ -16,7 +16,7 @@ public struct Enums
         Coats
     }
 
-    public enum Status
+    public enum Status // status of order. 
     {
         Confirmed,
         Sent,

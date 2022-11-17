@@ -9,5 +9,5 @@ public interface IProduct
     public void Delete(int idProduct);
     public List<ProductForList> GetList();
     public Product GetForManager(int idProduct);
-    public ProductItem GetForCustomer(int idCustomer);
+    public ProductItem GetForCustomer(int idCustomer, Cart cart);
 }
