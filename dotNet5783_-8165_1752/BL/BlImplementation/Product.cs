@@ -31,23 +31,10 @@ internal class Product : BlApi.IProduct // class for product, that the manager c
         {
             Dal.Product.Add(prod);
         }
-        catch (Exception)
+        catch (ExceptionObjectCouldNotBeFound inner)
         {
-
-            throw;
+            throw new ExceptionLogicObjectCouldNotBeFound("product", inner);
         }
-        catch (Exception)
-        {
-
-            throw;
-        }
-        catch (Exception)
-        {
-
-            throw;
-        }
-
-        throw new NotImplementedException();
     }
     public void Delete(int idProduct) // func that gets and id of product, and deletes him from the dBase. The only that can use this func is the manager
     {
@@ -56,21 +43,20 @@ internal class Product : BlApi.IProduct // class for product, that the manager c
         foreach (DO.Order item in listOfOrders) // foreach order in the dBase
         {
             listOfItemOrders = Dal.OrderItem.GetDataOfOrderItem(item.ID);
-            foreach(DO.OrderItem item2 in listOfItemOrders) // foreach orderItem in order we are looking now
-                if(item2.ProductID==idProduct) // if the product of this specific orderItem is equal to the idProduct, it means this product already found in one order at least, and we can't delete him.
-                    throw new ExceptionObjectIsFoundInOrders("product");
+            foreach (DO.OrderItem item2 in listOfItemOrders) // foreach orderItem in order we are looking now
+                if (item2.ProductID == idProduct) // if the product of this specific orderItem is equal to the idProduct, it means this product already found in one order at least, and we can't delete him.
+                    throw new ExceptionLogicObjectIsFoundInOrders("product");
         }
         try
         {
             Dal.Product.Delete(idProduct);
         }
-        catch(ExceptionObjectCouldNotBeFound)
+        catch (ExceptionObjectCouldNotBeFound inner)
         {
-            throw new ExceptionLogicObjectCouldNotBeFound("product");
+            throw new ExceptionLogicObjectCouldNotBeFound("product", inner);
         }
-        throw new NotImplementedException();
     }
-     public ProductItem GetForCustomer(int idProduct, BO.Cart cart) // func that gets an id of product in the client's cart, and his cart, and return the data of the specific product and the cart, as an item in the cart. 
+    public ProductItem GetForCustomer(int idProduct, BO.Cart cart) // func that gets an id of product in the client's cart, and his cart, and return the data of the specific product and the cart, as an item in the cart. 
     {
         DO.Product product = new DO.Product(); // i want to get the specific product from the dBase
         if (idProduct >= 0)
@@ -79,9 +65,9 @@ internal class Product : BlApi.IProduct // class for product, that the manager c
             {
                 product = Dal.Product.Get(idProduct);
             }
-            catch (ExceptionObjectCouldNotBeFound)
+            catch (ExceptionObjectCouldNotBeFound inner)
             {
-                throw new ExceptionObjectCouldNotBeFoundInDataBase("product");
+                throw new ExceptionLogicObjectCouldNotBeFound("product", inner);
             }
         }
         BO.ProductItem item = new BO.ProductItem();
@@ -102,9 +88,9 @@ internal class Product : BlApi.IProduct // class for product, that the manager c
             {
                 product = Dal.Product.Get(idProduct);
             }
-            catch (ExceptionObjectCouldNotBeFound)
+            catch (ExceptionObjectCouldNotBeFound inner)
             {
-                throw new ExceptionObjectCouldNotBeFoundInDataBase("product");
+                throw new ExceptionLogicObjectCouldNotBeFound("product", inner);
             }
         }
         BO.Product item = new BO.Product();
@@ -144,14 +130,9 @@ internal class Product : BlApi.IProduct // class for product, that the manager c
         {
             Dal.Product.Update(prod);
         }
-        catch (ExceptionObjectCouldNotBeFound)
+        catch (ExceptionObjectCouldNotBeFound inner)
         {
-            throw new ExceptionLogicObjectCouldNotBeFound("product");
-        }
-        catch (Exception)
-        {
-
-            throw;
+            throw new ExceptionLogicObjectCouldNotBeFound("product", inner);
         }
     }
 }
