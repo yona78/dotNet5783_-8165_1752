@@ -22,17 +22,17 @@ public class ExceptionNotEnoughInDataBase : Exception // there isn't enough from
     public override string Message { get => String.Format("ERROR, {0}, there isn't enough in the dBase", nameOfObject); }
 
 }
-public class ExceptionObjectIsNotAviliable : Exception // the data you gave me is invalid
+public class ExceptionObjectIsNotAviliable : Exception // the data you gave me is not aviliable
 {
     string nameOfObject;
     public ExceptionObjectIsNotAviliable(string msg) { nameOfObject = msg; }
     public override string Message { get => String.Format("ERROR, {0} isn't aviliable", nameOfObject); }
 
 }
-public class ExceptionDataInvalid : Exception // the data you gave me is invalid
+public class ExceptionDataIsInvalid : Exception // the data you gave me is invalid
 {
     string nameOfObject;
-    public ExceptionDataInvalid(string msg) { nameOfObject = msg; }
+    public ExceptionDataIsInvalid(string msg) { nameOfObject = msg; }
     public override string Message { get => String.Format("ERROR, {0}, data is invalid", nameOfObject); }
 
 }

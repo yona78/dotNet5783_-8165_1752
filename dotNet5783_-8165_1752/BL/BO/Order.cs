@@ -10,7 +10,7 @@ public class Order // object of the manager, on a order a client had asked for
     public Enums.Status OrderStatus { set; get; } // status of order
     public DateTime PaymentDate { set; get; } // day of payment on this order
     public DateTime ShipDate { set; get; } // when did you send the order
-    public DateTime DeliveryrDate { set; get; } // when did the order actually arrived
+    public DateTime DeliveryDate { set; get; } // when did the order actually arrived
     public List<OrderItem> Items { set; get; } // items in order
     public double TotelPrice { set; get; } // total price of order
 
@@ -22,7 +22,7 @@ public class Order // object of the manager, on a order a client had asked for
        Status: {OrderStatus}
        PaymentDate: {PaymentDate}
        ShipDate {ShipDate}
-       DeliveryrDate: {DeliveryrDate}
+       DeliveryDate: {DeliveryDate}
        Items: {Items}
        TotelPrice: {TotelPrice}
     "; // to string.

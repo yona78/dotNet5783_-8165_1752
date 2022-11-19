@@ -20,7 +20,7 @@ internal class Product : BlApi.IProduct // class for product, that the manager c
     public void Add(BO.Product product) // func that gets a proudct, and add it into the dBase
     {
         if (product.ID <= 0 || product.Name == "" || product.Price <= 0 || product.InStock < 0)
-            throw new ExceptionDataInvalid("product");
+            throw new ExceptionDataIsInvalid("product");
         DO.Product prod = new DO.Product();
         prod.ID = product.ID;
         prod.Name = product.Name;
@@ -119,7 +119,7 @@ internal class Product : BlApi.IProduct // class for product, that the manager c
     {
 
         if (product.ID <= 0 || product.Name == "" || product.Price <= 0 || product.InStock < 0)
-            throw new ExceptionDataInvalid("product");
+            throw new ExceptionDataIsInvalid("product");
         DO.Product prod = new DO.Product();
         prod.ID = product.ID;
         prod.Name = product.Name;

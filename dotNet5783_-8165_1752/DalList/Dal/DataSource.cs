@@ -112,7 +112,7 @@ internal static class DataSource
         }
         for (int i = 0; i < orderInit; i++)
         {
-            Order order = new Order { ID = Config.GetLastIndexOrder, CustomerName = customerNames[_rnd.Next(10)], CustomerEmail = customerNames[_rnd.Next(10)] + _rnd.Next(1000) + "@gmail.com", CustomerAdrress = _rnd.Next(100) + " " + streets[_rnd.Next(10)] + " Street \t" + _rnd.Next(1000000, 9999999) + " " + cities[_rnd.Next(5)] + "\t Israel", OrderDate = orderDates[i], ShipDate = shipDateDates[i], DeliveryrDate = deliveryDateDates[i] }; // we use a clean format
+            Order order = new Order { ID = Config.GetLastIndexOrder, CustomerName = customerNames[_rnd.Next(10)], CustomerEmail = customerNames[_rnd.Next(10)] + _rnd.Next(1000) + "@gmail.com", CustomerAdrress = _rnd.Next(100) + " " + streets[_rnd.Next(10)] + " Street \t" + _rnd.Next(1000000, 9999999) + " " + cities[_rnd.Next(5)] + "\t Israel", OrderDate = orderDates[i], ShipDate = shipDateDates[i], DeliveryDate = deliveryDateDates[i] }; // we use a clean format
             addOrder(order);
         }
 

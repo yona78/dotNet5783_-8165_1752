@@ -6,9 +6,9 @@ using DO;
 using System.IO.Pipes;
 
 namespace BlImplementation;
-internal class Cart : ICart
+internal class Cart : ICart // cart of customer
 {
-    private IDal Dal = new DalList();
+    private IDal Dal = new DalList(); // a way to communicate with dBase level
 
     public BO.Cart AddProduct(BO.Cart cart, int idProduct) // add a product to the cart of the customer. The customer will use this func
     {
@@ -74,14 +74,14 @@ internal class Cart : ICart
                 throw new ExceptionLogicObjectCouldNotBeFound("product", inner);
             }
             if (item.Amount < 0) // amount negative
-                throw new ExceptionDataInvalid("orderItem");
+                throw new ExceptionDataIsInvalid("orderItem");
             if (product.InStock < item.Amount) // not enough in dBase
                 throw new ExceptionNotEnoughInDataBase("orderItem");
         }
         if (name == "" || address == "" || email == "") // checks if the string are valids. ### TO ADD - that email and address will be in a specific format.
-            throw new ExceptionDataInvalid("cart");
+            throw new ExceptionDataIsInvalid("cart");
         DO.Order order = new DO.Order();
-        order.OrderDate = DateTime.Now;
+        order.OrderDate = DateTime.Now; // initalize the orderDate to be now.
         int id;
         try
         {
@@ -131,7 +131,7 @@ internal class Cart : ICart
         }
     }
 
-    public BO.Cart UpdateAmount(BO.Cart cart, int idProduct, int amount)
+    public BO.Cart UpdateAmount(BO.Cart cart, int idProduct, int amount) // func that updates the amount of a product in the cart
     {
         bool productExistInCart = false;
         BO.OrderItem itemToChange = new BO.OrderItem();

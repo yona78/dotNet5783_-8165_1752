@@ -97,7 +97,7 @@ namespace Program
                         orderToAdd.CustomerAdrress = customerAdrress;
                         orderToAdd.OrderDate = orderDate;
                         orderToAdd.ShipDate = shipDate;
-                        orderToAdd.DeliveryrDate = deliveryrDate;
+                        orderToAdd.DeliveryDate = deliveryrDate;
                         try
                         {
                             Console.WriteLine("id of new order: " + dalList.Order.Add(orderToAdd));
@@ -169,7 +169,7 @@ namespace Program
                         orderToUpdate.CustomerAdrress = customerAdrress;
                         orderToUpdate.OrderDate = orderDate;
                         orderToUpdate.ShipDate = shipDate;
-                        orderToUpdate.DeliveryrDate = deliveryrDate;
+                        orderToUpdate.DeliveryDate = deliveryrDate;
                         try
                         {
                             dalList.Order.Update(orderToUpdate);
