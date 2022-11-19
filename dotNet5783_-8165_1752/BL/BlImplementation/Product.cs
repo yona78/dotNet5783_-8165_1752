@@ -45,7 +45,7 @@ internal class Product : BlApi.IProduct // class for product, that the manager c
             listOfItemOrders = Dal.OrderItem.GetDataOfOrderItem(item.ID);
             foreach (DO.OrderItem item2 in listOfItemOrders) // foreach orderItem in order we are looking now
                 if (item2.ProductID == idProduct) // if the product of this specific orderItem is equal to the idProduct, it means this product already found in one order at least, and we can't delete him.
-                    throw new ExceptionLogicObjectIsFoundInOrders("product");
+                    throw new ExceptionLogicObjectAlreadyExist("product");
         }
         try
         {

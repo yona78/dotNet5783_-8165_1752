@@ -59,7 +59,7 @@ internal class Cart : ICart
         return cart;
     }
 
-    public void MakeOrder(BO.Cart cart, string name, string address, string email)
+    public void MakeOrder(BO.Cart cart, string name, string address, string email) // func that take the customer cart and make it into a real order in the dBase
     {
         // checks if all the data in the cart is valid
         DO.Product product = new DO.Product();
@@ -87,9 +87,9 @@ internal class Cart : ICart
         {
             id = Dal.Order.Add(order);
         }
-        catch (ExceptionObjectAlreadyExist)
+        catch (ExceptionObjectAlreadyExist a)
         {
-            throw new ExceptionLogicObjectAlreadyExist("order");
+            throw a;
         }
         DO.OrderItem orderItem = new DO.OrderItem();
         foreach (var item in cart.Items)
@@ -106,9 +106,9 @@ internal class Cart : ICart
             {
                 throw new ExceptionLogicObjectCouldNotBeFound("orderItem", inner);
             }
-            catch (ExceptionObjectAlreadyExist)
+            catch (ExceptionObjectAlreadyExist inner)
             {
-                throw new ExceptionLogicObjectAlreadyExist("orderItem");
+                throw new ExceptionLogicObjectAlreadyExist("orderItem", inner);
             }
             try
             {
