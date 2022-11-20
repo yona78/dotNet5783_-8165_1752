@@ -438,14 +438,6 @@ namespace Program
                         int orderId = id;
                         do
                         {
-                            Console.Write("please enter Price: ");
-                            validInput = double.TryParse(Console.ReadLine(), out price);
-                            if (!validInput)
-                                Console.WriteLine("please enter a valid input");
-                        } while (!validInput);
-                        double priceOrderItem = price;
-                        do
-                        {
                             Console.Write("please enter Amount: ");
                             validInput = int.TryParse(Console.ReadLine(), out amount);
                             if (!validInput)
@@ -456,7 +448,7 @@ namespace Program
                         OrderItem orderItemToAdd = new OrderItem();
                         orderItemToAdd.ProductID = productId;
                         orderItemToAdd.OrderID = orderId;
-                        orderItemToAdd.Price = priceOrderItem;
+                        orderItemToAdd.Price = 0;
                         orderItemToAdd.Amount = amountOrdetItem;
                         try
                         {
@@ -523,14 +515,6 @@ namespace Program
                         int orderIdUpdate = id;
                         do
                         {
-                            Console.Write("please enter Price: ");
-                            validInput = double.TryParse(Console.ReadLine(), out price);
-                            if (!validInput)
-                                Console.WriteLine("please enter a valid input");
-                        } while (!validInput);
-                        double priceOrderItemUpdate = price;
-                        do
-                        {
                             Console.Write("please enter Amount: ");
                             validInput = int.TryParse(Console.ReadLine(), out amount);
                             if (!validInput)
@@ -542,7 +526,7 @@ namespace Program
                         orderItemToUpdate.OrderItemID = OrderItemIdUpdate;
                         orderItemToUpdate.ProductID = productIdUpdate;
                         orderItemToUpdate.OrderID = orderIdUpdate;
-                        orderItemToUpdate.Price = priceOrderItemUpdate;
+                        orderItemToUpdate.Price =0;
                         orderItemToUpdate.Amount = amountOrdetItemUpdate;
                         try
                         {

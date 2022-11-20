@@ -22,19 +22,20 @@ internal class DalOrderItem : IOrderItem
         }
         if (!found)
             throw new ExceptionObjectCouldNotBeFound("order");
-
+        double price = 0;
         found = false;
         for (int i = 0; i < DataSource._products.Count(); i++)// looks if  there is such an product
         {
             if (DataSource._products[i].ID == newOrderItem.ProductID)
             {
+                price = DataSource._products[i].Price;
                 found = true;
                 break;
             }
         }
         if (!found)
             throw new ExceptionObjectCouldNotBeFound("product");
-
+        newOrderItem.Price = price;
         newOrderItem.OrderItemID = DataSource.Config.GetLastIndexOrderItems;
         for (int i = 0; i < DataSource._orderItems.Count(); i++)
         {
@@ -98,6 +99,13 @@ internal class DalOrderItem : IOrderItem
             throw new ExceptionObjectCouldNotBeFound("product");
 
         found = false;
+        for(int i =0; i< DataSource._products.Count();i++)
+        {
+            if (newOrderItem.ProductID == DataSource._products[i].ID)
+            {
+                newOrderItem.Price = DataSource._products[i].Price;
+            }
+        }
         for (int i = 0; i < DataSource._orderItems.Count(); i++)
         {
             if (DataSource._orderItems[i].OrderItemID == newOrderItem.OrderItemID) // if it has the same id, we do a deep copy
