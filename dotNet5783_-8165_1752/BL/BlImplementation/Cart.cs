@@ -87,9 +87,9 @@ internal class Cart : ICart // cart of customer
         {
             id = Dal.Order.Add(order);
         }
-        catch (ExceptionObjectAlreadyExist a)
+        catch (ExceptionObjectAlreadyExist inner)
         {
-            throw a;
+            throw new ExceptionLogicObjectAlreadyExist("orderItem", inner);
         }
         DO.OrderItem orderItem = new DO.OrderItem();
         foreach (var item in cart.Items)

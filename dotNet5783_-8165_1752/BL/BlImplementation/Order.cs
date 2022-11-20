@@ -136,10 +136,9 @@ internal class Order : BlApi.IOrder // object of the manager, on a order a clien
         orderTracking.status = lst;
         return orderTracking;
     }
-    public void Update(int idOrder) // update for the manager, to update an order
+    public BO.Order Update(int idOrder, int amount) // update for the manager, to update an order
     {
-
-
+        throw new NotImplementedException();
     }
     public BO.Order UpdateArrived(int idOrder) // update that this order is know been delivering (Arrived)
     {
