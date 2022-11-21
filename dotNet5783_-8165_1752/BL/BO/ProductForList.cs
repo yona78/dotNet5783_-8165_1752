@@ -16,6 +16,5 @@ public class ProductForList // // logic object for dealing with the products. we
        Name: {Name}
        category: {Category}
        Price: {Price}
-       Category: {Category}
     ";
 }

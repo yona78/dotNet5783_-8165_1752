@@ -8,7 +8,7 @@ namespace Program;
 class Program
 {
     static IBl blList = new Bl();
-
+    static Cart cart = new Cart();
     static void Main()
     {
         bool validInput = true;
@@ -298,6 +298,10 @@ class Program
                     {
                         Console.WriteLine("Name Of Exception: {0}\nMassage In Exception: {1}\nName Of Inner Exception: {2}\nMassage In Inner Exception: {3}", error.GetType().Name, error.Message, error.InnerException.GetType().Name, error.InnerException.Message);
                     }
+                    catch (ExceptionBadInput error)
+                    {
+                        Console.WriteLine("Name Of Exception: {0}\nMassage In Exception: {1}", error.GetType().Name, error.Message);
+                    }
                     break;
                 case 'c': // getting all of the products
                     IEnumerable<ProductForList> list = blList.Product.GetList();
@@ -394,11 +398,15 @@ class Program
                     } while (!validInput);
                     try
                     {
-                        Console.WriteLine(blList.Product.GetForCustomer(id, /*here should he enter the cart*/)); // what should i do?
+                        Console.WriteLine(blList.Product.GetForCustomer(id, cart)); // what should i do?
                     }
                     catch (ExceptionLogicObjectCouldNotBeFound error)
                     {
                         Console.WriteLine("Name Of Exception: {0}\nMassage In Exception: {1}\nName Of Inner Exception: {2}\nMassage In Inner Exception: {3}", error.GetType().Name, error.Message, error.InnerException.GetType().Name, error.InnerException.Message);
+                    }
+                    catch (ExceptionBadInput error)
+                    {
+                        Console.WriteLine("Name Of Exception: {0}\nMassage In Exception: {1}", error.GetType().Name, error.Message);
                     }
                     break;
                 default:
@@ -444,7 +452,7 @@ class Program
                     } while (!validInput);
                     try
                     {
-                        Console.WriteLine(blList.Cart.AddProduct(/*here cart*/, id)); // i should enter here a cart
+                        Console.WriteLine(blList.Cart.AddProduct(cart, id)); // i should enter here a cart
                     }
                     catch (ExceptionObjectIsNotAviliable error)
                     {
@@ -473,7 +481,7 @@ class Program
                     } while (!validInput);
                     try
                     {
-                        Console.WriteLine(blList.Cart.UpdateAmount(/*cart here*/,id,amount));
+                        Console.WriteLine(blList.Cart.UpdateAmount(cart,id,amount));
                     }
                     catch (ExceptionDataIsInvalid error)
                     {
@@ -498,7 +506,7 @@ class Program
                     email = Console.ReadLine();
                     try
                     {
-                        blList.Cart.MakeOrder(/*here enter cart*/,name, address, email); // i should enter here a cart
+                        blList.Cart.MakeOrder(cart,name, address, email); // i should enter here a cart
                     }
                     catch (ExceptionObjectIsNotAviliable error)
                     {

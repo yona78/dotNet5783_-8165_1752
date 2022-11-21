@@ -70,13 +70,21 @@ internal class Product : BlApi.IProduct // class for product, that the manager c
                 throw new ExceptionLogicObjectCouldNotBeFound("product", inner);
             }
         }
+        else
+            throw new ExceptionBadInput();
         BO.ProductItem item = new BO.ProductItem();
         item.ID = idProduct;
         item.Price = product.Price;
         item.Name = product.Name;
         item.Category = (BO.Enums.Category)product.Category;
         item.InStock = (product.InStock > 0); // it is aviliable if the items from this specific product in the dBase is bigger than zero.
-        item.Amount = cart.Items.Count(); // the amount of the items from this specific product in the customer's cart
+        int num = 0;
+        foreach(BO.OrderItem i in cart.Items)
+        {
+            if (i.ProductID == idProduct)
+                num++;
+        }
+        item.Amount = num; // the amount of the items from this specific product in the customer's cart
         return item;
     }
     public BO.Product GetForManager(int idProduct) // func that gets an id of product, and returns the product from this specific id. The manager will use this logic object, in oppsite from the last func, when the customer is going to use it, as it will be printed to the screen
@@ -93,7 +101,11 @@ internal class Product : BlApi.IProduct // class for product, that the manager c
                 throw new ExceptionLogicObjectCouldNotBeFound("product", inner);
             }
         }
+        else
+            throw new ExceptionBadInput();
         BO.Product item = new BO.Product();
+        item.InStock = product.InStock;
+        item.ID = product.ID;
         item.Price = product.Price;
         item.Name = product.Name;
         item.Category = (BO.Enums.Category)product.Category;

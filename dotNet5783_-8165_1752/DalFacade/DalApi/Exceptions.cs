@@ -24,3 +24,8 @@ public class ExceptionObjectAlreadyExist : Exception // the object you're trying
     public override string Message { get => String.Format("ERROR, {0} is already exist", nameOfObject); }
 }
 
+public class ExceptionBadInput : Exception // the object you're trying to add is already exist
+{
+    public override string Message { get => "ERROR, nagtive id"; }
+}
+
