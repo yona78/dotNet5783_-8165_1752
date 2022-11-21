@@ -33,6 +33,7 @@ public class ExceptionDataIsInvalid : Exception // the data you gave me is inval
 {
     string nameOfObject;
     public ExceptionDataIsInvalid(string msg) { nameOfObject = msg; }
+    public ExceptionDataIsInvalid(string msg, ExceptionObjectAlreadyExist inner) : base(msg, inner) { nameOfObject = msg; }
     public override string Message { get => String.Format("ERROR, {0}, data is invalid", nameOfObject); }
 
 }
@@ -43,6 +44,7 @@ public class ExceptionLogicObjectAlreadyExist : Exception // the object you're t
     public ExceptionLogicObjectAlreadyExist(string msg, ExceptionObjectAlreadyExist inner) : base(msg, inner) { nameOfObject = msg; }
     public override string Message { get => String.Format("ERROR, {0} is already exist", nameOfObject); }
 }
+
 
 
 

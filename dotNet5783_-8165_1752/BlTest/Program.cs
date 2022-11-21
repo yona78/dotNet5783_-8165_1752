@@ -298,7 +298,7 @@ class Program
                     {
                         Console.WriteLine("Name Of Exception: {0}\nMassage In Exception: {1}\nName Of Inner Exception: {2}\nMassage In Inner Exception: {3}", error.GetType().Name, error.Message, error.InnerException.GetType().Name, error.InnerException.Message);
                     }
-                    catch (ExceptionBadInput error)
+                    catch (ExceptionDataIsInvalid error)
                     {
                         Console.WriteLine("Name Of Exception: {0}\nMassage In Exception: {1}", error.GetType().Name, error.Message);
                     }
@@ -404,7 +404,7 @@ class Program
                     {
                         Console.WriteLine("Name Of Exception: {0}\nMassage In Exception: {1}\nName Of Inner Exception: {2}\nMassage In Inner Exception: {3}", error.GetType().Name, error.Message, error.InnerException.GetType().Name, error.InnerException.Message);
                     }
-                    catch (ExceptionBadInput error)
+                    catch (ExceptionDataIsInvalid error)
                     {
                         Console.WriteLine("Name Of Exception: {0}\nMassage In Exception: {1}", error.GetType().Name, error.Message);
                     }
@@ -428,7 +428,7 @@ class Program
 
             do
             {
-                Console.WriteLine(@"you chose: OrderItem 
+                Console.WriteLine(@"you chose: Cart 
                    a ==> for adding a product to a cart
                    b ==> for updating the amount of a product in a cart
                    c ==> for making a cart into a real order");
