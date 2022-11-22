@@ -77,7 +77,7 @@ class Program
             switch (choiceInSubSwitch)
             {
                 case 'a': // getOrderList option
-                    List<BO.OrderForList> list = blList.Order.GetOrderList();
+                    IEnumerable<BO.OrderForList> list = blList.Order.GetOrderList();
                     foreach (BO.OrderForList item in list)
                         Console.WriteLine(item);
                     break;
@@ -452,7 +452,7 @@ class Program
                     } while (!validInput);
                     try
                     {
-                        Console.WriteLine(blList.Cart.AddProduct(cart, id)); // i should enter here a cart
+                        cart = blList.Cart.AddProduct(cart, id); // i should enter here a cart
                     }
                     catch (ExceptionObjectIsNotAviliable error)
                     {
@@ -481,9 +481,9 @@ class Program
                     } while (!validInput);
                     try
                     {
-                        Console.WriteLine(blList.Cart.UpdateAmount(cart,id,amount));
+                        cart = blList.Cart.UpdateAmount(cart,id,amount);
                     }
-                    catch (ExceptionDataIsInvalid error)
+                    catch (ExceptionObjectIsNotAviliable error)
                     {
                         Console.WriteLine("Name Of Exception: {0}\nMassage In Exception: {1}", error.GetType().Name, error.Message);
                     }
@@ -497,16 +497,24 @@ class Program
                     }
                     catch (ExceptionLogicObjectCouldNotBeFound error)
                     {
-                        Console.WriteLine("Name Of Exception: {0}\nMassage In Exception: {1}\nName Of Inner Exception: {2}\nMassage In Inner Exception: {3}", error.GetType().Name, error.Message, error.InnerException.GetType().Name, error.InnerException.Message);
+                        Console.WriteLine("Name Of Exception: {0}\nMassage In Exception: {1}\n", error.GetType().Name, error.Message) ;
+                    }
+                    catch(ExceptionDataIsInvalid error)
+                    {
+                        Console.WriteLine("Name Of Exception: {0}\nMassage In Exception: {1}\n", error.GetType().Name, error.Message);
                     }
                     break;
                 case 'c': // making a cart into a real order
+                    Console.WriteLine("enter name ");
                     name = Console.ReadLine();
+                    Console.WriteLine("Enter address");
                     address = Console.ReadLine();
+                    Console.WriteLine("enter email");
                     email = Console.ReadLine();
                     try
                     {
                         blList.Cart.MakeOrder(cart,name, address, email); // i should enter here a cart
+                        cart = new Cart();
                     }
                     catch (ExceptionObjectIsNotAviliable error)
                     {

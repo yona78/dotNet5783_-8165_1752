@@ -82,7 +82,7 @@ internal class Product : BlApi.IProduct // class for product, that the manager c
         foreach(BO.OrderItem i in cart.Items)
         {
             if (i.ProductID == idProduct)
-                num++;
+                num+=i.Amount;
         }
         item.Amount = num; // the amount of the items from this specific product in the customer's cart
         return item;

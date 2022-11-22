@@ -15,34 +15,40 @@ internal class Cart : ICart // cart of customer
         bool productExistInCart = false;
         BO.OrderItem itemToChange = new BO.OrderItem();
         DO.Product product = new DO.Product();
-
-        foreach (var item in cart.Items)
+        try
         {
-            if (item.ProductID == idProduct)
+            product = Dal.Product.Get(idProduct);
+        }
+        catch (ExceptionObjectCouldNotBeFound inner) // the product isn't exist in the dBase
+        {
+            throw new ExceptionLogicObjectCouldNotBeFound("product", inner);
+        }
+        if (cart.Items != null)
+        {
+            foreach (BO.OrderItem item in cart.Items)
             {
-                productExistInCart = true;
-                itemToChange = item;
-                break;
+                if (item.ProductID == idProduct)
+                {
+                    productExistInCart = true;
+                    itemToChange = item;
+                    break;
+                }
             }
         }
         if (!productExistInCart) // the product isn't found in the cart
         {
-            try
-            {
-                product = Dal.Product.Get(idProduct);
-            }
-            catch (ExceptionObjectCouldNotBeFound inner) // the product isn't exist in the dBase
-            {
-                throw new ExceptionLogicObjectCouldNotBeFound("product", inner);
-            }
             if (product.InStock <= 0) // there isn't enugh in stock
                 throw new ExceptionObjectIsNotAviliable("product");
 
             BO.OrderItem item = new BO.OrderItem();
             item.Name = product.Name;
+            item.Amount = 1;
+            item.ProductID = product.ID;
             item.Price = product.Price;
             item.TotalPrice = product.Price;
             cart.TotelPrice += product.Price;
+            if(cart.Items ==null) 
+                cart.Items = new List<BO.OrderItem>();
             cart.Items.Add(item);
 
 
@@ -81,6 +87,9 @@ internal class Cart : ICart // cart of customer
         if (name == "" || address == "" || email == "") // checks if the string are valids. ### TO ADD - that email and address will be in a specific format.
             throw new ExceptionDataIsInvalid("cart");
         DO.Order order = new DO.Order();
+        order.CustomerAdrress = address;
+        order.CustomerEmail= email;
+        order.CustomerName = name;
         order.OrderDate = DateTime.Now; // initalize the orderDate to be now.
         int id;
         try
@@ -133,10 +142,14 @@ internal class Cart : ICart // cart of customer
 
     public BO.Cart UpdateAmount(BO.Cart cart, int idProduct, int amount) // func that updates the amount of a product in the cart
     {
+
+        if(amount<0)
+        {
+            throw new  ExceptionDataIsInvalid("cart");
+        }
         bool productExistInCart = false;
         BO.OrderItem itemToChange = new BO.OrderItem();
         DO.Product product = new DO.Product();
-
         foreach (var item in cart.Items)
         {
             if (item.ProductID == idProduct) // checks if the specific product is found in the cart
@@ -153,6 +166,16 @@ internal class Cart : ICart // cart of customer
         }
         else // the product is exist in the cart
         {
+            try
+            {
+                product = Dal.Product.Get(idProduct);
+            }
+            catch (ExceptionObjectCouldNotBeFound inner)
+            {
+                throw new ExceptionLogicObjectCouldNotBeFound("product", inner);
+            }
+            if (product.InStock < amount)
+                throw new ExceptionDataIsInvalid("cart");
             if (product.InStock <= 0) // there isn't enough in stock
                 throw new ExceptionObjectIsNotAviliable("product");
             if (amount == 0)

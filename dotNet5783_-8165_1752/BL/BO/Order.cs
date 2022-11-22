@@ -14,7 +14,14 @@ public class Order // object of the manager, on a order a client had asked for
     public List<OrderItem> Items { set; get; } // items in order
     public double TotelPrice { set; get; } // total price of order
 
-    public override string ToString() => $@"
+    public override string ToString()
+    {
+        string sum = "";
+        foreach (OrderItem tmp in Items)
+        {
+            sum+= tmp.ToString();
+        }
+            return $@"
        ID:{ID}
        CustomerName: {CustomerName}
        CustomerEmail: {CustomerEmail}
@@ -23,8 +30,8 @@ public class Order // object of the manager, on a order a client had asked for
        PaymentDate: {PaymentDate}
        ShipDate {ShipDate}
        DeliveryDate: {DeliveryDate}
-       Items: {Items}
+       Items: {sum}
        TotelPrice: {TotelPrice}
     "; // to string.
-
+    }
 }

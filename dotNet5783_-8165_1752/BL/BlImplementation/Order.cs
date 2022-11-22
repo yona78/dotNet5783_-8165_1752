@@ -19,8 +19,7 @@ internal class Order : BlApi.IOrder // object of the manager, on a order a clien
     public List<BO.OrderForList> GetOrderList() // returns a list of the orders in the dBase to present on the screen to the customer
     {
         List<BO.OrderForList> listToReturn = new List<BO.OrderForList>();
-        IEnumerable<DO.Order> orderList = new List<DO.Order>();
-        orderList = Dal.Order.GetDataOf();
+        IEnumerable<DO.Order> orderList = Dal.Order.GetDataOf();
         BO.OrderForList tmp = new BO.OrderForList();
         double price = 0;
         int amountOfItems = 0;
@@ -38,14 +37,17 @@ internal class Order : BlApi.IOrder // object of the manager, on a order a clien
             tmp.TotelPrice = price; // the total price of the order
             tmp.AmountOfItems = amountOfItems; // the total amount of items in the order
             // now i will check the status of the order, by comparing the current time, and the time in the data.
+            price = 0;
+            amountOfItems = 0;
             DateTime now = DateTime.Now;
             if (now > order.DeliveryDate && order.DeliveryDate != DateTime.MinValue) // it means the order has already arrived. 
                 tmp.OrderStatus = BO.Enums.Status.Arrived;
-            else if (now > order.ShipDate && order.DeliveryDate != DateTime.MinValue) // it means it has been sent, but hasn't arrived yet
+            else if (now > order.ShipDate && order.ShipDate != DateTime.MinValue) // it means it has been sent, but hasn't arrived yet
                 tmp.OrderStatus = BO.Enums.Status.Sent;
             else
                 tmp.OrderStatus = BO.Enums.Status.Confirmed; // it must be confirmed, otherwise it wasn't an order in the dBase
             listToReturn.Add(tmp);
+            tmp = new BO.OrderForList();
         }
         return listToReturn; // return the list
     }
@@ -94,6 +96,7 @@ internal class Order : BlApi.IOrder // object of the manager, on a order a clien
             }
             orderItemTmp.TotalPrice = (item.Amount * item.Price); // every thing in this orderItem cost Price, and there are Amount things. so the total price is Amount*Price
             bO_listOfOrderItems.Add(orderItemTmp);
+            orderItemTmp = new BO.OrderItem();
             price += (item.Amount * item.Price);
         }
         orderToReturn.TotelPrice = price; // the total price of the order
@@ -103,7 +106,7 @@ internal class Order : BlApi.IOrder // object of the manager, on a order a clien
         DateTime now = DateTime.Now;
         if (now > order.DeliveryDate && order.DeliveryDate != DateTime.MinValue) // it means the order has already arrived. 
             orderToReturn.OrderStatus = BO.Enums.Status.Arrived;
-        else if (now > order.ShipDate && order.DeliveryDate != DateTime.MinValue) // it means it has been sent, but hasn't arrived yet
+        else if (now > order.ShipDate && order.ShipDate != DateTime.MinValue) // it means it has been sent, but hasn't arrived yet
             orderToReturn.OrderStatus = BO.Enums.Status.Sent;
         else
             orderToReturn.OrderStatus = BO.Enums.Status.Confirmed; // it must be confirmed, otherwise it wasn't an order in the dBase
@@ -125,14 +128,24 @@ internal class Order : BlApi.IOrder // object of the manager, on a order a clien
         orderTracking.ID = order.ID;
         // now i will check the status of the order, by comparing the current time, and the time in the data.
         DateTime now = DateTime.Now;
-        if (now > order.DeliveryDate) // it means the order has already arrived. 
-            orderTracking.OrderStatus = BO.Enums.Status.Arrived;
-        else if (now > order.ShipDate) // it means it has been sent, but hasn't arrived yet
-            orderTracking.OrderStatus = BO.Enums.Status.Sent;
-        else
-            orderTracking.OrderStatus = BO.Enums.Status.Confirmed; // it must be confirmed, otherwise it wasn't an order in the dBase
         List<(DateTime, BO.Enums.Status)> lst = new List<(DateTime, Enums.Status)>();
-        lst.Add((DateTime.Now, orderTracking.OrderStatus)); // adding the first touple to the list, i guess that's what you meant.
+        lst.Add((order.OrderDate, BO.Enums.Status.Confirmed));
+        if (now > order.DeliveryDate && order.DeliveryDate != DateTime.MinValue) // it means the order has already arrived. 
+        {
+            orderTracking.OrderStatus = BO.Enums.Status.Arrived;
+            lst.Add((order.OrderDate, BO.Enums.Status.Confirmed));
+            lst.Add((order.ShipDate, BO.Enums.Status.Sent));
+            lst.Add((order.DeliveryDate, BO.Enums.Status.Arrived));
+        }
+        else if (now > order.ShipDate && order.ShipDate != DateTime.MinValue)
+        {// it means it has been sent, but hasn't arrived yet
+            lst.Add((order.ShipDate, BO.Enums.Status.Sent));
+            orderTracking.OrderStatus = BO.Enums.Status.Sent;
+        }
+        else
+            orderTracking.OrderStatus = BO.Enums.Status.Confirmed;
+        // it must be confirmed, otherwise it wasn't an order in the dBase
+        //lst.Add((DateTime.Now, orderTracking.OrderStatus)); // adding the first touple to the list, i guess that's what you meant.
         orderTracking.status = lst;
         return orderTracking;
     }
@@ -185,6 +198,7 @@ internal class Order : BlApi.IOrder // object of the manager, on a order a clien
         if (orderToReturn.OrderStatus != Enums.Status.Confirmed)
             throw new ExceptionObjectIsNotAviliable("order"); // becuase it has been already sent, or even arrived
         orderToReturn.ShipDate = DateTime.Now; // updating the logic object
+        orderToReturn.OrderStatus = Enums.Status.Sent;
         order.ShipDate = DateTime.Now; // updating the object
         try
         {

@@ -7,9 +7,18 @@ public class OrderTracking // logic object for the manager to see the progras of
     public Enums.Status OrderStatus { set; get; } // status of order
     public List<(DateTime, Enums.Status)> status { set; get; } // what is the date now and  what is his current status.
 
-    public override string ToString() => $@"
+    public override string ToString()
+    {
+        string sum = "";
+        foreach ((DateTime, Enums.Status) tmp in status)
+        {
+            sum += tmp;
+            sum += "\n";
+        }
+        return $@"
        Order ID: {ID}
-       Status: {OrderStatus}"; // to string.
-
-
+       Status: {OrderStatus}
+       Status : {sum}
+        "; // to string.
+    }
 }
