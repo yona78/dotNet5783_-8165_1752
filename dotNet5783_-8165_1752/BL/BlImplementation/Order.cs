@@ -133,7 +133,6 @@ internal class Order : BlApi.IOrder // object of the manager, on a order a clien
         if (now > order.DeliveryDate && order.DeliveryDate != DateTime.MinValue) // it means the order has already arrived. 
         {
             orderTracking.OrderStatus = BO.Enums.Status.Arrived;
-            lst.Add((order.OrderDate, BO.Enums.Status.Confirmed));
             lst.Add((order.ShipDate, BO.Enums.Status.Sent));
             lst.Add((order.DeliveryDate, BO.Enums.Status.Arrived));
         }
