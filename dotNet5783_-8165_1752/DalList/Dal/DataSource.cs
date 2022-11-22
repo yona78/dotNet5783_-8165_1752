@@ -102,12 +102,12 @@ internal static class DataSource
         {
             TimeSpan duration = new TimeSpan(-_rnd.Next(50, 200), _rnd.Next(24), _rnd.Next(60), _rnd.Next(60)); // taking random duration between 50 to 200 days from now
             orderDates[i] = DateTime.Now.Add(duration); // the day of the add of the order, it's from now to 50-200 day ago
-            duration = new TimeSpan(_rnd.Next(20, 45), _rnd.Next(24), _rnd.Next(60), _rnd.Next(60)); // taking random duration between 20 to 45 days from now
+            duration = new TimeSpan(_rnd.Next(20, 100), _rnd.Next(24), _rnd.Next(60), _rnd.Next(60)); // taking random duration between 20 to 45 days from now
             shipDateDates[i] = orderDates[i].Add(duration); // the day of the ship of the order, it's from now to 20-45 day ago
             if (i % 5 == 0 || i % 4 == 0 || i % 3 == 0) // thats equal to 60% from all of the orders
             {
-                duration = new TimeSpan(_rnd.Next(2, 18), _rnd.Next(24), _rnd.Next(60), _rnd.Next(60)); // taking random duration between 2 to 18 days from now
-                deliveryDateDates[i] = orderDates[i].Add(duration); // the day of the delivery of the order, it's from now to 2-18 day ago
+                duration = new TimeSpan(_rnd.Next(4, 25), _rnd.Next(24), _rnd.Next(60), _rnd.Next(60)); // taking random duration between 2 to 18 days from now
+                deliveryDateDates[i] = shipDateDates[i].Add(duration); // the day of the delivery of the order, it's from now to 2-18 day ago
             }
         }
         for (int i = 0; i < orderInit; i++)
