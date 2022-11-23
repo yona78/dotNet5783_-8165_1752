@@ -462,7 +462,10 @@ class Program
                     {
                         Console.WriteLine("Name Of Exception: {0}\nMassage In Exception: {1}\nName Of Inner Exception: {2}\nMassage In Inner Exception: {3}", error.GetType().Name, error.Message, error.InnerException.GetType().Name, error.InnerException.Message);
                     }
-
+                    catch (ExceptionNotEnoughInDataBase error)
+                    {
+                        Console.WriteLine("Name Of Exception: {0}\nMassage In Exception: {1}\n", error.GetType().Name, error.Message);
+                    }
                     break;
                 case 'b': // updating the amount of a product in a cart
                     do
@@ -523,6 +526,14 @@ class Program
                     catch (ExceptionLogicObjectCouldNotBeFound error)
                     {
                         Console.WriteLine("Name Of Exception: {0}\nMassage In Exception: {1}\nName Of Inner Exception: {2}\nMassage In Inner Exception: {3}", error.GetType().Name, error.Message, error.InnerException.GetType().Name, error.InnerException.Message);
+                    }
+                    catch (ExceptionDataIsInvalid error)
+                    {
+                        Console.WriteLine("Name Of Exception: {0}\nMassage In Exception: {1}\n", error.GetType().Name, error.Message);
+                    }
+                    catch (ExceptionNotEnoughInDataBase error)
+                    {
+                        Console.WriteLine("Name Of Exception: {0}\nMassage In Exception: {1}\n", error.GetType().Name, error.Message);
                     }
                     break;
                 default:

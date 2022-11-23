@@ -57,6 +57,8 @@ internal class Cart : ICart // cart of customer
         {
             if (product.InStock <= 0) // there isn't enough in stock
                 throw new ExceptionObjectIsNotAviliable("product");
+            if (itemToChange.Amount == product.InStock)
+                throw new ExceptionNotEnoughInDataBase("to many");
             itemToChange.Amount += 1;
             itemToChange.TotalPrice += product.Price;
             cart.TotelPrice += product.Price;
@@ -68,6 +70,8 @@ internal class Cart : ICart // cart of customer
     public void MakeOrder(BO.Cart cart, string name, string address, string email) // func that take the customer cart and make it into a real order in the dBase
     {
         // checks if all the data in the cart is valid
+        if (cart.Items == null || cart.Items.Count == 0)
+            throw new ExceptionDataIsInvalid("cart is empty");
         DO.Product product = new DO.Product();
         foreach (var item in cart.Items) // checks if all the items are realy exist, if the amounts are positive
         {
@@ -77,7 +81,19 @@ internal class Cart : ICart // cart of customer
             }
             catch (ExceptionObjectCouldNotBeFound inner) // the product isn't exist in the dBase
             {
-                throw new ExceptionLogicObjectCouldNotBeFound("product", inner);
+                cart.Items.Remove(item);
+                break;
+            }
+        }
+        foreach (var item in cart.Items) // checks if all the items are realy exist, if the amounts are positive
+        {
+            try
+            {
+                product = Dal.Product.Get(item.ProductID);
+            }
+            catch (ExceptionObjectCouldNotBeFound inner) // the product isn't exist in the dBase
+            {
+                
             }
             if (item.Amount < 0) // amount negative
                 throw new ExceptionDataIsInvalid("orderItem");
@@ -142,7 +158,8 @@ internal class Cart : ICart // cart of customer
 
     public BO.Cart UpdateAmount(BO.Cart cart, int idProduct, int amount) // func that updates the amount of a product in the cart
     {
-
+        if (cart.Items == null || cart.Items.Count == 0)
+            throw new ExceptionDataIsInvalid("cart is empty");
         if(amount<0)
         {
             throw new  ExceptionDataIsInvalid("cart");

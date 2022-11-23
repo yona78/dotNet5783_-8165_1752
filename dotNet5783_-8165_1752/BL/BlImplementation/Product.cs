@@ -58,6 +58,8 @@ internal class Product : BlApi.IProduct // class for product, that the manager c
     }
     public ProductItem GetForCustomer(int idProduct, BO.Cart cart) // func that gets an id of product in the client's cart, and his cart, and return the data of the specific product and the cart, as an item in the cart. 
     {
+        if (cart.Items == null || cart.Items.Count == 0)
+            throw new ExceptionDataIsInvalid("cart empty");
         DO.Product product = new DO.Product(); // i want to get the specific product from the dBase
         if (idProduct >= 0)
         {
