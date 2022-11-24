@@ -78,6 +78,17 @@ internal class Cart : ICart // cart of customer
         return cart;
     }
 
+    /// <summary>
+    /// The functions makes order from the cart data
+    /// </summary>
+    /// <param name="cart">the users cart</param>
+    /// <param name="name">name of the customer</param>
+    /// <param name="address">address of the customer</param>
+    /// <param name="email">email of customer</param>
+    /// <exception cref="ExceptionDataIsInvalid"></exception>
+    /// <exception cref="ExceptionNotEnoughInDataBase"></exception>
+    /// <exception cref="ExceptionLogicObjectAlreadyExist"></exception>
+    /// <exception cref="ExceptionLogicObjectCouldNotBeFound"></exception>
     public void MakeOrder(BO.Cart cart, string name, string address, string email) // func that take the customer cart and make it into a real order in the dBase
     {
         // checks if all the data in the cart is valid
@@ -167,6 +178,16 @@ internal class Cart : ICart // cart of customer
         }
     }
 
+    /// <summary>
+    /// The function update the amount of product in cart
+    /// </summary>
+    /// <param name="cart">the users cart</param>
+    /// <param name="idProduct">the id of product to upstae his amount</param>
+    /// <param name="amount">the new amount</param>
+    /// <returns>the update cart</returns>
+    /// <exception cref="ExceptionDataIsInvalid"></exception>
+    /// <exception cref="ExceptionLogicObjectCouldNotBeFound"></exception>
+    /// <exception cref="ExceptionObjectIsNotAviliable"></exception>
     public BO.Cart UpdateAmount(BO.Cart cart, int idProduct, int amount) // func that updates the amount of a product in the cart
     {
         if (cart.Items == null || cart.Items.Count == 0)

@@ -12,10 +12,17 @@ using Dal;
 using DalApi;
 
 namespace BlImplementation;
+/// <summary>
+/// The functions of order
+/// </summary>
 internal class Order : BlApi.IOrder // object of the manager, on a order a client had asked for
 {
     private IDal Dal = new DalList(); // a way to communicate with dBase level
 
+    /// <summary>
+    /// The functions returns data about all the orders
+    /// </summary>
+    /// <returns>list with data of all the orders</returns>
     public List<BO.OrderForList> GetOrderList() // returns a list of the orders in the dBase to present on the screen to the customer
     {
         List<BO.OrderForList> listToReturn = new List<BO.OrderForList>();
@@ -51,6 +58,13 @@ internal class Order : BlApi.IOrder // object of the manager, on a order a clien
         }
         return listToReturn; // return the list
     }
+    /// <summary>
+    /// The function returns data about order for menager
+    /// </summary>
+    /// <param name="idOrder">the id of order to return</param>
+    /// <returns>the data of order</returns>
+    /// <exception cref="ExceptionDataIsInvalid"></exception>
+    /// <exception cref="ExceptionLogicObjectCouldNotBeFound"></exception>
     public BO.Order GetOrderManager(int idOrder) // func that returns an order from the dBase to the using of the manager
     {
         if (idOrder < 0) // throw exception if the id isn't positive
@@ -113,6 +127,12 @@ internal class Order : BlApi.IOrder // object of the manager, on a order a clien
 
         return orderToReturn; // return the order
     }
+    /// <summary>
+    /// The functions returns all the statues of order has been 
+    /// </summary>
+    /// <param name="idOrder">id of the order the menager wants</param>
+    /// <returns>list with all the statues the order was with the date</returns>
+    /// <exception cref="ExceptionLogicObjectCouldNotBeFound"></exception>
     public BO.OrderTracking TrackOrder(int idOrder) // func that help me to track an order, by creating and sending a entity that is adjusted for working with orders
     {
         BO.OrderTracking orderTracking = new BO.OrderTracking();
@@ -148,10 +168,24 @@ internal class Order : BlApi.IOrder // object of the manager, on a order a clien
         orderTracking.status = lst;
         return orderTracking;
     }
+    /// <summary>
+    /// The function update amount of order
+    /// </summary>
+    /// <param name="idOrder">the id of order to update</param>
+    /// <param name="amount">the new amount </param>
+    /// <returns>the updated order</returns>
+    /// <exception cref="NotImplementedException"></exception>
     public BO.Order Update(int idOrder, int amount) // update for the manager, to update an order
     {
         throw new NotImplementedException();
     }
+    /// <summary>
+    /// The function update the status of order to arrived
+    /// </summary>
+    /// <param name="idOrder">the id of order to updtae</param>
+    /// <returns>the new order after the change</returns>
+    /// <exception cref="ExceptionLogicObjectCouldNotBeFound"></exception>
+    /// <exception cref="ExceptionObjectIsNotAviliable"></exception>
     public BO.Order UpdateArrived(int idOrder) // update that this order is know been delivering (Arrived)
     {
         DO.Order order = new DO.Order();
@@ -180,6 +214,13 @@ internal class Order : BlApi.IOrder // object of the manager, on a order a clien
         }
         return orderToReturn;
     }
+    /// <summary>
+    /// The function upsate the status of order to sent
+    /// </summary>
+    /// <param name="idOrder">the id of order to update</param>
+    /// <returns>the new order</returns>
+    /// <exception cref="ExceptionLogicObjectCouldNotBeFound"></exception>
+    /// <exception cref="ExceptionObjectIsNotAviliable"></exception>
     public BO.Order UpdateSent(int idOrder) // update that this order in know been sending. (Sent)
     {
         DO.Order order = new DO.Order();

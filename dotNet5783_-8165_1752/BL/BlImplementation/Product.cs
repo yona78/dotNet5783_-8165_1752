@@ -13,10 +13,19 @@ using DalApi;
 using DO;
 
 namespace BlImplementation;
+/// <summary>
+/// The functions of product object
+/// </summary>
 internal class Product : BlApi.IProduct // class for product, that the manager can deal with.
 { // otherwise there is ambigiouty, because he doesn't know whether it's BlApi.IProduct or DalApi.IProduct
     private IDal Dal = new DalList(); // a way to communicate with dBase level
 
+    /// <summary>
+    /// The function add new product to the store
+    /// </summary>
+    /// <param name="product">the new product to add</param>
+    /// <exception cref="ExceptionDataIsInvalid"></exception>
+    /// <exception cref="ExceptionLogicObjectCouldNotBeFound"></exception>
     public void Add(BO.Product product) // func that gets a proudct, and add it into the dBase
     {
         if (product.ID <= 0 || product.Name == "" || product.Price <= 0 || product.InStock < 0)
@@ -36,6 +45,12 @@ internal class Product : BlApi.IProduct // class for product, that the manager c
             throw new ExceptionLogicObjectCouldNotBeFound("product", inner);
         }
     }
+    /// <summary>
+    /// The functions delete product from the store
+    /// </summary>
+    /// <param name="idProduct">the id of product to delete</param>
+    /// <exception cref="ExceptionLogicObjectAlreadyExist"></exception>
+    /// <exception cref="ExceptionLogicObjectCouldNotBeFound"></exception>
     public void Delete(int idProduct) // func that gets and id of product, and deletes him from the dBase. The only that can use this func is the manager
     {
         IEnumerable<DO.Order> listOfOrders = Dal.Order.GetDataOf();
@@ -56,6 +71,14 @@ internal class Product : BlApi.IProduct // class for product, that the manager c
             throw new ExceptionLogicObjectCouldNotBeFound("product", inner);
         }
     }
+    /// <summary>
+    /// The function returns the amount of product in the users cart
+    /// </summary>
+    /// <param name="idProduct">the produt to check</param>
+    /// <param name="cart">the users cart</param>
+    /// <returns>the data of the product in cart</returns>
+    /// <exception cref="ExceptionDataIsInvalid"></exception>
+    /// <exception cref="ExceptionLogicObjectCouldNotBeFound"></exception>
     public ProductItem GetForCustomer(int idProduct, BO.Cart cart) // func that gets an id of product in the client's cart, and his cart, and return the data of the specific product and the cart, as an item in the cart. 
     {
         if (cart.Items == null || cart.Items.Count == 0)
@@ -89,6 +112,13 @@ internal class Product : BlApi.IProduct // class for product, that the manager c
         item.Amount = num; // the amount of the items from this specific product in the customer's cart
         return item;
     }
+    /// <summary>
+    /// The funcation returns for the manager the data about product
+    /// </summary>
+    /// <param name="idProduct">the id of product to get data</param>
+    /// <returns>the product the user wants</returns>
+    /// <exception cref="ExceptionLogicObjectCouldNotBeFound"></exception>
+    /// <exception cref="ExceptionDataIsInvalid"></exception>
     public BO.Product GetForManager(int idProduct) // func that gets an id of product, and returns the product from this specific id. The manager will use this logic object, in oppsite from the last func, when the customer is going to use it, as it will be printed to the screen
     {
         DO.Product product = new DO.Product();
@@ -113,6 +143,10 @@ internal class Product : BlApi.IProduct // class for product, that the manager c
         item.Category = (BO.Enums.Category)product.Category;
         return item;
     }
+    /// <summary>
+    /// The function return all the products in the store
+    /// </summary>
+    /// <returns>the list with all the products</returns>
     public List<ProductForList> GetList() // func that returns all the products in a special logic object, which either the manager can use it or it will be printed to the customer screen
     {
         IEnumerable<DO.Product> listOfProducts = Dal.Product.GetDataOf();
@@ -129,6 +163,12 @@ internal class Product : BlApi.IProduct // class for product, that the manager c
         }
         return list;
     }
+    /// <summary>
+    /// the function update a product in the store
+    /// </summary>
+    /// <param name="product">the new product</param>
+    /// <exception cref="ExceptionDataIsInvalid"></exception>
+    /// <exception cref="ExceptionLogicObjectCouldNotBeFound"></exception>
     public void Update(BO.Product product) // func that gets a proudct, and update him in the dBase
     {
 
