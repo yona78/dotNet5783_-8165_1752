@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 using BlApi;
 namespace BlImplementation;
+/// <summary>
+/// Class to use in the menu for get accses to all the functions of the products
+/// </summary>
 sealed public class Bl : IBl
 {
     public IProduct Product => new Product();

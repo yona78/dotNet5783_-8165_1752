@@ -6,10 +6,21 @@ using DO;
 using System.IO.Pipes;
 
 namespace BlImplementation;
+/// <summary>
+/// Class the imploanet all the functions of cart
+/// </summary>
 internal class Cart : ICart // cart of customer
 {
     private IDal Dal = new DalList(); // a way to communicate with dBase level
-
+    /// <summary>
+    /// Function to add product to cart
+    /// </summary>
+    /// <param name="cart">the cart to add the product</param>
+    /// <param name="idProduct"> id of the product to return</param>
+    /// <returns>The new cart</returns>
+    /// <exception cref="ExceptionLogicObjectCouldNotBeFound"></exception>
+    /// <exception cref="ExceptionObjectIsNotAviliable"></exception>
+    /// <exception cref="ExceptionNotEnoughInDataBase"></exception>
     public BO.Cart AddProduct(BO.Cart cart, int idProduct) // add a product to the cart of the customer. The customer will use this func
     {
         bool productExistInCart = false;
