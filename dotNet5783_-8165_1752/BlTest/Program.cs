@@ -178,6 +178,7 @@ class Program
                         if (!validInput)
                             Console.WriteLine("please enter a valid input");
                     } while (!validInput);
+                    int idOfProduct;
                     do // getting the new amount
                     {
                         Console.Write("please enter me an amount: ");
@@ -185,9 +186,16 @@ class Program
                         if (!validInput)
                             Console.WriteLine("please enter a valid input");
                     } while (!validInput);
+                    do // getting the new amount
+                    {
+                        Console.Write("please enter me an amount: ");
+                        validInput = int.TryParse(Console.ReadLine(), out idOfProduct);
+                        if (!validInput)
+                            Console.WriteLine("please enter a valid input");
+                    } while (!validInput);
                     try
                     {
-                        Console.WriteLine(blList.Order.Update(id, amount));
+                        blList.Order.Update(id,idOfProduct, amount);
                     }
                     //catch (ExceptionLogicObjectCouldNotBeFound error)
                     //{

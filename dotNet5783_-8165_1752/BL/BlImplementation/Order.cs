@@ -173,11 +173,52 @@ internal class Order : BlApi.IOrder // object of the manager, on a order a clien
     /// </summary>
     /// <param name="idOrder">the id of order to update</param>
     /// <param name="amount">the new amount </param>
-    /// <returns>the updated order</returns>
+    ///  <param name="idOfProduct">the product to update </param>
     /// <exception cref="NotImplementedException"></exception>
-    public BO.Order Update(int idOrder, int amount) // update for the manager, to update an order
+    public void Update(int idOrder,int idOfProduct, int amount) // update for the manager, to update an order
     {
-        throw new NotImplementedException();
+        DO.Order order = new DO.Order();
+        try
+        {
+            order = Dal.Order.Get(idOrder);
+        }
+        catch (ExceptionObjectCouldNotBeFound inner)
+        {
+            throw new ExceptionLogicObjectCouldNotBeFound("order", inner);
+        }
+        if(order.ShipDate!= DateTime.MinValue) 
+        {
+            throw new ExceptionDataIsInvalid("order");
+        }
+        try
+        {
+            Dal.Product.Get(idOfProduct);
+        }
+        catch (ExceptionObjectCouldNotBeFound inner)
+        {
+            throw new ExceptionLogicObjectCouldNotBeFound("product", inner);
+        }
+        IEnumerable<DO.OrderItem> lst =null;
+        try
+        {
+            lst = Dal.OrderItem.GetDataOfOrderItem(idOrder);
+        }
+        catch (ExceptionObjectCouldNotBeFound inner)
+        {
+            throw new ExceptionLogicObjectCouldNotBeFound("orderItem", inner);
+        }
+        DO.OrderItem it = new DO.OrderItem();
+        foreach (var item in lst)
+        {
+            if(item.ProductID==idOfProduct)
+            {
+                it= item;
+                break;
+            }
+        }
+        it.Amount= amount;
+        Dal.OrderItem.Update(it);
+
     }
     /// <summary>
     /// The function update the status of order to arrived
