@@ -5,10 +5,16 @@ using System.Collections.Generic;
 using DalApi;
 
 namespace Program;
+/// <summary>
+/// The main progrem to test our code
+/// </summary>
 class Program
 {
     static IBl blList = new Bl();
     static Cart cart = new Cart();
+    /// <summary>
+    /// The main menu for all the objects
+    /// </summary>
     static void Main()
     {
         bool validInput = true;
@@ -47,6 +53,9 @@ class Program
         } while (choice != 0);
 
     }
+    /// <summary>
+    /// The function to test all the order functions
+    /// </summary>
     static void OrderOption() // order option
     {
         char choiceInSubSwitch = 'x';
@@ -196,6 +205,9 @@ class Program
             }
         } while (!didSomethingInThisSession);
     }
+    /// <summary>
+    /// The function to test all the product functions
+    /// </summary>
     static void ProductOption() // product option
     {
         char choiceInSubSwitch = 'x';
@@ -416,6 +428,9 @@ class Program
             }
         } while (!didSomethingInThisSession);
     }
+    /// <summary>
+    /// The function to test all the cart functions
+    /// </summary>
     static void CartOption() // cart option
     {
         char choiceInSubSwitch = 'x';

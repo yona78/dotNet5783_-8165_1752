@@ -2,6 +2,9 @@
 using System.Dynamic;
 
 namespace BlApi;
+/// <summary>
+/// The interface for all product functions
+/// </summary>
 public interface IProduct
 {
     public void Add(Product product); // func that gets a proudct, and add it into the dBase

@@ -1,6 +1,9 @@
 ﻿using DO;
 
 namespace BO;
+/// <summary>
+/// class of object to use in our shop
+/// </summary>
 public class Order // object of the manager, on a order a client had asked for
 {
     public int ID { set; get; } // id of order
@@ -14,6 +17,12 @@ public class Order // object of the manager, on a order a client had asked for
     public List<OrderItem> Items { set; get; } // items in order
     public double TotelPrice { set; get; } // total price of order
 
+    /// <summary>
+    /// override to string function to order
+    /// </summary>
+    /// <returns>
+    /// string with all the information about the order
+    /// </returns>
     public override string ToString()
     {
         string sum = "";

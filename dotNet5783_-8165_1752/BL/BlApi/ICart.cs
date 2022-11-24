@@ -1,5 +1,8 @@
 ﻿using BO;
 namespace BlApi;
+/// <summary>
+/// The interface for all cart functions
+/// </summary>
 public interface ICart
 {
     public Cart AddProduct(Cart cart,int idProduct); // add a product to the cart of the customer. The customer will use this func

@@ -5,6 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace BO;
+/// <summary>
+/// class of object to use for creating list with all the information about products
+/// </summary>
 public class ProductForList // // logic object for dealing with the products. we doens't care about the items, we only want to know about the product
 {
     public int ID { get; set; } // id of product

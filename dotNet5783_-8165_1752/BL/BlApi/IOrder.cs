@@ -1,5 +1,8 @@
 ﻿using BO;
 namespace BlApi;
+/// <summary>
+/// The interface for all order functions
+/// </summary>
 public interface IOrder
 {
     public List<OrderForList> GetOrderList(); // returns a list of the orders in the dBase to present on the screen to the customer
