@@ -190,9 +190,10 @@ internal class Order : BlApi.IOrder // object of the manager, on a order a clien
         {
             throw new ExceptionDataIsInvalid("order");
         }
+        DO.Product prdct= new DO.Product();
         try
         {
-            Dal.Product.Get(idOfProduct);
+            prdct = Dal.Product.Get(idOfProduct);
         }
         catch (ExceptionObjectCouldNotBeFound inner)
         {
@@ -216,7 +217,12 @@ internal class Order : BlApi.IOrder // object of the manager, on a order a clien
                 break;
             }
         }
+        if (it.Amount < amount)
+            prdct.InStock -= (amount - it.Amount);
+        else
+            prdct.InStock += (it.Amount - amount);
         it.Amount= amount;
+        Dal.Product.Update(prdct);
         Dal.OrderItem.Update(it);
 
     }

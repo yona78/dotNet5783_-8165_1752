@@ -188,7 +188,7 @@ class Program
                     } while (!validInput);
                     do // getting the new amount
                     {
-                        Console.Write("please enter me an amount: ");
+                        Console.Write("please enter me an id of protuct: ");
                         validInput = int.TryParse(Console.ReadLine(), out idOfProduct);
                         if (!validInput)
                             Console.WriteLine("please enter a valid input");
