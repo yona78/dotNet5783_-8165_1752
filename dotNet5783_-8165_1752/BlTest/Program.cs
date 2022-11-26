@@ -201,10 +201,10 @@ class Program
                     {
                        Console.WriteLine("Name Of Exception: {0}\nMassage In Exception: {1}\nName Of Inner Exception: {2}\nMassage In Inner Exception: {3}", error.GetType().Name, error.Message, error.InnerException.GetType().Name, error.InnerException.Message);
                     }
-                    catch (Exception)
+                    catch (ExceptionNotEnoughInDataBase error)
                     {
-
-                    } // i should see what are the Exceptions.
+                        Console.WriteLine("Name Of Exception: {0}\nMassage In Exception: {1}\n", error.GetType().Name, error.Message);
+                    }
                     break;
                 default:
                     Console.WriteLine("Invalid choice");
