@@ -26,6 +26,7 @@ internal class Product : BlApi.IProduct // class for product, that the manager c
     /// <param name="product">the new product to add</param>
     /// <exception cref="ExceptionDataIsInvalid"></exception>
     /// <exception cref="ExceptionLogicObjectCouldNotBeFound"></exception>
+    /// <exception cref="ExceptionLogicObjectAlreadyExist"></exception>
     public void Add(BO.Product product) // func that gets a proudct, and add it into the dBase
     {
         if (product.ID <= 0 || product.Name == "" || product.Price <= 0 || product.InStock < 0)
@@ -43,6 +44,10 @@ internal class Product : BlApi.IProduct // class for product, that the manager c
         catch (ExceptionObjectCouldNotBeFound inner)
         {
             throw new ExceptionLogicObjectCouldNotBeFound("product", inner);
+        }
+        catch (ExceptionObjectAlreadyExist inner)
+        {
+            throw new ExceptionLogicObjectAlreadyExist("product", inner);
         }
     }
     /// <summary>

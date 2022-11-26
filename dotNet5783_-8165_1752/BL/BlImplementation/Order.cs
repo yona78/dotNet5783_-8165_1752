@@ -164,12 +164,12 @@ internal class Order : BlApi.IOrder // object of the manager, on a order a clien
         else
             orderTracking.OrderStatus = BO.Enums.Status.Confirmed;
         // it must be confirmed, otherwise it wasn't an order in the dBase
-        //lst.Add((DateTime.Now, orderTracking.OrderStatus)); // adding the first touple to the list, i guess that's what you meant.
+        //list.Add((DateTime.Now, orderTracking.OrderStatus)); // adding the first touple to the list, i guess that's what you meant.
         orderTracking.status = lst;
         return orderTracking;
     }
     /// <summary>
-    /// The function update amount of order
+    /// The function update amount of order, bonus func for the manager
     /// </summary>
     /// <param name="idOrder">the id of order to update</param>
     /// <param name="amount">the new amount </param>
@@ -186,30 +186,30 @@ internal class Order : BlApi.IOrder // object of the manager, on a order a clien
         {
             throw new ExceptionLogicObjectCouldNotBeFound("order", inner);
         }
-        if(order.ShipDate!= DateTime.MinValue) 
+        if(order.ShipDate!= DateTime.MinValue)  // checks if it hasn't been shipped yet
         {
             throw new ExceptionDataIsInvalid("order");
         }
-        DO.Product prdct= new DO.Product();
+        DO.Product product= new DO.Product();
         try
         {
-            prdct = Dal.Product.Get(idOfProduct);
+            product = Dal.Product.Get(idOfProduct);
         }
         catch (ExceptionObjectCouldNotBeFound inner)
         {
             throw new ExceptionLogicObjectCouldNotBeFound("product", inner);
         }
-        IEnumerable<DO.OrderItem> lst =null;
+        IEnumerable<DO.OrderItem> list;
         try
         {
-            lst = Dal.OrderItem.GetDataOfOrderItem(idOrder);
+            list = Dal.OrderItem.GetDataOfOrderItem(idOrder); // trying to get all of the order items in the order
         }
         catch (ExceptionObjectCouldNotBeFound inner)
         {
             throw new ExceptionLogicObjectCouldNotBeFound("orderItem", inner);
         }
         DO.OrderItem it = new DO.OrderItem();
-        foreach (var item in lst)
+        foreach (var item in list) // we wants to update an item in the order, which its id is the id of the product we got.
         {
             if(item.ProductID==idOfProduct)
             {
@@ -217,16 +217,16 @@ internal class Order : BlApi.IOrder // object of the manager, on a order a clien
                 break;
             }
         }
-        if(prdct.InStock<amount)
+        if(product.InStock<amount) // checks if we can take more items from this kind from the dBase
         {
             throw new ExceptionNotEnoughInDataBase("order");
         }
         if (it.Amount < amount)
-            prdct.InStock -= (amount - it.Amount);
+            product.InStock -= (amount - it.Amount);
         else
-            prdct.InStock += (it.Amount - amount);
+            product.InStock += (it.Amount - amount); 
         it.Amount= amount;
-        Dal.Product.Update(prdct);
+        Dal.Product.Update(product);
         Dal.OrderItem.Update(it);
 
     }

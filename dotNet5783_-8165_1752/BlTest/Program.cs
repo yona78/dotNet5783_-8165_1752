@@ -301,6 +301,10 @@ class Program
                     {
                         Console.WriteLine("Name Of Exception: {0}\nMassage In Exception: {1}\nName Of Inner Exception: {2}\nMassage In Inner Exception: {3}", error.GetType().Name, error.Message, error.InnerException.GetType().Name, error.InnerException.Message);
                     }
+                    catch (ExceptionLogicObjectAlreadyExist error)
+                    {
+                        Console.WriteLine("Name Of Exception: {0}\nMassage In Exception: {1}\nName Of Inner Exception: {2}\nMassage In Inner Exception: {3}", error.GetType().Name, error.Message, error.InnerException.GetType().Name, error.InnerException.Message);
+                    }
                     break;
                 case 'b': // getting a product by its id
                     do
@@ -418,7 +422,7 @@ class Program
                     } while (!validInput);
                     try
                     {
-                        Console.WriteLine(blList.Product.GetForCustomer(id, cart)); // what should i do?
+                        Console.WriteLine(blList.Product.GetForCustomer(id, cart));
                     }
                     catch (ExceptionLogicObjectCouldNotBeFound error)
                     {
@@ -475,7 +479,7 @@ class Program
                     } while (!validInput);
                     try
                     {
-                        cart = blList.Cart.AddProduct(cart, id); // i should enter here a cart
+                        cart = blList.Cart.AddProduct(cart, id); 
                     }
                     catch (ExceptionObjectIsNotAviliable error)
                     {
@@ -539,7 +543,7 @@ class Program
                     email = Console.ReadLine();
                     try
                     {
-                        blList.Cart.MakeOrder(cart,name, address, email); // i should enter here a cart
+                        blList.Cart.MakeOrder(cart,name, address, email); 
                         cart = new Cart();
                     }
                     catch (ExceptionObjectIsNotAviliable error)
