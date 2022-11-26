@@ -197,10 +197,10 @@ class Program
                     {
                         blList.Order.Update(id,idOfProduct, amount);
                     }
-                    //catch (ExceptionLogicObjectCouldNotBeFound error)
-                    //{
-                    //    Console.WriteLine("Name Of Exception: {0}\nMassage In Exception: {1}\nName Of Inner Exception: {2}\nMassage In Inner Exception: {3}", error.GetType().Name, error.Message, error.InnerException.GetType().Name, error.InnerException.Message);
-                    //}
+                    catch (ExceptionLogicObjectCouldNotBeFound error)
+                    {
+                       Console.WriteLine("Name Of Exception: {0}\nMassage In Exception: {1}\nName Of Inner Exception: {2}\nMassage In Inner Exception: {3}", error.GetType().Name, error.Message, error.InnerException.GetType().Name, error.InnerException.Message);
+                    }
                     catch (Exception)
                     {
 
