@@ -436,6 +436,10 @@ class Program
                     {
                         Console.WriteLine("Name Of Exception: {0}\nMassage In Exception: {1}", error.GetType().Name, error.Message);
                     }
+                    catch (ExceptionObjectCouldNotBeFound error)
+                    {
+                        Console.WriteLine("Name Of Exception: {0}\nMassage In Exception: {1}", error.GetType().Name, error.Message);
+                    }
                     break;
                 default:
                     Console.WriteLine("Invalid choice");

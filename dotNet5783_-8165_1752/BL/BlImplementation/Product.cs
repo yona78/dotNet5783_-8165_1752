@@ -114,6 +114,10 @@ internal class Product : BlApi.IProduct // class for product, that the manager c
             if (i.ProductID == idProduct)
                 num+=i.Amount;
         }
+        if(num==0)
+        {
+            throw new ExceptionObjectCouldNotBeFound("product in cart");
+        }
         item.Amount = num; // the amount of the items from this specific product in the customer's cart
         return item;
     }
