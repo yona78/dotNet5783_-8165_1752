@@ -205,6 +205,10 @@ class Program
                     {
                         Console.WriteLine("Name Of Exception: {0}\nMassage In Exception: {1}\n", error.GetType().Name, error.Message);
                     }
+                    catch (ExceptionDataIsInvalid error)
+                    {
+                        Console.WriteLine("Name Of Exception: {0}\nMassage In Exception: {1}\n", error.GetType().Name, error.Message);
+                    }
                     break;
                 default:
                     Console.WriteLine("Invalid choice");
