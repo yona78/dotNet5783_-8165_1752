@@ -32,9 +32,12 @@ internal class DalOrder : IOrder
         }
         throw new ExceptionObjectCouldNotBeFound("order");
     }
-    public IEnumerable<Order> GetDataOf() // func that returns all of the orders
+    public IEnumerable<Order?> GetDataOf(Func<Order?,bool>? predict=null) // func that returns all of the orders
     {
-        return DataSource._orders;
+        if (predict == null)
+            return DataSource._orders;
+        IEnumerable<Order?> data = DataSource._orders.Where(x => predict(x));
+        return data;
     }
     public void Delete(int id) // func that deletes order from the array
     {
