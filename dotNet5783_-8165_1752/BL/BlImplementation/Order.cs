@@ -26,7 +26,7 @@ internal class Order : BlApi.IOrder // object of the manager, on a order a clien
     public List<BO.OrderForList> GetOrderList() // returns a list of the orders in the dBase to present on the screen to the customer
     {
         List<BO.OrderForList> listToReturn = new List<BO.OrderForList>();
-        IEnumerable<DO.Order> orderList = Dal.Order.GetDataOf();
+        IEnumerable<DO.Order?> orderList = Dal.Order.GetDataOf();
         BO.OrderForList tmp = new BO.OrderForList();
         double price = 0;
         int amountOfItems = 0;

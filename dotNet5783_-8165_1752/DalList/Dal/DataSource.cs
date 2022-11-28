@@ -7,11 +7,11 @@ internal static class DataSource
 {
 
     static readonly Random _rnd = new Random(); // neccesery initlizetion for the initilizetion of the data structures. 
-    static internal List<Order> _orders = new List<Order>();
+    static internal List<Order?> _orders = new List<Order?>();
     public static int maxOrders = 100; // we will use it in the functions of each class
-    static internal List<Product> _products = new List<Product>();
+    static internal List<Product?> _products = new List<Product?>();
     public static int maxProducts = 50; // we will use it in the functions of each class
-    static internal List<OrderItem> _orderItems = new List<OrderItem>();
+    static internal List<OrderItem?> _orderItems = new List<OrderItem?>();
     public static int maxOrderItems = 200; // we will use it in the functions of each class
 
 

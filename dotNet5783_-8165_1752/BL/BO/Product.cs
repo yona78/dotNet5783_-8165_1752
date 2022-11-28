@@ -12,8 +12,8 @@ namespace BO;
 public class Product // logic obejct of product, in order to deal with data base object 
 {
     public int ID { get; set; } // id of product
-    public string Name { get; set; } // name of product
-    public Enums.Category Category { get; set; } // category of product
+    public string? Name { get; set; } // name of product
+    public Enums.Category? Category { get; set; } // category of product
     public double Price { get; set; } // price of product
     public int InStock { set; get; } // num of items from this product in stock
     /// <summary>
