@@ -32,13 +32,13 @@ internal class DalOrder : IOrder
         }
         throw new ExceptionObjectCouldNotBeFound("order");
     }
-    public IEnumerable<Order?> GetDataOf(Func<Order?,bool>? predict=null) // func that returns all of the orders
-    {
-        if (predict == null)
-            return DataSource._orders;
-        IEnumerable<Order?> data = DataSource._orders.Where(x => predict(x));
-        return data;
-    }
+    //public IEnumerable<Order> GetDataOf(Func<Order?,bool>? predict=null) // func that returns all of the orders
+    //{
+    //    if (predict == null)
+    //        return DataSource._orders;
+    //    IEnumerable<Order>? data = DataSource._orders.Where(x => predict(x));
+    //    return data;
+    //}
     public void Delete(int id) // func that deletes order from the array
     {
         bool found = false;
@@ -72,4 +72,8 @@ internal class DalOrder : IOrder
             throw new ExceptionObjectCouldNotBeFound("order"); // checks if the speicifed order was found 
     }
 
+    public IEnumerable<Order> GetDataOf(Func<Order, bool>? predict = null)
+    {
+        return DataSource._orders.FindAll(item=>predict(item));
+    }
 }

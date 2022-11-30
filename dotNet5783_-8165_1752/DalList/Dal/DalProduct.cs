@@ -1,5 +1,6 @@
 ﻿using DO;
 using DalApi;
+
 namespace Dal;
 /// <summary>
 /// public class for implemention of product 
@@ -28,10 +29,10 @@ internal class DalProduct : IProduct
         }
         throw new ExceptionObjectCouldNotBeFound("product");
     }
-    public IEnumerable<Product> GetDataOf() // func that returns all of the products
-    {
-        return DataSource._products;
-    }
+    //public IEnumerable<Product> GetDataOf() // func that returns all of the products
+    //{
+    //    return DataSource._products;
+    //}
     public void Delete(int id) // func that deletes product from the array
     {
         bool found = false;
@@ -63,4 +64,8 @@ internal class DalProduct : IProduct
             throw new ExceptionObjectCouldNotBeFound("product");  
     }
 
+    public IEnumerable<Product> GetDataOf(Func<Product, bool>? predict = null)
+    {
+        return DataSource._products.FindAll(item => predict(item)) ;
+    }
 }

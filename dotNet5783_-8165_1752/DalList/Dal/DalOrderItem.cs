@@ -1,5 +1,6 @@
 ﻿using DO;
 using DalApi;
+
 namespace Dal;
 /// <summary>
 /// public class for implemention of orderItem
@@ -54,10 +55,10 @@ internal class DalOrderItem : IOrderItem
         }
         throw new ExceptionObjectCouldNotBeFound("orderItem");
     }
-    public IEnumerable<OrderItem> GetDataOf() // func that returns all of the orderItems
-    {
-        return DataSource._orderItems;
-    }
+    //public IEnumerable<OrderItem> GetDataOf() // func that returns all of the orderItems
+    //{
+    //    return DataSource._orderItems;
+    //}
     public void Delete(int idOrderItem) // func that deletes orderItem from the array
     {
         bool found = false;
@@ -141,5 +142,10 @@ internal class DalOrderItem : IOrderItem
             }
         }
         return ret;
+    }
+
+    public IEnumerable<OrderItem> GetDataOf(Func<OrderItem, bool>? predict = null)
+    {
+        return DataSource._orderItems.FindAll(item=>predict(item));
     }
 }

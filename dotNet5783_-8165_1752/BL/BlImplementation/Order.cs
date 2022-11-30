@@ -26,7 +26,7 @@ internal class Order : BlApi.IOrder // object of the manager, on a order a clien
     public List<BO.OrderForList> GetOrderList() // returns a list of the orders in the dBase to present on the screen to the customer
     {
         List<BO.OrderForList> listToReturn = new List<BO.OrderForList>();
-        IEnumerable<DO.Order?> orderList = Dal.Order.GetDataOf();
+        IEnumerable<DO.Order>? orderList = Dal.Order.GetDataOf();
         BO.OrderForList tmp = new BO.OrderForList();
         double price = 0;
         int amountOfItems = 0;
@@ -35,7 +35,7 @@ internal class Order : BlApi.IOrder // object of the manager, on a order a clien
             tmp.CustomerName = order.CustomerName;
             tmp.ID = order.ID;
             // now i will calculate the totalPrice of the order, and the amount of items.
-            IEnumerable<DO.OrderItem> listOfItems = Dal.OrderItem.GetDataOfOrderItem(order.ID);
+            IEnumerable<DO.OrderItem>? listOfItems = Dal.OrderItem.GetDataOfOrderItem(order.ID);
             foreach (DO.OrderItem item in listOfItems)
             {
                 price += (item.Amount * item.Price); // the price is the total price, the amount*price
@@ -78,7 +78,7 @@ internal class Order : BlApi.IOrder // object of the manager, on a order a clien
         {
             throw new ExceptionLogicObjectCouldNotBeFound("order", inner);
         }
-        IEnumerable<DO.OrderItem> dO_listOfOrderItems = Dal.OrderItem.GetDataOfOrderItem(order.ID);
+        IEnumerable<DO.OrderItem>? dO_listOfOrderItems = Dal.OrderItem.GetDataOfOrderItem(order.ID);
         BO.Order orderToReturn = new BO.Order();
 
         orderToReturn.CustomerName = order.CustomerName;
@@ -149,16 +149,16 @@ internal class Order : BlApi.IOrder // object of the manager, on a order a clien
         // now i will check the status of the order, by comparing the current time, and the time in the data.
         DateTime now = DateTime.Now;
         List<(DateTime, BO.Enums.Status)> lst = new List<(DateTime, Enums.Status)>();
-        lst.Add((order.OrderDate, BO.Enums.Status.Confirmed));
+        lst.Add(((DateTime, Enums.Status))(order.OrderDate, BO.Enums.Status.Confirmed));
         if (now > order.DeliveryDate && order.DeliveryDate != DateTime.MinValue) // it means the order has already arrived. 
         {
             orderTracking.OrderStatus = BO.Enums.Status.Arrived;
-            lst.Add((order.ShipDate, BO.Enums.Status.Sent));
-            lst.Add((order.DeliveryDate, BO.Enums.Status.Arrived));
+            lst.Add(((DateTime, Enums.Status))(order.ShipDate, BO.Enums.Status.Sent));
+            lst.Add(((DateTime, Enums.Status))(order.DeliveryDate, BO.Enums.Status.Arrived));
         }
         else if (now > order.ShipDate && order.ShipDate != DateTime.MinValue)
         {// it means it has been sent, but hasn't arrived yet
-            lst.Add((order.ShipDate, BO.Enums.Status.Sent));
+            lst.Add(((DateTime, Enums.Status))(order.ShipDate, BO.Enums.Status.Sent));
             orderTracking.OrderStatus = BO.Enums.Status.Sent;
         }
         else
