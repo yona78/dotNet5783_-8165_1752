@@ -47,12 +47,14 @@ internal class DalOrderItem : IOrderItem
     }
     public OrderItem Get(int id) // func that return orderItem by its id 
     {
-        for (int i = 0; i < DataSource._orderItems.Count(); i++) // returns an orderItem by its id
+        return Get(orderItem => (orderItem ?? new OrderItem()).OrderItemID == id);
+
+        /*for (int i = 0; i < DataSource._orderItems.Count(); i++) // returns an orderItem by its id
         {
             if ((DataSource._orderItems[i] ?? new OrderItem()).OrderItemID == id)
                 return (DataSource._orderItems[i] ?? new OrderItem());
         }
-        throw new ExceptionObjectCouldNotBeFound("orderItem");
+        throw new ExceptionObjectCouldNotBeFound("orderItem");*/
     }
     public IEnumerable<OrderItem?> GetDataOf(Func<OrderItem?, bool>? predict = null) // func that returns all of the orderItems
     {
@@ -126,12 +128,14 @@ internal class DalOrderItem : IOrderItem
     // The special functions we were asked to add
     public OrderItem GetOrderItem(int idOrder, int idProduct) // func that reutrns orderItem by its order and product ids
     {
-        for (int i = 0; i < DataSource._orderItems.Count(); i++) // returns an orderItem by its product id and its order id
+        return Get(orderItem => ((orderItem ?? new OrderItem()).OrderID == idOrder)&&((orderItem ?? new OrderItem()).ProductID == idProduct));
+
+        /*for (int i = 0; i < DataSource._orderItems.Count(); i++) // returns an orderItem by its product id and its order id
         {
             if ((DataSource._orderItems[i] ?? new OrderItem()).OrderID == idOrder && (DataSource._orderItems[i] ?? new OrderItem()).ProductID == idProduct)
                 return (DataSource._orderItems[i] ?? new OrderItem());
         }
-        throw new ExceptionObjectCouldNotBeFound("order");
+        throw new ExceptionObjectCouldNotBeFound("order");*/
     }
     public IEnumerable<OrderItem?> GetDataOfOrderItem(int idOfOrder) // func that returns all the orderItems from the specific order
     {
@@ -144,5 +148,15 @@ internal class DalOrderItem : IOrderItem
             }
         }
         return ret;
+    }
+
+    public OrderItem Get(Func<OrderItem?, bool>? func) // func that returns an orderItem by a term it gets.
+    {
+        foreach (var item in DataSource._orderItems)
+        {
+            if (func(item))
+                return (item ?? new OrderItem()); // if item is null, i will return a default value
+        }
+        throw new ExceptionObjectCouldNotBeFound("orderItem"); // else, if i couldn't have found this orderItem, i will throw an exception
     }
 }

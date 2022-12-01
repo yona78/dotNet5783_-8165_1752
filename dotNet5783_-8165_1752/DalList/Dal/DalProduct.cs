@@ -21,12 +21,14 @@ internal class DalProduct : IProduct
     }
     public Product Get(int id) // func that reutrns product by its id
     {
-        for (int i = 0; i < DataSource._products.Count(); i++) // the loop checks whether this prodcut is exist or not
+        return Get(product => (product ?? new Product()).ID == id);
+    
+        /*for (int i = 0; i < DataSource._products.Count(); i++) // the loop checks whether this prodcut is exist or not
         {
             if ((DataSource._products[i] ?? new Product()).ID == id)
                 return (DataSource._products[i] ?? new Product());
         }
-        throw new ExceptionObjectCouldNotBeFound("product");
+        throw new ExceptionObjectCouldNotBeFound("product");*/
     }
     public IEnumerable<Product?> GetDataOf(Func<Product?, bool>? predict = null) // func that returns all of the products
     {
@@ -66,4 +68,13 @@ internal class DalProduct : IProduct
             throw new ExceptionObjectCouldNotBeFound("product");  
     }
 
+    public Product Get(Func<Product?, bool>? func) // func that returns an proudct by a term it gets.
+    {
+        foreach (var item in DataSource._products)
+        {
+            if (func(item))
+                return (item ?? new Product()); // if item is null, i will return a default value
+        }
+        throw new ExceptionObjectCouldNotBeFound("product"); // else, if i couldn't have found this product, i will throw an exception
+    }
 }

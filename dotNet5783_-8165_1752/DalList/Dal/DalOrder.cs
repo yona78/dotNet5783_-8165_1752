@@ -72,4 +72,13 @@ internal class DalOrder : IOrder
             throw new ExceptionObjectCouldNotBeFound("order"); // checks if the speicifed order was found 
     }
 
+    public Order Get(Func<Order?, bool>? func) // func that returns an order by a term it gets.
+    {
+        foreach (var item in DataSource._orders)
+        {
+            if (func(item)) 
+                return (item??new Order()); // if item is null, i will return a default value
+        }
+        throw new ExceptionObjectCouldNotBeFound("order"); // else, if i couldn't have found this order, i will throw an exception
+    }
 }

@@ -3,7 +3,7 @@ namespace BlApi;
 /// <summary>
 /// The interface for all order functions
 /// </summary>
-public interface IOrder
+public interface IOrder 
 {
     public IEnumerable<OrderForList?> GetOrderList(); // returns a list of the orders in the dBase to present on the screen to the customer
     public Order GetOrderManager(int idOrder); // func that returns an order from the dBase to the using of the manager
