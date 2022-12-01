@@ -15,7 +15,7 @@ namespace BlImplementation;
 /// <summary>
 /// The functions of order
 /// </summary>
-internal class Order : BlApi.IOrder // object of the manager, on a order a client had asked for
+internal class Order : BlApi.IOrder  // object of the manager, on a order a client had asked for
 {
     private IDal Dal = new DalList(); // a way to communicate with dBase level
 
@@ -23,10 +23,10 @@ internal class Order : BlApi.IOrder // object of the manager, on a order a clien
     /// The functions returns data about all the orders
     /// </summary>
     /// <returns>list with data of all the orders</returns>
-    public List<BO.OrderForList> GetOrderList() // returns a list of the orders in the dBase to present on the screen to the customer
+    public IEnumerable<BO.OrderForList?> GetOrderList() // returns a list of the orders in the dBase to present on the screen to the customer
     {
-        List<BO.OrderForList> listToReturn = new List<BO.OrderForList>();
-        IEnumerable<DO.Order>? orderList = Dal.Order.GetDataOf();
+        List<BO.OrderForList?> listToReturn = new List<BO.OrderForList>();
+        IEnumerable<DO.Order?> orderList = Dal.Order.GetDataOf();
         BO.OrderForList tmp = new BO.OrderForList();
         double price = 0;
         int amountOfItems = 0;
@@ -35,7 +35,7 @@ internal class Order : BlApi.IOrder // object of the manager, on a order a clien
             tmp.CustomerName = order.CustomerName;
             tmp.ID = order.ID;
             // now i will calculate the totalPrice of the order, and the amount of items.
-            IEnumerable<DO.OrderItem>? listOfItems = Dal.OrderItem.GetDataOfOrderItem(order.ID);
+            IEnumerable<DO.OrderItem?> listOfItems = Dal.OrderItem.GetDataOfOrderItem(order.ID);
             foreach (DO.OrderItem item in listOfItems)
             {
                 price += (item.Amount * item.Price); // the price is the total price, the amount*price
@@ -78,7 +78,7 @@ internal class Order : BlApi.IOrder // object of the manager, on a order a clien
         {
             throw new ExceptionLogicObjectCouldNotBeFound("order", inner);
         }
-        IEnumerable<DO.OrderItem>? dO_listOfOrderItems = Dal.OrderItem.GetDataOfOrderItem(order.ID);
+        IEnumerable<DO.OrderItem?> dO_listOfOrderItems = Dal.OrderItem.GetDataOfOrderItem(order.ID);
         BO.Order orderToReturn = new BO.Order();
 
         orderToReturn.CustomerName = order.CustomerName;
@@ -148,17 +148,17 @@ internal class Order : BlApi.IOrder // object of the manager, on a order a clien
         orderTracking.ID = order.ID;
         // now i will check the status of the order, by comparing the current time, and the time in the data.
         DateTime now = DateTime.Now;
-        List<(DateTime, BO.Enums.Status)> lst = new List<(DateTime, Enums.Status)>();
-        lst.Add(((DateTime, Enums.Status))(order.OrderDate, BO.Enums.Status.Confirmed));
+        List<(DateTime?, BO.Enums.Status)?> lst = new List<(DateTime?, Enums.Status)?>();
+        lst.Add((order.OrderDate, BO.Enums.Status.Confirmed));
         if (now > order.DeliveryDate && order.DeliveryDate != DateTime.MinValue) // it means the order has already arrived. 
         {
             orderTracking.OrderStatus = BO.Enums.Status.Arrived;
-            lst.Add(((DateTime, Enums.Status))(order.ShipDate, BO.Enums.Status.Sent));
-            lst.Add(((DateTime, Enums.Status))(order.DeliveryDate, BO.Enums.Status.Arrived));
+            lst.Add((order.ShipDate, BO.Enums.Status.Sent));
+            lst.Add((order.DeliveryDate, BO.Enums.Status.Arrived));
         }
         else if (now > order.ShipDate && order.ShipDate != DateTime.MinValue)
         {// it means it has been sent, but hasn't arrived yet
-            lst.Add(((DateTime, Enums.Status))(order.ShipDate, BO.Enums.Status.Sent));
+            lst.Add((order.ShipDate, BO.Enums.Status.Sent));
             orderTracking.OrderStatus = BO.Enums.Status.Sent;
         }
         else
@@ -199,7 +199,7 @@ internal class Order : BlApi.IOrder // object of the manager, on a order a clien
         {
             throw new ExceptionLogicObjectCouldNotBeFound("product", inner);
         }
-        IEnumerable<DO.OrderItem> list;
+        IEnumerable<DO.OrderItem?> list;
         try
         {
             list = Dal.OrderItem.GetDataOfOrderItem(idOrder); // trying to get all of the order items in the order
@@ -211,20 +211,20 @@ internal class Order : BlApi.IOrder // object of the manager, on a order a clien
         DO.OrderItem it = new DO.OrderItem();
         foreach (var item in list) // we wants to update an item in the order, which its id is the id of the product we got.
         {
-            if(item.ProductID==idOfProduct)
+            if((item??new DO.OrderItem()).ProductID==idOfProduct)
             {
-                it= item;
+                it= (item ?? new DO.OrderItem());
                 break;
             }
         }
-        if(product.InStock+it.Amount<amount) // checks if we can take more items from this kind from the dBase
+        if(product.InStock+(it).Amount<amount) // checks if we can take more items from this kind from the dBase
         {
             throw new ExceptionNotEnoughInDataBase("order");
         }
         if (it.Amount < amount)
             product.InStock -= (amount - it.Amount);
         else
-            product.InStock += (it.Amount - amount); 
+            product.InStock += it.Amount - amount;
         it.Amount= amount;
         Dal.Product.Update(product);
         Dal.OrderItem.Update(it);

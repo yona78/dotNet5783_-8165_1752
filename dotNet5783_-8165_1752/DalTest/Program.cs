@@ -128,7 +128,7 @@ namespace Program
                     case 'c': // print all orders option
                         try
                         {
-                            IEnumerable<Order> array = dalList.Order.GetDataOf();
+                            IEnumerable<Order?> array = dalList.Order.GetDataOf();
 
                             foreach (Order item in array)
                             {
@@ -303,7 +303,7 @@ namespace Program
                         }
                         break;
                     case 'c': // print all products option
-                        IEnumerable<Product> array = dalList.Product.GetDataOf();
+                        IEnumerable<Product?> array = dalList.Product.GetDataOf();
                         foreach (Product item in array)
                         {
                             if (item.ID != 0)
@@ -479,7 +479,7 @@ namespace Program
                         }
                         break;
                     case 'c': // print all orderItem option
-                        IEnumerable<OrderItem> array = dalList.OrderItem.GetDataOf();
+                        IEnumerable<OrderItem?> array = dalList.OrderItem.GetDataOf();
                         foreach (OrderItem item in array)
                         {
                             if (item.OrderItemID != 0)
@@ -592,7 +592,7 @@ namespace Program
                         int idForList = id;
                         try
                         {
-                            IEnumerable<OrderItem> ret = dalList.OrderItem.GetDataOfOrderItem(idForList);
+                            IEnumerable<OrderItem?> ret = dalList.OrderItem.GetDataOfOrderItem(idForList);
                             foreach (OrderItem item in ret)
                             {
                                 Console.WriteLine(item);

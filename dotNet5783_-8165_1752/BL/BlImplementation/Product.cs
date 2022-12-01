@@ -58,8 +58,8 @@ internal class Product : BlApi.IProduct // class for product, that the manager c
     /// <exception cref="ExceptionLogicObjectCouldNotBeFound"></exception>
     public void Delete(int idProduct) // func that gets and id of product, and deletes him from the dBase. The only that can use this func is the manager
     {
-        IEnumerable<DO.Order> listOfOrders = Dal.Order.GetDataOf();
-        IEnumerable<DO.OrderItem> listOfItemOrders;
+        IEnumerable<DO.Order?> listOfOrders = Dal.Order.GetDataOf();
+        IEnumerable<DO.OrderItem?> listOfItemOrders;
         foreach (DO.Order item in listOfOrders) // foreach order in the dBase
         {
             listOfItemOrders = Dal.OrderItem.GetDataOfOrderItem(item.ID);
@@ -156,9 +156,9 @@ internal class Product : BlApi.IProduct // class for product, that the manager c
     /// The function return all the products in the store
     /// </summary>
     /// <returns>the list with all the products</returns>
-    public List<ProductForList> GetList() // func that returns all the products in a special logic object, which either the manager can use it or it will be printed to the customer screen
+    public IEnumerable<ProductForList?> GetList() // func that returns all the products in a special logic object, which either the manager can use it or it will be printed to the customer screen
     {
-        IEnumerable<DO.Product> listOfProducts = Dal.Product.GetDataOf();
+        IEnumerable<DO.Product?> listOfProducts = Dal.Product.GetDataOf();
         List<BO.ProductForList> list = new List<BO.ProductForList>();
         BO.ProductForList product1 = new BO.ProductForList();
         foreach (DO.Product product in listOfProducts)  // for each product in the dBase, i would like to initalize a similar product in the ProductForList. The only that can use this func is the manager

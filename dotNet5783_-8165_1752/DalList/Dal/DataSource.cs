@@ -127,9 +127,9 @@ internal static class DataSource
                 amountOfItems = 4;
                 do
                 {
-                    if (_products[productInOrder].InStock == 0)
+                    if ((_products[productInOrder]??new Product()).InStock == 0)
                         productInOrder = _rnd.Next(productInit);
-                } while (_products[productInOrder].InStock <= amountOfItems || _products[productInOrder].InStock == 0); // i can't add a number of amount itmes if there is no such num of items in the store...
+                } while ((_products[productInOrder]??new Product()).InStock <= amountOfItems || (_products[productInOrder]??new Product()).InStock == 0); // i can't add a number of amount itmes if there is no such num of items in the store...
 
             }
 
@@ -137,15 +137,15 @@ internal static class DataSource
             {
                 do
                 {
-                    while (_products[productInOrder].InStock <= amountOfItems && _products[productInOrder].InStock != 0)
+                    while ((_products[productInOrder]??new Product()).InStock <= amountOfItems && (_products[productInOrder]??new Product()).InStock != 0)
                         amountOfItems = _rnd.Next(1, 4);
-                    if (_products[productInOrder].InStock == 0)
+                    if ((_products[productInOrder]??new Product()).InStock == 0)
                         productInOrder = _rnd.Next(productInit);
-                } while (_products[productInOrder].InStock <= amountOfItems || _products[productInOrder].InStock == 0);
+                } while ((_products[productInOrder]??new Product()).InStock <= amountOfItems || (_products[productInOrder]??new Product()).InStock == 0);
             }
             /// now i chose the product and the num of items that will be in this order
 
-            OrderItem orderItem = new OrderItem { OrderItemID = Config.GetLastIndexOrderItems, ProductID = _products[productInOrder].ID, OrderID = _orders[i].ID, Price = _products[productInOrder].Price, Amount = amountOfItems };
+            OrderItem orderItem = new OrderItem { OrderItemID = Config.GetLastIndexOrderItems, ProductID = (_products[productInOrder]??new Product()).ID, OrderID = (_orders[i]??new Order()).ID, Price = (_products[productInOrder]??new Product()).Price, Amount = amountOfItems };
             //int sum = _products[productInOrder].InStock - amountOfItems; // if someone orders 4 items from specific product, i will save this items for him. 
             addOrdersItem(orderItem);
         }
