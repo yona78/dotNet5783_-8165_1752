@@ -2,7 +2,7 @@
 using System;
 
 namespace DalApi;
-public interface ICrud <T>
+public interface ICrud <T> where T : struct
 {
     public int Add(T toAdd);// func that adds an T to the list of T's, and return its id 
     public T Get(int id); // func that reutrns T by its id
