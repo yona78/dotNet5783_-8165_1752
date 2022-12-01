@@ -14,7 +14,7 @@ internal class DalOrderItem : IOrderItem
         bool found = false;
         for (int i = 0; i < DataSource._orders.Count(); i++) // looks if  there is such an order
         {
-            if ((DataSource._orders[i] ?? new Order()).ID == newOrderItem.OrderID)
+            if ((DataSource._orders[i]).ID == newOrderItem.OrderID)
             {
                 found = true;
                 break;
@@ -26,9 +26,9 @@ internal class DalOrderItem : IOrderItem
         found = false;
         for (int i = 0; i < DataSource._products.Count(); i++)// looks if  there is such an product
         {
-            if ((DataSource._products[i] ?? new Product()).ID == newOrderItem.ProductID)
+            if ((DataSource._products[i]).ID == newOrderItem.ProductID)
             {
-                price = (DataSource._products[i] ?? new Product()).Price;
+                price = (DataSource._products[i]).Price;
                 found = true;
                 break;
             }
@@ -39,7 +39,7 @@ internal class DalOrderItem : IOrderItem
         newOrderItem.OrderItemID = DataSource.Config.GetLastIndexOrderItems;
         for (int i = 0; i < DataSource._orderItems.Count(); i++)
         {
-            if ((DataSource._orderItems[i] ?? new OrderItem()).OrderID == newOrderItem.OrderID && (DataSource._orderItems[i] ?? new OrderItem()).ProductID == newOrderItem.ProductID) // because we can't add a new orderItem to the same product and product id, if there is already one there. 
+            if ((DataSource._orderItems[i]).OrderID == newOrderItem.OrderID && (DataSource._orderItems[i]).ProductID == newOrderItem.ProductID) // because we can't add a new orderItem to the same product and product id, if there is already one there. 
                 throw new ExceptionObjectAlreadyExist("orderItem");
         }
         DataSource._orderItems.Add(newOrderItem);
@@ -56,11 +56,11 @@ internal class DalOrderItem : IOrderItem
         }
         throw new ExceptionObjectCouldNotBeFound("orderItem");*/
     }
-    public IEnumerable<OrderItem?> GetDataOf(Func<OrderItem?, bool>? predict = null) // func that returns all of the orderItems
+    public IEnumerable<OrderItem> GetDataOf(Func<OrderItem?, bool>? predict = null) // func that returns all of the orderItems
     {
         if (predict == null)
             return DataSource._orderItems;
-        IEnumerable<OrderItem?> data = DataSource._orderItems.Where(x => predict(x));
+        IEnumerable<OrderItem> data = DataSource._orderItems.Where(x => predict(x));
         return data;
     }
     public void Delete(int idOrderItem) // func that deletes orderItem from the array
@@ -68,7 +68,7 @@ internal class DalOrderItem : IOrderItem
         bool found = false;
         for (int i = 0; i < DataSource._orderItems.Count(); i++) // checks if the order item exists
         {
-            if ((DataSource._orderItems[i] ?? new OrderItem()).OrderItemID == idOrderItem)
+            if ((DataSource._orderItems[i]).OrderItemID == idOrderItem)
             {
                 found = true;
                 DataSource._orderItems.RemoveAt(i);
