@@ -82,7 +82,7 @@ internal class DalOrderItem : IOrderItem
         bool found = false;
         for (int i = 0; i < DataSource._orderItems.Count(); i++) // checks if the order exists
         {
-            if ((DataSource._orders[i] ?? new Order()).ID == newOrderItem.OrderID)
+            if ((DataSource._orders[i]).ID == newOrderItem.OrderID)
             {
                 found = true;
                 break;
@@ -94,7 +94,7 @@ internal class DalOrderItem : IOrderItem
         found = false;
         for (int i = 0; i < DataSource._orderItems.Count(); i++) // checks if the product exists
         {
-            if ((DataSource._products[i] ?? new Product()).ID == newOrderItem.ProductID)
+            if ((DataSource._products[i] ).ID == newOrderItem.ProductID)
             {
                 found = true;
                 break;
@@ -106,14 +106,14 @@ internal class DalOrderItem : IOrderItem
         found = false;
         for(int i =0; i< DataSource._products.Count();i++)
         {
-            if (newOrderItem.ProductID == (DataSource._products[i] ?? new Product()).ID)
+            if (newOrderItem.ProductID == (DataSource._products[i]).ID)
             {
-                newOrderItem.Price = (DataSource._products[i] ?? new Product()).Price;
+                newOrderItem.Price = (DataSource._products[i]).Price;
             }
         }
         for (int i = 0; i < DataSource._orderItems.Count(); i++)
         {
-            if ((DataSource._orderItems[i] ?? new OrderItem()).OrderItemID == newOrderItem.OrderItemID) // if it has the same id, we do a deep copy
+            if ((DataSource._orderItems[i]).OrderItemID == newOrderItem.OrderItemID) // if it has the same id, we do a deep copy
             {
                 found = true;
                 DataSource._orderItems.RemoveAt(i);
@@ -137,14 +137,14 @@ internal class DalOrderItem : IOrderItem
         }
         throw new ExceptionObjectCouldNotBeFound("order");*/
     }
-    public IEnumerable<OrderItem?> GetDataOfOrderItem(int idOfOrder) // func that returns all the orderItems from the specific order
+    public IEnumerable<OrderItem> GetDataOfOrderItem(int idOfOrder) // func that returns all the orderItems from the specific order
     {
-        List<OrderItem?> ret = new List<OrderItem?>(); // we use list because we don't know the what is the size of the structre we will need to use.
+        List<OrderItem> ret = new List<OrderItem>(); // we use list because we don't know the what is the size of the structre we will need to use.
         for (int i = 0; i < DataSource._orderItems.Count(); i++) // returns a list of all of the orderItems from the specific order, whose id was given to us.
         {
-            if ((DataSource._orderItems[i] ?? new OrderItem()).OrderID == idOfOrder)
-            {
-                ret.Add((DataSource._orderItems[i] ?? new OrderItem()));
+            if ((DataSource._orderItems[i]).OrderID == idOfOrder)
+            {   
+                ret.Add((DataSource._orderItems[i]));
             }
         }
         return ret;
@@ -155,7 +155,7 @@ internal class DalOrderItem : IOrderItem
         foreach (var item in DataSource._orderItems)
         {
             if (func(item))
-                return (item ?? new OrderItem()); // if item is null, i will return a default value
+                return (item); // if item is null, i will return a default value
         }
         throw new ExceptionObjectCouldNotBeFound("orderItem"); // else, if i couldn't have found this orderItem, i will throw an exception
     }

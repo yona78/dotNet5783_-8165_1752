@@ -145,7 +145,7 @@ internal static class DataSource
             }
             /// now i chose the product and the num of items that will be in this order
 
-            OrderItem orderItem = new OrderItem { OrderItemID = Config.GetLastIndexOrderItems, ProductID = (_products[productInOrder]).ID, OrderID = (_orders[i]??new Order()).ID, Price = (_products[productInOrder]).Price, Amount = amountOfItems };
+            OrderItem orderItem = new OrderItem { OrderItemID = Config.GetLastIndexOrderItems, ProductID = (_products[productInOrder]).ID, OrderID = (_orders[i]).ID, Price = (_products[productInOrder]).Price, Amount = amountOfItems };
             //int sum = _products[productInOrder].InStock - amountOfItems; // if someone orders 4 items from specific product, i will save this items for him. 
             addOrdersItem(orderItem);
         }

@@ -26,7 +26,7 @@ internal class Order : BlApi.IOrder  // object of the manager, on a order a clie
     public IEnumerable<BO.OrderForList?> GetOrderList() // returns a list of the orders in the dBase to present on the screen to the customer
     {
         List<BO.OrderForList?> listToReturn = new List<BO.OrderForList>();
-        IEnumerable<DO.Order?> orderList = Dal.Order.GetDataOf();
+        IEnumerable<DO.Order> orderList = Dal.Order.GetDataOf();
         BO.OrderForList tmp = new BO.OrderForList();
         double price = 0;
         int amountOfItems = 0;
@@ -35,7 +35,7 @@ internal class Order : BlApi.IOrder  // object of the manager, on a order a clie
             tmp.CustomerName = order.CustomerName;
             tmp.ID = order.ID;
             // now i will calculate the totalPrice of the order, and the amount of items.
-            IEnumerable<DO.OrderItem?> listOfItems = Dal.OrderItem.GetDataOfOrderItem(order.ID);
+            IEnumerable<DO.OrderItem> listOfItems = Dal.OrderItem.GetDataOfOrderItem(order.ID);
             foreach (DO.OrderItem item in listOfItems)
             {
                 price += (item.Amount * item.Price); // the price is the total price, the amount*price
@@ -47,9 +47,9 @@ internal class Order : BlApi.IOrder  // object of the manager, on a order a clie
             price = 0;
             amountOfItems = 0;
             DateTime now = DateTime.Now;
-            if (now > order.DeliveryDate && order.DeliveryDate != DateTime.MinValue) // it means the order has already arrived. 
+            if (now > order.DeliveryDate && order.DeliveryDate != null) // it means the order has already arrived. 
                 tmp.OrderStatus = BO.Enums.Status.Arrived;
-            else if (now > order.ShipDate && order.ShipDate != DateTime.MinValue) // it means it has been sent, but hasn't arrived yet
+            else if (now > order.ShipDate && order.ShipDate != null) // it means it has been sent, but hasn't arrived yet
                 tmp.OrderStatus = BO.Enums.Status.Sent;
             else
                 tmp.OrderStatus = BO.Enums.Status.Confirmed; // it must be confirmed, otherwise it wasn't an order in the dBase
@@ -78,7 +78,7 @@ internal class Order : BlApi.IOrder  // object of the manager, on a order a clie
         {
             throw new ExceptionLogicObjectCouldNotBeFound("order", inner);
         }
-        IEnumerable<DO.OrderItem?> dO_listOfOrderItems = Dal.OrderItem.GetDataOfOrderItem(order.ID);
+        IEnumerable<DO.OrderItem> dO_listOfOrderItems = Dal.OrderItem.GetDataOfOrderItem(order.ID);
         BO.Order orderToReturn = new BO.Order();
 
         orderToReturn.CustomerName = order.CustomerName;
@@ -118,9 +118,9 @@ internal class Order : BlApi.IOrder  // object of the manager, on a order a clie
 
         // now i will check the status of the order, by comparing the current time, and the time in the data.
         DateTime now = DateTime.Now;
-        if (now > order.DeliveryDate && order.DeliveryDate != DateTime.MinValue) // it means the order has already arrived. 
+        if (now > order.DeliveryDate && order.DeliveryDate != null) // it means the order has already arrived. 
             orderToReturn.OrderStatus = BO.Enums.Status.Arrived;
-        else if (now > order.ShipDate && order.ShipDate != DateTime.MinValue) // it means it has been sent, but hasn't arrived yet
+        else if (now > order.ShipDate && order.ShipDate != null) // it means it has been sent, but hasn't arrived yet
             orderToReturn.OrderStatus = BO.Enums.Status.Sent;
         else
             orderToReturn.OrderStatus = BO.Enums.Status.Confirmed; // it must be confirmed, otherwise it wasn't an order in the dBase
@@ -148,17 +148,17 @@ internal class Order : BlApi.IOrder  // object of the manager, on a order a clie
         orderTracking.ID = order.ID;
         // now i will check the status of the order, by comparing the current time, and the time in the data.
         DateTime now = DateTime.Now;
-        List<(DateTime?, BO.Enums.Status)?> lst = new List<(DateTime?, Enums.Status)?>();
-        lst.Add((order.OrderDate, BO.Enums.Status.Confirmed));
-        if (now > order.DeliveryDate && order.DeliveryDate != DateTime.MinValue) // it means the order has already arrived. 
+        List<(DateTime, BO.Enums.Status)?> lst = new List<(DateTime, Enums.Status)?>();
+        lst.Add(((DateTime, Enums.Status)?)(order.OrderDate, BO.Enums.Status.Confirmed));
+        if (now > order.DeliveryDate && order.DeliveryDate != null) // it means the order has already arrived. 
         {
             orderTracking.OrderStatus = BO.Enums.Status.Arrived;
-            lst.Add((order.ShipDate, BO.Enums.Status.Sent));
-            lst.Add((order.DeliveryDate, BO.Enums.Status.Arrived));
+            lst.Add(((DateTime, Enums.Status)?)(order.ShipDate, BO.Enums.Status.Sent));
+            lst.Add(((DateTime, Enums.Status)?)(order.DeliveryDate, BO.Enums.Status.Arrived));
         }
-        else if (now > order.ShipDate && order.ShipDate != DateTime.MinValue)
+        else if (now > order.ShipDate && order.ShipDate != null)
         {// it means it has been sent, but hasn't arrived yet
-            lst.Add((order.ShipDate, BO.Enums.Status.Sent));
+            lst.Add(((DateTime, Enums.Status)?)(order.ShipDate, BO.Enums.Status.Sent));
             orderTracking.OrderStatus = BO.Enums.Status.Sent;
         }
         else
@@ -186,7 +186,7 @@ internal class Order : BlApi.IOrder  // object of the manager, on a order a clie
         {
             throw new ExceptionLogicObjectCouldNotBeFound("order", inner);
         }
-        if(order.ShipDate!= DateTime.MinValue)  // checks if it hasn't been shipped yet
+        if(order.ShipDate!= null)  // checks if it hasn't been shipped yet
         {
             throw new ExceptionDataIsInvalid("order");
         }
@@ -199,7 +199,7 @@ internal class Order : BlApi.IOrder  // object of the manager, on a order a clie
         {
             throw new ExceptionLogicObjectCouldNotBeFound("product", inner);
         }
-        IEnumerable<DO.OrderItem?> list;
+        IEnumerable<DO.OrderItem> list;
         try
         {
             list = Dal.OrderItem.GetDataOfOrderItem(idOrder); // trying to get all of the order items in the order
@@ -211,9 +211,9 @@ internal class Order : BlApi.IOrder  // object of the manager, on a order a clie
         DO.OrderItem it = new DO.OrderItem();
         foreach (var item in list) // we wants to update an item in the order, which its id is the id of the product we got.
         {
-            if((item??new DO.OrderItem()).ProductID==idOfProduct)
+            if((item).ProductID==idOfProduct)
             {
-                it= (item ?? new DO.OrderItem());
+                it= (item);
                 break;
             }
         }
