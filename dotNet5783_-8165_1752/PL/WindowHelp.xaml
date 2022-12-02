@@ -20,9 +20,10 @@
             </Grid.ColumnDefinitions >
         </Grid>
         <ComboBox Name="AttributeSelector"
-           HorizontalAlignment= "Stretch"
-           VerticalAlignment="Stretch"
-           Grid.Column="1">
+         HorizontalAlignment= "Stretch"
+         VerticalAlignment="Stretch"
+         Grid.Column="1"/>
+        <Label Content="Label" HorizontalAlignment="Left" Margin="83,31,0,0" Grid.Row="1" VerticalAlignment="Top" Grid.Column="0"/>
 
     </Grid>
 </Window>
