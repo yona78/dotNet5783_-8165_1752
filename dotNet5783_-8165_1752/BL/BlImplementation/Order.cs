@@ -4,12 +4,15 @@ using System.Data;
 using System.Diagnostics;
 using System.Linq;
 using System.Net.Http.Headers;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using BlApi;
+using BlImplementation;
 using BO;
 using Dal;
 using DalApi;
+using DO;
 
 namespace BlImplementation;
 /// <summary>
@@ -72,7 +75,7 @@ internal class Order : BlApi.IOrder  // object of the manager, on a order a clie
         DO.Order order = new DO.Order();
         try
         {
-            order = Dal.Order.Get(idOrder); // now i got the order from the dBase
+            order = Dal.Order.Get(idOrder); // now i get the order from the dBase
         }
         catch (ExceptionObjectCouldNotBeFound inner)
         {
@@ -148,17 +151,17 @@ internal class Order : BlApi.IOrder  // object of the manager, on a order a clie
         orderTracking.ID = order.ID;
         // now i will check the status of the order, by comparing the current time, and the time in the data.
         DateTime now = DateTime.Now;
-        List<(DateTime, BO.Enums.Status)?> lst = new List<(DateTime, Enums.Status)?>();
-        lst.Add(((DateTime, Enums.Status)?)(order.OrderDate, BO.Enums.Status.Confirmed));
+        List<(DateTime, BO.Enums.Status)?> lst = new List<(DateTime, BO.Enums.Status)?>();
+        lst.Add(((DateTime, BO.Enums.Status)?)(order.OrderDate, BO.Enums.Status.Confirmed));
         if (now > order.DeliveryDate && order.DeliveryDate != null) // it means the order has already arrived. 
         {
             orderTracking.OrderStatus = BO.Enums.Status.Arrived;
-            lst.Add(((DateTime, Enums.Status)?)(order.ShipDate, BO.Enums.Status.Sent));
-            lst.Add(((DateTime, Enums.Status)?)(order.DeliveryDate, BO.Enums.Status.Arrived));
+            lst.Add(((DateTime, BO.Enums.Status)?)(order.ShipDate, BO.Enums.Status.Sent));
+            lst.Add(((DateTime, BO.Enums.Status)?)(order.DeliveryDate, BO.Enums.Status.Arrived));
         }
         else if (now > order.ShipDate && order.ShipDate != null)
         {// it means it has been sent, but hasn't arrived yet
-            lst.Add(((DateTime, Enums.Status)?)(order.ShipDate, BO.Enums.Status.Sent));
+            lst.Add(((DateTime, BO.Enums.Status)?)(order.ShipDate, BO.Enums.Status.Sent));
             orderTracking.OrderStatus = BO.Enums.Status.Sent;
         }
         else
@@ -175,7 +178,7 @@ internal class Order : BlApi.IOrder  // object of the manager, on a order a clie
     /// <param name="amount">the new amount </param>
     ///  <param name="idOfProduct">the product to update </param>
     /// <exception cref="NotImplementedException"></exception>
-    public void Update(int idOrder,int idOfProduct, int amount) // update for the manager, to update an order
+    public void Update(int idOrder, int idOfProduct, int amount) // update for the manager, to update an order
     {
         DO.Order order = new DO.Order();
         try
@@ -186,11 +189,11 @@ internal class Order : BlApi.IOrder  // object of the manager, on a order a clie
         {
             throw new ExceptionLogicObjectCouldNotBeFound("order", inner);
         }
-        if(order.ShipDate!= null)  // checks if it hasn't been shipped yet
+        if (order.ShipDate != null)  // checks if it hasn't been shipped yet
         {
             throw new ExceptionDataIsInvalid("order");
         }
-        DO.Product product= new DO.Product();
+        DO.Product product = new DO.Product();
         try
         {
             product = Dal.Product.Get(idOfProduct);
@@ -211,13 +214,13 @@ internal class Order : BlApi.IOrder  // object of the manager, on a order a clie
         DO.OrderItem it = new DO.OrderItem();
         foreach (var item in list) // we wants to update an item in the order, which its id is the id of the product we got.
         {
-            if((item).ProductID==idOfProduct)
+            if ((item).ProductID == idOfProduct)
             {
-                it= (item);
+                it = (item);
                 break;
             }
         }
-        if(product.InStock+(it).Amount<amount) // checks if we can take more items from this kind from the dBase
+        if (product.InStock + (it).Amount < amount) // checks if we can take more items from this kind from the dBase
         {
             throw new ExceptionNotEnoughInDataBase("order");
         }
@@ -225,7 +228,7 @@ internal class Order : BlApi.IOrder  // object of the manager, on a order a clie
             product.InStock -= (amount - it.Amount);
         else
             product.InStock += it.Amount - amount;
-        it.Amount= amount;
+        it.Amount = amount;
         Dal.Product.Update(product);
         Dal.OrderItem.Update(it);
 
@@ -251,7 +254,7 @@ internal class Order : BlApi.IOrder  // object of the manager, on a order a clie
         }
 
         orderToReturn = GetOrderManager(idOrder);
-        if (orderToReturn.OrderStatus != Enums.Status.Sent)
+        if (orderToReturn.OrderStatus != BO.Enums.Status.Sent)
             throw new ExceptionObjectIsNotAviliable("order"); // becuase it has been already sent, or even hasn't supplied yet
         orderToReturn.DeliveryDate = DateTime.Now; // updating the logic object
         order.DeliveryDate = DateTime.Now; // updating the object
@@ -286,10 +289,10 @@ internal class Order : BlApi.IOrder  // object of the manager, on a order a clie
         }
 
         orderToReturn = GetOrderManager(idOrder);
-        if (orderToReturn.OrderStatus != Enums.Status.Confirmed)
+        if (orderToReturn.OrderStatus != BO.Enums.Status.Confirmed)
             throw new ExceptionObjectIsNotAviliable("order"); // becuase it has been already sent, or even arrived
         orderToReturn.ShipDate = DateTime.Now; // updating the logic object
-        orderToReturn.OrderStatus = Enums.Status.Sent;
+        orderToReturn.OrderStatus = BO.Enums.Status.Sent;
         order.ShipDate = DateTime.Now; // updating the object
         try
         {
@@ -297,9 +300,147 @@ internal class Order : BlApi.IOrder  // object of the manager, on a order a clie
         }
         catch (ExceptionObjectCouldNotBeFound inner)
         {
-            throw new ExceptionLogicObjectCouldNotBeFound("order", inner); 
+            throw new ExceptionLogicObjectCouldNotBeFound("order", inner);
         }
         return orderToReturn;
+    }
+    /// <summary>
+    /// func that returns a product that is being choosing by a specified condition
+    /// </summary>
+    /// <param name="func"></param>the predict, the specific condition
+    /// <returns>the order ti return</returns>
+    /// <exception cref="ExceptionObjectCouldNotBeFound"></exception>
+    public BO.Order Get(Func<BO.Order?, bool>? func) // func that returns an order by a term it gets.
+    {
+        IEnumerable<DO.Order> orders = Dal.Order.GetDataOf();
+        List<BO.Order> listOfLogicEntities = new List<BO.Order>();
+        BO.Order order = new BO.Order();
+        foreach (var item in orders)
+        {
+
+            IEnumerable<DO.OrderItem> dO_listOfOrderItems = Dal.OrderItem.GetDataOfOrderItem(item.ID);
+
+            order.CustomerName = item.CustomerName;
+            order.CustomerAddress = item.CustomerAdrress;
+            order.CustomerEmail = item.CustomerEmail;
+            order.ShipDate = item.ShipDate;
+            order.DeliveryDate = item.DeliveryDate;
+            order.PaymentDate = item.OrderDate;
+            order.ID = item.ID;
+            List<BO.OrderItem> bO_listOfOrderItems = new List<BO.OrderItem>();
+            BO.OrderItem orderItemTmp = new BO.OrderItem();
+
+            // now i will calculate the totalPrice of the order, in addition, i want to take a list of the orderItems from the logic
+            double price = 0;
+            foreach (DO.OrderItem orderItem in dO_listOfOrderItems)
+            {
+                orderItemTmp.Price = orderItem.Price;
+                orderItemTmp.ProductID = orderItem.ProductID;
+                orderItemTmp.ID = orderItem.OrderItemID;
+                orderItemTmp.Amount = orderItem.Amount;
+                // if i want to add the name of the product, i must check what is his item, and then, take its name.
+                try
+                {
+                    orderItemTmp.Name = (Dal.Product.Get(orderItem.ProductID)).Name;
+                }
+                catch (ExceptionObjectCouldNotBeFound inner)
+                {
+                    throw new ExceptionLogicObjectCouldNotBeFound("product", inner);
+                }
+                orderItemTmp.TotalPrice = (orderItem.Amount * orderItem.Price); // every thing in this orderItem cost Price, and there are Amount things. so the total price is Amount*Price
+                bO_listOfOrderItems.Add(orderItemTmp);
+                orderItemTmp = new BO.OrderItem();
+                price += (orderItem.Amount * orderItem.Price);
+            }
+            order.TotelPrice = price; // the total price of the order
+            order.Items = bO_listOfOrderItems; // giving the Items property a value
+
+            // now i will check the status of the order, by comparing the current time, and the time in the data.
+            DateTime now = DateTime.Now;
+            if (now > order.DeliveryDate && order.DeliveryDate != null) // it means the order has already arrived. 
+                order.OrderStatus = BO.Enums.Status.Arrived;
+            else if (now > order.ShipDate && order.ShipDate != null) // it means it has been sent, but hasn't arrived yet
+                order.OrderStatus = BO.Enums.Status.Sent;
+            else
+                order.OrderStatus = BO.Enums.Status.Confirmed; // it must be confirmed, otherwise it wasn't an order in the dBase
+
+            listOfLogicEntities.Add(order); // adding the order
+        } // now, i've created like "DataSouce._orders
+
+
+        foreach (var item in listOfLogicEntities)
+        {
+            if (func(item))
+                return (item); // if item is null, i will return a default value
+        }
+        throw new ExceptionObjectCouldNotBeFound("order"); // else, if i couldn't have found this product, i will throw an exception
+    }
+    /// <summary>
+    /// func that returns a list of order that are being chosed by a specified condition
+    /// </summary>
+    /// <param name="predict"></param>the condition we get
+    /// <returns>the order to return</returns>
+    public IEnumerable<BO.Order> GetDataOf(Func<BO.Order?, bool>? predict = null) // func that returns all of the orders    
+    {
+        IEnumerable<DO.Order> orders = Dal.Order.GetDataOf();
+        List<BO.Order> ordersToReturn = new List<BO.Order>();
+        BO.Order order = new BO.Order();
+        foreach (var item in orders)
+        {
+
+            IEnumerable<DO.OrderItem> dO_listOfOrderItems = Dal.OrderItem.GetDataOfOrderItem(item.ID);
+
+            order.CustomerName = item.CustomerName;
+            order.CustomerAddress = item.CustomerAdrress;
+            order.CustomerEmail = item.CustomerEmail;
+            order.ShipDate = item.ShipDate;
+            order.DeliveryDate = item.DeliveryDate;
+            order.PaymentDate = item.OrderDate;
+            order.ID = item.ID;
+            List<BO.OrderItem> bO_listOfOrderItems = new List<BO.OrderItem>();
+            BO.OrderItem orderItemTmp = new BO.OrderItem();
+
+            // now i will calculate the totalPrice of the order, in addition, i want to take a list of the orderItems from the logic
+            double price = 0;
+            foreach (DO.OrderItem orderItem in dO_listOfOrderItems)
+            {
+                orderItemTmp.Price = orderItem.Price;
+                orderItemTmp.ProductID = orderItem.ProductID;
+                orderItemTmp.ID = orderItem.OrderItemID;
+                orderItemTmp.Amount = orderItem.Amount;
+                // if i want to add the name of the product, i must check what is his item, and then, take its name.
+                try
+                {
+                    orderItemTmp.Name = (Dal.Product.Get(orderItem.ProductID)).Name;
+                }
+                catch (ExceptionObjectCouldNotBeFound inner)
+                {
+                    throw new ExceptionLogicObjectCouldNotBeFound("product", inner);
+                }
+                orderItemTmp.TotalPrice = (orderItem.Amount * orderItem.Price); // every thing in this orderItem cost Price, and there are Amount things. so the total price is Amount*Price
+                bO_listOfOrderItems.Add(orderItemTmp);
+                orderItemTmp = new BO.OrderItem();
+                price += (orderItem.Amount * orderItem.Price);
+            }
+            order.TotelPrice = price; // the total price of the order
+            order.Items = bO_listOfOrderItems; // giving the Items property a value
+
+            // now i will check the status of the order, by comparing the current time, and the time in the data.
+            DateTime now = DateTime.Now;
+            if (now > order.DeliveryDate && order.DeliveryDate != null) // it means the order has already arrived. 
+                order.OrderStatus = BO.Enums.Status.Arrived;
+            else if (now > order.ShipDate && order.ShipDate != null) // it means it has been sent, but hasn't arrived yet
+                order.OrderStatus = BO.Enums.Status.Sent;
+            else
+                order.OrderStatus = BO.Enums.Status.Confirmed; // it must be confirmed, otherwise it wasn't an order in the dBase
+
+            ordersToReturn.Add(order); // adding the order
+        } // now, i've created like "DataSouce._orders
+
+        if (predict == null)
+            return ordersToReturn;
+        IEnumerable<BO.Order> data = ordersToReturn.Where(x => predict(x));
+        return data;
     }
 }
 

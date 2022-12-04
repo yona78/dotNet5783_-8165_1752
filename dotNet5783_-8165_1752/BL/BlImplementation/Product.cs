@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Reflection.Metadata.Ecma335;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -201,5 +202,65 @@ internal class Product : BlApi.IProduct // class for product, that the manager c
             throw new ExceptionLogicObjectCouldNotBeFound("product", inner);
         }
     }
+    /// <summary>
+    /// func that returns a product that is being choosing by a specified condition
+    /// </summary>
+    /// <param name="func"></param>the predict, the specific condition
+    /// <returns>the specified product</returns>
+    /// <exception cref="ExceptionObjectCouldNotBeFound"></exception>
+    public BO.Product Get(Func<BO.Product?, bool>? func) // func that returns proudct by a term it gets.
+    {
+        IEnumerable<DO.Product> products = Dal.Product.GetDataOf();
+        List<BO.Product> listOfLogicEntities = new List<BO.Product>();
+        BO.Product product = new BO.Product(); 
+        foreach (var item in products)
+        {
+
+            product.InStock = item.InStock;
+            product.ID = item.ID;
+            product.Price = item.Price;
+            product.Name = item.Name;
+            product.Category = (BO.Enums.Category)item.Category;
+
+            listOfLogicEntities.Add(product);
+        } // now, i've created like "DataSouce._products
+
+
+        foreach (var item in listOfLogicEntities)
+        {
+            if (func(item))
+                return (item); // if item is null, i will return a default value
+        }
+        throw new ExceptionObjectCouldNotBeFound("product"); // else, if i couldn't have found this product, i will throw an exception
+    }
+    /// <summary>
+    /// func that returns a list of product that are being chosed by a specified condition
+    /// </summary>
+    /// <param name="predict"></param>the condition we get
+    /// <returns>the specified product</returns>
+    public IEnumerable<BO.Product> GetDataOf(Func<BO.Product?, bool>? predict = null) // func that returns all of the products
+    {
+        IEnumerable<DO.Product> products = Dal.Product.GetDataOf();
+        List<BO.Product> productsToReturn = new List<BO.Product>();
+        BO.Product product = new BO.Product();
+        foreach (var item in products)
+        {
+
+            product.InStock = item.InStock;
+            product.ID = item.ID;
+            product.Price = item.Price;
+            product.Name = item.Name;
+            product.Category = (BO.Enums.Category)item.Category;
+
+            productsToReturn.Add(product);
+
+        }
+
+        if (predict == null)
+            return productsToReturn;
+        IEnumerable<BO.Product> data = productsToReturn.Where(x => predict(x));
+        return data;
+    }
 }
+
 

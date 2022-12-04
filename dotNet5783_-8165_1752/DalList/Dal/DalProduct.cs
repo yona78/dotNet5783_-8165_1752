@@ -22,13 +22,6 @@ internal class DalProduct : IProduct
     public Product Get(int id) // func that reutrns product by its id
     {
         return Get(product => (product ?? new Product()).ID == id);
-    
-        /*for (int i = 0; i < DataSource._products.Count(); i++) // the loop checks whether this prodcut is exist or not
-        {
-            if ((DataSource._products[i] ?? new Product()).ID == id)
-                return (DataSource._products[i] ?? new Product());
-        }
-        throw new ExceptionObjectCouldNotBeFound("product");*/
     }
     public IEnumerable<Product> GetDataOf(Func<Product?, bool>? predict = null) // func that returns all of the products
     {
