@@ -122,7 +122,7 @@ internal class Cart : ICart // cart of customer
             if (product.InStock < item.Amount) // not enough in dBase
                 throw new ExceptionNotEnoughInDataBase("orderItem");
         }
-        if (name == null|| address ==null || email == null) // checks if the string are valids. ### TO ADD - that email and address will be in a specific format.
+        if (name == null|| address ==null || email == null || name == "" || address == "" || email == "") // checks if the string are valids. ### TO ADD - that email and address will be in a specific format.
             throw new ExceptionDataIsInvalid("cart");
         DO.Order order = new DO.Order();
         order.CustomerAdrress = address;
