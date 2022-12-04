@@ -13,6 +13,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Xml;
 
 namespace PL
 {
@@ -43,7 +44,15 @@ namespace PL
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            new ProductWindow(bl).Show();
+            new ProductWindow(bl,0).Show();
+            ProductListView.ItemsSource = bl.Product.GetList();
+        }
+
+        private void MouseDoubleClickFunc(object sender, MouseButtonEventArgs e)
+        {
+            BO.ProductForList prdct = (BO.ProductForList)ProductListView.SelectedItem;
+            new ProductWindow(bl, prdct.ID).Show();
+            ProductListView.ItemsSource = bl.Product.GetList();
         }
     }
 }

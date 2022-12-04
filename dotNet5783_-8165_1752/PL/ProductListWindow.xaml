@@ -25,7 +25,7 @@
                       >
             </ComboBox>
         </Grid>
-        <ListView x:Name="ProductListView" Grid.Row="1" d:ItemsSource="{d:SampleData ItemCount=5}">
+        <ListView x:Name="ProductListView" Grid.Row="1" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="75,94,-75,-55" Grid.RowSpan="2" MouseDoubleClick="MouseDoubleClickFunc">
             <ListView.View>
                 <GridView>
                     <GridViewColumn/>

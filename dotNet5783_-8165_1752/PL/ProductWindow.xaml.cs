@@ -21,22 +21,29 @@ namespace PL
     /// </summary>
     public partial class ProductWindow : Window
     {
-        List<Object> pacads = new List<object>();
+        int id= 0;
         IBl blP = new Bl();
-        public ProductWindow(IBl bl)
+        public ProductWindow(IBl bl,int ect)
         {
             InitializeComponent();
             blP = bl;
-            Viewbox inputId = creteTextBox();
-            pacads.Add(inputId);
-            ComboBox combo1 = creteComboBox(Enum.GetValues(typeof(BO.Enums.Status)));
-            pacads.Add(combo1);
-            Viewbox inputName = creteTextBox();
-            pacads.Add(inputName);
-            Viewbox inputPrice = creteTextBox();
-            pacads.Add(inputPrice);
-            Viewbox inputInStock = creteTextBox();
-            pacads.Add(inputInStock);
+            CatgoryChoise.Items.Clear();
+            CatgoryChoise.ItemsSource = Enum.GetValues(typeof(BO.Enums.Category));
+            if (ect == 0)
+            {
+                update.Visibility = Visibility.Hidden;
+            }
+            else
+            {
+                add.Visibility = Visibility.Hidden;
+                BO.Product prdct = blP.Product.GetForManager(ect);
+                ID.Text = prdct.ID.ToString();
+                CatgoryChoise.SelectedItem = prdct.Category;
+                name.Text= prdct.Name;
+                price.Text=prdct.Price.ToString();
+                inStock.Text=prdct.InStock.ToString();
+
+            }
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -44,11 +51,24 @@ namespace PL
             try
             {
                 BO.Product prdct = new BO.Product();
-                prdct.ID = Convert.ToInt32((((pacads[0] as Viewbox).Child as TextBox).Text));
-                prdct.Category = (BO.Enums.Category)(pacads[1] as ComboBox).SelectedItem;
-                prdct.Name = Convert.ToString((((pacads[0] as Viewbox).Child as TextBox).Text));
-                prdct.Price = Convert.ToInt32((((pacads[3] as Viewbox).Child as TextBox).Text));
-                prdct.InStock = Convert.ToInt32((((pacads[4] as Viewbox).Child as TextBox).Text));
+                int h;
+                bool validInput = int.TryParse(ID.Text, out h);
+                if (!validInput)
+                    throw new Exception();
+                prdct.ID = h;
+                 validInput = int.TryParse(price.Text, out h);
+                if (!validInput)
+                    throw new Exception();
+                prdct.Price = h;
+                validInput = int.TryParse(inStock.Text, out h);
+                if (!validInput)
+                    throw new Exception();
+                prdct.InStock = h;
+                prdct.Name = name.Text;
+                string selected = CatgoryChoise.SelectedItem.ToString();
+                BO.Enums.Category category;
+                BO.Enums.Category.TryParse(selected, out category);
+                prdct.Category = category;
                 blP.Product.Add(prdct);
             }
             catch (Exception err)
@@ -65,26 +85,39 @@ namespace PL
             }
         }
 
-        private Viewbox creteTextBox()
+        private void Left_Click(object sender, RoutedEventArgs  e)
         {
-            Viewbox view1 = new Viewbox();
-            TextBox textBox1 = new TextBox();
-            textBox1.Text = "";
-            view1.Child = textBox1;
-            return view1;
+            try
+            {
+                BO.Product prdct = new BO.Product();
+                int h;
+                bool validInput = int.TryParse(price.Text, out h);
+                if (!validInput)
+                    throw new Exception();
+                prdct.Price = h;
+                validInput = int.TryParse(inStock.Text, out h);
+                if (!validInput)
+                    throw new Exception();
+                prdct.InStock = h;
+                prdct.Name = name.Text;
+                string selected = CatgoryChoise.SelectedItem.ToString();
+                BO.Enums.Category category;
+                BO.Enums.Category.TryParse(selected, out category);
+                prdct.Category = category;
+                blP.Product.Update(prdct);
+            }
+            catch (Exception err)
+            {
 
+                MessageBox.Show(err.ToString(), "Exception", MessageBoxButton.OK, MessageBoxImage.Error);
 
-        }
+            }
+            finally
+            {
 
-        private ComboBox creteComboBox(Array enumy)
-        {
+                this.Close();
 
-            ComboBox comboBox1 = new ComboBox();
-            comboBox1.ItemsSource = enumy;
-
-            return comboBox1;
-
-
+            }
         }
     }
 }

@@ -7,6 +7,29 @@
         mc:Ignorable="d"
         Title="ProductWindow" Height="450" Width="800">
     <Grid>
-        <Button Click ="Button_Click" Content="Add" Grid.Row="2" HorizontalAlignment="Right" Margin="5" Padding="5"/>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <TextBlock Grid.Row="0" Grid.Column="0" Text="id:"/>
+        <TextBlock Grid.Row="1" Grid.Column="0" Text="category:"/>
+        <TextBlock Grid.Row="2" Grid.Column="0" Text="name:"/>
+        <TextBlock Grid.Row="3" Grid.Column="0" Text="price:"/>
+        <TextBlock Grid.Row="4" Grid.Column="0" Text="in stock:"/>
+        <Button x:Name="add"   Click ="Button_Click" Content="Add" Grid.Row="5" Grid.Column="0" HorizontalAlignment="Right" Margin="5" Padding="5"/>
+        <Button x:Name="update" Click ="Left_Click" Content="update" Grid.Row="5" Grid.Column="0" HorizontalAlignment="Left" Margin="5" Padding="5"/>
+        <TextBox x:Name ="ID" Grid.Column="1" HorizontalAlignment="Left" Margin="133,36,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name ="name" Grid.Column="1" HorizontalAlignment="Left" Margin="133,0,0,0" Grid.Row="2" TextWrapping="Wrap" Text="" VerticalAlignment="Center" Width="120"/>
+        <TextBox x:Name ="price" Grid.Column="1" HorizontalAlignment="Left" Margin="200,36,0,0" Grid.Row="3" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name ="inStock" Grid.Column="1" HorizontalAlignment="Left" Margin="193,37,0,0" Grid.Row="4" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+        <ComboBox x:Name="CatgoryChoise" HorizontalAlignment="Center" Margin="0,21,0,0" Grid.Row="1" VerticalAlignment="Top" Width="120" />
     </Grid>
 </Window>
