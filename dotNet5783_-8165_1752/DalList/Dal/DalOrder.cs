@@ -25,14 +25,9 @@ internal class DalOrder : IOrder
     }
     public Order Get(int id) // func that reutrns order by its id
     {
-        for (int i = 0; i < DataSource._orders.Count(); i++) // looking for the order with the specified id
-        {
-            if ((DataSource._orders[i]).ID == id)
-                return (DataSource._orders[i]);
-        }
-        throw new ExceptionObjectCouldNotBeFound("order");
+        return Get(order => (order ?? new Order()).ID == id);
     }
-    public IEnumerable<Order> GetDataOf(Func<Order?,bool>? predict=null) // func that returns all of the orders
+    public IEnumerable<Order> GetDataOf(Func<Order?, bool>? predict = null) // func that returns all of the orders
     {
         if (predict == null)
             return (IEnumerable<Order>)DataSource._orders;
@@ -76,7 +71,7 @@ internal class DalOrder : IOrder
     {
         foreach (var item in DataSource._orders)
         {
-            if (func(item)) 
+            if (func(item))
                 return (item); // if item is null, i will return a default value
         }
         throw new ExceptionObjectCouldNotBeFound("order"); // else, if i couldn't have found this order, i will throw an exception
