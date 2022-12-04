@@ -78,31 +78,7 @@ internal class Order : BlApi.IOrder  // object of the manager, on a order a clie
         {
             throw new ExceptionLogicObjectCouldNotBeFound("order", inner);
         }
-        IEnumerable<DO.OrderItem> dO_listOfOrderItems = Dal.OrderItem.GetDataOfOrderItem(order.ID);
-        BO.Order orderToReturn = new BO.Order();
-
-        orderToReturn.CustomerName = order.CustomerName;
-        orderToReturn.CustomerAddress = order.CustomerAdrress;
-        orderToReturn.CustomerEmail = order.CustomerEmail;
-        orderToReturn.ShipDate = order.ShipDate;
-        orderToReturn.DeliveryDate = order.DeliveryDate;
-        orderToReturn.PaymentDate = order.OrderDate;
-        orderToReturn.ID = order.ID;
-        List<BO.OrderItem> bO_listOfOrderItems = new List<BO.OrderItem>();
-        BO.OrderItem orderItemTmp = new BO.OrderItem();
-
-        // now i will calculate the totalPrice of the order, in addition, i want to take a list of the orderItems from the logic
-        double price = 0;
-        foreach (DO.OrderItem item in dO_listOfOrderItems)
-        {
-            orderItemTmp.Price = item.Price;
-            orderItemTmp.ProductID = item.ProductID;
-            orderItemTmp.ID = item.OrderItemID;
-            orderItemTmp.Amount = item.Amount;
-            // if i want to add the name of the product, i must check what is his item, and then, take its name.
-            try
-            {
-                orderItemTmp.Name = (Dal.Product.Get(item.ProductID)).Name;
+        return Get(order => (order??new DO.Order()).ID == idOrder);
             }
             catch (ExceptionObjectCouldNotBeFound inner)
             {
