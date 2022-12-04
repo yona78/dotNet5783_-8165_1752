@@ -15,6 +15,6 @@ public interface IProduct
     public ProductItem GetForCustomer(int idCustomer, Cart cart); // func that gets an id of product in the client's cart, and his cart, and return the data of the specific product and the cart, as an item in the cart
 
     public Product Get(Func<Product?, bool>? func); // func that returns proudct according to a term it gets.
-    public IEnumerable<BO.Product> GetDataOf(Func<Product?, bool>? predict = null); // func that returns all of the Products  with the specail condition that is indicate in the predict
+    public IEnumerable<BO.Product> GetDataOf(Func<Product?, bool>? predict = null); // func that returns all of the products  with the special condition that is indicate in the predict
 
 }

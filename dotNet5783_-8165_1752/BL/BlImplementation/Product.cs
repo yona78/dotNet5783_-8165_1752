@@ -205,7 +205,7 @@ internal class Product : BlApi.IProduct // class for product, that the manager c
     /// <param name="func"></param>the predict, the specific condition
     /// <returns>the specified product</returns>
     /// <exception cref="ExceptionObjectCouldNotBeFound"></exception>
-    public BO.Product Get(Func<BO.Product?, bool>? func) // func that returns an proudct by a term it gets.
+    public BO.Product Get(Func<BO.Product?, bool>? func) // func that returns proudct by a term it gets.
     {
         IEnumerable<DO.Product> products = Dal.Product.GetDataOf();
         List<BO.Product> listOfLogicEntities = new List<BO.Product>();
