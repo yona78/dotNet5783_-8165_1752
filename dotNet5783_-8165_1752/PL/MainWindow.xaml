@@ -15,7 +15,7 @@
             </ListView.View>
         </ListView>
         <StackPanel>
-            <Button Click="Button_Click">ListShow</Button>
+            <Button Click="Button_Click">Admin</Button>
         </StackPanel>
     </Grid>
 </Window>

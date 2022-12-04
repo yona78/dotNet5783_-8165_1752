@@ -156,7 +156,7 @@ internal class Product : BlApi.IProduct // class for product, that the manager c
     /// The function return all the products in the store
     /// </summary>
     /// <returns>the list with all the products</returns>
-    public IEnumerable<ProductForList?> GetList() // func that returns all the products in a special logic object, which either the manager can use it or it will be printed to the customer screen
+    public IEnumerable<ProductForList?> GetList(Func<BO.ProductForList?, bool>? func = null) // func that returns all the products in a special logic object, which either the manager can use it or it will be printed to the customer screen
     {
         IEnumerable<DO.Product> listOfProducts = Dal.Product.GetDataOf();
         List<BO.ProductForList> list = new List<BO.ProductForList>();
@@ -170,7 +170,10 @@ internal class Product : BlApi.IProduct // class for product, that the manager c
             list.Add(product1);
             product1 = new BO.ProductForList();
         }
-        return list;
+        if (func == null)
+            return list;
+        IEnumerable<ProductForList?> data = list.Where(x => func(x));
+        return data;
     }
     /// <summary>
     /// the function update a product in the store

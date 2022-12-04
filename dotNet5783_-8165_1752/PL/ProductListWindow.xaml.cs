@@ -24,18 +24,26 @@ namespace PL
         IBl bl = new Bl();
         public ProductListWindow()
         {
+            
             InitializeComponent();
-            ProductListView.ItemsSource= bl.Product.GetList();
+            ProductListView.ItemsSource = bl.Product.GetList();
+            GategorySelector.Items.Clear();
             GategorySelector.ItemsSource = Enum.GetValues(typeof(BO.Enums.Category));
-
         }
 
         private void SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             string selected = GategorySelector.SelectedItem.ToString();
             ProductListView.ItemsSource = bl.Product.GetList();
-            BO.Enums.Category category; BO.Enums.Category.TryParse(selected, out category);
-            Func<BO.Product?, bool>? func(BO.Product item,);
+            BO.Enums.Category category;
+            BO.Enums.Category.TryParse(selected, out category);
+            Func<BO.ProductForList?, bool>? func= item=>item.Category==category;
+            ProductListView.ItemsSource = bl.Product.GetList(func);
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            new ProductWindow(bl).Show();
         }
     }
 }

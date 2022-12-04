@@ -16,12 +16,13 @@
                 </Grid.ColumnDefinitions >
 
             </Grid>
+            <Label Content="Category" Grid.Column="0"/>
             <ComboBox Name="GategorySelector"
                       HorizontalAlignment= "Stretch"
                       VerticalAlignment="Stretch"
                       Grid.Column="1"
-                      SelectionChanged="SelectionChanged">
-                <Label Grid.Column="0"/>
+                      SelectionChanged="SelectionChanged"
+                      >
             </ComboBox>
         </Grid>
         <ListView x:Name="ProductListView" Grid.Row="1" d:ItemsSource="{d:SampleData ItemCount=5}">
@@ -31,6 +32,7 @@
                 </GridView>
             </ListView.View>
         </ListView>
+        <Button Click ="Button_Click" Content="Add new Product" Grid.Row="2" HorizontalAlignment="Right" Margin="5" Padding="5"/>
         <Grid.RowDefinitions>
             <RowDefinition Height="40*"/>
             <RowDefinition Height="500*"/>
