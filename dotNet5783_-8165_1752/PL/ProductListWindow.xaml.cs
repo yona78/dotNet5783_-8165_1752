@@ -53,5 +53,7 @@ namespace PL
             new ProductWindow(bl, "UPDATE",prdct.ID).Show();
             ProductListView.ItemsSource = bl.Product.GetList(); // print the new list on the board
         }
+
+ 
     }
 }
