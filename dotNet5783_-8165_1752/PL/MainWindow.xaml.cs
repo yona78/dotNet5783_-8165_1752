@@ -22,7 +22,7 @@ namespace PL
     /// </summary>
     public partial class MainWindow : Window
     {
-        IBl bl = new Bl();
+        IBl bl = new Bl(); // as it was asked from us
         public MainWindow()
         {
             InitializeComponent();
@@ -30,7 +30,7 @@ namespace PL
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            new ProductListWindow().Show();
+            new ProductListWindow().Show(); // if he clicked the button, we want to show him the list of the avilable products.
         }
 
     }

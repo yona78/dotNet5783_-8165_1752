@@ -6,38 +6,41 @@
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
         Title="ProductListWindow" Height="640" Width="800">
-    <Grid>
-        <Grid Name ="MainGrid">
-            <Grid Name="UpGrid" HorizontalAlignment="Stretch" Height="auto" Grid.Row="0"
+    <Grid Name ="MainGrid"> <!--this is the main grid-->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40*"/>
+            <RowDefinition Height="500*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <!--the up Grid-->
+        <Grid Name="UpGrid" HorizontalAlignment="Stretch" Height="auto" Grid.Row="0" 
             VerticalAlignment="Stretch" Width="auto">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions >
+            <Label Name="labelForCategorySelector" Content="Choose category: " Grid.Column="0" FontSize="16" Background="#FF00FF27"/>
 
-            </Grid>
-            <Label Content="Category" Grid.Column="0"/>
-            <ComboBox Name="GategorySelector"
+            <ComboBox Name="CategorySelector"
                       HorizontalAlignment= "Stretch"
                       VerticalAlignment="Stretch"
                       Grid.Column="1"
                       SelectionChanged="SelectionChanged"
+                      FontSize="15"
                       >
+                <!--the comboBox in which you select the category-->
             </ComboBox>
         </Grid>
-        <ListView x:Name="ProductListView" Grid.Row="1" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="75,94,-75,-55" Grid.RowSpan="2" MouseDoubleClick="MouseDoubleClickFunc">
+       
+        <ListView x:Name="ProductListView" Grid.Row="1" Margin="0,1,0,0" MouseDoubleClick="MouseDoubleClickFunc">
             <ListView.View>
                 <GridView>
                     <GridViewColumn/>
                 </GridView>
             </ListView.View>
         </ListView>
-        <Button Click ="Button_Click" Content="Add new Product" Grid.Row="2" HorizontalAlignment="Right" Margin="5" Padding="5"/>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="40*"/>
-            <RowDefinition Height="500*"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
+        <Button Click ="Button_Click" Content="Add new Product" Grid.Row="2" HorizontalAlignment="Right" Margin="5" Padding="5"/> 
         
+
     </Grid>
 </Window>

@@ -27,14 +27,14 @@ namespace PL
         {
             
             InitializeComponent();
-            ProductListView.ItemsSource = bl.Product.GetList();
-            GategorySelector.Items.Clear();
-            GategorySelector.ItemsSource = Enum.GetValues(typeof(BO.Enums.Category));
+            ProductListView.ItemsSource = bl.Product.GetList(); // 
+            CategorySelector.Items.Clear();
+            CategorySelector.ItemsSource = Enum.GetValues(typeof(BO.Enums.Category));
         }
 
         private void SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            string selected = GategorySelector.SelectedItem.ToString();
+            string selected = CategorySelector.SelectedItem.ToString();
             ProductListView.ItemsSource = bl.Product.GetList();
             BO.Enums.Category category;
             BO.Enums.Category.TryParse(selected, out category);
