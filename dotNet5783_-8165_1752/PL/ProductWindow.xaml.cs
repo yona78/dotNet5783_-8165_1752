@@ -42,6 +42,7 @@ namespace PL
                 name.Text= prdct.Name;
                 price.Text=prdct.Price.ToString();
                 inStock.Text=prdct.InStock.ToString();
+                id = prdct.ID;
 
             }
         }
@@ -104,6 +105,7 @@ namespace PL
                 BO.Enums.Category category;
                 BO.Enums.Category.TryParse(selected, out category);
                 prdct.Category = category;
+                prdct.ID = id;
                 blP.Product.Update(prdct);
             }
             catch (Exception err)
