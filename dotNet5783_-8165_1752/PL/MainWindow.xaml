@@ -9,7 +9,7 @@
     <Grid>
 
 
-        <Button x:Name="MoveIntoProductListViewWindow" Click="Button_Click" Content="Admin" Width="150" Height="80" FontSize="30" Background="#FF0095FF" /> <!--when pressing it, you move to the ProductList window-->
+        <Button x:Name="EnterenceButton" Click="MoveToDataWindow" Content="Admin" Width="150" Height="80" FontSize="30" Background="#FF0095FF" /> <!--when pressing it, you move to the ProductList window-->
 
     </Grid>
 </Window>

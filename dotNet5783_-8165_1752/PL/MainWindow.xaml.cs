@@ -28,7 +28,7 @@ namespace PL
             InitializeComponent();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void MoveToDataWindow(object sender, RoutedEventArgs e)
         {
             new ProductListWindow().Show(); // if he clicked the button, we want to show him the list of the avilable products.
         }
