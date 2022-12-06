@@ -30,7 +30,7 @@ namespace PL
 
         private void MoveToDataWindow(object sender, RoutedEventArgs e)
         {
-            new ProductListWindow().Show(); // if he clicked the button, we want to show him the list of the avilable products.
+            new ProductListWindow().ShowDialog(); // if he clicked the button, we want to show him the list of the avilable products. can't do anything else until it closed
         }
 
     }

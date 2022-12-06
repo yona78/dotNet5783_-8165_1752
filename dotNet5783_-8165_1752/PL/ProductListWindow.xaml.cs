@@ -43,7 +43,7 @@ namespace PL
 
         private void AddProductButton(object sender, RoutedEventArgs e)
         {
-            new ProductWindow(bl,"ADD",0).Show(); 
+            new ProductWindow(bl,"ADD",0).ShowDialog(); // can't do anything else until it closed
             ProductListView.ItemsSource = bl.Product.GetList(); // print the new list on the board
         }
 
@@ -52,7 +52,7 @@ namespace PL
             BO.ProductForList prdct = (BO.ProductForList)ProductListView.SelectedItem; // the product we want to update
             if (prdct == null)
                 return;
-            new ProductWindow(bl, "UPDATE",prdct.ID).Show();
+            new ProductWindow(bl, "UPDATE",prdct.ID).ShowDialog(); // can't do anything else until it closed
             ProductListView.ItemsSource = bl.Product.GetList(); // print the new list on the board
         }
 
