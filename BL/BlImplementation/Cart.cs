@@ -1,9 +1,8 @@
 ﻿using BlApi;
 using BO;
-using Dal;
 using DalApi;
-using DO;
-using System.IO.Pipes;
+
+
 
 namespace BlImplementation;
 /// <summary>
@@ -11,7 +10,7 @@ namespace BlImplementation;
 /// </summary>
 internal class Cart : ICart // cart of customer
 {
-    private IDal Dal = new DalList(); // a way to communicate with dBase level
+    private IDal Dal = DalApi.Factory.Get(); // a way to communicate with dBase level
     /// <summary>
     /// Function to add product to cart
     /// </summary>

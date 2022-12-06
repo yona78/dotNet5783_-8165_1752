@@ -1,17 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http.Headers;
-using System.Reflection.Metadata.Ecma335;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml;
-using BlApi;
+﻿
 using BO;
-using Dal;
 using DalApi;
-using DO;
 
 namespace BlImplementation;
 /// <summary>
@@ -19,7 +8,7 @@ namespace BlImplementation;
 /// </summary>
 internal class Product : BlApi.IProduct // class for product, that the manager can deal with.
 { // otherwise there is ambigiouty, because he doesn't know whether it's BlApi.IProduct or DalApi.IProduct
-    private IDal Dal = new DalList(); // a way to communicate with dBase level
+    private IDal Dal = DalApi.Factory.Get(); // a way to communicate with dBase level
 
     /// <summary>
     /// The function add new product to the store

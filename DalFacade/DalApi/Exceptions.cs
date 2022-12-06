@@ -24,3 +24,11 @@ public class ExceptionObjectAlreadyExist : Exception // the object you're trying
     public override string Message { get => String.Format("ERROR, {0} is already exist", nameOfObject); }
 }
 
+[Serializable]
+public class DalConfigException : Exception
+{
+    public DalConfigException(string msg) : base(msg) { }
+    public DalConfigException(string msg, Exception ex) : base(msg, ex) { }
+}
+
+

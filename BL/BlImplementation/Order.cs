@@ -1,18 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Diagnostics;
-using System.Linq;
-using System.Net.Http.Headers;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using BlApi;
-using BlImplementation;
+﻿
 using BO;
-using Dal;
+
 using DalApi;
-using DO;
+
 
 namespace BlImplementation;
 /// <summary>
@@ -20,7 +10,7 @@ namespace BlImplementation;
 /// </summary>
 internal class Order : BlApi.IOrder  // object of the manager, on a order a client had asked for
 {
-    private IDal Dal = new DalList(); // a way to communicate with dBase level
+    private IDal Dal = DalApi.Factory.Get(); // a way to communicate with dBase level
 
     /// <summary>
     /// The functions returns data about all the orders
