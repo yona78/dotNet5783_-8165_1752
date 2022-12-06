@@ -50,6 +50,8 @@ namespace PL
         private void UpdateProductButton(object sender, MouseButtonEventArgs e)
         {
             BO.ProductForList prdct = (BO.ProductForList)ProductListView.SelectedItem; // the product we want to update
+            if (prdct == null)
+                return;
             new ProductWindow(bl, "UPDATE",prdct.ID).Show();
             ProductListView.ItemsSource = bl.Product.GetList(); // print the new list on the board
         }
