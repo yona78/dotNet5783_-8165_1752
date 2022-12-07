@@ -2,7 +2,8 @@
 using BO;
 
 using DalApi;
-
+using DO;
+using System.Data;
 
 namespace BlImplementation;
 /// <summary>
@@ -18,21 +19,21 @@ internal class Order : BlApi.IOrder  // object of the manager, on a order a clie
     /// <returns>list with data of all the orders</returns>
     public IEnumerable<BO.OrderForList?> GetOrderList() // returns a list of the orders in the dBase to present on the screen to the customer
     {
-        List<BO.OrderForList?> listToReturn = new List<BO.OrderForList>();
-        IEnumerable<DO.Order> orderList = Dal.Order.GetDataOf();
-        BO.OrderForList tmp = new BO.OrderForList();
+        List<BO.OrderForList?> listToReturn = new List<BO.OrderForList?>();
+        IEnumerable<DO.Order?> orderList = Dal.Order.GetDataOf();
+        BO.OrderForList? tmp = new BO.OrderForList();
         double price = 0;
         int amountOfItems = 0;
-        foreach (DO.Order order in orderList)  // for each order in the orderlist from the dB, i would like to add a similiar orderList in the orderList list.
+        foreach (DO.Order? order in orderList)  // for each order in the orderlist from the dB, i would like to add a similiar orderList in the orderList list.
         {
-            tmp.CustomerName = order.CustomerName;
-            tmp.ID = order.ID;
+            tmp.CustomerName = (order??new DO.Order()).CustomerName;
+            tmp.ID = (order ?? new DO.Order()).ID;
             // now i will calculate the totalPrice of the order, and the amount of items.
-            IEnumerable<DO.OrderItem> listOfItems = Dal.OrderItem.GetDataOfOrderItem(order.ID);
-            foreach (DO.OrderItem item in listOfItems)
+            IEnumerable<DO.OrderItem?> listOfItems = Dal.OrderItem.GetDataOfOrderItem((order ?? new DO.Order()).ID);
+            foreach (DO.OrderItem? item in listOfItems)
             {
-                price += (item.Amount * item.Price); // the price is the total price, the amount*price
-                amountOfItems += item.Amount;
+                price += ((item ?? new DO.OrderItem()).Amount * (item ?? new DO.OrderItem()).Price); // the price is the total price, the amount*price
+                amountOfItems += (item ?? new DO.OrderItem()).Amount;
             }
             tmp.TotelPrice = price; // the total price of the order
             tmp.AmountOfItems = amountOfItems; // the total amount of items in the order
@@ -40,9 +41,9 @@ internal class Order : BlApi.IOrder  // object of the manager, on a order a clie
             price = 0;
             amountOfItems = 0;
             DateTime now = DateTime.Now;
-            if (now > order.DeliveryDate && order.DeliveryDate != null) // it means the order has already arrived. 
+            if (now > (order ?? new DO.Order()).DeliveryDate && (order ?? new DO.Order()).DeliveryDate != null) // it means the order has already arrived. 
                 tmp.OrderStatus = BO.Enums.Status.Arrived;
-            else if (now > order.ShipDate && order.ShipDate != null) // it means it has been sent, but hasn't arrived yet
+            else if (now > (order ?? new DO.Order()).ShipDate && (order ?? new DO.Order()).ShipDate != null) // it means it has been sent, but hasn't arrived yet
                 tmp.OrderStatus = BO.Enums.Status.Sent;
             else
                 tmp.OrderStatus = BO.Enums.Status.Confirmed; // it must be confirmed, otherwise it wasn't an order in the dBase
@@ -71,7 +72,7 @@ internal class Order : BlApi.IOrder  // object of the manager, on a order a clie
         {
             throw new ExceptionLogicObjectCouldNotBeFound("order", inner);
         }
-        IEnumerable<DO.OrderItem> dO_listOfOrderItems = Dal.OrderItem.GetDataOfOrderItem(order.ID);
+        IEnumerable<DO.OrderItem?> dO_listOfOrderItems = Dal.OrderItem.GetDataOfOrderItem(order.ID);
         BO.Order orderToReturn = new BO.Order();
 
         orderToReturn.CustomerName = order.CustomerName;
@@ -86,25 +87,25 @@ internal class Order : BlApi.IOrder  // object of the manager, on a order a clie
 
         // now i will calculate the totalPrice of the order, in addition, i want to take a list of the orderItems from the logic
         double price = 0;
-        foreach (DO.OrderItem item in dO_listOfOrderItems)
+        foreach (DO.OrderItem? item in dO_listOfOrderItems)
         {
-            orderItemTmp.Price = item.Price;
-            orderItemTmp.ProductID = item.ProductID;
-            orderItemTmp.ID = item.OrderItemID;
-            orderItemTmp.Amount = item.Amount;
+            orderItemTmp.Price = (item ?? new DO.OrderItem()).Price;
+            orderItemTmp.ProductID = (item ?? new DO.OrderItem()).ProductID;
+            orderItemTmp.ID = (item ?? new DO.OrderItem()).OrderItemID;
+            orderItemTmp.Amount = (item ?? new DO.OrderItem()).Amount;
             // if i want to add the name of the product, i must check what is his item, and then, take its name.
             try
             {
-                orderItemTmp.Name = (Dal.Product.Get(item.ProductID)).Name;
+                orderItemTmp.Name = (Dal.Product.Get((item ?? new DO.OrderItem()).ProductID)).Name;
             }
             catch (ExceptionObjectCouldNotBeFound inner)
             {
                 throw new ExceptionLogicObjectCouldNotBeFound("product", inner);
             }
-            orderItemTmp.TotalPrice = (item.Amount * item.Price); // every thing in this orderItem cost Price, and there are Amount things. so the total price is Amount*Price
+            orderItemTmp.TotalPrice = ((item ?? new DO.OrderItem()).Amount * (item ?? new DO.OrderItem()).Price); // every thing in this orderItem cost Price, and there are Amount things. so the total price is Amount*Price
             bO_listOfOrderItems.Add(orderItemTmp);
             orderItemTmp = new BO.OrderItem();
-            price += (item.Amount * item.Price);
+            price += ((item ?? new DO.OrderItem()).Amount * (item ?? new DO.OrderItem()).Price);
         }
         orderToReturn.TotelPrice = price; // the total price of the order
         orderToReturn.Items = bO_listOfOrderItems; // giving the Items property a value
@@ -142,16 +143,16 @@ internal class Order : BlApi.IOrder  // object of the manager, on a order a clie
         // now i will check the status of the order, by comparing the current time, and the time in the data.
         DateTime now = DateTime.Now;
         List<(DateTime, BO.Enums.Status)?> lst = new List<(DateTime, BO.Enums.Status)?>();
-        lst.Add(((DateTime, BO.Enums.Status)?)(order.OrderDate, BO.Enums.Status.Confirmed));
+        lst.Add(((DateTime, BO.Enums.Status)?)(order.OrderDate??new DateTime(), BO.Enums.Status.Confirmed));
         if (now > order.DeliveryDate && order.DeliveryDate != null) // it means the order has already arrived. 
         {
             orderTracking.OrderStatus = BO.Enums.Status.Arrived;
-            lst.Add(((DateTime, BO.Enums.Status)?)(order.ShipDate, BO.Enums.Status.Sent));
+            lst.Add(((DateTime, BO.Enums.Status)?)(order.ShipDate??new DateTime(), BO.Enums.Status.Sent));
             lst.Add(((DateTime, BO.Enums.Status)?)(order.DeliveryDate, BO.Enums.Status.Arrived));
         }
         else if (now > order.ShipDate && order.ShipDate != null)
         {// it means it has been sent, but hasn't arrived yet
-            lst.Add(((DateTime, BO.Enums.Status)?)(order.ShipDate, BO.Enums.Status.Sent));
+            lst.Add(((DateTime, BO.Enums.Status)?)(order.ShipDate??new DateTime(), BO.Enums.Status.Sent));
             orderTracking.OrderStatus = BO.Enums.Status.Sent;
         }
         else
@@ -192,7 +193,7 @@ internal class Order : BlApi.IOrder  // object of the manager, on a order a clie
         {
             throw new ExceptionLogicObjectCouldNotBeFound("product", inner);
         }
-        IEnumerable<DO.OrderItem> list;
+        IEnumerable<DO.OrderItem?> list;
         try
         {
             list = Dal.OrderItem.GetDataOfOrderItem(idOrder); // trying to get all of the order items in the order
@@ -204,9 +205,9 @@ internal class Order : BlApi.IOrder  // object of the manager, on a order a clie
         DO.OrderItem it = new DO.OrderItem();
         foreach (var item in list) // we wants to update an item in the order, which its id is the id of the product we got.
         {
-            if ((item).ProductID == idOfProduct)
+            if (((item ?? new DO.OrderItem())).ProductID == idOfProduct)
             {
-                it = (item);
+                it = (item ?? new DO.OrderItem());
                 break;
             }
         }
@@ -302,45 +303,45 @@ internal class Order : BlApi.IOrder  // object of the manager, on a order a clie
     /// <exception cref="ExceptionObjectCouldNotBeFound"></exception>
     public BO.Order Get(Func<BO.Order?, bool>? func) // func that returns an order by a term it gets.
     {
-        IEnumerable<DO.Order> orders = Dal.Order.GetDataOf();
-        List<BO.Order> listOfLogicEntities = new List<BO.Order>();
+        IEnumerable<DO.Order?> orders = Dal.Order.GetDataOf();
+        List<BO.Order?> listOfLogicEntities = new List<BO.Order?>();
         BO.Order order = new BO.Order();
         foreach (var item in orders)
         {
 
-            IEnumerable<DO.OrderItem> dO_listOfOrderItems = Dal.OrderItem.GetDataOfOrderItem(item.ID);
+            IEnumerable<DO.OrderItem?> dO_listOfOrderItems = Dal.OrderItem.GetDataOfOrderItem((item ?? new DO.Order()).ID);
 
-            order.CustomerName = item.CustomerName;
-            order.CustomerAddress = item.CustomerAdrress;
-            order.CustomerEmail = item.CustomerEmail;
-            order.ShipDate = item.ShipDate;
-            order.DeliveryDate = item.DeliveryDate;
-            order.PaymentDate = item.OrderDate;
-            order.ID = item.ID;
+            order.CustomerName = (item??new DO.Order()).CustomerName;
+            order.CustomerAddress = (item ?? new DO.Order()).CustomerAdrress;
+            order.CustomerEmail = (item ?? new DO.Order()).CustomerEmail;
+            order.ShipDate = (item ?? new DO.Order()).ShipDate;
+            order.DeliveryDate = (item ?? new DO.Order()).DeliveryDate;
+            order.PaymentDate = (item ?? new DO.Order()).OrderDate;
+            order.ID = (item ?? new DO.Order()).ID;
             List<BO.OrderItem> bO_listOfOrderItems = new List<BO.OrderItem>();
             BO.OrderItem orderItemTmp = new BO.OrderItem();
 
             // now i will calculate the totalPrice of the order, in addition, i want to take a list of the orderItems from the logic
             double price = 0;
-            foreach (DO.OrderItem orderItem in dO_listOfOrderItems)
+            foreach (DO.OrderItem? orderItem in dO_listOfOrderItems)
             {
-                orderItemTmp.Price = orderItem.Price;
-                orderItemTmp.ProductID = orderItem.ProductID;
-                orderItemTmp.ID = orderItem.OrderItemID;
-                orderItemTmp.Amount = orderItem.Amount;
+                orderItemTmp.Price = (orderItem ?? new DO.OrderItem()).Price;
+                orderItemTmp.ProductID = (orderItem ?? new DO.OrderItem()).ProductID;
+                orderItemTmp.ID = (orderItem ?? new DO.OrderItem()).OrderItemID;
+                orderItemTmp.Amount = (orderItem ?? new DO.OrderItem()).Amount;
                 // if i want to add the name of the product, i must check what is his item, and then, take its name.
                 try
                 {
-                    orderItemTmp.Name = (Dal.Product.Get(orderItem.ProductID)).Name;
+                    orderItemTmp.Name = (Dal.Product.Get((orderItem ?? new DO.OrderItem()).ProductID)).Name;
                 }
                 catch (ExceptionObjectCouldNotBeFound inner)
                 {
                     throw new ExceptionLogicObjectCouldNotBeFound("product", inner);
                 }
-                orderItemTmp.TotalPrice = (orderItem.Amount * orderItem.Price); // every thing in this orderItem cost Price, and there are Amount things. so the total price is Amount*Price
+                orderItemTmp.TotalPrice = ((orderItem ?? new DO.OrderItem()).Amount * (orderItem ?? new DO.OrderItem()).Price); // every thing in this orderItem cost Price, and there are Amount things. so the total price is Amount*Price
                 bO_listOfOrderItems.Add(orderItemTmp);
                 orderItemTmp = new BO.OrderItem();
-                price += (orderItem.Amount * orderItem.Price);
+                price += ((orderItem ?? new DO.OrderItem()).Amount * (orderItem ?? new DO.OrderItem()).Price);
             }
             order.TotelPrice = price; // the total price of the order
             order.Items = bO_listOfOrderItems; // giving the Items property a value
@@ -360,8 +361,8 @@ internal class Order : BlApi.IOrder  // object of the manager, on a order a clie
 
         foreach (var item in listOfLogicEntities)
         {
-            if (func(item))
-                return (item); // if item is null, i will return a default value
+            if ((func ?? (x => false))(item))
+                return (item ?? new BO.Order()); // if item is null, i will return a default value
         }
         throw new ExceptionObjectCouldNotBeFound("order"); // else, if i couldn't have found this product, i will throw an exception
     }
@@ -370,47 +371,47 @@ internal class Order : BlApi.IOrder  // object of the manager, on a order a clie
     /// </summary>
     /// <param name="predict"></param>the condition we get
     /// <returns>the order to return</returns>
-    public IEnumerable<BO.Order> GetDataOf(Func<BO.Order?, bool>? predict = null) // func that returns all of the orders    
+    public IEnumerable<BO.Order?> GetDataOf(Func<BO.Order?, bool>? predict = null) // func that returns all of the orders    
     {
-        IEnumerable<DO.Order> orders = Dal.Order.GetDataOf();
-        List<BO.Order> ordersToReturn = new List<BO.Order>();
+        IEnumerable<DO.Order?> orders = Dal.Order.GetDataOf();
+        List<BO.Order?> ordersToReturn = new List<BO.Order?>();
         BO.Order order = new BO.Order();
         foreach (var item in orders)
         {
 
-            IEnumerable<DO.OrderItem> dO_listOfOrderItems = Dal.OrderItem.GetDataOfOrderItem(item.ID);
+            IEnumerable<DO.OrderItem?> dO_listOfOrderItems = Dal.OrderItem.GetDataOfOrderItem((item ?? new DO.Order()).ID);
 
-            order.CustomerName = item.CustomerName;
-            order.CustomerAddress = item.CustomerAdrress;
-            order.CustomerEmail = item.CustomerEmail;
-            order.ShipDate = item.ShipDate;
-            order.DeliveryDate = item.DeliveryDate;
-            order.PaymentDate = item.OrderDate;
-            order.ID = item.ID;
+            order.CustomerName = (item ?? new DO.Order()).CustomerName;
+            order.CustomerAddress = (item ?? new DO.Order()).CustomerAdrress;
+            order.CustomerEmail = (item ?? new DO.Order()).CustomerEmail;
+            order.ShipDate = (item ?? new DO.Order()).ShipDate;
+            order.DeliveryDate = (item ?? new DO.Order()).DeliveryDate;
+            order.PaymentDate = (item ?? new DO.Order()).OrderDate;
+            order.ID = (item ?? new DO.Order()).ID;
             List<BO.OrderItem> bO_listOfOrderItems = new List<BO.OrderItem>();
             BO.OrderItem orderItemTmp = new BO.OrderItem();
 
             // now i will calculate the totalPrice of the order, in addition, i want to take a list of the orderItems from the logic
             double price = 0;
-            foreach (DO.OrderItem orderItem in dO_listOfOrderItems)
+            foreach (DO.OrderItem? orderItem in dO_listOfOrderItems)
             {
-                orderItemTmp.Price = orderItem.Price;
-                orderItemTmp.ProductID = orderItem.ProductID;
-                orderItemTmp.ID = orderItem.OrderItemID;
-                orderItemTmp.Amount = orderItem.Amount;
+                orderItemTmp.Price = (orderItem ?? new DO.OrderItem()).Price;
+                orderItemTmp.ProductID = (orderItem ?? new DO.OrderItem()).ProductID;
+                orderItemTmp.ID = (orderItem ?? new DO.OrderItem()).OrderItemID;
+                orderItemTmp.Amount = (orderItem ?? new DO.OrderItem()).Amount;
                 // if i want to add the name of the product, i must check what is his item, and then, take its name.
                 try
                 {
-                    orderItemTmp.Name = (Dal.Product.Get(orderItem.ProductID)).Name;
+                    orderItemTmp.Name = (Dal.Product.Get((orderItem ?? new DO.OrderItem()).ProductID)).Name;
                 }
                 catch (ExceptionObjectCouldNotBeFound inner)
                 {
                     throw new ExceptionLogicObjectCouldNotBeFound("product", inner);
                 }
-                orderItemTmp.TotalPrice = (orderItem.Amount * orderItem.Price); // every thing in this orderItem cost Price, and there are Amount things. so the total price is Amount*Price
+                orderItemTmp.TotalPrice = ((orderItem ?? new DO.OrderItem()).Amount * (orderItem ?? new DO.OrderItem()).Price); // every thing in this orderItem cost Price, and there are Amount things. so the total price is Amount*Price
                 bO_listOfOrderItems.Add(orderItemTmp);
                 orderItemTmp = new BO.OrderItem();
-                price += (orderItem.Amount * orderItem.Price);
+                price += ((orderItem ?? new DO.OrderItem()).Amount * (orderItem ?? new DO.OrderItem()).Price);
             }
             order.TotelPrice = price; // the total price of the order
             order.Items = bO_listOfOrderItems; // giving the Items property a value
@@ -424,12 +425,12 @@ internal class Order : BlApi.IOrder  // object of the manager, on a order a clie
             else
                 order.OrderStatus = BO.Enums.Status.Confirmed; // it must be confirmed, otherwise it wasn't an order in the dBase
 
-            ordersToReturn.Add(order); // adding the order
+            ordersToReturn.Add((BO.Order?)order); // adding the order
         } // now, i've created like "DataSouce._orders
 
         if (predict == null)
-            return ordersToReturn;
-        IEnumerable<BO.Order> data = ordersToReturn.Where(x => predict(x));
+            return ordersToReturn??new List<BO.Order?>();
+        IEnumerable<BO.Order?> data = ordersToReturn.Where(x => predict(x));
         return data;
     }
 }

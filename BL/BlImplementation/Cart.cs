@@ -100,21 +100,10 @@ internal class Cart : ICart // cart of customer
             {
                 product = Dal.Product.Get(item.ProductID);
             }
-            catch (ExceptionObjectCouldNotBeFound inner) // the product isn't exist in the dBase
+            catch (ExceptionObjectCouldNotBeFound) // the product isn't exist in the dBase
             {
                 cart.Items.Remove(item);
                 break;
-            }
-        }
-        foreach (var item in cart.Items) // checks if all the items are realy exist, if the amounts are positive
-        {
-            try
-            {
-                product = Dal.Product.Get(item.ProductID);
-            }
-            catch (ExceptionObjectCouldNotBeFound inner) // the product isn't exist in the dBase
-            {
-                
             }
             if (item.Amount < 0) // amount negative
                 throw new ExceptionDataIsInvalid("orderItem");

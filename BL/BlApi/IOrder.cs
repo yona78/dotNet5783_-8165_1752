@@ -5,7 +5,7 @@ namespace BlApi;
 /// </summary>
 public interface IOrder
 {
-    public IEnumerable<OrderForList> GetOrderList(); // returns a list of the orders in the dBase to present on the screen to the customer
+    public IEnumerable<OrderForList?> GetOrderList(); // returns a list of the orders in the dBase to present on the screen to the customer
     public Order GetOrderManager(int idOrder); // func that returns an order from the dBase to the using of the manager
     public Order UpdateSent(int idOrder); // update that this order in know been sending. (Sent)
     public Order UpdateArrived(int idOrder); // update that this order is know been delivering (Arrived)
@@ -13,6 +13,6 @@ public interface IOrder
     public void Update(int idOrder, int idOfOrder, int amount); // update for the manager, to update an order. I guess that you want me to return the order 
 
     public Order Get(Func<Order?, bool>? func); // func that returns order according to a term it gets.
-    public IEnumerable<Order> GetDataOf(Func<Order?, bool>? predict = null); // func that returns all of the Orders  with the specail condition that is indicate in the predict
+    public IEnumerable<Order?> GetDataOf(Func<Order?, bool>? predict = null); // func that returns all of the Orders  with the specail condition that is indicate in the predict
 
 }

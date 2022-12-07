@@ -26,9 +26,12 @@ public class Order // object of the manager, on a order a client had asked for
     public override string ToString()
     {
         string sum = "";
-        foreach (OrderItem tmp in Items)
+        if (Items != null)
         {
-            sum+= tmp.ToString();
+            foreach (OrderItem tmp in Items)
+            {
+                sum += tmp.ToString();
+            }
         }
             return $@"
        ID:{ID}

@@ -1,6 +1,7 @@
 ﻿
 using BO;
 using DalApi;
+using System.Reflection.Metadata.Ecma335;
 
 namespace BlImplementation;
 /// <summary>
@@ -26,7 +27,7 @@ internal class Product : BlApi.IProduct // class for product, that the manager c
         prod.Name = product.Name;
         prod.Price = product.Price;
         prod.InStock = product.InStock;
-        prod.Category = (DO.Enums.Category)product.Category;
+        prod.Category = (DO.Enums.Category?)product.Category;
         try
         {
             Dal.Product.Add(prod);
@@ -48,13 +49,13 @@ internal class Product : BlApi.IProduct // class for product, that the manager c
     /// <exception cref="ExceptionLogicObjectCouldNotBeFound"></exception>
     public void Delete(int idProduct) // func that gets and id of product, and deletes him from the dBase. The only that can use this func is the manager
     {
-        IEnumerable<DO.Order> listOfOrders = Dal.Order.GetDataOf();
-        IEnumerable<DO.OrderItem> listOfItemOrders;
-        foreach (DO.Order item in listOfOrders) // foreach order in the dBase
+        IEnumerable<DO.Order?> listOfOrders = Dal.Order.GetDataOf();
+        IEnumerable<DO.OrderItem?> listOfItemOrders;
+        foreach (DO.Order? item in listOfOrders) // foreach order in the dBase
         {
-            listOfItemOrders = Dal.OrderItem.GetDataOfOrderItem(item.ID);
-            foreach (DO.OrderItem item2 in listOfItemOrders) // foreach orderItem in order we are looking now
-                if (item2.ProductID == idProduct) // if the product of this specific orderItem is equal to the idProduct, it means this product already found in one order at least, and we can't delete him.
+            listOfItemOrders = Dal.OrderItem.GetDataOfOrderItem((item ?? new DO.Order()).ID);
+            foreach (DO.OrderItem? item2 in listOfItemOrders) // foreach orderItem in order we are looking now
+                if ((item2 ?? new DO.OrderItem()).ProductID == idProduct) // if the product of this specific orderItem is equal to the idProduct, it means this product already found in one order at least, and we can't delete him.
                     throw new ExceptionLogicObjectAlreadyExist("product");
         }
         try
@@ -96,7 +97,7 @@ internal class Product : BlApi.IProduct // class for product, that the manager c
         item.ID = idProduct;
         item.Price = product.Price;
         item.Name = product.Name;
-        item.Category = (BO.Enums.Category)product.Category;
+        item.Category = (BO.Enums.Category?)product.Category;
         item.InStock = (product.InStock > 0); // it is aviliable if the items from this specific product in the dBase is bigger than zero.
         int num = 0;
         foreach(BO.OrderItem i in cart.Items)
@@ -139,7 +140,7 @@ internal class Product : BlApi.IProduct // class for product, that the manager c
         item.ID = product.ID;
         item.Price = product.Price;
         item.Name = product.Name;
-        item.Category = (BO.Enums.Category)product.Category;
+        item.Category = (BO.Enums.Category?)product.Category;
         return item;
     }
     /// <summary>
@@ -148,15 +149,15 @@ internal class Product : BlApi.IProduct // class for product, that the manager c
     /// <returns>the list with all the products</returns>
     public IEnumerable<ProductForList?> GetList(Func<BO.ProductForList?, bool>? func = null) // func that returns all the products in a special logic object, which either the manager can use it or it will be printed to the customer screen
     {
-        IEnumerable<DO.Product> listOfProducts = Dal.Product.GetDataOf();
-        List<BO.ProductForList> list = new List<BO.ProductForList>();
+        IEnumerable<DO.Product?> listOfProducts = Dal.Product.GetDataOf();
+        List<BO.ProductForList?> list = new List<BO.ProductForList?>();
         BO.ProductForList product1 = new BO.ProductForList();
-        foreach (DO.Product product in listOfProducts)  // for each product in the dBase, i would like to initalize a similar product in the ProductForList. The only that can use this func is the manager
+        foreach (DO.Product? product in listOfProducts)  // for each product in the dBase, i would like to initalize a similar product in the ProductForList. The only that can use this func is the manager
         {
-            product1.ID = product.ID;
-            product1.Name = product.Name;
-            product1.Price = product.Price;
-            product1.Category = (BO.Enums.Category)product.Category;
+            product1.ID = (product??new DO.Product()).ID;
+            product1.Name = (product ?? new DO.Product()).Name;
+            product1.Price = (product ?? new DO.Product()).Price;
+            product1.Category = (BO.Enums.Category?)(product ?? new DO.Product()).Category;
             list.Add(product1);
             product1 = new BO.ProductForList();
         }
@@ -181,7 +182,7 @@ internal class Product : BlApi.IProduct // class for product, that the manager c
         prod.Name = product.Name;
         prod.Price = product.Price;
         prod.InStock = product.InStock;
-        prod.Category = (DO.Enums.Category)product.Category;
+        prod.Category = (DO.Enums.Category?)product.Category;
         try
         {
             Dal.Product.Update(prod);
@@ -199,17 +200,17 @@ internal class Product : BlApi.IProduct // class for product, that the manager c
     /// <exception cref="ExceptionObjectCouldNotBeFound"></exception>
     public BO.Product Get(Func<BO.Product?, bool>? func) // func that returns proudct by a term it gets.
     {
-        IEnumerable<DO.Product> products = Dal.Product.GetDataOf();
-        List<BO.Product> listOfLogicEntities = new List<BO.Product>();
+        IEnumerable<DO.Product?> products = Dal.Product.GetDataOf();
+        List<BO.Product?> listOfLogicEntities = new List<BO.Product?>();
         BO.Product product = new BO.Product(); 
         foreach (var item in products)
         {
 
-            product.InStock = item.InStock;
-            product.ID = item.ID;
-            product.Price = item.Price;
-            product.Name = item.Name;
-            product.Category = (BO.Enums.Category)item.Category;
+            product.InStock = (item ?? new DO.Product()).InStock;
+            product.ID = (item ?? new DO.Product()).ID;
+            product.Price = (item ?? new DO.Product()).Price;
+            product.Name = (item ?? new DO.Product()).Name;
+            product.Category = (BO.Enums.Category?)(item ?? new DO.Product()).Category;
 
             listOfLogicEntities.Add(product);
         } // now, i've created like "DataSouce._products
@@ -217,8 +218,9 @@ internal class Product : BlApi.IProduct // class for product, that the manager c
 
         foreach (var item in listOfLogicEntities)
         {
-            if (func(item))
-                return (item); // if item is null, i will return a default value
+            
+            if ((func??(x =>false))(item)) // if the func is null, i will return false
+                return (item??new BO.Product()); // if item is null, i will return a default value
         }
         throw new ExceptionObjectCouldNotBeFound("product"); // else, if i couldn't have found this product, i will throw an exception
     }
@@ -227,19 +229,19 @@ internal class Product : BlApi.IProduct // class for product, that the manager c
     /// </summary>
     /// <param name="predict"></param>the condition we get
     /// <returns>the specified product</returns>
-    public IEnumerable<BO.Product> GetDataOf(Func<BO.Product?, bool>? predict = null) // func that returns all of the products
+    public IEnumerable<BO.Product?> GetDataOf(Func<BO.Product?, bool>? predict = null) // func that returns all of the products
     {
-        IEnumerable<DO.Product> products = Dal.Product.GetDataOf();
+        IEnumerable<DO.Product?> products = Dal.Product.GetDataOf();
         List<BO.Product> productsToReturn = new List<BO.Product>();
         BO.Product product = new BO.Product();
         foreach (var item in products)
         {
 
-            product.InStock = item.InStock;
-            product.ID = item.ID;
-            product.Price = item.Price;
-            product.Name = item.Name;
-            product.Category = (BO.Enums.Category)item.Category;
+            product.InStock = (item ?? new DO.Product()).InStock;
+            product.ID = (item ?? new DO.Product()).ID;
+            product.Price = (item ?? new DO.Product()).Price;
+            product.Name = (item ?? new DO.Product()).Name;
+            product.Category = (BO.Enums.Category?)(item ?? new DO.Product()).Category;
 
             productsToReturn.Add(product);
 
@@ -247,7 +249,7 @@ internal class Product : BlApi.IProduct // class for product, that the manager c
 
         if (predict == null)
             return productsToReturn;
-        IEnumerable<BO.Product> data = productsToReturn.Where(x => predict(x));
+        IEnumerable<BO.Product?> data = productsToReturn.Where(x => predict(x));
         return data;
     }
 }
