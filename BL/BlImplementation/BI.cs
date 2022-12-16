@@ -11,10 +11,10 @@ namespace BlImplementation;
 /// </summary>
 sealed internal class Bl : IBl
 {
-    public IProduct Product => new Product();
+    public IProduct Product { get; } = new BlImplementation.Product();
 
-    public IOrder Order => new Order();
+    public IOrder Order { get; } = new BlImplementation.Order();
 
-    public ICart Cart => new Cart();
+    public ICart Cart { get; } = new BlImplementation.Cart();
 }
 
