@@ -9,7 +9,7 @@ namespace BlImplementation;
 /// </summary>
 internal class Product : BlApi.IProduct // class for product, that the manager can deal with.
 { // otherwise there is ambigiouty, because he doesn't know whether it's BlApi.IProduct or DalApi.IProduct
-    private IDal Dal = DalApi.Factory.Get(); // a way to communicate with dBase level
+    private DalApi.IDal? dal = DalApi.Factory.Get(); // a way to communicate with dBase level
 
     /// <summary>
     /// The function add new product to the store
@@ -30,7 +30,7 @@ internal class Product : BlApi.IProduct // class for product, that the manager c
         prod.Category = (DO.Enums.Category?)product.Category;
         try
         {
-            Dal.Product.Add(prod);
+            dal.Product.Add(prod);
         }
         catch (ExceptionObjectCouldNotBeFound inner)
         {
@@ -49,18 +49,18 @@ internal class Product : BlApi.IProduct // class for product, that the manager c
     /// <exception cref="ExceptionLogicObjectCouldNotBeFound"></exception>
     public void Delete(int idProduct) // func that gets and id of product, and deletes him from the dBase. The only that can use this func is the manager
     {
-        IEnumerable<DO.Order?> listOfOrders = Dal.Order.GetDataOf();
+        IEnumerable<DO.Order?> listOfOrders = dal.Order.GetDataOf();
         IEnumerable<DO.OrderItem?> listOfItemOrders;
         foreach (DO.Order? item in listOfOrders) // foreach order in the dBase
         {
-            listOfItemOrders = Dal.OrderItem.GetDataOfOrderItem((item ?? new DO.Order()).ID);
+            listOfItemOrders = dal.OrderItem.GetDataOfOrderItem((item ?? new DO.Order()).ID);
             foreach (DO.OrderItem? item2 in listOfItemOrders) // foreach orderItem in order we are looking now
                 if ((item2 ?? new DO.OrderItem()).ProductID == idProduct) // if the product of this specific orderItem is equal to the idProduct, it means this product already found in one order at least, and we can't delete him.
                     throw new ExceptionLogicObjectAlreadyExist("product");
         }
         try
         {
-            Dal.Product.Delete(idProduct);
+            dal.Product.Delete(idProduct);
         }
         catch (ExceptionObjectCouldNotBeFound inner)
         {
@@ -84,7 +84,7 @@ internal class Product : BlApi.IProduct // class for product, that the manager c
         {
             try
             {
-                product = Dal.Product.Get(idProduct);
+                product = dal.Product.Get(idProduct);
             }
             catch (ExceptionObjectCouldNotBeFound inner)
             {
@@ -126,7 +126,7 @@ internal class Product : BlApi.IProduct // class for product, that the manager c
         {
             try
             {
-                product = Dal.Product.Get(idProduct);
+                product = dal.Product.Get(idProduct);
             }
             catch (ExceptionObjectCouldNotBeFound inner)
             {
@@ -149,7 +149,7 @@ internal class Product : BlApi.IProduct // class for product, that the manager c
     /// <returns>the list with all the products</returns>
     public IEnumerable<ProductForList?> GetList(Func<BO.ProductForList?, bool>? func = null) // func that returns all the products in a special logic object, which either the manager can use it or it will be printed to the customer screen
     {
-        IEnumerable<DO.Product?> listOfProducts = Dal.Product.GetDataOf();
+        IEnumerable<DO.Product?> listOfProducts = dal.Product.GetDataOf();
         List<BO.ProductForList?> list = new List<BO.ProductForList?>();
         BO.ProductForList product1 = new BO.ProductForList();
         foreach (DO.Product? product in listOfProducts)  // for each product in the dBase, i would like to initalize a similar product in the ProductForList. The only that can use this func is the manager
@@ -185,7 +185,7 @@ internal class Product : BlApi.IProduct // class for product, that the manager c
         prod.Category = (DO.Enums.Category?)product.Category;
         try
         {
-            Dal.Product.Update(prod);
+            dal.Product.Update(prod);
         }
         catch (ExceptionObjectCouldNotBeFound inner)
         {
@@ -200,7 +200,7 @@ internal class Product : BlApi.IProduct // class for product, that the manager c
     /// <exception cref="ExceptionObjectCouldNotBeFound"></exception>
     public BO.Product Get(Func<BO.Product?, bool>? func) // func that returns proudct by a term it gets.
     {
-        IEnumerable<DO.Product?> products = Dal.Product.GetDataOf();
+        IEnumerable<DO.Product?> products = dal.Product.GetDataOf();
         List<BO.Product?> listOfLogicEntities = new List<BO.Product?>();
         BO.Product product = new BO.Product(); 
         foreach (var item in products)
@@ -231,7 +231,7 @@ internal class Product : BlApi.IProduct // class for product, that the manager c
     /// <returns>the specified product</returns>
     public IEnumerable<BO.Product?> GetDataOf(Func<BO.Product?, bool>? predict = null) // func that returns all of the products
     {
-        IEnumerable<DO.Product?> products = Dal.Product.GetDataOf();
+        IEnumerable<DO.Product?> products = dal.Product.GetDataOf();
         List<BO.Product> productsToReturn = new List<BO.Product>();
         BO.Product product = new BO.Product();
         foreach (var item in products)

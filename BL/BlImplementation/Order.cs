@@ -11,7 +11,7 @@ namespace BlImplementation;
 /// </summary>
 internal class Order : BlApi.IOrder  // object of the manager, on a order a client had asked for
 {
-    private IDal Dal = DalApi.Factory.Get(); // a way to communicate with dBase level
+    private DalApi.IDal? dal = DalApi.Factory.Get(); // a way to communicate with dBase level
 
     /// <summary>
     /// The functions returns data about all the orders
@@ -20,7 +20,7 @@ internal class Order : BlApi.IOrder  // object of the manager, on a order a clie
     public IEnumerable<BO.OrderForList?> GetOrderList() // returns a list of the orders in the dBase to present on the screen to the customer
     {
         List<BO.OrderForList?> listToReturn = new List<BO.OrderForList?>();
-        IEnumerable<DO.Order?> orderList = Dal.Order.GetDataOf();
+        IEnumerable<DO.Order?> orderList = dal.Order.GetDataOf();
         BO.OrderForList? tmp = new BO.OrderForList();
         double price = 0;
         int amountOfItems = 0;
@@ -29,7 +29,7 @@ internal class Order : BlApi.IOrder  // object of the manager, on a order a clie
             tmp.CustomerName = (order??new DO.Order()).CustomerName;
             tmp.ID = (order ?? new DO.Order()).ID;
             // now i will calculate the totalPrice of the order, and the amount of items.
-            IEnumerable<DO.OrderItem?> listOfItems = Dal.OrderItem.GetDataOfOrderItem((order ?? new DO.Order()).ID);
+            IEnumerable<DO.OrderItem?> listOfItems = dal.OrderItem.GetDataOfOrderItem((order ?? new DO.Order()).ID);
             foreach (DO.OrderItem? item in listOfItems)
             {
                 price += ((item ?? new DO.OrderItem()).Amount * (item ?? new DO.OrderItem()).Price); // the price is the total price, the amount*price
@@ -66,13 +66,13 @@ internal class Order : BlApi.IOrder  // object of the manager, on a order a clie
         DO.Order order = new DO.Order();
         try
         {
-            order = Dal.Order.Get(idOrder); // now i get the order from the dBase
+            order = dal.Order.Get(idOrder); // now i get the order from the dBase
         }
         catch (ExceptionObjectCouldNotBeFound inner)
         {
             throw new ExceptionLogicObjectCouldNotBeFound("order", inner);
         }
-        IEnumerable<DO.OrderItem?> dO_listOfOrderItems = Dal.OrderItem.GetDataOfOrderItem(order.ID);
+        IEnumerable<DO.OrderItem?> dO_listOfOrderItems = dal.OrderItem.GetDataOfOrderItem(order.ID);
         BO.Order orderToReturn = new BO.Order();
 
         orderToReturn.CustomerName = order.CustomerName;
@@ -96,7 +96,7 @@ internal class Order : BlApi.IOrder  // object of the manager, on a order a clie
             // if i want to add the name of the product, i must check what is his item, and then, take its name.
             try
             {
-                orderItemTmp.Name = (Dal.Product.Get((item ?? new DO.OrderItem()).ProductID)).Name;
+                orderItemTmp.Name = (dal.Product.Get((item ?? new DO.OrderItem()).ProductID)).Name;
             }
             catch (ExceptionObjectCouldNotBeFound inner)
             {
@@ -133,7 +133,7 @@ internal class Order : BlApi.IOrder  // object of the manager, on a order a clie
         DO.Order order = new DO.Order();
         try
         {
-            order = Dal.Order.Get(idOrder);
+            order = dal.Order.Get(idOrder);
         }
         catch (ExceptionObjectCouldNotBeFound inner)
         {
@@ -174,7 +174,7 @@ internal class Order : BlApi.IOrder  // object of the manager, on a order a clie
         DO.Order order = new DO.Order();
         try
         {
-            order = Dal.Order.Get(idOrder);
+            order = dal.Order.Get(idOrder);
         }
         catch (ExceptionObjectCouldNotBeFound inner)
         {
@@ -187,7 +187,7 @@ internal class Order : BlApi.IOrder  // object of the manager, on a order a clie
         DO.Product product = new DO.Product();
         try
         {
-            product = Dal.Product.Get(idOfProduct);
+            product = dal.Product.Get(idOfProduct);
         }
         catch (ExceptionObjectCouldNotBeFound inner)
         {
@@ -196,7 +196,7 @@ internal class Order : BlApi.IOrder  // object of the manager, on a order a clie
         IEnumerable<DO.OrderItem?> list;
         try
         {
-            list = Dal.OrderItem.GetDataOfOrderItem(idOrder); // trying to get all of the order items in the order
+            list = dal.OrderItem.GetDataOfOrderItem(idOrder); // trying to get all of the order items in the order
         }
         catch (ExceptionObjectCouldNotBeFound inner)
         {
@@ -220,8 +220,8 @@ internal class Order : BlApi.IOrder  // object of the manager, on a order a clie
         else
             product.InStock += it.Amount - amount;
         it.Amount = amount;
-        Dal.Product.Update(product);
-        Dal.OrderItem.Update(it);
+        dal.Product.Update(product);
+        dal.OrderItem.Update(it);
 
     }
     /// <summary>
@@ -237,7 +237,7 @@ internal class Order : BlApi.IOrder  // object of the manager, on a order a clie
         BO.Order orderToReturn = new BO.Order();
         try
         {
-            order = Dal.Order.Get(idOrder);
+            order = dal.Order.Get(idOrder);
         }
         catch (ExceptionObjectCouldNotBeFound inner)
         {
@@ -251,7 +251,7 @@ internal class Order : BlApi.IOrder  // object of the manager, on a order a clie
         order.DeliveryDate = DateTime.Now; // updating the object
         try
         {
-            Dal.Order.Update(order);
+            dal.Order.Update(order);
         }
         catch (ExceptionObjectCouldNotBeFound inner)
         {
@@ -272,7 +272,7 @@ internal class Order : BlApi.IOrder  // object of the manager, on a order a clie
         BO.Order orderToReturn = new BO.Order();
         try
         {
-            order = Dal.Order.Get(idOrder);
+            order = dal.Order.Get(idOrder);
         }
         catch (ExceptionObjectCouldNotBeFound inner)
         {
@@ -287,7 +287,7 @@ internal class Order : BlApi.IOrder  // object of the manager, on a order a clie
         order.ShipDate = DateTime.Now; // updating the object
         try
         {
-            Dal.Order.Update(order);
+            dal.Order.Update(order);
         }
         catch (ExceptionObjectCouldNotBeFound inner)
         {
@@ -303,13 +303,13 @@ internal class Order : BlApi.IOrder  // object of the manager, on a order a clie
     /// <exception cref="ExceptionObjectCouldNotBeFound"></exception>
     public BO.Order Get(Func<BO.Order?, bool>? func) // func that returns an order by a term it gets.
     {
-        IEnumerable<DO.Order?> orders = Dal.Order.GetDataOf();
+        IEnumerable<DO.Order?> orders = dal.Order.GetDataOf();
         List<BO.Order?> listOfLogicEntities = new List<BO.Order?>();
         BO.Order order = new BO.Order();
         foreach (var item in orders)
         {
 
-            IEnumerable<DO.OrderItem?> dO_listOfOrderItems = Dal.OrderItem.GetDataOfOrderItem((item ?? new DO.Order()).ID);
+            IEnumerable<DO.OrderItem?> dO_listOfOrderItems = dal.OrderItem.GetDataOfOrderItem((item ?? new DO.Order()).ID);
 
             order.CustomerName = (item??new DO.Order()).CustomerName;
             order.CustomerAddress = (item ?? new DO.Order()).CustomerAdrress;
@@ -332,7 +332,7 @@ internal class Order : BlApi.IOrder  // object of the manager, on a order a clie
                 // if i want to add the name of the product, i must check what is his item, and then, take its name.
                 try
                 {
-                    orderItemTmp.Name = (Dal.Product.Get((orderItem ?? new DO.OrderItem()).ProductID)).Name;
+                    orderItemTmp.Name = (dal.Product.Get((orderItem ?? new DO.OrderItem()).ProductID)).Name;
                 }
                 catch (ExceptionObjectCouldNotBeFound inner)
                 {
@@ -373,13 +373,13 @@ internal class Order : BlApi.IOrder  // object of the manager, on a order a clie
     /// <returns>the order to return</returns>
     public IEnumerable<BO.Order?> GetDataOf(Func<BO.Order?, bool>? predict = null) // func that returns all of the orders    
     {
-        IEnumerable<DO.Order?> orders = Dal.Order.GetDataOf();
+        IEnumerable<DO.Order?> orders = dal.Order.GetDataOf();
         List<BO.Order?> ordersToReturn = new List<BO.Order?>();
         BO.Order order = new BO.Order();
         foreach (var item in orders)
         {
 
-            IEnumerable<DO.OrderItem?> dO_listOfOrderItems = Dal.OrderItem.GetDataOfOrderItem((item ?? new DO.Order()).ID);
+            IEnumerable<DO.OrderItem?> dO_listOfOrderItems = dal.OrderItem.GetDataOfOrderItem((item ?? new DO.Order()).ID);
 
             order.CustomerName = (item ?? new DO.Order()).CustomerName;
             order.CustomerAddress = (item ?? new DO.Order()).CustomerAdrress;
@@ -402,7 +402,7 @@ internal class Order : BlApi.IOrder  // object of the manager, on a order a clie
                 // if i want to add the name of the product, i must check what is his item, and then, take its name.
                 try
                 {
-                    orderItemTmp.Name = (Dal.Product.Get((orderItem ?? new DO.OrderItem()).ProductID)).Name;
+                    orderItemTmp.Name = (dal.Product.Get((orderItem ?? new DO.OrderItem()).ProductID)).Name;
                 }
                 catch (ExceptionObjectCouldNotBeFound inner)
                 {

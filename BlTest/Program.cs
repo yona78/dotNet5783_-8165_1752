@@ -10,7 +10,7 @@ namespace Program;
 /// </summary>
 class Program
 {
-    static IBl blList = new Bl();
+    static BlApi.IBl? bl = BlApi.Factory.Get();
     static Cart cart = new Cart();
     /// <summary>
     /// The main menu for all the objects
@@ -86,8 +86,8 @@ class Program
             switch (choiceInSubSwitch)
             {
                 case 'a': // getOrderList option
-                    IEnumerable<BO.OrderForList> list = blList.Order.GetOrderList();
-                    foreach (BO.OrderForList item in list)
+                    IEnumerable<BO.OrderForList?> list = (bl ?? BlApi.Factory.Get()).Order.GetOrderList();
+                    foreach (BO.OrderForList? item in list)
                         Console.WriteLine(item);
                     break;
                 case 'b': // getting access to an order: Manager 
@@ -100,7 +100,7 @@ class Program
                     } while (!validInput);
                     try
                     {
-                        Console.WriteLine(blList.Order.GetOrderManager(id));
+                        Console.WriteLine((bl ?? BlApi.Factory.Get()).Order.GetOrderManager(id)); ;
                     }
                     catch (ExceptionDataIsInvalid error)
                     {
@@ -108,7 +108,7 @@ class Program
                     }
                     catch (ExceptionLogicObjectCouldNotBeFound error)
                     {
-                        Console.WriteLine("Name Of Exception: {0}\nMassage In Exception: {1}\nName Of Inner Exception: {2}\nMassage In Inner Exception: {3}", error.GetType().Name, error.Message, error.InnerException.GetType().Name, error.InnerException.Message);
+                        Console.WriteLine("Name Of Exception: {0}\nMassage In Exception: {1}\nName Of Inner Exception: {2}\nMassage In Inner Exception: {3}", error.GetType().Name, error.Message, (error.InnerException ?? new ExceptionObjectCouldNotBeFound("")).GetType().Name, (error.InnerException ?? new ExceptionObjectCouldNotBeFound("")).Message);
                     }
                     break;
                 case 'c': // updating that an order has been sent
@@ -121,7 +121,7 @@ class Program
                     } while (!validInput);
                     try
                     {
-                        Console.WriteLine(blList.Order.UpdateSent(id));
+                        Console.WriteLine((bl ?? BlApi.Factory.Get()).Order.UpdateSent(id));
                     }
                     catch (ExceptionObjectIsNotAviliable error)
                     {
@@ -129,7 +129,7 @@ class Program
                     }
                     catch (ExceptionLogicObjectCouldNotBeFound error)
                     {
-                        Console.WriteLine("Name Of Exception: {0}\nMassage In Exception: {1}\nName Of Inner Exception: {2}\nMassage In Inner Exception: {3}", error.GetType().Name, error.Message, error.InnerException.GetType().Name, error.InnerException.Message);
+                        Console.WriteLine("Name Of Exception: {0}\nMassage In Exception: {1}\nName Of Inner Exception: {2}\nMassage In Inner Exception: {3}", error.GetType().Name, error.Message, (error.InnerException ?? new ExceptionObjectCouldNotBeFound("")).GetType().Name, (error.InnerException ?? new ExceptionObjectCouldNotBeFound("")).Message);
                     }
                     break;
                 case 'd': // updating that an order has been arrived
@@ -142,7 +142,7 @@ class Program
                     } while (!validInput);
                     try
                     {
-                        Console.WriteLine(blList.Order.UpdateArrived(id));
+                        Console.WriteLine((bl ?? BlApi.Factory.Get()).Order.UpdateArrived(id));
                     }
                     catch (ExceptionObjectIsNotAviliable error)
                     {
@@ -150,7 +150,7 @@ class Program
                     }
                     catch (ExceptionLogicObjectCouldNotBeFound error)
                     {
-                        Console.WriteLine("Name Of Exception: {0}\nMassage In Exception: {1}\nName Of Inner Exception: {2}\nMassage In Inner Exception: {3}", error.GetType().Name, error.Message, error.InnerException.GetType().Name, error.InnerException.Message);
+                        Console.WriteLine("Name Of Exception: {0}\nMassage In Exception: {1}\nName Of Inner Exception: {2}\nMassage In Inner Exception: {3}", error.GetType().Name, error.Message, (error.InnerException ?? new ExceptionObjectCouldNotBeFound("")).GetType().Name, (error.InnerException ?? new ExceptionObjectCouldNotBeFound("")).Message);
                     }
                     break;
                 case 'e': // for getting an Entity that helps me to control the orders
@@ -163,11 +163,11 @@ class Program
                     } while (!validInput);
                     try
                     {
-                        Console.WriteLine(blList.Order.TrackOrder(id));
+                        Console.WriteLine((bl ?? BlApi.Factory.Get()).Order.TrackOrder(id));
                     }
                     catch (ExceptionLogicObjectCouldNotBeFound error)
                     {
-                        Console.WriteLine("Name Of Exception: {0}\nMassage In Exception: {1}\nName Of Inner Exception: {2}\nMassage In Inner Exception: {3}", error.GetType().Name, error.Message, error.InnerException.GetType().Name, error.InnerException.Message);
+                        Console.WriteLine("Name Of Exception: {0}\nMassage In Exception: {1}\nName Of Inner Exception: {2}\nMassage In Inner Exception: {3}", error.GetType().Name, error.Message, (error.InnerException ?? new ExceptionObjectCouldNotBeFound("")).GetType().Name, (error.InnerException ?? new ExceptionObjectCouldNotBeFound("")).Message);
                     }
                     break;
                 case 'f': // for updating an order
@@ -195,11 +195,11 @@ class Program
                     } while (!validInput);
                     try
                     {
-                        blList.Order.Update(id,idOfProduct, amount);
+                        (bl ?? BlApi.Factory.Get()).Order.Update(id, idOfProduct, amount);
                     }
                     catch (ExceptionLogicObjectCouldNotBeFound error)
                     {
-                       Console.WriteLine("Name Of Exception: {0}\nMassage In Exception: {1}\nName Of Inner Exception: {2}\nMassage In Inner Exception: {3}", error.GetType().Name, error.Message, error.InnerException.GetType().Name, error.InnerException.Message);
+                        Console.WriteLine("Name Of Exception: {0}\nMassage In Exception: {1}\nName Of Inner Exception: {2}\nMassage In Inner Exception: {3}", error.GetType().Name, error.Message, (error.InnerException ?? new ExceptionObjectCouldNotBeFound("")).GetType().Name, (error.InnerException ?? new ExceptionObjectCouldNotBeFound("")).Message);
                     }
                     catch (ExceptionNotEnoughInDataBase error)
                     {
@@ -295,7 +295,7 @@ class Program
                     productToAdd.Category = category;
                     try
                     {
-                        blList.Product.Add(productToAdd);
+                        (bl ?? BlApi.Factory.Get()).Product.Add(productToAdd);
                     }
                     catch (ExceptionDataIsInvalid error)
                     {
@@ -303,11 +303,11 @@ class Program
                     }
                     catch (ExceptionLogicObjectCouldNotBeFound error)
                     {
-                        Console.WriteLine("Name Of Exception: {0}\nMassage In Exception: {1}\nName Of Inner Exception: {2}\nMassage In Inner Exception: {3}", error.GetType().Name, error.Message, error.InnerException.GetType().Name, error.InnerException.Message);
+                        Console.WriteLine("Name Of Exception: {0}\nMassage In Exception: {1}\nName Of Inner Exception: {2}\nMassage In Inner Exception: {3}", error.GetType().Name, error.Message, (error.InnerException ?? new ExceptionObjectCouldNotBeFound("")).GetType().Name, (error.InnerException ?? new ExceptionObjectCouldNotBeFound("")).Message);
                     }
                     catch (ExceptionLogicObjectAlreadyExist error)
                     {
-                        Console.WriteLine("Name Of Exception: {0}\nMassage In Exception: {1}\nName Of Inner Exception: {2}\nMassage In Inner Exception: {3}", error.GetType().Name, error.Message, error.InnerException.GetType().Name, error.InnerException.Message);
+                        Console.WriteLine("Name Of Exception: {0}\nMassage In Exception: {1}\nName Of Inner Exception: {2}\nMassage In Inner Exception: {3}", error.GetType().Name, error.Message, (error.InnerException ?? new ExceptionObjectAlreadyExist("")).GetType().Name, (error.InnerException ?? new ExceptionObjectAlreadyExist("")).Message);
                     }
                     break;
                 case 'b': // getting a product by its id
@@ -320,11 +320,11 @@ class Program
                     } while (!validInput);
                     try
                     {
-                        Console.WriteLine(blList.Product.GetForManager(id));
+                        Console.WriteLine((bl ?? BlApi.Factory.Get()).Product.GetForManager(id));
                     }
                     catch (ExceptionLogicObjectCouldNotBeFound error)
                     {
-                        Console.WriteLine("Name Of Exception: {0}\nMassage In Exception: {1}\nName Of Inner Exception: {2}\nMassage In Inner Exception: {3}", error.GetType().Name, error.Message, error.InnerException.GetType().Name, error.InnerException.Message);
+                        Console.WriteLine("Name Of Exception: {0}\nMassage In Exception: {1}\nName Of Inner Exception: {2}\nMassage In Inner Exception: {3}", error.GetType().Name, error.Message, (error.InnerException ?? new ExceptionObjectCouldNotBeFound("")).GetType().Name, (error.InnerException ?? new ExceptionObjectCouldNotBeFound("")).Message);
                     }
                     catch (ExceptionDataIsInvalid error)
                     {
@@ -332,8 +332,8 @@ class Program
                     }
                     break;
                 case 'c': // getting all of the products
-                    IEnumerable<ProductForList> list = blList.Product.GetList();
-                    foreach (ProductForList item in list)
+                    IEnumerable<ProductForList?> list = (bl ?? BlApi.Factory.Get()).Product.GetList();
+                    foreach (ProductForList? item in list)
                     {
                         Console.WriteLine(item);
                     }
@@ -384,7 +384,7 @@ class Program
                     productToUpdate.Category = category;
                     try
                     {
-                        blList.Product.Update(productToUpdate);
+                        (bl ?? BlApi.Factory.Get()).Product.Update(productToUpdate);
                     }
                     catch (ExceptionDataIsInvalid error)
                     {
@@ -392,7 +392,7 @@ class Program
                     }
                     catch (ExceptionLogicObjectCouldNotBeFound error)
                     {
-                        Console.WriteLine("Name Of Exception: {0}\nMassage In Exception: {1}\nName Of Inner Exception: {2}\nMassage In Inner Exception: {3}", error.GetType().Name, error.Message, error.InnerException.GetType().Name, error.InnerException.Message);
+                        Console.WriteLine("Name Of Exception: {0}\nMassage In Exception: {1}\nName Of Inner Exception: {2}\nMassage In Inner Exception: {3}", error.GetType().Name, error.Message, (error.InnerException ?? new ExceptionObjectCouldNotBeFound("")).GetType().Name, (error.InnerException ?? new ExceptionObjectCouldNotBeFound("")).Message);
                     }
                     break;
                 case 'e': // deleting a product
@@ -405,7 +405,7 @@ class Program
                     } while (!validInput);
                     try
                     {
-                        blList.Product.Delete(id);
+                        (bl ?? BlApi.Factory.Get()).Product.Delete(id);
                     }
                     catch (ExceptionLogicObjectAlreadyExist error)
                     {
@@ -413,7 +413,7 @@ class Program
                     }
                     catch (ExceptionLogicObjectCouldNotBeFound error)
                     {
-                        Console.WriteLine("Name Of Exception: {0}\nMassage In Exception: {1}\nName Of Inner Exception: {2}\nMassage In Inner Exception: {3}", error.GetType().Name, error.Message, error.InnerException.GetType().Name, error.InnerException.Message);
+                        Console.WriteLine("Name Of Exception: {0}\nMassage In Exception: {1}\nName Of Inner Exception: {2}\nMassage In Inner Exception: {3}", error.GetType().Name, error.Message, (error.InnerException ?? new ExceptionObjectAlreadyExist("")).GetType().Name, (error.InnerException ?? new ExceptionObjectAlreadyExist("")).Message);
                     }
                     break;
                 case 'f': // getting data of a product in a cart
@@ -426,11 +426,11 @@ class Program
                     } while (!validInput);
                     try
                     {
-                        Console.WriteLine(blList.Product.GetForCustomer(id, cart));
+                        Console.WriteLine((bl ?? BlApi.Factory.Get()).Product.GetForCustomer(id, cart));
                     }
                     catch (ExceptionLogicObjectCouldNotBeFound error)
                     {
-                        Console.WriteLine("Name Of Exception: {0}\nMassage In Exception: {1}\nName Of Inner Exception: {2}\nMassage In Inner Exception: {3}", error.GetType().Name, error.Message, error.InnerException.GetType().Name, error.InnerException.Message);
+                        Console.WriteLine("Name Of Exception: {0}\nMassage In Exception: {1}\nName Of Inner Exception: {2}\nMassage In Inner Exception: {3}", error.GetType().Name, error.Message, (error.InnerException??new ExceptionObjectCouldNotBeFound("")).GetType().Name, (error.InnerException ?? new ExceptionObjectCouldNotBeFound("")).Message);
                     }
                     catch (ExceptionDataIsInvalid error)
                     {
@@ -474,7 +474,7 @@ class Program
             } while (!validInput);
             int id;
             int amount;
-            string name, address, email;
+            string? name, address, email;
             switch (choiceInSubSwitch)
             {
                 case 'a': // adding a product to a cart
@@ -487,7 +487,7 @@ class Program
                     } while (!validInput);
                     try
                     {
-                        cart = blList.Cart.AddProduct(cart, id); 
+                        cart = (bl ?? BlApi.Factory.Get()).Cart.AddProduct(cart, id);
                     }
                     catch (ExceptionObjectIsNotAviliable error)
                     {
@@ -495,7 +495,7 @@ class Program
                     }
                     catch (ExceptionLogicObjectCouldNotBeFound error)
                     {
-                        Console.WriteLine("Name Of Exception: {0}\nMassage In Exception: {1}\nName Of Inner Exception: {2}\nMassage In Inner Exception: {3}", error.GetType().Name, error.Message, error.InnerException.GetType().Name, error.InnerException.Message);
+                        Console.WriteLine("Name Of Exception: {0}\nMassage In Exception: {1}\nName Of Inner Exception: {2}\nMassage In Inner Exception: {3}", error.GetType().Name, error.Message, (error.InnerException??new ExceptionObjectCouldNotBeFound("")).GetType().Name, (error.InnerException??new ExceptionObjectCouldNotBeFound("")).Message);
                     }
                     catch (ExceptionNotEnoughInDataBase error)
                     {
@@ -519,7 +519,7 @@ class Program
                     } while (!validInput);
                     try
                     {
-                        cart = blList.Cart.UpdateAmount(cart,id,amount);
+                        cart = (bl ?? BlApi.Factory.Get()).Cart.UpdateAmount(cart, id, amount);
                     }
                     catch (ExceptionObjectIsNotAviliable error)
                     {
@@ -531,13 +531,13 @@ class Program
                     }
                     catch (ExceptionLogicObjectAlreadyExist error)
                     {
-                        Console.WriteLine("Name Of Exception: {0}\nMassage In Exception: {1}\nName Of Inner Exception: {2}\nMassage In Inner Exception: {3}", error.GetType().Name, error.Message, error.InnerException.GetType().Name, error.InnerException.Message);
+                        Console.WriteLine("Name Of Exception: {0}\nMassage In Exception: {1}\nName Of Inner Exception: {2}\nMassage In Inner Exception: {3}", error.GetType().Name, error.Message, (error.InnerException ?? new ExceptionObjectAlreadyExist("")).GetType().Name, (error.InnerException ?? new ExceptionObjectAlreadyExist("")).Message);
                     }
                     catch (ExceptionLogicObjectCouldNotBeFound error)
                     {
-                        Console.WriteLine("Name Of Exception: {0}\nMassage In Exception: {1}\n", error.GetType().Name, error.Message) ;
+                        Console.WriteLine("Name Of Exception: {0}\nMassage In Exception: {1}\n", error.GetType().Name, error.Message);
                     }
-                    catch(ExceptionDataIsInvalid error)
+                    catch (ExceptionDataIsInvalid error)
                     {
                         Console.WriteLine("Name Of Exception: {0}\nMassage In Exception: {1}\n", error.GetType().Name, error.Message);
                     }
@@ -551,7 +551,7 @@ class Program
                     email = Console.ReadLine();
                     try
                     {
-                        blList.Cart.MakeOrder(cart,name, address, email); 
+                        (bl ?? BlApi.Factory.Get()).Cart.MakeOrder(cart, name ?? "", address ?? "", email ?? "");
                         cart = new Cart();
                     }
                     catch (ExceptionObjectIsNotAviliable error)
@@ -560,7 +560,7 @@ class Program
                     }
                     catch (ExceptionLogicObjectCouldNotBeFound error)
                     {
-                        Console.WriteLine("Name Of Exception: {0}\nMassage In Exception: {1}\nName Of Inner Exception: {2}\nMassage In Inner Exception: {3}", error.GetType().Name, error.Message, error.InnerException.GetType().Name, error.InnerException.Message);
+                        Console.WriteLine("Name Of Exception: {0}\nMassage In Exception: {1}\nName Of Inner Exception: {2}\nMassage In Inner Exception: {3}", error.GetType().Name, error.Message, (error.InnerException ?? new ExceptionObjectCouldNotBeFound("")).GetType().Name, (error.InnerException ?? new ExceptionObjectCouldNotBeFound("")).Message);
                     }
                     catch (ExceptionDataIsInvalid error)
                     {

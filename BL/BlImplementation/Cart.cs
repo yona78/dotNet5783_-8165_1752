@@ -10,7 +10,7 @@ namespace BlImplementation;
 /// </summary>
 internal class Cart : ICart // cart of customer
 {
-    private IDal Dal = DalApi.Factory.Get(); // a way to communicate with dBase level
+    private DalApi.IDal? dal = DalApi.Factory.Get(); // a way to communicate with dBase level
     /// <summary>
     /// Function to add product to cart
     /// </summary>
@@ -27,7 +27,7 @@ internal class Cart : ICart // cart of customer
         DO.Product product = new DO.Product();
         try
         {
-            product = Dal.Product.Get(idProduct);
+            product = dal.Product.Get(idProduct);
         }
         catch (ExceptionObjectCouldNotBeFound inner) // the product isn't exist in the dBase
         {
@@ -98,7 +98,7 @@ internal class Cart : ICart // cart of customer
         {
             try
             {
-                product = Dal.Product.Get(item.ProductID);
+                product = dal.Product.Get(item.ProductID);
             }
             catch (ExceptionObjectCouldNotBeFound) // the product isn't exist in the dBase
             {
@@ -120,7 +120,7 @@ internal class Cart : ICart // cart of customer
         int id;
         try
         {
-            id = Dal.Order.Add(order);
+            id = dal.Order.Add(order);
         }
         catch (ExceptionObjectAlreadyExist inner)
         {
@@ -135,7 +135,7 @@ internal class Cart : ICart // cart of customer
             orderItem.Amount = item.Amount;
             try
             {
-                Dal.OrderItem.Add(orderItem);
+                dal.OrderItem.Add(orderItem);
             }
             catch (ExceptionObjectCouldNotBeFound inner)
             {
@@ -147,7 +147,7 @@ internal class Cart : ICart // cart of customer
             }
             try
             {
-                product = Dal.Product.Get(orderItem.ProductID);
+                product = dal.Product.Get(orderItem.ProductID);
             }
             catch (ExceptionObjectCouldNotBeFound inner)
             {
@@ -156,7 +156,7 @@ internal class Cart : ICart // cart of customer
             product.InStock -= orderItem.Amount;
             try
             {
-                Dal.Product.Update(product);
+                dal.Product.Update(product);
             }
             catch (ExceptionObjectCouldNotBeFound inner)
             {
@@ -205,7 +205,7 @@ internal class Cart : ICart // cart of customer
         {
             try
             {
-                product = Dal.Product.Get(idProduct);
+                product = dal.Product.Get(idProduct);
             }
             catch (ExceptionObjectCouldNotBeFound inner)
             {

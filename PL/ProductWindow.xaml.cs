@@ -13,7 +13,7 @@ namespace PL
     public partial class ProductWindow : Window
     {
         int idTmp = 0;
-        IBl blP = BlApi.Factory.Get();
+        BlApi.IBl? blP = BlApi.Factory.Get();
         public ProductWindow(IBl bl, string option, int id) // id of product, option of action that we want to do
         {
             InitializeComponent();
@@ -61,13 +61,13 @@ namespace PL
                     throw new Exception("inStock is invalid");
                 prdct.InStock = tmp;
                 prdct.Name = name.Text; // // getting the Name from the TextBox, and insert it into the product
-                string selected = CatgoryChoise.SelectedItem.ToString();
+                string? selected = CatgoryChoise.SelectedItem.ToString();
 
                 validInput = BO.Enums.Category.TryParse(selected, out category);// getting the category from the TextBox, and insert it into the product
                 if (!validInput)
                     throw new Exception("category is invalid");
                 prdct.Category = category;
-                blP.Product.Add(prdct);
+                (blP ?? BlApi.Factory.Get()).Product.Add(prdct);
             }
             catch (Exception err)
             {
@@ -99,14 +99,14 @@ namespace PL
                     throw new Exception("inStock is invalid");
                 prdct.InStock = tmp;
                 prdct.Name = name.Text; // // getting the Name from the TextBox, and insert it into the product
-                string selected = CatgoryChoise.SelectedItem.ToString();
+                string? selected = CatgoryChoise.SelectedItem.ToString();
 
                 validInput = BO.Enums.Category.TryParse(selected, out category);// getting the category from the TextBox, and insert it into the product
                 if (!validInput)
                     throw new Exception("category is invalid");
                 prdct.Category = category;
                 prdct.ID = idTmp; // the ID stays the same 
-                blP.Product.Update(prdct);
+                (blP ?? BlApi.Factory.Get()).Product.Update(prdct);
             }
             catch (Exception err)
             {
