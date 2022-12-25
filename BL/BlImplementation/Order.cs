@@ -11,7 +11,7 @@ namespace BlImplementation;
 /// </summary>
 internal class Order : BlApi.IOrder  // object of the manager, on a order a client had asked for
 {
-    private DalApi.IDal? dal = DalApi.Factory.Get(); // a way to communicate with dBase level
+    private DalApi.IDal dal = DalApi.Factory.Get()!; // a way to communicate with dBase level
 
     /// <summary>
     /// The functions returns data about all the orders
@@ -180,10 +180,10 @@ internal class Order : BlApi.IOrder  // object of the manager, on a order a clie
         {
             throw new ExceptionLogicObjectCouldNotBeFound("order", inner);
         }
-        if (order.ShipDate != null)  // checks if it hasn't been shipped yet
-        {
-            throw new ExceptionDataIsInvalid("order");
-        }
+        //if (order.ShipDate != null)  // checks if it hasn't been shipped yet
+        //{
+        //    throw new ExceptionDataIsInvalid("order");
+        //}       
         DO.Product product = new DO.Product();
         try
         {

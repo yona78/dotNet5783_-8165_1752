@@ -9,7 +9,7 @@ namespace BlImplementation;
 /// </summary>
 internal class Product : BlApi.IProduct // class for product, that the manager can deal with.
 { // otherwise there is ambigiouty, because he doesn't know whether it's BlApi.IProduct or DalApi.IProduct
-    private DalApi.IDal? dal = DalApi.Factory.Get(); // a way to communicate with dBase level
+    private DalApi.IDal dal = DalApi.Factory.Get()!; // a way to communicate with dBase level
 
     /// <summary>
     /// The function add new product to the store

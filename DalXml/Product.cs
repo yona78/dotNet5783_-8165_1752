@@ -5,10 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 using DalApi;
 using DO;
-
+/*
 namespace Dal
 {
     internal class Product :IProduct
     {
     }
 }
+*/
