@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace BO;
+﻿namespace BO;
 /// <summary>
 /// class of object to use for creating list with all the information about products
 /// </summary>

@@ -1,8 +1,4 @@
-﻿using DO;
-
-using System;
-
-namespace DalApi;
+﻿namespace DalApi;
 
 public interface IDal
 {

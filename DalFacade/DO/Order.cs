@@ -1,6 +1,4 @@
-﻿
-/// not a special thing, regular abstract class.
-using System.Data;
+﻿/// not a special thing, regular abstract class.
 
 namespace DO;
 /// <summary>

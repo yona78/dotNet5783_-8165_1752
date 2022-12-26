@@ -1,6 +1,4 @@
-﻿using DO;
-
-namespace BO;
+﻿namespace BO;
 /// <summary>
 /// help class to use in our project to contine data about products in order
 /// </summary>

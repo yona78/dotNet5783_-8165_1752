@@ -1,6 +1,4 @@
-﻿using DO;
-
-namespace BO;
+﻿namespace BO;
 /// <summary>
 /// help class of object to use for getting all the data about order status
 /// </summary>

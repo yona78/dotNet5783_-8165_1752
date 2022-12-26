@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DO;
-namespace BO;
+﻿namespace BO;
 /// <summary>
 /// class of object to use in our shop
 /// </summary>
@@ -31,4 +24,4 @@ public class Product // logic obejct of product, in order to deal with data base
     "; // to string.
 }
 
-    
+

@@ -1,5 +1,5 @@
-﻿using DO;
-using DalApi;
+﻿using DalApi;
+using DO;
 namespace Dal;
 /// <summary>
 /// public class for implemention of orderItem
@@ -61,7 +61,7 @@ internal class DalOrderItem : IOrderItem
         bool found = false;
         for (int i = 0; i < DataSource._orderItems.Count(); i++) // checks if the order item exists
         {
-            if ((DataSource._orderItems[i]?? new OrderItem()).OrderItemID == idOrderItem)
+            if ((DataSource._orderItems[i] ?? new OrderItem()).OrderItemID == idOrderItem)
             {
                 found = true;
                 DataSource._orderItems.RemoveAt(i);
@@ -73,9 +73,9 @@ internal class DalOrderItem : IOrderItem
     public void Update(OrderItem newOrderItem) // func that updates an orderItem in his array
     {
         bool found = false;
-        for (int i = 0; i < DataSource._orderItems.Count(); i++) // checks if the order exists
+        for (int i = 0; i < DataSource._orders.Count(); i++) // checks if the order exists
         {
-            if ((DataSource._orders[i]??new Order()).ID == newOrderItem.OrderID)
+            if ((DataSource._orders[i] ?? new Order()).ID == newOrderItem.OrderID)
             {
                 found = true;
                 break;
@@ -85,9 +85,9 @@ internal class DalOrderItem : IOrderItem
             throw new ExceptionObjectCouldNotBeFound("order");
 
         found = false;
-        for (int i = 0; i < DataSource._orderItems.Count(); i++) // checks if the product exists
+        for (int i = 0; i < DataSource._products.Count(); i++) // checks if the product exists
         {
-            if ((DataSource._products[i]??new Product()).ID == newOrderItem.ProductID)
+            if ((DataSource._products[i] ?? new Product()).ID == newOrderItem.ProductID)
             {
                 found = true;
                 break;
@@ -99,14 +99,14 @@ internal class DalOrderItem : IOrderItem
         found = false;
         for (int i = 0; i < DataSource._products.Count(); i++)
         {
-            if (newOrderItem.ProductID == (DataSource._products[i]??new Product()).ID)
+            if (newOrderItem.ProductID == (DataSource._products[i] ?? new Product()).ID)
             {
-                newOrderItem.Price = (DataSource._products[i]??new Product()).Price;
+                newOrderItem.Price = (DataSource._products[i] ?? new Product()).Price;
             }
         }
         for (int i = 0; i < DataSource._orderItems.Count(); i++)
         {
-            if ((DataSource._orderItems[i]??new OrderItem()).OrderItemID == newOrderItem.OrderItemID) // if it has the same id, we do a deep copy
+            if ((DataSource._orderItems[i] ?? new OrderItem()).OrderItemID == newOrderItem.OrderItemID) // if it has the same id, we do a deep copy
             {
                 found = true;
                 DataSource._orderItems.RemoveAt(i);

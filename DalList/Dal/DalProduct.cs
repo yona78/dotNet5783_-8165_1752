@@ -1,5 +1,5 @@
-﻿using DO;
-using DalApi;
+﻿using DalApi;
+using DO;
 namespace Dal;
 /// <summary>
 /// public class for implemention of product 
@@ -13,7 +13,7 @@ internal class DalProduct : IProduct
             throw new ExceptionListIsFull();
         for (int i = 0; i < DataSource._products.Count(); i++) // checks if the product is already exist
         {
-            if ((DataSource._products[i]??new Product()).ID == newProduct.ID)
+            if ((DataSource._products[i] ?? new Product()).ID == newProduct.ID)
                 throw new ExceptionObjectAlreadyExist("product");
         }
         DataSource._products.Add(newProduct);
@@ -35,7 +35,7 @@ internal class DalProduct : IProduct
         bool found = false;
         for (int i = 0; i < DataSource._products.Count(); i++) // looks for the product with the specific id
         {
-            if ((DataSource._products[i]??new Product()).ID == id)
+            if ((DataSource._products[i] ?? new Product()).ID == id)
             {
                 DataSource._products.RemoveAt(i);
                 found = true;
@@ -49,7 +49,7 @@ internal class DalProduct : IProduct
         bool found = false;
         for (int i = 0; i < DataSource._products.Count(); i++) // if the specific product is found, it does a deep copy
         {
-            if ((DataSource._products[i]?? new Product()).ID == newProduct.ID)
+            if ((DataSource._products[i] ?? new Product()).ID == newProduct.ID)
             {
                 DataSource._products.RemoveAt(i);
                 DataSource._products.Insert(i, newProduct);
@@ -58,7 +58,7 @@ internal class DalProduct : IProduct
             }
         }
         if (!found) // if the product isn't exist throw an exception
-            throw new ExceptionObjectCouldNotBeFound("product");  
+            throw new ExceptionObjectCouldNotBeFound("product");
     }
 
     public Product Get(Func<Product?, bool>? func) // func that returns an proudct by a term it gets.

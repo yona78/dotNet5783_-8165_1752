@@ -1,6 +1,4 @@
-﻿using DO;
-
-namespace BO;
+﻿namespace BO;
 /// <summary>
 /// class of object to use in our shop
 /// </summary>

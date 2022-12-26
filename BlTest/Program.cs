@@ -1,7 +1,4 @@
 ﻿using BO;
-using BlApi;
-using BlImplementation;
-using System.Collections.Generic;
 using DalApi;
 
 namespace Program;
@@ -430,7 +427,7 @@ class Program
                     }
                     catch (ExceptionLogicObjectCouldNotBeFound error)
                     {
-                        Console.WriteLine("Name Of Exception: {0}\nMassage In Exception: {1}\nName Of Inner Exception: {2}\nMassage In Inner Exception: {3}", error.GetType().Name, error.Message, (error.InnerException??new ExceptionObjectCouldNotBeFound("")).GetType().Name, (error.InnerException ?? new ExceptionObjectCouldNotBeFound("")).Message);
+                        Console.WriteLine("Name Of Exception: {0}\nMassage In Exception: {1}\nName Of Inner Exception: {2}\nMassage In Inner Exception: {3}", error.GetType().Name, error.Message, (error.InnerException ?? new ExceptionObjectCouldNotBeFound("")).GetType().Name, (error.InnerException ?? new ExceptionObjectCouldNotBeFound("")).Message);
                     }
                     catch (ExceptionDataIsInvalid error)
                     {
@@ -495,7 +492,7 @@ class Program
                     }
                     catch (ExceptionLogicObjectCouldNotBeFound error)
                     {
-                        Console.WriteLine("Name Of Exception: {0}\nMassage In Exception: {1}\nName Of Inner Exception: {2}\nMassage In Inner Exception: {3}", error.GetType().Name, error.Message, (error.InnerException??new ExceptionObjectCouldNotBeFound("")).GetType().Name, (error.InnerException??new ExceptionObjectCouldNotBeFound("")).Message);
+                        Console.WriteLine("Name Of Exception: {0}\nMassage In Exception: {1}\nName Of Inner Exception: {2}\nMassage In Inner Exception: {3}", error.GetType().Name, error.Message, (error.InnerException ?? new ExceptionObjectCouldNotBeFound("")).GetType().Name, (error.InnerException ?? new ExceptionObjectCouldNotBeFound("")).Message);
                     }
                     catch (ExceptionNotEnoughInDataBase error)
                     {

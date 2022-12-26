@@ -1,7 +1,6 @@
 ﻿
 using BO;
 using DalApi;
-using System.Reflection.Metadata.Ecma335;
 
 namespace BlImplementation;
 /// <summary>
@@ -100,12 +99,12 @@ internal class Product : BlApi.IProduct // class for product, that the manager c
         item.Category = (BO.Enums.Category?)product.Category;
         item.InStock = (product.InStock > 0); // it is aviliable if the items from this specific product in the dBase is bigger than zero.
         int num = 0;
-        foreach(BO.OrderItem i in cart.Items)
+        foreach (BO.OrderItem i in cart.Items)
         {
             if (i.ProductID == idProduct)
-                num+=i.Amount;
+                num += i.Amount;
         }
-        if(num==0)
+        if (num == 0)
         {
             throw new ExceptionObjectCouldNotBeFound("product in cart");
         }
@@ -154,7 +153,7 @@ internal class Product : BlApi.IProduct // class for product, that the manager c
         BO.ProductForList product1 = new BO.ProductForList();
         foreach (DO.Product? product in listOfProducts)  // for each product in the dBase, i would like to initalize a similar product in the ProductForList. The only that can use this func is the manager
         {
-            product1.ID = (product??new DO.Product()).ID;
+            product1.ID = (product ?? new DO.Product()).ID;
             product1.Name = (product ?? new DO.Product()).Name;
             product1.Price = (product ?? new DO.Product()).Price;
             product1.Category = (BO.Enums.Category?)(product ?? new DO.Product()).Category;
@@ -202,7 +201,7 @@ internal class Product : BlApi.IProduct // class for product, that the manager c
     {
         IEnumerable<DO.Product?> products = dal.Product.GetDataOf();
         List<BO.Product?> listOfLogicEntities = new List<BO.Product?>();
-        BO.Product product = new BO.Product(); 
+        BO.Product product = new BO.Product();
         foreach (var item in products)
         {
 
@@ -218,9 +217,9 @@ internal class Product : BlApi.IProduct // class for product, that the manager c
 
         foreach (var item in listOfLogicEntities)
         {
-            
-            if ((func??(x =>false))(item)) // if the func is null, i will return false
-                return (item??new BO.Product()); // if item is null, i will return a default value
+
+            if ((func ?? (x => false))(item)) // if the func is null, i will return false
+                return (item ?? new BO.Product()); // if item is null, i will return a default value
         }
         throw new ExceptionObjectCouldNotBeFound("product"); // else, if i couldn't have found this product, i will throw an exception
     }

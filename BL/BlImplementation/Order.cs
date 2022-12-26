@@ -2,7 +2,6 @@
 using BO;
 
 using DalApi;
-using DO;
 using System.Data;
 
 namespace BlImplementation;
@@ -26,7 +25,7 @@ internal class Order : BlApi.IOrder  // object of the manager, on a order a clie
         int amountOfItems = 0;
         foreach (DO.Order? order in orderList)  // for each order in the orderlist from the dB, i would like to add a similiar orderList in the orderList list.
         {
-            tmp.CustomerName = (order??new DO.Order()).CustomerName;
+            tmp.CustomerName = (order ?? new DO.Order()).CustomerName;
             tmp.ID = (order ?? new DO.Order()).ID;
             // now i will calculate the totalPrice of the order, and the amount of items.
             IEnumerable<DO.OrderItem?> listOfItems = dal.OrderItem.GetDataOfOrderItem((order ?? new DO.Order()).ID);
@@ -112,9 +111,9 @@ internal class Order : BlApi.IOrder  // object of the manager, on a order a clie
 
         // now i will check the status of the order, by comparing the current time, and the time in the data.
         DateTime now = DateTime.Now;
-        if (now > order.DeliveryDate && order.DeliveryDate != null) // it means the order has already arrived. 
+        if (now > order.DeliveryDate && order.DeliveryDate != null &&order.DeliveryDate !=DateTime.MinValue) // it means the order has already arrived. 
             orderToReturn.OrderStatus = BO.Enums.Status.Arrived;
-        else if (now > order.ShipDate && order.ShipDate != null) // it means it has been sent, but hasn't arrived yet
+        else if (now > order.ShipDate && order.ShipDate != null&& order.ShipDate != DateTime.MinValue) // it means it has been sent, but hasn't arrived yet
             orderToReturn.OrderStatus = BO.Enums.Status.Sent;
         else
             orderToReturn.OrderStatus = BO.Enums.Status.Confirmed; // it must be confirmed, otherwise it wasn't an order in the dBase
@@ -143,16 +142,16 @@ internal class Order : BlApi.IOrder  // object of the manager, on a order a clie
         // now i will check the status of the order, by comparing the current time, and the time in the data.
         DateTime now = DateTime.Now;
         List<(DateTime, BO.Enums.Status)?> lst = new List<(DateTime, BO.Enums.Status)?>();
-        lst.Add(((DateTime, BO.Enums.Status)?)(order.OrderDate??new DateTime(), BO.Enums.Status.Confirmed));
+        lst.Add(((DateTime, BO.Enums.Status)?)(order.OrderDate ?? new DateTime(), BO.Enums.Status.Confirmed));
         if (now > order.DeliveryDate && order.DeliveryDate != null) // it means the order has already arrived. 
         {
             orderTracking.OrderStatus = BO.Enums.Status.Arrived;
-            lst.Add(((DateTime, BO.Enums.Status)?)(order.ShipDate??new DateTime(), BO.Enums.Status.Sent));
+            lst.Add(((DateTime, BO.Enums.Status)?)(order.ShipDate ?? new DateTime(), BO.Enums.Status.Sent));
             lst.Add(((DateTime, BO.Enums.Status)?)(order.DeliveryDate, BO.Enums.Status.Arrived));
         }
         else if (now > order.ShipDate && order.ShipDate != null)
         {// it means it has been sent, but hasn't arrived yet
-            lst.Add(((DateTime, BO.Enums.Status)?)(order.ShipDate??new DateTime(), BO.Enums.Status.Sent));
+            lst.Add(((DateTime, BO.Enums.Status)?)(order.ShipDate ?? new DateTime(), BO.Enums.Status.Sent));
             orderTracking.OrderStatus = BO.Enums.Status.Sent;
         }
         else
@@ -311,7 +310,7 @@ internal class Order : BlApi.IOrder  // object of the manager, on a order a clie
 
             IEnumerable<DO.OrderItem?> dO_listOfOrderItems = dal.OrderItem.GetDataOfOrderItem((item ?? new DO.Order()).ID);
 
-            order.CustomerName = (item??new DO.Order()).CustomerName;
+            order.CustomerName = (item ?? new DO.Order()).CustomerName;
             order.CustomerAddress = (item ?? new DO.Order()).CustomerAdrress;
             order.CustomerEmail = (item ?? new DO.Order()).CustomerEmail;
             order.ShipDate = (item ?? new DO.Order()).ShipDate;
@@ -429,7 +428,7 @@ internal class Order : BlApi.IOrder  // object of the manager, on a order a clie
         } // now, i've created like "DataSouce._orders
 
         if (predict == null)
-            return ordersToReturn??new List<BO.Order?>();
+            return ordersToReturn ?? new List<BO.Order?>();
         IEnumerable<BO.Order?> data = ordersToReturn.Where(x => predict(x));
         return data;
     }
