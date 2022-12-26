@@ -1,6 +1,4 @@
-﻿using DO;
-
-namespace BO;
+﻿namespace BO;
 /// <summary>
 /// class of object to use in our shop
 /// </summary>
@@ -33,7 +31,7 @@ public class Order // object of the manager, on a order a client had asked for
                 sum += tmp.ToString();
             }
         }
-            return $@"
+        return $@"
        ID:{ID}
        CustomerName: {CustomerName}
        CustomerEmail: {CustomerEmail}

@@ -1,211 +1,161 @@
 ﻿using DalApi;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using DL;
 using System.Xml.Linq;
 
 namespace Dal
 {
     internal class OrderItem : IOrderItem
     {
-        XElement OrderItemRoot;
-        XElement idNum;
-        string FPath_n = "@config.xml";
-        string FPath = "@OrderItem.xml";
-        public OrderItem()
-        {
-            if (!File.Exists(FPath))
-                CreateFiles();
-            else
-                LoadData();
-            idNum = XElement.Load(FPath_n);
-        }
-        private void CreateFiles()
-        {
-            OrderItemRoot = new XElement("orderItems");
-            OrderItemRoot.Save(FPath);
-        }
-
-        private void LoadData()
-        {
-            try
-            {
-                OrderItemRoot = XElement.Load(FPath);
-            }
-            catch
-            {
-                Console.WriteLine("File upload problem");
-            }
-        }
+        private const string orderItemFileName = "orderItem.xml";
+        private const string ordersFileName = "orders.xml";
+        private const string productsFileName = "Product.xml";
+        string FPath_n = @"..\xml\config.xml";
         public int Add(DO.OrderItem toAdd)
         {
-            int num_id = int.Parse(idNum.Element("lastIndexOrderItems").Value);
-            XElement orderElement;
-            try
+            List<DO.OrderItem?> orders = XMLTools.LoadListFromXMLSerializer<DO.OrderItem?>(orderItemFileName);
+            List<DO.Order?> lst = XMLTools.LoadListFromXMLSerializer<DO.Order?>(ordersFileName);
+            List<DO.Product?> lst1 = XMLTools.LoadListFromXMLSerializer<DO.Product?>(productsFileName);
+            bool found = false;
+            for (int i = 0; i <lst.Count(); i++) // looks if  there is such an order
             {
-                orderElement = (from p in OrderItemRoot.Elements()
-                                where Convert.ToInt32(p.Element("id").Value) == toAdd.OrderItemID
-                                select p).FirstOrDefault();
-                throw new ExceptionObjectAlreadyExist("orderItem");
+                if ((lst[i] ?? new DO.Order()).ID == toAdd.OrderID)
+                {
+                    found = true;
+                    break;
+                }
             }
-            catch
+            if (!found)
+                throw new ExceptionObjectCouldNotBeFound("order");
+            double price = 0;
+            found = false;
+            for (int i = 0; i < lst1.Count(); i++)// looks if  there is such an product
             {
-                XElement id = new XElement("id", num_id);
-                num_id += 1;
-                idNum.Element("lastIndexOrderItems").Value = num_id.ToString();
-                idNum.Save(FPath_n);
-                XElement Price = new XElement("Price", toAdd.Price);
-                XElement ProductID = new XElement("ProductID", toAdd.ProductID);
-                XElement OrderID = new XElement("OrderID", toAdd.OrderID);
-                XElement Amount = new XElement("Amount", toAdd.Amount);
-                XElement orderItem = new XElement("orderItem", id, Price, ProductID, Amount, OrderID);
-                OrderItemRoot.Add(orderItem);
-                OrderItemRoot.Save(FPath);
-                return num_id-1;
+                if ((lst1[i] ?? new DO.Product()).ID == toAdd.ProductID)
+                {
+                    price = (lst1[i] ?? new DO.Product()).Price;
+                    found = true;
+                    break;
+                }
             }
+            if (!found)
+                throw new ExceptionObjectCouldNotBeFound("product");
+            toAdd.Price = price;
+            XElement root = XElement.Load(FPath_n);
+            toAdd.OrderItemID = int.Parse(root.Element("lastIndexOrderItems").Value);
+            for (int i = 0; i < orders.Count(); i++)
+            {
+                if ((orders[i] ?? new DO.OrderItem()).OrderID == toAdd.OrderID && (orders[i] ?? new DO.OrderItem()).ProductID == toAdd.ProductID) // because we can't add a new orderItem to the same product and product id, if there is already one there. 
+                    throw new ExceptionObjectAlreadyExist("orderItem");
+            }
+            orders.Add(toAdd);
+            XMLTools.SaveListToXMLSerializer<DO.OrderItem?>(orders, orderItemFileName);
+            root.Element("lastIndexOrderItems").Value = (toAdd.OrderItemID + 1).ToString();
+            root.Save(FPath_n);
+            return toAdd.OrderItemID; // return the id of the orderItem we added
         }
 
         public void Delete(int id)
         {
-            XElement orderItemElement;
-            try
+            List<DO.OrderItem> orders = XMLTools.LoadListFromXMLSerializer<DO.OrderItem>(orderItemFileName);
+            int index = orders.FindIndex(o => o.OrderItemID == id);
+            if (index != -1)
             {
-                orderItemElement = (from p in OrderItemRoot.Elements()
-                                where Convert.ToInt32(p.Element("id").Value) == id
-                                select p).FirstOrDefault();
-                orderItemElement.Remove();
-                OrderItemRoot.Save(FPath);
+                orders.RemoveAt(index);
             }
-            catch
+            else
             {
-                throw new ExceptionObjectCouldNotBeFound("OrderItem");
+                throw new ExceptionObjectCouldNotBeFound("order");
             }
+            XMLTools.SaveListToXMLSerializer<DO.OrderItem>(orders, orderItemFileName);
         }
 
         public DO.OrderItem Get(Func<DO.OrderItem?, bool>? func)
         {
-            IEnumerable<DO.OrderItem?> orders = GetDataOf();
-            foreach (var p in orders)
+            List<DO.OrderItem?> orders = XMLTools.LoadListFromXMLSerializer<DO.OrderItem?>(orderItemFileName);
+            foreach (var item in orders)
             {
-                if (func(p))
-                    return (DO.OrderItem)p;
+                if ((func ?? (x => false))(item))
+                    return (item ?? new DO.OrderItem()); // if item is null, i will return a default value
             }
-            throw new ExceptionObjectCouldNotBeFound("orderItem");
+            throw new ExceptionObjectCouldNotBeFound("orderItem"); // else, if i couldn't have found this order, i will throw an exception
         }
 
         public DO.OrderItem Get(int id)
         {
-            DO.OrderItem orderItem;
-            try
-            {
-                orderItem = (from p in OrderItemRoot.Elements()
-                         where Convert.ToInt32(p.Element("id").Value) == id
-                         select new DO.OrderItem()
-                         {
-                             OrderItemID = Convert.ToInt32(p.Element("id").Value),
-                             OrderID = Convert.ToInt32(p.Element("OrderID").Value),
-                             ProductID = Convert.ToInt32(p.Element("ProductID").Value),
-                             Price = Convert.ToInt32(p.Element("Price").Value),
-                             Amount = Convert.ToInt32(p.Element("Amount").Value)
-                         }).FirstOrDefault();
-            }
-            catch
-            {
-                throw new ExceptionObjectCouldNotBeFound("orderItem");
-            }
-            return orderItem;
+            return Get(orderItem => (orderItem ?? new DO.OrderItem()).OrderItemID == id);
         }
 
         public IEnumerable<DO.OrderItem?> GetDataOf(Func<DO.OrderItem?, bool>? predict = null)
         {
-            IEnumerable<DO.OrderItem?> orderItems;
-            try
-            {
-                orderItems = ((IEnumerable<DO.OrderItem?>)(from p in OrderItemRoot.Elements()
-                                                   select new DO.OrderItem()
-                                                   {
-                                                       OrderItemID = Convert.ToInt32(p.Element("id").Value),
-                                                       OrderID = Convert.ToInt32(p.Element("OrderID").Value),
-                                                       ProductID = Convert.ToInt32(p.Element("ProductID").Value),
-                                                       Price = Convert.ToInt32(p.Element("Price").Value),
-                                                       Amount = Convert.ToInt32(p.Element("Amount").Value)
-
-                                                   }));
-            }
-            catch
-            {
-                orderItems = null;
-            }
-            IEnumerable<DO.OrderItem?> data = orderItems.Where(x => predict(x));
+            List<DO.OrderItem?> orders = XMLTools.LoadListFromXMLSerializer<DO.OrderItem?>(orderItemFileName);
+            if (predict == null)
+                return (orders);
+            IEnumerable<DO.OrderItem?> data = orders.Where(x => predict(x));
             return data;
         }
 
         public IEnumerable<DO.OrderItem?> GetDataOfOrderItem(int idOfOrder)
         {
-            IEnumerable<DO.OrderItem?> orderItems;
-            try
+            List<DO.OrderItem?> orders = XMLTools.LoadListFromXMLSerializer<DO.OrderItem?>(orderItemFileName);
+            List<DO.OrderItem?> ret = new List<DO.OrderItem?>(); // we use list because we don't know the what is the size of the structre we will need to use.
+            for (int i = 0; i < orders.Count(); i++) // returns a list of all of the orderItems from the specific order, whose id was given to us.
             {
-                orderItems = ((IEnumerable<DO.OrderItem?>)(from p in OrderItemRoot.Elements()
-                                                           where Convert.ToInt32(p.Element("OrderID").Value) == idOfOrder
-                                                           select new DO.OrderItem()
-                                                           {
-                                                               OrderItemID = Convert.ToInt32(p.Element("id").Value),
-                                                               OrderID = Convert.ToInt32(p.Element("OrderID").Value),
-                                                               ProductID = Convert.ToInt32(p.Element("ProductID").Value),
-                                                               Price = Convert.ToInt32(p.Element("Price").Value),
-                                                               Amount = Convert.ToInt32(p.Element("Amount").Value)
-
-                                                           }));
+                if ((orders[i] ?? new DO.OrderItem()).OrderID == idOfOrder)
+                {
+                    ret.Add((orders[i]));
+                }
             }
-            catch
-            {
-                orderItems = null;
-            }
-            return orderItems;
+            return ret;
         }
 
         public DO.OrderItem GetOrderItem(int idOrder, int idProduct)
         {
-            DO.OrderItem orderItem;
-            try
-            {
-                orderItem = (from p in OrderItemRoot.Elements()
-                             where Convert.ToInt32(p.Element("OrderID").Value) == idOrder && Convert.ToInt32(p.Element("ProductID").Value) == idProduct
-                             select new DO.OrderItem()
-                             {
-                                 OrderItemID = Convert.ToInt32(p.Element("id").Value),
-                                 OrderID = Convert.ToInt32(p.Element("OrderID").Value),
-                                 ProductID = Convert.ToInt32(p.Element("ProductID").Value),
-                                 Price = Convert.ToInt32(p.Element("Price").Value),
-                                 Amount = Convert.ToInt32(p.Element("Amount").Value)
-                             }).FirstOrDefault();
-            }
-            catch
-            {
-                throw new ExceptionObjectCouldNotBeFound("orderItem");
-            }
-            return orderItem;
+            return Get(orderItem => ((orderItem ?? new DO.OrderItem()).OrderID == idOrder) && ((orderItem ?? new DO.OrderItem()).ProductID == idProduct));
         }
 
         public void Update(DO.OrderItem toUpdate)
         {
-            try
+            List<DO.OrderItem?> orders = XMLTools.LoadListFromXMLSerializer<DO.OrderItem?>(orderItemFileName);
+            List<DO.Order?> lst = XMLTools.LoadListFromXMLSerializer<DO.Order?>(ordersFileName);
+            List<DO.Product?> lst1 = XMLTools.LoadListFromXMLSerializer<DO.Product?>(productsFileName);
+            bool found = false;
+            for (int i = 0; i < lst.Count(); i++) // checks if the order exists
             {
-                XElement orderElement = (from p in OrderItemRoot.Elements()
-                                         where Convert.ToInt32(p.Element("id").Value) == toUpdate.OrderItemID
-                                         select p).FirstOrDefault();
-                orderElement.Element("OrderID").Value = toUpdate.OrderID.ToString();
-                orderElement.Element("ProductID").Value = toUpdate.ProductID.ToString();
-                orderElement.Element("Amount").Value = toUpdate.Amount.ToString();
-                orderElement.Element("Price").Value = toUpdate.Price.ToString();
-                OrderItemRoot.Save(FPath);
+                if ((lst[i] ?? new DO.Order()).ID == toUpdate.OrderID)
+                {
+                    found = true;
+                    break;
+                }
             }
-            catch
+            if (!found)
+                throw new ExceptionObjectCouldNotBeFound("order");
+
+            found = false;
+            for (int i = 0; i < lst1.Count(); i++) // checks if the product exists
             {
+                if ((lst1[i] ?? new DO.Product()).ID == toUpdate.ProductID)
+                {
+                    found = true;
+                    toUpdate.Price = (lst1[i] ?? new DO.Product()).Price;
+                    break;
+                }
+            }
+            if (!found)
+                throw new ExceptionObjectCouldNotBeFound("product");
+            found = false;
+            for (int i = 0; i < orders.Count(); i++)
+            {
+                if ((orders[i] ?? new DO.OrderItem()).OrderItemID == toUpdate.OrderItemID) // if it has the same id, we do a deep copy
+                {
+                    found = true;
+                    orders.RemoveAt(i);
+                    orders.Insert(i, toUpdate);
+                    break;
+                }
+            }
+            if (!found) // otherwise, the order itemcouldn't be found.
                 throw new ExceptionObjectCouldNotBeFound("orderItem");
-            }
+            XMLTools.SaveListToXMLSerializer<DO.OrderItem?>(orders, orderItemFileName);
         }
     }
 }

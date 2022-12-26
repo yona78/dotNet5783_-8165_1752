@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DalApi;
-using DO;
+﻿using DalApi;
 
 namespace Dal
 {
-    sealed internal class DalXML : IDal
+    sealed internal class DalXml : IDal
     {
+        private DalXml() { }
+        public static IDal Instance { get; } = new DalXml();
+
         public IOrder Order { get; } = new Dal.Order();
 
         public IProduct Product { get; } = new Dal.Product();

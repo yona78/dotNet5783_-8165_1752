@@ -1,7 +1,4 @@
-﻿using DO;
-using System;
-
-namespace DalApi;
+﻿namespace DalApi;
 
 public class ExceptionListIsFull : Exception // maybe the list is full, and you're trying to push more objects into it
 {

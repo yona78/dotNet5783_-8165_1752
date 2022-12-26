@@ -1,6 +1,4 @@
-﻿using BlApi;
-
-using System;
+﻿using System;
 
 using System.Windows;
 using System.Windows.Controls;
@@ -17,7 +15,7 @@ namespace PL
     {
         BlApi.IBl? bl = BlApi.Factory.Get(); // as it was asked...
         public ProductListWindow()
-        {   
+        {
             InitializeComponent();
             ProductListView.ItemsSource = bl.Product.GetList(); // that in the beginning it will be initialized
             CategorySelector.Items.Clear();
@@ -30,13 +28,13 @@ namespace PL
             ProductListView.ItemsSource = (bl ?? BlApi.Factory.Get()).Product.GetList(); // put all the products in the itemSource of the productListView
             BO.Enums.Category category;
             BO.Enums.Category.TryParse(selected, out category); // convert it into a category
-            Func<BO.ProductForList?, bool>? func= item=>(item??new BO.ProductForList()).Category==category; // the condition \ predict we create checks if the categories are equal or not
+            Func<BO.ProductForList?, bool>? func = item => (item ?? new BO.ProductForList()).Category == category; // the condition \ predict we create checks if the categories are equal or not
             ProductListView.ItemsSource = (bl ?? BlApi.Factory.Get()).Product.GetList(func); // get A list with all the products that answer the deserve condition
         }
 
         private void AddProductButton(object sender, RoutedEventArgs e)
         {
-            new ProductWindow((bl ?? BlApi.Factory.Get()), "ADD",0).ShowDialog(); // can't do anything else until it closed
+            new ProductWindow((bl ?? BlApi.Factory.Get()), "ADD", 0).ShowDialog(); // can't do anything else until it closed
             ProductListView.ItemsSource = (bl ?? BlApi.Factory.Get()).Product.GetList(); // print the new list on the board
         }
 
@@ -45,10 +43,10 @@ namespace PL
             BO.ProductForList prdct = (BO.ProductForList)ProductListView.SelectedItem; // the product we want to update
             if (prdct == null)
                 return;
-            new ProductWindow((bl ?? BlApi.Factory.Get()), "UPDATE",prdct.ID).ShowDialog(); // can't do anything else until it closed
+            new ProductWindow((bl ?? BlApi.Factory.Get()), "UPDATE", prdct.ID).ShowDialog(); // can't do anything else until it closed
             ProductListView.ItemsSource = (bl ?? BlApi.Factory.Get()).Product.GetList(); // print the new list on the board
         }
 
- 
+
     }
 }

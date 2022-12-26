@@ -1,160 +1,110 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
-using DalApi;
+﻿using DalApi;
+using DL;
 using DO;
+using System.Diagnostics;
+using System.Linq;
+using System.Xml.Linq;
+using static DO.Enums;
 
-namespace Dal
+namespace Dal;
+internal class Product : IProduct
 {
-    internal class Product : IProduct
+    
+    string FPath = "Product.xml";
+
+    public int Add(DO.Product toAdd)
     {
-        XElement ProductRoot;
-        string FPath = "@Product.xml";
-        public Product()
+        XElement ProductRoot = XMLTools.LoadListFromXMLElement(FPath);
+        XElement productElement;
+            productElement = (from p in ProductRoot.Elements()
+                              where Convert.ToInt32(p.Element("ID").Value) == toAdd.ID
+                              select p).FirstOrDefault();
+        if(productElement != null)
         {
-            if (!File.Exists(FPath))
-                CreateFiles();
-            else
-                LoadData();
-        }
-        private void CreateFiles()
-        {
-            ProductRoot = new XElement("Products");
-            ProductRoot.Save(FPath);
-        }
-
-        public int Add(DO.Product toAdd)
-        {
-            XElement productElement;
-            try
-            {
-                productElement = (from p in ProductRoot.Elements()
-                                  where Convert.ToInt32(p.Element("id").Value) == toAdd.ID
-                                  select p).FirstOrDefault();
                 throw new ExceptionObjectAlreadyExist("product");
-            }
-            catch
-            {
-                XElement id = new XElement("id", toAdd.ID);
-                XElement name = new XElement("name", toAdd.Name);
-                XElement price = new XElement("price", toAdd.Price);
-                XElement inStock = new XElement("inStock", toAdd.InStock);
-                XElement category = new XElement("catgeory", toAdd.Category);
-                XElement product = new XElement("product", id, name, price, inStock, category);
-                ProductRoot.Add(product);
-                ProductRoot.Save(FPath);
-                return toAdd.ID;
-            }
         }
-        private void LoadData()
-        {
-            try
-            {
-                ProductRoot = XElement.Load(FPath);
-            }
-            catch
-            {
-                Console.WriteLine("File upload problem");
-            }
-        }
+            
+        XElement ID = new XElement("ID", toAdd.ID.ToString());
+        XElement Name = new XElement("Name", toAdd.Name);
+        XElement Price = new XElement("Price", toAdd.Price.ToString());
+        XElement Category = new XElement("Category", toAdd.Category.ToString());
+        XElement InStock = new XElement("InStock", toAdd.InStock.ToString());
+        XElement product = new XElement("Product", ID, Name, Price,  Category,InStock);
+        ProductRoot.Add(product);
+        XMLTools.SaveListToXMLElement(ProductRoot, FPath);
+        //ProductRoot.Save(FPath);
+        return toAdd.ID;
+    }
 
-        public void Delete(int id)
-        {
-            XElement productElement;
-            try
-            {
-                productElement = (from p in ProductRoot.Elements()
-                                  where Convert.ToInt32(p.Element("id").Value) == id
+    public void Delete(int id)
+    {
+        XElement ProductRoot = XMLTools.LoadListFromXMLElement(FPath);
+        XElement productElement= (from p in ProductRoot.Elements()
+                                  where Convert.ToInt32(p.Element("ID").Value) == id
                                   select p).FirstOrDefault();
-                productElement.Remove();
-                ProductRoot.Save(FPath);
-            }
-            catch
-            {
-                throw new ExceptionObjectCouldNotBeFound("product");
-            }
-        }
-
-        public DO.Product Get(Func<DO.Product?, bool>? func)
+        if(productElement!=null)
         {
-            IEnumerable<DO.Product?> products = GetDataOf();
-            foreach(var p in products)
-            {
-                if (func(p))
-                    return (DO.Product)p;
-            }
+            productElement.Remove();
+            XMLTools.SaveListToXMLElement(ProductRoot, FPath);
+        }
+        else
+        {
             throw new ExceptionObjectCouldNotBeFound("product");
         }
+    }
 
-        public DO.Product Get(int id)
+    public DO.Product Get(Func<DO.Product?, bool>? func)
+    {
+        IEnumerable<DO.Product?> lst = GetDataOf();
+        foreach (var item in lst)
         {
-            DO.Product prdct;
-            try
-            {
-                prdct = (from p in ProductRoot.Elements()
-                           where Convert.ToInt32(p.Element("id").Value) == id
-                           select new DO.Product()
-                           {
-                               ID = Convert.ToInt32(p.Element("id").Value),
-                               Name = p.Element("name").Value,
-                               Price = Convert.ToInt32(p.Element("price").Value),
-                               InStock = Convert.ToInt32(p.Element("inStock").Value),
-                               Category = (Enums.Category)Enum.Parse(typeof(Enums.Category), p.Element("category").Value, true)
-                           }).FirstOrDefault();
-            }
-            catch
-            {
-                throw new ExceptionObjectCouldNotBeFound("product");
-            }
-            return prdct;
-
+            if ((func ?? (x => false))(item))
+                return (item ?? new DO.Product()); // if item is null, i will return a default value
         }
+        throw new ExceptionObjectCouldNotBeFound("Product"); // else, if i couldn't have found this order, i will throw an exception
+    }
 
-        public IEnumerable<DO.Product?> GetDataOf(Func<DO.Product?, bool>? predict = null)
+    public DO.Product Get(int id)
+    {
+        return Get(product => (product ?? new DO.Product()).ID == id);
+
+    }
+
+    public IEnumerable<DO.Product?> GetDataOf(Func<DO.Product?, bool>? predict = null)
+    {
+        XElement ProductRoot = XMLTools.LoadListFromXMLElement(FPath);
+        return (from p in ProductRoot.Elements()
+                select (DO.Product?)new DO.Product()
+                {
+                    ID = Convert.ToInt32(p.Element("ID").Value),
+                    Name = p.Element("Name").Value,
+                    Price = Convert.ToDouble(p.Element("Price").Value),
+                    InStock = Convert.ToInt32(p.Element("InStock").Value),
+                    Category = (Enums.Category)Enum.Parse(typeof(Enums.Category), p.Element("Category").Value, true)
+
+                }).Where(product => predict is null ? true : predict(product));
+
+    }
+
+    public void Update(DO.Product toUpdate)
+    {
+        XElement ProductRoot = XMLTools.LoadListFromXMLElement(FPath);
+        XElement productElement = (from p in ProductRoot.Elements()
+                                   where Convert.ToInt32(p.Element("ID").Value) == toUpdate.ID
+                                   select p).FirstOrDefault();
+        if (productElement != null)
         {
-            IEnumerable<DO.Product?> products;
-            try
-            {
-                products = ((IEnumerable<DO.Product?>)(from p in ProductRoot.Elements()
-                            select new DO.Product()
-                            {
-                                ID = Convert.ToInt32(p.Element("id").Value),
-                                Name = p.Element("name").Value,
-                                Price = Convert.ToInt32(p.Element("price").Value),
-                                InStock = Convert.ToInt32(p.Element("inStock").Value),
-                                Category = (Enums.Category)Enum.Parse(typeof(Enums.Category),p.Element("category").Value,true)
-
-                            }));
-            }
-            catch
-            {
-                products = null;
-            }
-            IEnumerable<DO.Product?> data = products.Where(x => predict(x));
-            return data;
-
+            productElement.Element("ID").Value = toUpdate.ID.ToString();
+            productElement.Element("Name").Value = toUpdate.Name;
+            productElement.Element("Price").Value = toUpdate.Price.ToString();
+            productElement.Element("InStock").Value = toUpdate.InStock.ToString();
+            productElement.Element("Category").Value = toUpdate.Category.ToString();
+            XMLTools.SaveListToXMLElement(ProductRoot, FPath);
         }
-
-        public void Update(DO.Product toUpdate)
+        else
         {
-            try
-            {
-                XElement productElement = (from p in ProductRoot.Elements()
-                                           where Convert.ToInt32(p.Element("id").Value) == toUpdate.ID
-                                           select p).FirstOrDefault();
-                productElement.Element("name").Value = toUpdate.Name;
-                productElement.Element("price").Value = toUpdate.Price.ToString();
-                productElement.Element("inStock").Value = toUpdate.InStock.ToString();
-                productElement.Element("category").Value = toUpdate.Category.ToString();
-                ProductRoot.Save(FPath);
-            }
-            catch
-            {
-                throw new ExceptionObjectCouldNotBeFound("product");
-            }
+            throw new ExceptionObjectCouldNotBeFound("product");
         }
     }
 }
+

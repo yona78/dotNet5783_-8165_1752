@@ -57,7 +57,7 @@ internal class Cart : ICart // cart of customer
             item.Price = product.Price;
             item.TotalPrice = product.Price;
             cart.TotelPrice += product.Price;
-            if(cart.Items ==null) 
+            if (cart.Items == null)
                 cart.Items = new List<BO.OrderItem>();
             cart.Items.Add(item);
 
@@ -110,11 +110,11 @@ internal class Cart : ICart // cart of customer
             if (product.InStock < item.Amount) // not enough in dBase
                 throw new ExceptionNotEnoughInDataBase("orderItem");
         }
-        if (name == null|| address ==null || email == null || name == "" || address == "" || email == "") // checks if the string are valids. ### TO ADD - that email and address will be in a specific format.
+        if (name == null || address == null || email == null || name == "" || address == "" || email == "") // checks if the string are valids. ### TO ADD - that email and address will be in a specific format.
             throw new ExceptionDataIsInvalid("cart");
         DO.Order order = new DO.Order();
         order.CustomerAdrress = address;
-        order.CustomerEmail= email;
+        order.CustomerEmail = email;
         order.CustomerName = name;
         order.OrderDate = DateTime.Now; // initalize the orderDate to be now.
         int id;
@@ -180,9 +180,9 @@ internal class Cart : ICart // cart of customer
     {
         if (cart.Items == null || cart.Items.Count == 0)
             throw new ExceptionDataIsInvalid("cart is empty");
-        if(amount<0)
+        if (amount < 0)
         {
-            throw new  ExceptionDataIsInvalid("cart");
+            throw new ExceptionDataIsInvalid("cart");
         }
         bool productExistInCart = false;
         BO.OrderItem itemToChange = new BO.OrderItem();

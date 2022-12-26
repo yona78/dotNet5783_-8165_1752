@@ -1,4 +1,5 @@
 ﻿using DO;
+
 namespace Dal;
 /// <summary>
 /// static class for having the real dataSource we are going to work with 
@@ -14,11 +15,15 @@ internal static class DataSource
     static internal List<OrderItem?> _orderItems = new List<OrderItem?>();
     public static int maxOrderItems = 200; // we will use it in the functions of each class
 
-
-
+    ////private const string orderItemFileName = "orders.xml";
+    ////private const string ordersFileName = "orderItems.xml";
+    ////private const string productsFileName = "Product.xml";
     static DataSource() // the constructor calls this func.
     {
         s_Initialize();
+        //XMLTools.SaveListToXMLSerializer(_products, productsFileName);
+        //XMLTools.SaveListToXMLSerializer(_orders, ordersFileName);
+        //XMLTools.SaveListToXMLSerializer(_orderItems, orderItemFileName);
     }
 
     private static void addOrder(Order newOrder) // func that gets new order and add it to the array of orders
@@ -127,7 +132,7 @@ internal static class DataSource
                 amountOfItems = 4;
                 do
                 {
-                    if ((_products[productInOrder]??new Product()).InStock == 0)
+                    if ((_products[productInOrder] ?? new Product()).InStock == 0)
                         productInOrder = _rnd.Next(productInit);
                 } while ((_products[productInOrder] ?? new Product()).InStock <= amountOfItems || (_products[productInOrder] ?? new Product()).InStock == 0); // i can't add a number of amount itmes if there is no such num of items in the store...
 

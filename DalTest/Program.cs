@@ -1,12 +1,12 @@
 ﻿using DalApi;
 using DO;
-using System.Collections.Generic;
 
 namespace Program
 {
 
     class Program
     {
+
         static IDal? dal = Factory.Get();
 
         // static private DalOrder _dalOrder = new DalOrder();
@@ -131,7 +131,7 @@ namespace Program
 
                             foreach (Order? item in array)
                             {
-                                if ((item??new Order()).ID != 0)
+                                if ((item ?? new Order()).ID != 0)
                                 {
                                     Console.WriteLine(item);
                                 }
@@ -305,7 +305,7 @@ namespace Program
                         IEnumerable<Product?> array = dal.Product.GetDataOf();
                         foreach (Product? item in array)
                         {
-                            if ((item??new Product()).ID != 0)
+                            if ((item ?? new Product()).ID != 0)
                             {
                                 Console.WriteLine(item);
                             }
@@ -480,7 +480,7 @@ namespace Program
                         IEnumerable<OrderItem?> array = dal.OrderItem.GetDataOf();
                         foreach (OrderItem? item in array)
                         {
-                            if ((item??new OrderItem()).OrderItemID != 0)
+                            if ((item ?? new OrderItem()).OrderItemID != 0)
                             {
                                 Console.WriteLine(item);
                             }
@@ -524,7 +524,7 @@ namespace Program
                         orderItemToUpdate.OrderItemID = OrderItemIdUpdate;
                         orderItemToUpdate.ProductID = productIdUpdate;
                         orderItemToUpdate.OrderID = orderIdUpdate;
-                        orderItemToUpdate.Price =0;
+                        orderItemToUpdate.Price = 0;
                         orderItemToUpdate.Amount = amountOrdetItemUpdate;
                         try
                         {

@@ -1,5 +1,5 @@
-﻿using DO;
-using DalApi;
+﻿using DalApi;
+using DO;
 
 namespace Dal;
 /// <summary>
@@ -16,11 +16,11 @@ internal class DalOrder : IOrder
         newOrder.ID = DataSource.Config.GetLastIndexOrder;
         for (int i = 0; i < curEmptyOrder; i++) // very simple loop that checks whether the order is already exist.
         {
-            if (DataSource._orders!=null&&(DataSource._orders[i]??new Order()).ID == newOrder.ID)
+            if (DataSource._orders != null && (DataSource._orders[i] ?? new Order()).ID == newOrder.ID)
                 throw new ExceptionObjectAlreadyExist("order");
 
         }
-        (DataSource._orders??new List<Order?>()).Add(newOrder);
+        (DataSource._orders ?? new List<Order?>()).Add(newOrder);
         return newOrder.ID;
     }
     public Order Get(int id) // func that reutrns order by its id
@@ -39,7 +39,7 @@ internal class DalOrder : IOrder
         bool found = false;
         for (int i = 0; i < DataSource._orders.Count(); i++)
         {
-            if ((DataSource._orders[i]??new Order()).ID == id) // deleting only if it has the same id.
+            if ((DataSource._orders[i] ?? new Order()).ID == id) // deleting only if it has the same id.
             {
                 DataSource._orders.RemoveAt(i);
                 found = true;
@@ -55,7 +55,7 @@ internal class DalOrder : IOrder
         bool found = false;
         for (int i = 0; i < DataSource._orders.Count(); i++)
         {
-            if ((DataSource._orders[i]??new Order()).ID == newOrder.ID) // if the specified order is found, we do a deep copy.
+            if ((DataSource._orders[i] ?? new Order()).ID == newOrder.ID) // if the specified order is found, we do a deep copy.
             {
                 DataSource._orders.RemoveAt(i);
                 DataSource._orders.Insert(i, newOrder);
@@ -71,8 +71,8 @@ internal class DalOrder : IOrder
     {
         foreach (var item in DataSource._orders)
         {
-            if ((func??(x=>false))(item))
-                return (item??new Order()); // if item is null, i will return a default value
+            if ((func ?? (x => false))(item))
+                return (item ?? new Order()); // if item is null, i will return a default value
         }
         throw new ExceptionObjectCouldNotBeFound("order"); // else, if i couldn't have found this order, i will throw an exception
     }

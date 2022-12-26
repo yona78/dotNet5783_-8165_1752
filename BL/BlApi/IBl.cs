@@ -1,7 +1,4 @@
-﻿
-using System.Security.Principal;
-
-namespace BlApi
+﻿namespace BlApi
 {
     /// <summary>
     /// The main interface to use all the interfaces of the objects 
