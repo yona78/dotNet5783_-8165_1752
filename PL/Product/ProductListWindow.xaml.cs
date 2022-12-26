@@ -13,7 +13,7 @@ namespace PL
     /// </summary>
     public partial class ProductListWindow : Window
     {
-        BlApi.IBl? bl = BlApi.Factory.Get(); // as it was asked...
+        BlApi.IBl bl = BlApi.Factory.Get()!; // as it was asked...
         public ProductListWindow()
         {
             InitializeComponent();

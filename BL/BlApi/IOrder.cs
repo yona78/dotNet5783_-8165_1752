@@ -10,7 +10,7 @@ public interface IOrder
     public Order UpdateSent(int idOrder); // update that this order in know been sending. (Sent)
     public Order UpdateArrived(int idOrder); // update that this order is know been delivering (Arrived)
     public OrderTracking TrackOrder(int idOrder); // func that help me to track an order, by creating and sending a entity that is adjusted for working with orders
-    public void Update(int idOrder, int idOfOrder, int amount); // update for the manager, to update an order. I guess that you want me to return the order 
+    public void Update(int idOrder, int idOfProduct, int amount); // update for the manager, to update an order.
 
     public Order Get(Func<Order?, bool>? func); // func that returns order according to a term it gets.
     public IEnumerable<Order?> GetDataOf(Func<Order?, bool>? predict = null); // func that returns all of the Orders  with the specail condition that is indicate in the predict

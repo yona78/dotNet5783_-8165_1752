@@ -15,9 +15,22 @@ namespace PL
             InitializeComponent();
         }
 
-        private void MoveToDataWindow(object sender, RoutedEventArgs e)
+        private void MoveToManagerDataWindow(object sender, RoutedEventArgs e)
         {
             new ProductListWindow().ShowDialog(); // if he clicked the button, we want to show him the list of the avilable products. can't do anything else until it closed
+            new OrderListWindow().ShowDialog(); // if he clicked the button, we want to show him the list of the avilable orders. can't do anything else until it closed
+        }
+        private void MoveToNewOrderDataWindow(object sender, RoutedEventArgs e)
+        {
+            new OrderWindow("WATCH",10).ShowDialog(); // if he clicked the button, we want to show him the list of the avilable products. can't do anything else until it closed
+        }
+        private void MoveToOrderTrackingDataWindow(object sender, RoutedEventArgs e)
+        {
+            new OrderTrackingWindow().ShowDialog(); // if he clicked the button, we want to show him the list of the avilable products. can't do anything else until it closed
+        }
+        private void MoveToBonusWindow(object sender, RoutedEventArgs e)
+        {
+           // new OrderTrackingWindow().ShowDialog(); // if he clicked the button, we want to show him the list of the avilable products. can't do anything else until it closed
         }
 
     }

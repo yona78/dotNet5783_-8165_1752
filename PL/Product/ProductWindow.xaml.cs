@@ -12,9 +12,8 @@ namespace PL
     /// </summary>
     public partial class ProductWindow : Window
     {
-        int idTmp = 0;
         BlApi.IBl? blP = BlApi.Factory.Get();
-        public ProductWindow(IBl bl, string option, int id) // id of product, option of action that we want to do
+        public ProductWindow(IBl bl, string option, int id) // idOrder of product, option of action that we want to do
         {
             InitializeComponent();
             blP = bl;
@@ -34,8 +33,6 @@ namespace PL
                 name.Text = prdct.Name; // as before
                 price.Text = prdct.Price.ToString(); // as before
                 inStock.Text = prdct.InStock.ToString(); // as before
-                idTmp = prdct.ID; // we want to have in our hands the old id, in order he wouldn't be able to replace it
-
             }
         }
 
@@ -50,7 +47,7 @@ namespace PL
 
                 bool validInput = int.TryParse(ID.Text, out tmp); // getting the ID from the TextBox, and insert it into the product
                 if (!validInput)
-                    throw new Exception("id is invalid"); // i need to check whether it is realy int
+                    throw new Exception("idOrder is invalid"); // i need to check whether it is realy int
                 prdct.ID = tmp;
                 validInput = double.TryParse(price.Text, out tmpPrice); // getting the price from the TextBox, and insert it into the product
                 if (!validInput)
@@ -105,7 +102,6 @@ namespace PL
                 if (!validInput)
                     throw new Exception("category is invalid");
                 prdct.Category = category;
-                prdct.ID = idTmp; // the ID stays the same 
                 (blP ?? BlApi.Factory.Get()).Product.Update(prdct);
             }
             catch (Exception err)

@@ -16,7 +16,7 @@ public class OrderTracking // logic object for the manager to see the progras of
     public override string ToString()
     {
         string sum = "";
-        foreach ((DateTime, Enums.Status) tmp in status)
+        foreach ((DateTime, Enums.Status)? tmp in status)
         {
             sum += tmp;
             sum += "\n";

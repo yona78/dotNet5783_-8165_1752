@@ -10,7 +10,7 @@ namespace BlImplementation;
 /// </summary>
 internal class Cart : ICart // cart of customer
 {
-    private DalApi.IDal? dal = DalApi.Factory.Get(); // a way to communicate with dBase level
+    private DalApi.IDal dal = DalApi.Factory.Get()!; // a way to communicate with dBase level
     /// <summary>
     /// Function to add product to cart
     /// </summary>
