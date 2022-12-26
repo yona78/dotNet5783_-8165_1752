@@ -25,34 +25,35 @@ namespace PL
         private void GetOrdersButton(object sender, RoutedEventArgs e)
         {
         }
-        private void GetDataOfOrdersButton(object sender, RoutedEventArgs e) { }
-        private void UpdateOrderSendButton(object sender, RoutedEventArgs e) { }
-        private void UpdateOrderDelieverdButton(object sender, RoutedEventArgs e) { }
-        private void OrderTrackingButton(object sender, RoutedEventArgs e) { }
-        private void UpdateOrderButton(object sender, RoutedEventArgs e) { }
-        private void UpdateProductButton(object sender, MouseButtonEventArgs e)
-        {
-            BO.OrderForList order = (BO.OrderForList)OrderListView.SelectedItem; // the product we want to update
-            if (order== null)
-                return;
-            new OrderWindow("UPDATE", order.ID).ShowDialog(); // can't do anything else until it closed
+        private void GetDataOfOrdersButton(object sender, RoutedEventArgs e) {
+            new InputIdForGetOrderWindow().ShowDialog();
             OrderListView.ItemsSource = (bl ?? BlApi.Factory.Get()).Order.GetOrderList(); // print the new list on the board
         }
-        /*
-        private void AddProductButton(object sender, RoutedEventArgs e)
-        {
-            new ProductWindow((bl ?? BlApi.Factory.Get()), "ADD", 0).ShowDialog(); // can't do anything else until it closed
-            ProductListView.ItemsSource = (bl ?? BlApi.Factory.Get()).Product.GetList(); // print the new list on the board
+        private void UpdateOrderSendButton(object sender, RoutedEventArgs e) {
+            new UpdateOrderSendingWindow().ShowDialog();
+            OrderListView.ItemsSource = (bl ?? BlApi.Factory.Get()).Order.GetOrderList(); // print the new list on the boards
         }
+        private void UpdateOrderDelieverdButton(object sender, RoutedEventArgs e) {
+            new UpdateOrderDelieveringWindow().ShowDialog();
+            OrderListView.ItemsSource = (bl ?? BlApi.Factory.Get()).Order.GetOrderList(); // print the new list on the boards
+        }
+        private void OrderTrackingButton(object sender, RoutedEventArgs e) {
+            new OrderTrackingWindow().ShowDialog();
+            OrderListView.ItemsSource = (bl ?? BlApi.Factory.Get()).Order.GetOrderList(); // print the new list on the boards                                                                                  
+        }
+            private void UpdateOrderButton(object sender, RoutedEventArgs e) {
+            new OrderUpdateManagerWindow().ShowDialog();
+            OrderListView.ItemsSource = (bl ?? BlApi.Factory.Get()).Order.GetOrderList(); // print the new list on the boards                                                                                  
 
-        private void UpdateProductButton(object sender, MouseButtonEventArgs e)
-        {
-            BO.ProductForList prdct = (BO.ProductForList)ProductListView.SelectedItem; // the product we want to update
-            if (prdct == null)
-                return;
-            new ProductWindow((bl ?? BlApi.Factory.Get()), "UPDATE", prdct.ID).ShowDialog(); // can't do anything else until it closed
-            ProductListView.ItemsSource = (bl ?? BlApi.Factory.Get()).Product.GetList(); // print the new list on the board
         }
-        */
+        private void UpdateOrderButton(object sender, MouseButtonEventArgs e)
+        {
+            BO.OrderForList order = (BO.OrderForList)OrderListView.SelectedItem; // the order we want to update
+            if (order== null)
+                return;
+            new OrderWindow("UPDATE_CUSTOMER", order.ID).ShowDialog(); // can't do anything else until it closed
+            OrderListView.ItemsSource = (bl ?? BlApi.Factory.Get()).Order.GetOrderList(); // print the new list on the board
+        }
+        
     }
 }

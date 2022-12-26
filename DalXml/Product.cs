@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Xml.Linq;
 using DalApi;
 using DO;
-/*
+
 namespace Dal
 {
     internal class Product : IProduct
@@ -158,4 +158,3 @@ namespace Dal
         }
     }
 }
-*/

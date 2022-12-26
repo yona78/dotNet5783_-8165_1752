@@ -1,4 +1,5 @@
 ﻿using BlApi;
+using System;
 using System.Windows;
 
 
@@ -22,11 +23,16 @@ namespace PL
         }
         private void MoveToNewOrderDataWindow(object sender, RoutedEventArgs e)
         {
-            new OrderWindow("WATCH",10).ShowDialog(); // if he clicked the button, we want to show him the list of the avilable products. can't do anything else until it closed
+            
+            
+                new ShowProductItemsWindow().ShowDialog();
+          
+
+
         }
         private void MoveToOrderTrackingDataWindow(object sender, RoutedEventArgs e)
         {
-            new OrderTrackingWindow().ShowDialog(); // if he clicked the button, we want to show him the list of the avilable products. can't do anything else until it closed
+            new OrderTrackingListWindow().ShowDialog(); // if he clicked the button, we want to show him the list of the avilable products. can't do anything else until it closed
         }
         private void MoveToBonusWindow(object sender, RoutedEventArgs e)
         {

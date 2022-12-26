@@ -34,7 +34,7 @@ namespace PL
             ProductListView.ItemsSource = (bl ?? BlApi.Factory.Get()).Product.GetList(func); // get A list with all the products that answer the deserve condition
         }
 
-        private void AddProductButton(object sender, RoutedEventArgs e)
+        private void AddProduct(object sender, RoutedEventArgs e)
         {
             new ProductWindow((bl ?? BlApi.Factory.Get()), "ADD",0).ShowDialog(); // can't do anything else until it closed
             ProductListView.ItemsSource = (bl ?? BlApi.Factory.Get()).Product.GetList(); // print the new list on the board
@@ -49,6 +49,10 @@ namespace PL
             ProductListView.ItemsSource = (bl ?? BlApi.Factory.Get()).Product.GetList(); // print the new list on the board
         }
 
- 
+        private void DeleteProduct(object sender, RoutedEventArgs e)
+        {
+            new InputIdForDeleteProductWindow().ShowDialog();
+            ProductListView.ItemsSource = (bl ?? BlApi.Factory.Get()).Product.GetList(); // print the new list on the board
+        }
     }
 }

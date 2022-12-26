@@ -15,14 +15,14 @@ using System.Windows.Shapes;
 namespace PL
 {
     /// <summary>
-    /// Interaction logic for CartWindow.xaml
+    /// Interaction logic for ShowProductItemsWindow.xaml
     /// </summary>
-    public partial class CartWindow : Window
+    public partial class ShowProductItemsWindow : Window
     {
         BlApi.IBl bl = BlApi.Factory.Get()!;
         BO.Product product = new BO.Product();
         BO.Cart cart = new BO.Cart();
-        public CartWindow()
+        public ShowProductItemsWindow()
         {
             InitializeComponent();
             IEnumerable<BO.Product?> listProduct = (bl ?? BlApi.Factory.Get()).Product.GetDataOf();
@@ -38,6 +38,8 @@ namespace PL
             }
             ProductItemListView.ItemsSource = listProductItems;  // that in the beginning it will be initialized
 
+            CategorySelector.Items.Clear();
+            CategorySelector.ItemsSource = Enum.GetValues(typeof(BO.Enums.Category)); // the itemSource is all of the possible categories 
         }
         /*public int ID { set; get; } // id of product
         public string? Name { set; get; } // name of product
@@ -47,6 +49,7 @@ namespace PL
         public int Amount { set; get; } // amount of items from this product in the cart*/
         private void SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            string? selected = CategorySelector.SelectedItem.ToString(); // the category that was selected in the comboBox
             IEnumerable<BO.Product?> listProduct = (bl ?? BlApi.Factory.Get()).Product.GetDataOf();
             List<BO.ProductItem> listProductItems = new List<BO.ProductItem>();
             try
@@ -59,8 +62,22 @@ namespace PL
                 MessageBox.Show(err.Message, "Exception", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             ProductItemListView.ItemsSource = listProductItems; // put all the productItems in the itemSource of the productItemListView
+            BO.Enums.Category category;
+            BO.Enums.Category.TryParse(selected, out category); // convert it into a category
+            Func<BO.Product?, bool>? func = item => (item ?? new BO.Product()).Category == category; // the condition \ predict we create checks if the categories are equal or not
+            listProduct = (bl ?? BlApi.Factory.Get()).Product.GetDataOf(func); // get A list with all the products that answer the deserve condition
+            listProductItems.Clear();
+            foreach (BO.Product? item in listProduct)
+                listProductItems.Add(bl.Product.GetForCustomer(item.ID, cart));
+
+            ProductItemListView.ItemsSource = listProductItems;// get A list with all the productItems that answer the deserve condition
         }
 
+        private void MoveToCart(object sender, RoutedEventArgs e)
+        {
+            new CartWindow().ShowDialog();
+            // move to cart staff
+        }
 
         private void ShowProduct(object sender, MouseButtonEventArgs e)
         {
@@ -68,25 +85,6 @@ namespace PL
             if (prdct == null)
                 return;
             new ProductWindow((bl ?? BlApi.Factory.Get()), "WATCH", prdct.ID).ShowDialog(); // can't do anything else until it closed
-        }
-
-        private void DeleteItem(object sender, RoutedEventArgs e)
-        {
-
-        }
-        private void ChangeItem(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void MakeOrder(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void AddItem(object sender, RoutedEventArgs e)
-        {
-
         }
     }
 }
