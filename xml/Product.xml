@@ -54,27 +54,27 @@
     <Name>Rjjjjjed shirt</Name>
     <Price>35</Price>
     <Category>Shirts</Category>
-    <InStock>61</InStock>
+    <InStock>60</InStock>
   </Product>
   <Product>
     <ID>126372</ID>
     <Name>s</Name>
     <Price>8</Price>
     <Category>Shirts</Category>
-    <InStock>8</InStock>
+    <InStock>6</InStock>
   </Product>
   <Product>
     <ID>5</ID>
-    <Name>w</Name>
-    <Price>2</Price>
-    <Category>Socks</Category>
+    <Name>ui</Name>
+    <Price>99</Price>
+    <Category>Hats</Category>
     <InStock>1</InStock>
   </Product>
   <Product>
-    <ID>6</ID>
-    <Name>d</Name>
-    <Price>1</Price>
-    <Category>Hats</Category>
+    <ID>15</ID>
+    <Name>hi</Name>
+    <Price>6</Price>
+    <Category>Socks</Category>
     <InStock>7</InStock>
   </Product>
 </ArrayOfProduct>

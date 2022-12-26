@@ -6,7 +6,6 @@ namespace Program
 
     class Program
     {
-
         static IDal? dal = Factory.Get();
 
         // static private DalOrder _dalOrder = new DalOrder();

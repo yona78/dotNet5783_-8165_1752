@@ -111,9 +111,9 @@ internal class Order : BlApi.IOrder  // object of the manager, on a order a clie
 
         // now i will check the status of the order, by comparing the current time, and the time in the data.
         DateTime now = DateTime.Now;
-        if (now > order.DeliveryDate && order.DeliveryDate != null) // it means the order has already arrived. 
+        if (now > order.DeliveryDate && order.DeliveryDate != null &&order.DeliveryDate !=DateTime.MinValue) // it means the order has already arrived. 
             orderToReturn.OrderStatus = BO.Enums.Status.Arrived;
-        else if (now > order.ShipDate && order.ShipDate != null) // it means it has been sent, but hasn't arrived yet
+        else if (now > order.ShipDate && order.ShipDate != null&& order.ShipDate != DateTime.MinValue) // it means it has been sent, but hasn't arrived yet
             orderToReturn.OrderStatus = BO.Enums.Status.Sent;
         else
             orderToReturn.OrderStatus = BO.Enums.Status.Confirmed; // it must be confirmed, otherwise it wasn't an order in the dBase
