@@ -140,4 +140,11 @@
     <Price>35</Price>
     <Amount>1</Amount>
   </OrderItem>
+  <OrderItem>
+    <OrderItemID>20</OrderItemID>
+    <ProductID>506038</ProductID>
+    <OrderID>20</OrderID>
+    <Price>25.99</Price>
+    <Amount>1</Amount>
+  </OrderItem>
 </ArrayOfOrderItem>

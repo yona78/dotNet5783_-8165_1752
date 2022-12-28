@@ -47,11 +47,20 @@ namespace Dal
                 if ((orders[i] ?? new DO.OrderItem()).OrderID == toAdd.OrderID && (orders[i] ?? new DO.OrderItem()).ProductID == toAdd.ProductID) // because we can't add a new orderItem to the same product and product id, if there is already one there. 
                     throw new ExceptionObjectAlreadyExist("orderItem");
             }
-            orders.Add(toAdd);
+            try
+            {
+                GetOrderItem(toAdd.OrderID, toAdd.ProductID);
+
+            }
+            catch (Exception e)
+            {
+                orders.Add(toAdd);
             XMLTools.SaveListToXMLSerializer<DO.OrderItem?>(orders, orderItemFileName);
             root.Element("lastIndexOrderItems").Value = (toAdd.OrderItemID + 1).ToString();
             root.Save(FPath_n);
             return toAdd.OrderItemID; // return the id of the orderItem we added
+            }
+            throw new ExceptionObjectAlreadyExist("orderItem");
         }
 
         public void Delete(int id)
@@ -72,12 +81,16 @@ namespace Dal
         public DO.OrderItem Get(Func<DO.OrderItem?, bool>? func)
         {
             List<DO.OrderItem?> orders = XMLTools.LoadListFromXMLSerializer<DO.OrderItem?>(orderItemFileName);
-            foreach (var item in orders)
-            {
-                if ((func ?? (x => false))(item))
-                    return (item ?? new DO.OrderItem()); // if item is null, i will return a default value
-            }
-            throw new ExceptionObjectCouldNotBeFound("orderItem"); // else, if i couldn't have found this order, i will throw an exception
+            DO.OrderItem? oi = orders?.FirstOrDefault(ot => func(ot));
+            if (oi == null)
+                throw new ExceptionObjectCouldNotBeFound("orderItem"); // else, if i couldn't have found this orderItem, i will throw an exception
+            return oi ?? new DO.OrderItem();
+            //foreach (var item in orders)
+            //{
+            //    if ((func ?? (x => false))(item))
+            //        return (item ?? new DO.OrderItem()); // if item is null, i will return a default value
+            //}
+            //throw new ExceptionObjectCouldNotBeFound("orderItem"); // else, if i couldn't have found this order, i will throw an exception
         }
 
         public DO.OrderItem Get(int id)
@@ -96,16 +109,17 @@ namespace Dal
 
         public IEnumerable<DO.OrderItem?> GetDataOfOrderItem(int idOfOrder)
         {
-            List<DO.OrderItem?> orders = XMLTools.LoadListFromXMLSerializer<DO.OrderItem?>(orderItemFileName);
-            List<DO.OrderItem?> ret = new List<DO.OrderItem?>(); // we use list because we don't know the what is the size of the structre we will need to use.
-            for (int i = 0; i < orders.Count(); i++) // returns a list of all of the orderItems from the specific order, whose id was given to us.
-            {
-                if ((orders[i] ?? new DO.OrderItem()).OrderID == idOfOrder)
-                {
-                    ret.Add((orders[i]));
-                }
-            }
-            return ret;
+            //List<DO.OrderItem?> orders = XMLTools.LoadListFromXMLSerializer<DO.OrderItem?>(orderItemFileName);
+            //List<DO.OrderItem?> ret = new List<DO.OrderItem?>(); // we use list because we don't know the what is the size of the structre we will need to use.
+            //for (int i = 0; i < orders.Count(); i++) // returns a list of all of the orderItems from the specific order, whose id was given to us.
+            //{
+            //    if ((orders[i] ?? new DO.OrderItem()).OrderID == idOfOrder)
+            //    {
+            //        ret.Add((orders[i]));
+            //    }
+            //}
+            //return ret;
+            return GetDataOf(product => (product ?? new DO.OrderItem()).OrderID == idOfOrder);
         }
 
         public DO.OrderItem GetOrderItem(int idOrder, int idProduct)
@@ -142,20 +156,30 @@ namespace Dal
             }
             if (!found)
                 throw new ExceptionObjectCouldNotBeFound("product");
-            found = false;
-            for (int i = 0; i < orders.Count(); i++)
+            try
             {
-                if ((orders[i] ?? new DO.OrderItem()).OrderItemID == toUpdate.OrderItemID) // if it has the same id, we do a deep copy
-                {
-                    found = true;
-                    orders.RemoveAt(i);
-                    orders.Insert(i, toUpdate);
-                    break;
-                }
+                Get(toUpdate.OrderItemID);
+                orders.RemoveAll(o => o?.OrderItemID == toUpdate.OrderItemID);
+                orders.Add(toUpdate);
+                XMLTools.SaveListToXMLSerializer<DO.OrderItem?>(orders, orderItemFileName);
             }
-            if (!found) // otherwise, the order itemcouldn't be found.
+            catch (Exception e)
+            {
                 throw new ExceptionObjectCouldNotBeFound("orderItem");
-            XMLTools.SaveListToXMLSerializer<DO.OrderItem?>(orders, orderItemFileName);
+                //found = false;
+                //for (int i = 0; i < orders.Count(); i++)
+                //{
+                //    if ((orders[i] ?? new DO.OrderItem()).OrderItemID == toUpdate.OrderItemID) // if it has the same id, we do a deep copy
+                //    {
+                //        found = true;
+                //        orders.RemoveAt(i);
+                //        orders.Insert(i, toUpdate);
+                //        break;
+                //    }
+                //}
+                //if (!found) // otherwise, the order itemcouldn't be found.
+                //    throw new ExceptionObjectCouldNotBeFound("orderItem");
+            }
         }
     }
 }

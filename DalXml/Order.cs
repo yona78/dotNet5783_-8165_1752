@@ -40,13 +40,18 @@ namespace Dal
         public DO.Order Get(Func<DO.Order?, bool>? func)
         {
             List<DO.Order?> orders = XMLTools.LoadListFromXMLSerializer<DO.Order?>(ordersFileName);
-            foreach (var item in orders)
+            DO.Order? o = orders?.FirstOrDefault(x => func(x));
+            //foreach (var item in orders)
+            //{
+            //    if ((func ?? (x => false))(item))
+            //        return (item ?? new DO.Order()); // if item is null, i will return a default value
+            //}
+            //throw new ExceptionObjectCouldNotBeFound("order"); // else, if i couldn't have found this order, i will throw an exception
+            if (o == null)
             {
-                if ((func ?? (x => false))(item))
-                    return (item ?? new DO.Order()); // if item is null, i will return a default value
+                throw new ExceptionObjectCouldNotBeFound("order");
             }
-            throw new ExceptionObjectCouldNotBeFound("order"); // else, if i couldn't have found this order, i will throw an exception
-
+            return (o?? new DO.Order());
         }
 
         public DO.Order Get(int id)

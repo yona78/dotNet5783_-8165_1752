@@ -14,14 +14,24 @@ internal class DalOrder : IOrder
         if (curEmptyOrder == DataSource.maxOrders)
             throw new ExceptionListIsFull();
         newOrder.ID = DataSource.Config.GetLastIndexOrder;
-        for (int i = 0; i < curEmptyOrder; i++) // very simple loop that checks whether the order is already exist.
+        //for (int i = 0; i < curEmptyOrder; i++) // very simple loop that checks whether the order is already exist.
+        //{
+        //    if (DataSource._orders != null && (DataSource._orders[i] ?? new Order()).ID == newOrder.ID)
+        //        throw new ExceptionObjectAlreadyExist("order");
+
+        //}
+        //(DataSource._orders ?? new List<Order?>()).Add(newOrder);
+        try
         {
-            if (DataSource._orders != null && (DataSource._orders[i] ?? new Order()).ID == newOrder.ID)
-                throw new ExceptionObjectAlreadyExist("order");
+            Get(newOrder.ID);
 
         }
-        (DataSource._orders ?? new List<Order?>()).Add(newOrder);
-        return newOrder.ID;
+        catch (Exception e)
+        {
+            (DataSource._orders ?? new List<Order?>()).Add(newOrder);
+            return newOrder.ID;
+        }
+        throw new ExceptionObjectAlreadyExist("order");
     }
     public Order Get(int id) // func that reutrns order by its id
     {
@@ -36,44 +46,59 @@ internal class DalOrder : IOrder
     }
     public void Delete(int id) // func that deletes order from the array
     {
-        bool found = false;
-        for (int i = 0; i < DataSource._orders.Count(); i++)
-        {
-            if ((DataSource._orders[i] ?? new Order()).ID == id) // deleting only if it has the same id.
-            {
-                DataSource._orders.RemoveAt(i);
-                found = true;
-            }
-        }
-        if (!found) // checks if the speicifed order was found
+        if(DataSource._orders.RemoveAll(o => o?.ID == id)==0)
             throw new ExceptionObjectCouldNotBeFound("order");
+        //bool found = false;
+        //for (int i = 0; i < DataSource._orders.Count(); i++)
+        //{
+        //    if ((DataSource._orders[i] ?? new Order()).ID == id) // deleting only if it has the same id.
+        //    {
+        //        DataSource._orders.RemoveAt(i);
+        //        found = true;
+        //    }
+        //}
+        //if (!found) // checks if the speicifed order was found
+        //    throw new ExceptionObjectCouldNotBeFound("order");
 
 
     }
     public void Update(Order newOrder) // func that updates an order in his array
     {
-        bool found = false;
-        for (int i = 0; i < DataSource._orders.Count(); i++)
+        //bool found = false;
+        try
         {
-            if ((DataSource._orders[i] ?? new Order()).ID == newOrder.ID) // if the specified order is found, we do a deep copy.
-            {
-                DataSource._orders.RemoveAt(i);
-                DataSource._orders.Insert(i, newOrder);
-                found = true;
-                break;
-            }
+            Get(newOrder.ID);
+            DataSource._orders.RemoveAll(o=>o?.ID==newOrder.ID);
+            DataSource._orders.Add(newOrder);
         }
-        if (!found)
-            throw new ExceptionObjectCouldNotBeFound("order"); // checks if the speicifed order was found 
+        catch (Exception e)
+        {
+            throw new ExceptionObjectCouldNotBeFound("order");
+        }// checks if the speicifed order was found}
+        //    for (int i = 0; i < DataSource._orders.Count(); i++)
+        //{
+        //    if ((DataSource._orders[i] ?? new Order()).ID == newOrder.ID) // if the specified order is found, we do a deep copy.
+        //    {
+        //        DataSource._orders.RemoveAt(i);
+        //        DataSource._orders.Insert(i, newOrder);
+        //        found = true;
+        //        break;
+        //    }
+        //}
+        //if (!found)
+        //    throw new ExceptionObjectCouldNotBeFound("order"); // checks if the speicifed order was found 
     }
 
     public Order Get(Func<Order?, bool>? func) // func that returns an order by a term it gets.
     {
-        foreach (var item in DataSource._orders)
-        {
-            if ((func ?? (x => false))(item))
-                return (item ?? new Order()); // if item is null, i will return a default value
-        }
-        throw new ExceptionObjectCouldNotBeFound("order"); // else, if i couldn't have found this order, i will throw an exception
+        Order? order = DataSource._orders.FirstOrDefault(o => func(o));
+        if(order == null)
+        //foreach (var item in DataSource._orders)
+        //{
+        //    if ((func ?? (x => false))(item))
+        //        return (item ?? new Order()); // if item is null, i will return a default value
+        //}
+            throw new ExceptionObjectCouldNotBeFound("order"); // else, if i couldn't have found this order, i will throw an exception
+        return order?? new Order();
     }
 }

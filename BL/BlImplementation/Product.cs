@@ -1,6 +1,7 @@
 ﻿
 using BO;
 using DalApi;
+using DO;
 
 namespace BlImplementation;
 /// <summary>
@@ -99,11 +100,13 @@ internal class Product : BlApi.IProduct // class for product, that the manager c
         item.Category = (BO.Enums.Category?)product.Category;
         item.InStock = (product.InStock > 0); // it is aviliable if the items from this specific product in the dBase is bigger than zero.
         int num = 0;
-        foreach (BO.OrderItem i in cart.Items)
-        {
-            if (i.ProductID == idProduct)
-                num += i.Amount;
-        }
+        List<int> list = cart.Items.Select(x=>x.Amount).ToList();
+        num = list.Sum();
+        //foreach (BO.OrderItem i in cart.Items)
+        //{
+        //    if (i.ProductID == idProduct)
+        //        num += i.Amount;
+        //}
         if (num == 0)
         {
             throw new ExceptionObjectCouldNotBeFound("product in cart");
@@ -149,17 +152,24 @@ internal class Product : BlApi.IProduct // class for product, that the manager c
     public IEnumerable<ProductForList?> GetList(Func<BO.ProductForList?, bool>? func = null) // func that returns all the products in a special logic object, which either the manager can use it or it will be printed to the customer screen
     {
         IEnumerable<DO.Product?> listOfProducts = dal.Product.GetDataOf();
-        List<BO.ProductForList?> list = new List<BO.ProductForList?>();
-        BO.ProductForList product1 = new BO.ProductForList();
-        foreach (DO.Product? product in listOfProducts)  // for each product in the dBase, i would like to initalize a similar product in the ProductForList. The only that can use this func is the manager
+        IEnumerable<BO.ProductForList> list = from product in listOfProducts select new BO.ProductForList
         {
-            product1.ID = (product ?? new DO.Product()).ID;
-            product1.Name = (product ?? new DO.Product()).Name;
-            product1.Price = (product ?? new DO.Product()).Price;
-            product1.Category = (BO.Enums.Category?)(product ?? new DO.Product()).Category;
-            list.Add(product1);
-            product1 = new BO.ProductForList();
+            ID = (product ?? new DO.Product()).ID,
+            Name = (product ?? new DO.Product()).Name,
+            Price = (product ?? new DO.Product()).Price,
+            Category = (BO.Enums.Category?)(product ?? new DO.Product()).Category
         }
+        ;
+        //BO.ProductForList product1 = new BO.ProductForList();
+        //foreach (DO.Product? product in listOfProducts)  // for each product in the dBase, i would like to initalize a similar product in the ProductForList. The only that can use this func is the manager
+        //{
+        //    product1.ID = (product ?? new DO.Product()).ID;
+        //    product1.Name = (product ?? new DO.Product()).Name;
+        //    product1.Price = (product ?? new DO.Product()).Price;
+        //    product1.Category = (BO.Enums.Category?)(product ?? new DO.Product()).Category;
+        //    list.Add(product1);
+        //    product1 = new BO.ProductForList();
+        //}
         if (func == null)
             return list;
         IEnumerable<ProductForList?> data = list.Where(x => func(x));
@@ -200,28 +210,43 @@ internal class Product : BlApi.IProduct // class for product, that the manager c
     public BO.Product Get(Func<BO.Product?, bool>? func) // func that returns proudct by a term it gets.
     {
         IEnumerable<DO.Product?> products = dal.Product.GetDataOf();
-        List<BO.Product?> listOfLogicEntities = new List<BO.Product?>();
-        BO.Product product = new BO.Product();
-        foreach (var item in products)
+        //List<BO.Product?> listOfLogicEntities = new List<BO.Product?>();
+        //BO.Product product = new BO.Product();
+        IEnumerable<BO.Product?> listOfLogicEntities = from product in products
+                                              select new BO.Product
+                                              {
+                                                  InStock = (product ?? new DO.Product()).InStock,
+                                                  ID = (product ?? new DO.Product()).ID,
+                                                  Name = (product ?? new DO.Product()).Name,
+                                                  Price = (product ?? new DO.Product()).Price,
+                                                  Category = (BO.Enums.Category?)(product ?? new DO.Product()).Category
+                                              }
+        ;
+        //foreach (var item in products)
+        //{
+
+        //    product.InStock = (item ?? new DO.Product()).InStock;
+        //    product.ID = (item ?? new DO.Product()).ID;
+        //    product.Price = (item ?? new DO.Product()).Price;
+        //    product.Name = (item ?? new DO.Product()).Name;
+        //    product.Category = (BO.Enums.Category?)(item ?? new DO.Product()).Category;
+
+        //    listOfLogicEntities.Add(product);
+        //} // now, i've created like "DataSouce._products
+
+        BO.Product ret = listOfLogicEntities.FirstOrDefault(p=>func(p));
+        if(ret == null)
         {
-
-            product.InStock = (item ?? new DO.Product()).InStock;
-            product.ID = (item ?? new DO.Product()).ID;
-            product.Price = (item ?? new DO.Product()).Price;
-            product.Name = (item ?? new DO.Product()).Name;
-            product.Category = (BO.Enums.Category?)(item ?? new DO.Product()).Category;
-
-            listOfLogicEntities.Add(product);
-        } // now, i've created like "DataSouce._products
-
-
-        foreach (var item in listOfLogicEntities)
-        {
-
-            if ((func ?? (x => false))(item)) // if the func is null, i will return false
-                return (item ?? new BO.Product()); // if item is null, i will return a default value
+            throw new ExceptionObjectCouldNotBeFound("product"); // else, if i couldn't have found this product, i will throw an exception
         }
-        throw new ExceptionObjectCouldNotBeFound("product"); // else, if i couldn't have found this product, i will throw an exception
+        return (ret ?? new BO.Product());
+        //foreach (var item in listOfLogicEntities)
+        //{
+
+        //    if ((func ?? (x => false))(item)) // if the func is null, i will return false
+        //        return (item ?? new BO.Product()); // if item is null, i will return a default value
+        //}
+        //throw new ExceptionObjectCouldNotBeFound("product"); // else, if i couldn't have found this product, i will throw an exception
     }
     /// <summary>
     /// func that returns a list of product that are being chosed by a specified condition
@@ -231,20 +256,30 @@ internal class Product : BlApi.IProduct // class for product, that the manager c
     public IEnumerable<BO.Product?> GetDataOf(Func<BO.Product?, bool>? predict = null) // func that returns all of the products
     {
         IEnumerable<DO.Product?> products = dal.Product.GetDataOf();
-        List<BO.Product> productsToReturn = new List<BO.Product>();
-        BO.Product product = new BO.Product();
-        foreach (var item in products)
-        {
+        IEnumerable<BO.Product> productsToReturn = from product in products
+                                                   select new BO.Product
+                                                   {
+                                                       InStock = (product ?? new DO.Product()).InStock,
+                                                       ID = (product ?? new DO.Product()).ID,
+                                                       Name = (product ?? new DO.Product()).Name,
+                                                       Price = (product ?? new DO.Product()).Price,
+                                                       Category = (BO.Enums.Category?)(product ?? new DO.Product()).Category
+                                                   }
+        ;
 
-            product.InStock = (item ?? new DO.Product()).InStock;
-            product.ID = (item ?? new DO.Product()).ID;
-            product.Price = (item ?? new DO.Product()).Price;
-            product.Name = (item ?? new DO.Product()).Name;
-            product.Category = (BO.Enums.Category?)(item ?? new DO.Product()).Category;
+        //BO.Product product = new BO.Product();
+        //foreach (var item in products)
+        //{
 
-            productsToReturn.Add(product);
+        //    product.InStock = (item ?? new DO.Product()).InStock;
+        //    product.ID = (item ?? new DO.Product()).ID;
+        //    product.Price = (item ?? new DO.Product()).Price;
+        //    product.Name = (item ?? new DO.Product()).Name;
+        //    product.Category = (BO.Enums.Category?)(item ?? new DO.Product()).Category;
 
-        }
+        //    productsToReturn.Add(product);
+
+        //}
 
         if (predict == null)
             return productsToReturn;

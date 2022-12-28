@@ -56,12 +56,18 @@ internal class Product : IProduct
     public DO.Product Get(Func<DO.Product?, bool>? func)
     {
         IEnumerable<DO.Product?> lst = GetDataOf();
-        foreach (var item in lst)
+        DO.Product? p = lst?.FirstOrDefault(x => func(x));
+        //foreach (var item in lst)
+        //{
+        //    if ((func ?? (x => false))(item))
+        //        return (item ?? new DO.Product()); // if item is null, i will return a default value
+        //}
+        //throw new ExceptionObjectCouldNotBeFound("Product"); // else, if i couldn't have found this order, i will throw an exception
+        if (p == null)
         {
-            if ((func ?? (x => false))(item))
-                return (item ?? new DO.Product()); // if item is null, i will return a default value
+            throw new ExceptionObjectCouldNotBeFound("Product");
         }
-        throw new ExceptionObjectCouldNotBeFound("Product"); // else, if i couldn't have found this order, i will throw an exception
+        return (p ?? new DO.Product());
     }
 
     public DO.Product Get(int id)

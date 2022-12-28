@@ -29,10 +29,14 @@ internal class Order : BlApi.IOrder  // object of the manager, on a order a clie
             tmp.ID = (order ?? new DO.Order()).ID;
             // now i will calculate the totalPrice of the order, and the amount of items.
             IEnumerable<DO.OrderItem?> listOfItems = dal.OrderItem.GetDataOfOrderItem((order ?? new DO.Order()).ID);
+            //List<double> sum = (List<double>)(from item in listOfItems select ((item ?? new DO.OrderItem()).Amount * (item ?? new DO.OrderItem()).Price));
+            //price += sum.Sum();
+            List<int> sum1 = (List<int>)listOfItems.Select(x=>(x?? new DO.OrderItem()).Amount).ToList();
+            amountOfItems = sum1.Sum();
             foreach (DO.OrderItem? item in listOfItems)
             {
                 price += ((item ?? new DO.OrderItem()).Amount * (item ?? new DO.OrderItem()).Price); // the price is the total price, the amount*price
-                amountOfItems += (item ?? new DO.OrderItem()).Amount;
+                //amountOfItems += (item ?? new DO.OrderItem()).Amount;
             }
             tmp.TotelPrice = price; // the total price of the order
             tmp.AmountOfItems = amountOfItems; // the total amount of items in the order
@@ -201,26 +205,28 @@ internal class Order : BlApi.IOrder  // object of the manager, on a order a clie
         {
             throw new ExceptionLogicObjectCouldNotBeFound("orderItem", inner);
         }
-        DO.OrderItem it = new DO.OrderItem();
-        foreach (var item in list) // we wants to update an item in the order, which its id is the id of the product we got.
-        {
-            if (((item ?? new DO.OrderItem())).ProductID == idOfProduct)
-            {
-                it = (item ?? new DO.OrderItem());
-                break;
-            }
-        }
-        if (product.InStock + (it).Amount < amount) // checks if we can take more items from this kind from the dBase
+        DO.OrderItem? it = list.FirstOrDefault(p=>p?.ProductID==idOfProduct);
+        if(it==null) {throw new ExceptionLogicObjectCouldNotBeFound("product"); }
+        DO.OrderItem it1 = it ?? new DO.OrderItem();
+        //foreach (var item in list) // we wants to update an item in the order, which its id is the id of the product we got.
+        //{
+        //    if (((item ?? new DO.OrderItem())).ProductID == idOfProduct)
+        //    {
+        //        it = (item ?? new DO.OrderItem());
+        //        break;
+        //    }
+        //}
+        if (product.InStock + (it1).Amount < amount) // checks if we can take more items from this kind from the dBase
         {
             throw new ExceptionNotEnoughInDataBase("order");
         }
-        if (it.Amount < amount)
-            product.InStock -= (amount - it.Amount);
+        if (it1.Amount < amount)
+            product.InStock -= (amount - it1.Amount);
         else
-            product.InStock += it.Amount - amount;
-        it.Amount = amount;
+            product.InStock += it1.Amount - amount;
+        it1.Amount = amount;
         dal.Product.Update(product);
-        dal.OrderItem.Update(it);
+        dal.OrderItem.Update(it1);
 
     }
     /// <summary>
@@ -356,14 +362,17 @@ internal class Order : BlApi.IOrder  // object of the manager, on a order a clie
 
             listOfLogicEntities.Add(order); // adding the order
         } // now, i've created like "DataSouce._orders
-
-
-        foreach (var item in listOfLogicEntities)
+        BO.Order? order1 = listOfLogicEntities.FirstOrDefault(o => func(o));
+        if (order1 == null)
         {
-            if ((func ?? (x => false))(item))
-                return (item ?? new BO.Order()); // if item is null, i will return a default value
+            throw new ExceptionObjectCouldNotBeFound("order"); // else, if i couldn't have found this product, i will throw an exception
         }
-        throw new ExceptionObjectCouldNotBeFound("order"); // else, if i couldn't have found this product, i will throw an exception
+        //foreach (var item in listOfLogicEntities)
+        //{
+        //    if ((func ?? (x => false))(item))
+        //        return (item ?? new BO.Order()); // if item is null, i will return a default value
+        //}
+        return order1??new BO.Order();
     }
     /// <summary>
     /// func that returns a list of order that are being chosed by a specified condition

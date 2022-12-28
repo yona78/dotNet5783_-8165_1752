@@ -33,17 +33,20 @@ internal class Cart : ICart // cart of customer
         {
             throw new ExceptionLogicObjectCouldNotBeFound("product", inner);
         }
+        
         if (cart.Items != null)
         {
-            foreach (BO.OrderItem item in cart.Items)
-            {
-                if (item.ProductID == idProduct)
-                {
-                    productExistInCart = true;
-                    itemToChange = item;
-                    break;
-                }
-            }
+            itemToChange = cart.Items.FirstOrDefault(p => p.ProductID == idProduct);
+            productExistInCart = cart.Items.Any(p => p.ProductID == idProduct);
+            //foreach (BO.OrderItem item in cart.Items)
+            //{
+            //    if (item.ProductID == idProduct)
+            //    {
+            //        productExistInCart = true;
+            //        itemToChange = item;
+            //        break;
+            //    }
+            //}
         }
         if (!productExistInCart) // the product isn't found in the cart
         {
@@ -187,15 +190,17 @@ internal class Cart : ICart // cart of customer
         bool productExistInCart = false;
         BO.OrderItem itemToChange = new BO.OrderItem();
         DO.Product product = new DO.Product();
-        foreach (var item in cart.Items)
-        {
-            if (item.ProductID == idProduct) // checks if the specific product is found in the cart
-            {
-                productExistInCart = true;
-                itemToChange = item;
-                break;
-            }
-        }
+        itemToChange = cart.Items.FirstOrDefault(p => p.ProductID == idProduct);
+        productExistInCart = cart.Items.Any(p => p.ProductID == idProduct);
+        //foreach (var item in cart.Items)
+        //{
+        //    if (item.ProductID == idProduct) // checks if the specific product is found in the cart
+        //    {
+        //        productExistInCart = true;
+        //        itemToChange = item;
+        //        break;
+        //    }
+        //}
         if (!productExistInCart) // the product isn't exist in the cart
         {
             throw new ExceptionLogicObjectCouldNotBeFound("product");
