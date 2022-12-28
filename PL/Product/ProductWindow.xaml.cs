@@ -12,6 +12,7 @@ namespace PL
     public partial class ProductWindow : Window
     {
         BlApi.IBl? blP = BlApi.Factory.Get();
+        int idTmp = 0;
         public ProductWindow(IBl bl, string option, int id) // idOrder of product, option of action that we want to do
         {
             InitializeComponent();
@@ -32,6 +33,9 @@ namespace PL
                 name.Text = prdct.Name; // as before
                 price.Text = prdct.Price.ToString(); // as before
                 inStock.Text = prdct.InStock.ToString(); // as before
+                idTmp = prdct.ID; // we want to have in our hands the old id, in order he wouldn't be able to replace it
+
+                ID.IsEnabled = false; // you can't change it
             }
             else if (option == "WATCH")
             {
@@ -61,6 +65,8 @@ namespace PL
                 int tmp;
                 double tmpPrice;
                 BO.Enums.Category category;
+
+                prdct.ID = idTmp; // the ID stays the same 
 
                 bool validInput = int.TryParse(ID.Text, out tmp); // getting the ID from the TextBox, and insert it into the product
                 if (!validInput)
@@ -103,7 +109,7 @@ namespace PL
                 double tmpPrice;
                 BO.Enums.Category category;
 
-
+                prdct.ID = idTmp; // the ID stays the same 
                 bool validInput = double.TryParse(price.Text, out tmpPrice); // getting the price from the TextBox, and insert it into the product
                 if (!validInput)
                     throw new Exception("price is invalid");
@@ -135,6 +141,6 @@ namespace PL
             }
         }
 
-        
+
     }
 }

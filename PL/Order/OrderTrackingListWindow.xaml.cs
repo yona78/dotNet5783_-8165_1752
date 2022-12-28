@@ -22,12 +22,25 @@ namespace PL
         BlApi.IBl bl = BlApi.Factory.Get()!;
         public OrderTrackingListWindow()
         {
-            InitializeComponent();
-            IEnumerable<BO.Order?> tmpList = bl.Order.GetDataOf(); // that in the beginning it will be initialized
+            IEnumerable<BO.Order?> tmpList = new List<BO.Order?>();
             List<BO.OrderTracking> listOrderTracking = new List<BO.OrderTracking>();
-            foreach (BO.Order? element in tmpList)
+            InitializeComponent();
+            try
             {
-                listOrderTracking.Add(bl.Order.TrackOrder(element.ID));
+                tmpList = bl.Order.GetDataOf(); // that in the beginning it will be initialized
+
+                listOrderTracking = new List<BO.OrderTracking>();
+
+                foreach (BO.Order? element in tmpList)
+                {
+                    listOrderTracking.Add(bl.Order.TrackOrder(element.ID));
+                }
+            }
+            catch (Exception err)
+            {
+
+                MessageBox.Show(err.Message, "Exception", MessageBoxButton.OK, MessageBoxImage.Error);
+
             }
             OrderTrackingListView.ItemsSource = listOrderTracking;
         }

@@ -126,7 +126,9 @@ namespace PL
         {
             order.CustomerName=CustomerName.Text;   
             order.CustomerEmail = CustomerEmail.Text;   
-            order.CustomerAddress = CustomerAddress.Text;   
+            order.CustomerAddress = CustomerAddress.Text;
+            blP.Order.UpdateNameEmailAddress(order.CustomerAddress, order.CustomerEmail, order.CustomerAddress, order.ID); // the bonus we addes
+
             try
             {
                 (blP ?? BlApi.Factory.Get()).Order.Update(idOfOrder, idOfProduct, amount);
@@ -148,6 +150,7 @@ namespace PL
             order.CustomerName = CustomerName.Text;
             order.CustomerEmail = CustomerEmail.Text;
             order.CustomerAddress = CustomerAddress.Text;
+            blP.Order.UpdateNameEmailAddress(order.CustomerAddress, order.CustomerEmail, order.CustomerAddress, order.ID); // the bonus we addes
             this.Close();
         }
         private void showItemsInOrder(object sender, RoutedEventArgs e)
