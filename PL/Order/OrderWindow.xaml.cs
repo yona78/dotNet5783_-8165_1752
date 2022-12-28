@@ -48,6 +48,7 @@ namespace PL
                 return;
             }
             id = order.ID;
+            idOfOrder = order.ID;
             if (option == "WATCH")
             {
                 updateCustomer.Visibility = Visibility.Hidden; // hiding the update button

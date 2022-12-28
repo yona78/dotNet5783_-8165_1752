@@ -377,9 +377,8 @@ internal class Order : BlApi.IOrder  // object of the manager, on a order a clie
         BO.Order order = new BO.Order();
         foreach (var item in orders)
         {
-
             IEnumerable<DO.OrderItem?> dO_listOfOrderItems = dal.OrderItem.GetDataOfOrderItem((item ?? new DO.Order()).ID);
-
+            order = new BO.Order();
             order.CustomerName = (item ?? new DO.Order()).CustomerName;
             order.CustomerAddress = (item ?? new DO.Order()).CustomerAdrress;
             order.CustomerEmail = (item ?? new DO.Order()).CustomerEmail;
