@@ -15,8 +15,14 @@
                 <GridView>
 
                     <GridViewColumn Header="ID" Width="100" DisplayMemberBinding="{Binding ID}"  />
-                    <GridViewColumn Header="OrderStatus" Width="100" DisplayMemberBinding="{Binding orderStatus}" />
-                    <GridViewColumn Header="Status" Width="100" DisplayMemberBinding="{Binding Status}" />
+                    <GridViewColumn Header="OrderStatus" Width="100" DisplayMemberBinding="{Binding OrderStatus}" />
+                    <GridViewColumn Header="Status" Width="300" >
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                            <ItemsControl ItemsSource="{Binding status}" Width="300" />
+                        </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
                 </GridView>
             </ListView.View>
         </ListView>
