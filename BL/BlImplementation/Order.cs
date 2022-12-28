@@ -440,5 +440,16 @@ internal class Order : BlApi.IOrder  // object of the manager, on a order a clie
         IEnumerable<BO.Order?> data = ordersToReturn.Where(x => predict(x));
         return data;
     }
+    /// <summary>
+    /// Bonus func that updates the address, name and email in the order
+    /// </summary>
+    /// <param name="customerName"></param>
+    /// <param name="customerEmail"></param>
+    /// <param name="customerAddress"></param>
+    /// <param name="id"></param>
+    public void UpdateNameEmailAddress(string customerName, string customerEmail, string customerAddress, int id)
+    {
+        /// implemention
+    }
 }
 
