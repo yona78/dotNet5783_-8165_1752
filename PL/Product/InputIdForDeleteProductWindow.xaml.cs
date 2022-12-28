@@ -15,16 +15,20 @@ using System.Windows.Shapes;
 namespace PL
 {
     /// <summary>
-    /// Interaction logic for OrderTrackingWindow.xaml
+    /// Interaction logic for InputIdForDeleteProductWindow.xaml
     /// </summary>
-    public partial class OrderTrackingWindow : Window
+    public partial class InputIdForDeleteProductWindow : Window
     {
-        BlApi.IBl? blP = BlApi.Factory.Get()!;
-        public OrderTrackingWindow()
+        BlApi.IBl? bl = BlApi.Factory.Get()!;
+        public InputIdForDeleteProductWindow()
         {
             InitializeComponent();
             this.Left = System.Windows.SystemParameters.PrimaryScreenWidth - Width; // i want that the window will be in the right side of the screen.
+
         }
+
+
+
         private void ButtonOfAccept_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -33,14 +37,12 @@ namespace PL
                 bool validInput = int.TryParse(TextBoxOfID.Text, out id); // getting the ID from the TextBox
                 if (!validInput || id < 0)
                     throw new Exception("ID is invalid"); // i need to check whether it is realy int
-                new OrderTrackingPresentWindow(id).ShowDialog();
+                bl.Product.Delete(id);
             }
             catch (Exception err)
             {
                 MessageBox.Show(err.Message, "Exception", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-
-
             this.Close();
         }
     }

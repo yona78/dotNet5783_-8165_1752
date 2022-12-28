@@ -1,0 +1,24 @@
+﻿<Window x:Class="PL.OrderTrackingListWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PL"
+        mc:Ignorable="d"
+        Title="OrderTrackingListWindow" Height="450" Width="800">
+    <Grid Name ="MainGrid">
+        <!--this is the main grid-->
+
+        <ListView x:Name="OrderTrackingListView" Margin="10,10,10,10" MouseDoubleClick="UpdateOrderButton">
+            <!--The Table of the data-->
+            <ListView.View>
+                <GridView>
+
+                    <GridViewColumn Header="ID" Width="100" DisplayMemberBinding="{Binding ID}"  />
+                    <GridViewColumn Header="OrderStatus" Width="100" DisplayMemberBinding="{Binding orderStatus}" />
+                    <GridViewColumn Header="Status" Width="100" DisplayMemberBinding="{Binding Status}" />
+                </GridView>
+            </ListView.View>
+        </ListView>
+    </Grid>
+</Window>

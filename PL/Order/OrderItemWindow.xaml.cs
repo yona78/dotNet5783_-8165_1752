@@ -23,13 +23,15 @@ namespace PL
     public partial class OrderItemWindow : Window
     {
         BlApi.IBl bl = BlApi.Factory.Get()!; // as it was asked...
+        string option;
         BO.OrderItem? orderItem;
         int idOrder;
-        public OrderItemWindow(int idOfOrder, int idOfOrderItem)
+        public OrderItemWindow(int idOfOrder, int idOfOrderItem, string opt)
         {
             InitializeComponent();
-            orderItem = bl.Order.GetOrderManager(idOfOrder).Items.Find(x=>x.ID== idOfOrderItem);
-//orderItem = (bl// we only want to update this orderItem.
+            option = opt;
+            orderItem = bl.Order.GetOrderManager(idOfOrder).Items.Find(x => x.ID == idOfOrderItem);
+            //orderItem = (bl// we only want to update this orderItem.
             idOrder = idOfOrder;
 
             ID.Text = (orderItem ?? new BO.OrderItem()).ID.ToString(); // we want to display this to the window
@@ -39,11 +41,15 @@ namespace PL
             Amount.Text = (orderItem ?? new BO.OrderItem()).Amount.ToString();// as before
             TotalPrice.Text = (orderItem ?? new BO.OrderItem()).TotalPrice.ToString();// as before
 
+            if (option == "WATCH")
+            {
+                Amount.IsEnabled = false;
+                update.Visibility = Visibility.Hidden;
+            }
         }
 
         private void UpdateOption(object sender, RoutedEventArgs e)
         {
-
             try
             {
 

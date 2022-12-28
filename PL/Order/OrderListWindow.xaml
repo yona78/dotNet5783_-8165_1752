@@ -1,4 +1,5 @@
 ﻿<Window x:Class="PL.OrderListWindow"
+        WindowState="Maximized"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -14,9 +15,9 @@
         </Grid.RowDefinitions>
         <!--the up Grid-->
 
-        <Grid Name="UפGrid" HorizontalAlignment="Stretch" Height="auto" Grid.Row="0" VerticalAlignment="Stretch" Width="auto">
+        <Grid Name="UpGrid" HorizontalAlignment="Stretch" Height="auto" Grid.Row="0" VerticalAlignment="Stretch" Width="auto">
 
-            <ListView x:Name="OrderListView" Margin="10,10,10,10" MouseDoubleClick="UpdateProductButton">
+            <ListView x:Name="OrderListView" Margin="10,10,10,10" MouseDoubleClick="UpdateOrderButton">
                 <!--The Table of the data-->
                 <ListView.View>
                     <GridView>

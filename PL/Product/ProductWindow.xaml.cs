@@ -1,5 +1,4 @@
 ﻿using BlApi;
-
 using System;
 
 using System.Windows;
@@ -33,6 +32,24 @@ namespace PL
                 name.Text = prdct.Name; // as before
                 price.Text = prdct.Price.ToString(); // as before
                 inStock.Text = prdct.InStock.ToString(); // as before
+            }
+            else if (option == "WATCH")
+            {
+                add.Visibility = Visibility.Hidden; // hiding the add button
+                update.Visibility = Visibility.Hidden; // hiding the update button
+
+                BO.Product prdct = blP.Product.GetForManager(id); // we only want to show this product.
+                ID.Text = prdct.ID.ToString(); // we want to display this to the window
+                CatgoryChoise.SelectedItem = prdct.Category; // as before
+                name.Text = prdct.Name; // as before
+                price.Text = prdct.Price.ToString(); // as before
+                inStock.Text = prdct.InStock.ToString(); // as before
+
+                ID.IsEnabled = false;
+                CatgoryChoise.IsEnabled = false;
+                name.IsEnabled = false;
+                price.IsEnabled = false;
+                inStock.IsEnabled = false;
             }
         }
 
@@ -117,5 +134,7 @@ namespace PL
 
             }
         }
+
+        
     }
 }
