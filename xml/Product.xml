@@ -1,80 +1,73 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <ArrayOfProduct xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Product>
-    <ID>920649</ID>
+    <ID>689234</ID>
     <Name>Black coat</Name>
     <Price>399.99</Price>
     <Category>Coats</Category>
     <InStock>50</InStock>
   </Product>
   <Product>
-    <ID>271308</ID>
+    <ID>831459</ID>
     <Name>Winter dress</Name>
     <Price>150</Price>
     <Category>Dresses</Category>
     <InStock>30</InStock>
   </Product>
   <Product>
-    <ID>493690</ID>
+    <ID>827538</ID>
     <Name>Cowboy hat</Name>
     <Price>30.99</Price>
-    <Category>Socks</Category>
+    <Category>Hats</Category>
     <InStock>20</InStock>
   </Product>
   <Product>
-    <ID>235684</ID>
+    <ID>156960</ID>
     <Name>Sport shoes</Name>
     <Price>299.99</Price>
     <Category>Shoes</Category>
     <InStock>39</InStock>
   </Product>
   <Product>
-    <ID>300724</ID>
+    <ID>208991</ID>
     <Name>White socks</Name>
     <Price>15</Price>
     <Category>Socks</Category>
     <InStock>24</InStock>
   </Product>
   <Product>
-    <ID>944410</ID>
+    <ID>809310</ID>
     <Name>Striped skirt</Name>
     <Price>70.99</Price>
     <Category>Skirts</Category>
     <InStock>0</InStock>
   </Product>
   <Product>
-    <ID>811774</ID>
+    <ID>339196</ID>
     <Name>Blue shirt</Name>
     <Price>35</Price>
     <Category>Shirts</Category>
     <InStock>12</InStock>
   </Product>
   <Product>
-    <ID>510937</ID>
-    <Name>Rjjjjjed shirt</Name>
+    <ID>522601</ID>
+    <Name>Red shirt</Name>
     <Price>35</Price>
     <Category>Shirts</Category>
-    <InStock>60</InStock>
+    <InStock>61</InStock>
   </Product>
   <Product>
-    <ID>126372</ID>
-    <Name>s</Name>
-    <Price>8</Price>
-    <Category>Shirts</Category>
-    <InStock>6</InStock>
+    <ID>905416</ID>
+    <Name>Sha'abeth shoes</Name>
+    <Price>200</Price>
+    <Category>Shoes</Category>
+    <InStock>17</InStock>
   </Product>
   <Product>
-    <ID>5</ID>
-    <Name>ui</Name>
-    <Price>99</Price>
+    <ID>506038</ID>
+    <Name>Goofy hat</Name>
+    <Price>25.99</Price>
     <Category>Hats</Category>
-    <InStock>1</InStock>
-  </Product>
-  <Product>
-    <ID>15</ID>
-    <Name>hi</Name>
-    <Price>6</Price>
-    <Category>Socks</Category>
-    <InStock>7</InStock>
+    <InStock>28</InStock>
   </Product>
 </ArrayOfProduct>
