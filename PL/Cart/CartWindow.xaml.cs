@@ -76,7 +76,7 @@ namespace PL
         }
         private void ChangeItem(object sender, RoutedEventArgs e)
         {
-
+            new ProductItemWindow("UPDATE", product.ID).ShowDialog();
         }
 
         private void MakeOrder(object sender, RoutedEventArgs e)
@@ -86,7 +86,7 @@ namespace PL
 
         private void AddItem(object sender, RoutedEventArgs e)
         {
-
+            new ProductItemWindow("ADD", product.ID).ShowDialog();
         }
     }
 }

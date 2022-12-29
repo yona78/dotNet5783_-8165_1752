@@ -77,8 +77,6 @@ internal class Product : BlApi.IProduct // class for product, that the manager c
     /// <exception cref="ExceptionLogicObjectCouldNotBeFound"></exception>
     public ProductItem GetForCustomer(int idProduct, BO.Cart cart) // func that gets an id of product in the client's cart, and his cart, and return the data of the specific product and the cart, as an item in the cart. 
     {
-        if (cart.Items == null || cart.Items.Count == 0)
-            throw new ExceptionDataIsInvalid("cart empty");
         DO.Product product = new DO.Product(); // i want to get the specific product from the dBase
         if (idProduct >= 0)
         {
@@ -100,6 +98,11 @@ internal class Product : BlApi.IProduct // class for product, that the manager c
         item.Category = (BO.Enums.Category?)product.Category;
         item.InStock = (product.InStock > 0); // it is aviliable if the items from this specific product in the dBase is bigger than zero.
         int num = 0;
+        if (cart.Items == null || cart.Items.Count == 0)
+        {
+            item.Amount = 0;
+            return item;
+        }
         List<int> list = cart.Items.Select(x=>x.Amount).ToList();
         num = list.Sum();
         //foreach (BO.OrderItem i in cart.Items)
