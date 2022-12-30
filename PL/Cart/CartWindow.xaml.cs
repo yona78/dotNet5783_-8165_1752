@@ -20,51 +20,33 @@ namespace PL
     public partial class CartWindow : Window
     {
         BlApi.IBl bl = BlApi.Factory.Get()!;
-        BO.Product product = new BO.Product();
-        BO.Cart cart = new BO.Cart();
+        BO.OrderItem orderItem = new BO.OrderItem();
+        BO.Cart? cart = new BO.Cart();
         public CartWindow()
         {
             InitializeComponent();
-            IEnumerable<BO.Product?> listProduct = (bl ?? BlApi.Factory.Get()).Product.GetDataOf();
-            List<BO.ProductItem> listProductItems = new List<BO.ProductItem>();
-            try
-            {
-                foreach (BO.Product? item in listProduct)
-                    listProductItems.Add(bl.Product.GetForCustomer(item.ID, cart));
-            }
-            catch (Exception err)
-            {
-                MessageBox.Show(err.Message, "Exception", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-            ProductItemListView.ItemsSource = listProductItems;  // that in the beginning it will be initialized
+            IEnumerable<BO.OrderItem?> listOrderItems = cart.Items;
+            OrderItemsListView.ItemsSource = listOrderItems;  // that in the beginning it will be initialized
 
         }
-        /*public int ID { set; get; } // id of product
-        public string? Name { set; get; } // name of product
-        public double Price { set; get; } // price of product
-        public Enums.Category? Category { set; get; } // category of product
-        public bool InStock { set; get; } // is the product has enugh in the Dbase
-        public int Amount { set; get; } // amount of items from this product in the cart*/
+        /*
+    public int ID { set; get; } // id of order item
+    public int ProductID { set; get; } // id of prodcut, which product is this item
+    public string? Name { set; get; } // name of the product, what is the name of the product that the item is it
+    public double Price { set; get; } // price of the product
+    public int Amount { set; get; } // amount of things in the item. eg, i can order 4 items from the winter dress product
+    public double TotalPrice { set; get; } // total price of this item
+        */
         private void SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            IEnumerable<BO.Product?> listProduct = (bl ?? BlApi.Factory.Get()).Product.GetDataOf();
-            List<BO.ProductItem> listProductItems = new List<BO.ProductItem>();
-            try
-            {
-                foreach (BO.Product? item in listProduct)
-                    listProductItems.Add(bl.Product.GetForCustomer(item.ID, cart));
-            }
-            catch (Exception err)
-            {
-                MessageBox.Show(err.Message, "Exception", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-            ProductItemListView.ItemsSource = listProductItems; // put all the productItems in the itemSource of the productItemListView
+            IEnumerable<BO.OrderItem?> listOrderItems = cart.Items;
+            OrderItemsListView.ItemsSource = listOrderItems; // put all the productItems in the itemSource of the productItemListView
         }
 
 
         private void ShowProduct(object sender, MouseButtonEventArgs e)
         {
-            BO.ProductItem prdct = (BO.ProductItem)ProductItemListView.SelectedItem; // the product we want to show
+            BO.ProductItem prdct = (BO.ProductItem)OrderItemsListView.SelectedItem; // the product we want to show
             if (prdct == null)
                 return;
             new ProductWindow((bl ?? BlApi.Factory.Get()), "WATCH", prdct.ID).ShowDialog(); // can't do anything else until it closed
@@ -74,9 +56,9 @@ namespace PL
         {
 
         }
-        private void ChangeItem(object sender, RoutedEventArgs e)
+        private void UpdateItem(object sender, RoutedEventArgs e)
         {
-            new ProductItemWindow("UPDATE", product.ID).ShowDialog();
+            new OrderItemInCartWindow("UPDATE", orderItem.ID, cart).ShowDialog();
         }
 
         private void MakeOrder(object sender, RoutedEventArgs e)
@@ -86,7 +68,7 @@ namespace PL
 
         private void AddItem(object sender, RoutedEventArgs e)
         {
-            new ProductItemWindow("ADD", product.ID).ShowDialog();
+            new OrderItemInCartWindow("ADD", orderItem.ID, cart).ShowDialog();
         }
     }
 }
