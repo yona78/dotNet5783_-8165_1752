@@ -19,7 +19,7 @@ namespace PL
         public OrderListWindow()
         {
             InitializeComponent();
-            OrderListView.ItemsSource = bl.Order.GetOrderList(); // that in the beginning it will be initialized
+            OrderListView.DataContext = bl.Order.GetOrderList(); // that in the beginning it will be initialized
             
         }
         private void GetOrdersButton(object sender, RoutedEventArgs e)
@@ -27,23 +27,23 @@ namespace PL
         }
         private void GetDataOfOrdersButton(object sender, RoutedEventArgs e) {
             new InputIdForGetOrderWindow().ShowDialog();
-            OrderListView.ItemsSource = (bl ?? BlApi.Factory.Get()).Order.GetOrderList(); // print the new list on the board
+            OrderListView.DataContext = (bl ?? BlApi.Factory.Get()).Order.GetOrderList(); // print the new list on the board
         }
         private void UpdateOrderSendButton(object sender, RoutedEventArgs e) {
             new UpdateOrderSendingWindow().ShowDialog();
-            OrderListView.ItemsSource = (bl ?? BlApi.Factory.Get()).Order.GetOrderList(); // print the new list on the boards
+            OrderListView.DataContext = (bl ?? BlApi.Factory.Get()).Order.GetOrderList(); // print the new list on the boards
         }
         private void UpdateOrderDelieverdButton(object sender, RoutedEventArgs e) {
             new UpdateOrderDelieveringWindow().ShowDialog();
-            OrderListView.ItemsSource = (bl ?? BlApi.Factory.Get()).Order.GetOrderList(); // print the new list on the boards
+            OrderListView.DataContext = (bl ?? BlApi.Factory.Get()).Order.GetOrderList(); // print the new list on the boards
         }
         private void OrderTrackingButton(object sender, RoutedEventArgs e) {
             new OrderTrackingWindow().ShowDialog();
-            OrderListView.ItemsSource = (bl ?? BlApi.Factory.Get()).Order.GetOrderList(); // print the new list on the boards                                                                                  
+            OrderListView.DataContext = (bl ?? BlApi.Factory.Get()).Order.GetOrderList(); // print the new list on the boards                                                                                  
         }
             private void UpdateOrderButton(object sender, RoutedEventArgs e) {
             new OrderUpdateManagerWindow().ShowDialog();
-            OrderListView.ItemsSource = (bl ?? BlApi.Factory.Get()).Order.GetOrderList(); // print the new list on the boards                                                                                  
+            OrderListView.DataContext = (bl ?? BlApi.Factory.Get()).Order.GetOrderList(); // print the new list on the boards                                                                                  
 
         }
         private void UpdateOrderButton(object sender, MouseButtonEventArgs e)
@@ -52,7 +52,7 @@ namespace PL
             if (order== null)
                 return;
             new OrderWindow("UPDATE_CUSTOMER", order.ID).ShowDialog(); // can't do anything else until it closed
-            OrderListView.ItemsSource = (bl ?? BlApi.Factory.Get()).Order.GetOrderList(); // print the new list on the board
+            OrderListView.DataContext = (bl ?? BlApi.Factory.Get()).Order.GetOrderList(); // print the new list on the board
         }
         
     }

@@ -21,39 +21,86 @@ namespace PL
             CatgoryChoise.ItemsSource = Enum.GetValues(typeof(BO.Enums.Category)); // in order to print 
             if (option == "ADD")
             {
-                update.Visibility = Visibility.Hidden; // hiding the update button
+                DataContext = new
+                {
+                    ProductObject = new BO.Product(),
+                    AState = Visibility.Visible,
+                    UState = Visibility.Hidden,
+                    IDState = true,
+                    CState = true,
+                    Nstate = true,
+                    Pstate = true,
+                    ISState = true,
+                    IDT = "",
+                    NT = "",
+                    PT = "",
+                    IST = ""
+                };
+               // update.Visibility = Visibility.Hidden; // hiding the update button
             }
             else if (option == "UPDATE")
             {
-                add.Visibility = Visibility.Hidden; // hiding the add button
-
                 BO.Product prdct = blP.Product.GetForManager(id); // we only want to update this product.
-                ID.Text = prdct.ID.ToString(); // we want to display this to the window
-                CatgoryChoise.SelectedItem = prdct.Category; // as before
-                name.Text = prdct.Name; // as before
-                price.Text = prdct.Price.ToString(); // as before
-                inStock.Text = prdct.InStock.ToString(); // as before
+                DataContext = new 
+                {
+                    ProductObject = prdct,
+                    AState = Visibility.Hidden,
+                    UState = Visibility.Visible,
+                    IDState = false,
+                    CState = true,
+                    Nstate = true,
+                    Pstate = true,
+                    ISState = true,
+                    IDT = prdct.ID.ToString(),
+                    NT = prdct.Name,
+                    PT = prdct.Price.ToString(),
+                    IST = prdct.InStock.ToString()
+                };
                 idTmp = prdct.ID; // we want to have in our hands the old id, in order he wouldn't be able to replace it
+                //add.Visibility = Visibility.Hidden; // hiding the add button
 
-                ID.IsEnabled = false; // you can't change it
+                
+                //ID.Text = prdct.ID.ToString(); // we want to display this to the window
+                CatgoryChoise.SelectedItem = prdct.Category; // as before
+                //name.Text = prdct.Name; // as before
+                //price.Text = prdct.Price.ToString(); // as before
+                //inStock.Text = prdct.InStock.ToString(); // as before
+                
+
+                //ID.IsEnabled = false; // you can't change it
             }
             else if (option == "WATCH")
             {
-                add.Visibility = Visibility.Hidden; // hiding the add button
-                update.Visibility = Visibility.Hidden; // hiding the update button
-
                 BO.Product prdct = blP.Product.GetForManager(id); // we only want to show this product.
-                ID.Text = prdct.ID.ToString(); // we want to display this to the window
-                CatgoryChoise.SelectedItem = prdct.Category; // as before
-                name.Text = prdct.Name; // as before
-                price.Text = prdct.Price.ToString(); // as before
-                inStock.Text = prdct.InStock.ToString(); // as before
+                DataContext = new
+                {
+                    ProductObject = prdct,
+                    AState = Visibility.Hidden,
+                    UState = Visibility.Hidden,
+                    IDState = false,
+                    CState = false,
+                    Nstate = false,
+                    Pstate = false,
+                    ISState = false,
+                    IDT = prdct.ID.ToString(),
+                    NT = prdct.Name,
+                    PT = prdct.Price.ToString(),
+                    IST = prdct.InStock.ToString()
+                };
+                //add.Visibility = Visibility.Hidden; // hiding the add button
+                //update.Visibility = Visibility.Hidden; // hiding the update button
 
-                ID.IsEnabled = false;
-                CatgoryChoise.IsEnabled = false;
-                name.IsEnabled = false;
-                price.IsEnabled = false;
-                inStock.IsEnabled = false;
+                //ID.Text = prdct.ID.ToString(); // we want to display this to the window
+                CatgoryChoise.SelectedItem = prdct.Category; // as before
+                //name.Text = prdct.Name; // as before
+                //price.Text = prdct.Price.ToString(); // as before
+                //inStock.Text = prdct.InStock.ToString(); // as before
+
+                //ID.IsEnabled = false;
+                //CatgoryChoise.IsEnabled = false;
+                //name.IsEnabled = false;
+                //price.IsEnabled = false;
+                //inStock.IsEnabled = false;
             }
         }
 

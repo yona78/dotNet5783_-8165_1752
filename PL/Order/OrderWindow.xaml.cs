@@ -12,6 +12,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Windows.Shell;
 using System.Xml.Linq;
 using BlApi;
 using BO;
@@ -48,53 +49,85 @@ namespace PL
                 this.Close();
                 return;
             }
-            DataContext = order;
+         
             id = order.ID;
             idOfOrder = order.ID;
             if (option == "WATCH")
             {
-                updateCustomer.Visibility = Visibility.Hidden; // hiding the update button
-                updateManager.Visibility = Visibility.Hidden; // hiding the update button
-                ID.IsEnabled = false;
-                CustomerName.IsEnabled = false;
-                CustomerEmail.IsEnabled = false;
-                CustomerAddress.IsEnabled = false;
-                OrderStatusChoise.IsEnabled = false;
-                PaymentDate.IsEnabled = false;
-                ShipDate.IsEnabled = false;
-                DeliveryDate.IsEnabled = false;
-                TotelPrice.IsEnabled = false;
-
-
-            }
-            else if (option == "UPDATE_MANAGER")
-            {
-                updateCustomer.Visibility = Visibility.Hidden; // hiding the updateCustomer button
-
-                ID.IsEnabled = false;
+                //updateCustomer.Visibility = Visibility.Hidden; // hiding the update button
+                //updateManager.Visibility = Visibility.Hidden; // hiding the update button
+                DataContext = new { orderObject = order, IDState = false, CNState = false, CEState = false,CAState = false,
+                    OSCState = false, PDStaate = false, SDState = false, DDStates = false, TPState = false,
+                    UCState = Visibility.Hidden,UMState =Visibility.Hidden
+                };
+                //ID.IsEnabled = false;
                 //CustomerName.IsEnabled = false;
                 //CustomerEmail.IsEnabled = false;
                 //CustomerAddress.IsEnabled = false;
-                OrderStatusChoise.IsEnabled = false;
-                PaymentDate.IsEnabled = false;
-                ShipDate.IsEnabled = false;
-                DeliveryDate.IsEnabled = false;
-                TotelPrice.IsEnabled = false;
+                //OrderStatusChoise.IsEnabled = false;
+                //PaymentDate.IsEnabled = false;
+                //ShipDate.IsEnabled = false;
+                //DeliveryDate.IsEnabled = false;
+                //TotelPrice.IsEnabled = false;
+            }
+            else if (option == "UPDATE_MANAGER")
+            {
+                DataContext = new
+                {
+                    orderObject = order,
+                    IDState = false,
+                    CNState = true,
+                    CEState = true,
+                    CAState = true,
+                    OSCState = false,
+                    PDStaate = false,
+                    SDState = false,
+                    DDStates = false,
+                    TPState = false,
+                    UCState = Visibility.Hidden,
+                    UMState = Visibility.Visible
+                };
+                //updateCustomer.Visibility = Visibility.Hidden; // hiding the updateCustomer button
+
+                //ID.IsEnabled = false;
+                ////CustomerName.IsEnabled = false;
+                ////CustomerEmail.IsEnabled = false;
+                ////CustomerAddress.IsEnabled = false;
+                //OrderStatusChoise.IsEnabled = false;
+                //PaymentDate.IsEnabled = false;
+                //ShipDate.IsEnabled = false;
+                //DeliveryDate.IsEnabled = false;
+                //TotelPrice.IsEnabled = false;
 
             }
             else if (option == "UPDATE_CUSTOMER")
             {
-                updateManager.Visibility = Visibility.Hidden; // hiding the updateManager button
+                DataContext = new
+                {
+                    orderObject = order,
+                    IDState = false,
+                    CNState = true,
+                    CEState = true,
+                    CAState = true,
+                    OSCState = false,
+                    PDStaate = false,
+                    SDState = false,
+                    DDStates = false,
+                    TPState = false,
+                    UCState = Visibility.Visible,
+                    UMState = Visibility.Hidden
+                };
+                //updateManager.Visibility = Visibility.Hidden; // hiding the updateManager button
 
-                ID.IsEnabled = false;
-                //CustomerName.IsEnabled = false;
-                //CustomerEmail.IsEnabled = false;
-                //CustomerAddress.IsEnabled = false;
-                OrderStatusChoise.IsEnabled = false;
-                PaymentDate.IsEnabled = false;
-                ShipDate.IsEnabled = false;
-                DeliveryDate.IsEnabled = false;
-                TotelPrice.IsEnabled = false;
+                //ID.IsEnabled = false;
+                ////CustomerName.IsEnabled = false;
+                ////CustomerEmail.IsEnabled = false;
+                ////CustomerAddress.IsEnabled = false;
+                //OrderStatusChoise.IsEnabled = false;
+                //PaymentDate.IsEnabled = false;
+                //ShipDate.IsEnabled = false;
+                //DeliveryDate.IsEnabled = false;
+                //TotelPrice.IsEnabled = false;
 
             }
         }

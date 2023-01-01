@@ -23,18 +23,18 @@ namespace PL
         public OrderTrackingListWindow()
         {
             IEnumerable<BO.Order?> tmpList = new List<BO.Order?>();
-            List<BO.OrderTracking> listOrderTracking = new List<BO.OrderTracking>();
+            IEnumerable<BO.OrderTracking> listOrderTracking = new List<BO.OrderTracking>();
             InitializeComponent();
             try
             {
                 tmpList = bl.Order.GetDataOf(); // that in the beginning it will be initialized
 
-                listOrderTracking = new List<BO.OrderTracking>();
+                listOrderTracking = from p in tmpList select bl.Order.TrackOrder(p.ID);
 
-                foreach (BO.Order? element in tmpList)
-                {
-                    listOrderTracking.Add(bl.Order.TrackOrder(element.ID));
-                }
+                //foreach (BO.Order? element in tmpList)
+                //{
+                //    listOrderTracking.Add(bl.Order.TrackOrder(element.ID));
+                //}
             }
             catch (Exception err)
             {

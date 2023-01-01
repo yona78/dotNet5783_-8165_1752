@@ -10,7 +10,7 @@
 
     <Grid Name="UפGrid" HorizontalAlignment="Stretch" Height="auto" Grid.Row="0" VerticalAlignment="Stretch" Width="auto">
 
-        <ListView x:Name="OrderItemsListView" Margin="10,10,10,10" MouseDoubleClick="UpdateOrderItem">
+        <ListView x:Name="OrderItemsListView" ItemsSource="{Binding }" Margin="10,10,10,10" MouseDoubleClick="UpdateOrderItem">
             <!--The Table of the data-->
             <ListView.View>
                 <GridView>

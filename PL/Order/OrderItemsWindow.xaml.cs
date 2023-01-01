@@ -33,7 +33,7 @@ namespace PL
             InitializeComponent();
             this.Left = System.Windows.SystemParameters.PrimaryScreenWidth - Width; // i want that the window will be in the right side of the screen.
 
-            OrderItemsListView.ItemsSource = bl.Order.GetOrderManager(id).Items; // that in the beginning it will be initialized
+            OrderItemsListView.DataContext = bl.Order.GetOrderManager(id).Items; // that in the beginning it will be initialized
         }
         private void UpdateOrderItem(object sender, MouseButtonEventArgs e)
         {
@@ -41,8 +41,7 @@ namespace PL
             if (orderItem == null)
                 return;
             new OrderItemWindow(id, orderItem.ID, option, idProduct, amount).ShowDialog(); // can't do anything else until it closed
-           
-            OrderItemsListView.ItemsSource = (bl ?? BlApi.Factory.Get()).Order.GetOrderManager(id).Items; // print the new list on the board
+            OrderItemsListView.DataContext = (bl ?? BlApi.Factory.Get()).Order.GetOrderManager(id).Items; // print the new list on the board
         }
     }
 }

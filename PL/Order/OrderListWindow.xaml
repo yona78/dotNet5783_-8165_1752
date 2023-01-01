@@ -17,7 +17,7 @@
 
         <Grid Name="UpGrid" HorizontalAlignment="Stretch" Height="auto" Grid.Row="0" VerticalAlignment="Stretch" Width="auto">
 
-            <ListView x:Name="OrderListView" Margin="10,10,10,10" MouseDoubleClick="UpdateOrderButton">
+            <ListView x:Name="OrderListView" ItemsSource="{Binding}" Margin="10,10,10,10" MouseDoubleClick="UpdateOrderButton">
                 <!--The Table of the data-->
                 <ListView.View>
                     <GridView>

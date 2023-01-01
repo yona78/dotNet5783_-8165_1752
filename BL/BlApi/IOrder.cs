@@ -12,10 +12,7 @@ public interface IOrder
     public OrderTracking TrackOrder(int idOrder); // func that help me to track an order, by creating and sending a entity that is adjusted for working with orders
     public void Update(int idOrder, int idOfProduct, int amount); // update for the manager, to update an order.
 
-
-    public void UpdateNameEmailAddress(string customerName, string customerEmail, string customerAddress, int id); // Bonus func for updating Name Email and Address in the order
-
     public Order Get(Func<Order?, bool>? func); // func that returns order according to a term it gets.
     public IEnumerable<Order?> GetDataOf(Func<Order?, bool>? predict = null); // func that returns all of the Orders  with the specail condition that is indicate in the predict
-
+    void UpdateNameEmailAddress(string customerAddress1, string customerEmail, string customerAddress2, int iD);
 }

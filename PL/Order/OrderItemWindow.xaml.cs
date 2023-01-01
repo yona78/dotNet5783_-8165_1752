@@ -34,7 +34,6 @@ namespace PL
             //orderItem = (bl// we only want to update this orderItem.
             idOrder = idOfOrder;
             DataContext=orderItem;
-
             idProductFunc = orderItem.ProductID;
             amountFunc = orderItem.Amount;
             if (option == "WATCH")
