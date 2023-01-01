@@ -38,15 +38,15 @@
         <TextBlock Grid.Row="10" Grid.Column="0" Text="totalPrice:" HorizontalAlignment="Left" FontSize="13" Width="80" VerticalAlignment="Center" Margin="288,0,0,0"/>
         <Button x:Name="updateManager" Click ="UpdateManagerOption" Content="update manager" Grid.Row="11" HorizontalAlignment="Left" Margin="288,10,0,10" Padding="5" Width="100" Height="90" />
         <Button x:Name="updateCustomer" Click ="UpdateCutomerOption" Content="update cutomer" Grid.Row="11" Grid.Column="1" HorizontalAlignment="Left" Margin="10,10,0,10" Padding="5" Width="110" Height="90" />
-        <TextBox x:Name ="ID" HorizontalAlignment="Left"  TextWrapping="Wrap" Text="" VerticalAlignment="Center" Width="120" Grid.Row="1" Grid.Column="1" Height="22" />
-        <TextBox x:Name ="CustomerName"  HorizontalAlignment="Left"  TextWrapping="Wrap" Text="" VerticalAlignment="Center" Width="120" Grid.Row="2" Grid.Column="1" Height="22"/>
-        <TextBox x:Name ="CustomerEmail"  HorizontalAlignment="Left"  TextWrapping="Wrap" Text="" VerticalAlignment="Center" Width="120" Grid.Row="3" Grid.Column="1" Height="22"/>
-        <TextBox x:Name ="CustomerAddress"  HorizontalAlignment="Left"  TextWrapping="Wrap" Text="" VerticalAlignment="Center" Width="120" Grid.Row="4" Grid.Column="1" Height="22"/>
-        <ComboBox x:Name="OrderStatusChoise" HorizontalAlignment="Left" Grid.Row="5" VerticalAlignment="Center" Width="120" Grid.Column="1" Height="22" />
-        <TextBox x:Name ="PaymentDate"  HorizontalAlignment="Left"  TextWrapping="Wrap" Text="" VerticalAlignment="Center" Width="120" Grid.Row="6" Grid.Column="1" Height="22"/>
-        <TextBox x:Name ="ShipDate"  HorizontalAlignment="Left"  TextWrapping="Wrap" Text="" VerticalAlignment="Center" Width="120" Grid.Row="7" Grid.Column="1" Height="22"/>
-        <TextBox x:Name ="DeliveryDate"  HorizontalAlignment="Left"  TextWrapping="Wrap" Text="" VerticalAlignment="Center" Width="120" Grid.Row="8" Grid.Column="1" Height="22"/>
+        <TextBox x:Name ="ID" HorizontalAlignment="Left"  TextWrapping="Wrap" Text="{Binding ID}" VerticalAlignment="Center" Width="120" Grid.Row="1" Grid.Column="1" Height="22" />
+        <TextBox x:Name ="CustomerName"  HorizontalAlignment="Left"  TextWrapping="Wrap" Text="{Binding CustomerName}" VerticalAlignment="Center" Width="120" Grid.Row="2" Grid.Column="1" Height="22"/>
+        <TextBox x:Name ="CustomerEmail"  HorizontalAlignment="Left"  TextWrapping="Wrap" Text="{Binding CustomerEmail}" VerticalAlignment="Center" Width="120" Grid.Row="3" Grid.Column="1" Height="22"/>
+        <TextBox x:Name ="CustomerAddress"  HorizontalAlignment="Left"  TextWrapping="Wrap" Text="{Binding CustomerAddress}" VerticalAlignment="Center" Width="120" Grid.Row="4" Grid.Column="1" Height="22"/>
+        <ComboBox x:Name="OrderStatusChoise" HorizontalAlignment="Left" Grid.Row="5" SelectedItem="{Binding OrderStatus}" VerticalAlignment="Center" Width="120" Grid.Column="1" Height="22" />
+        <TextBox x:Name ="PaymentDate"  HorizontalAlignment="Left"  TextWrapping="Wrap" Text="{Binding PaymentDate}" VerticalAlignment="Center" Width="120" Grid.Row="6" Grid.Column="1" Height="22"/>
+        <TextBox x:Name ="ShipDate"  HorizontalAlignment="Left"  TextWrapping="Wrap" Text="{Binding ShipDate}" VerticalAlignment="Center" Width="120" Grid.Row="7" Grid.Column="1" Height="22"/>
+        <TextBox x:Name ="DeliveryDate"  HorizontalAlignment="Left"  TextWrapping="Wrap" Text="{Binding DeliveryDate}" VerticalAlignment="Center" Width="120" Grid.Row="8" Grid.Column="1" Height="22"/>
         <Button x:Name ="Items"  HorizontalAlignment="Left"  VerticalAlignment="Center" Click="showItemsInOrder" Width="120" Grid.Row="9" Grid.Column="1" Height="22"/>
-        <TextBox x:Name ="TotelPrice"  HorizontalAlignment="Left"  TextWrapping="Wrap" Text="" VerticalAlignment="Center" Width="120" Grid.Row="10" Grid.Column="1" Height="22"/>
+        <TextBox x:Name ="TotelPrice"  HorizontalAlignment="Left"  TextWrapping="Wrap" Text="{Binding TotelPrice}" VerticalAlignment="Center" Width="120" Grid.Row="10" Grid.Column="1" Height="22"/>
     </Grid>
 </Window>

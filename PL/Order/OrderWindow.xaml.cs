@@ -29,7 +29,8 @@ namespace PL
         string option;
         BO.Order order = new BO.Order();
         int idOfOrder;
-        int idOfProduct = 0, amount = 0;
+        int? idProduct;int? amount;
+
 
         public OrderWindow(string opt, int id) // idOrder of order, option of action that we want to do
         {
@@ -47,6 +48,7 @@ namespace PL
                 this.Close();
                 return;
             }
+            DataContext = order;
             id = order.ID;
             idOfOrder = order.ID;
             if (option == "WATCH")
@@ -63,15 +65,6 @@ namespace PL
                 DeliveryDate.IsEnabled = false;
                 TotelPrice.IsEnabled = false;
 
-                ID.Text = order.ID.ToString(); // we want to display this to the window
-                CustomerName.Text = order.CustomerName;// as before
-                CustomerEmail.Text = order.CustomerEmail;// as before
-                CustomerAddress.Text = order.CustomerAddress;// as before
-                OrderStatusChoise.SelectedItem = order.OrderStatus; // as before
-                PaymentDate.Text = order.PaymentDate.ToString();// as before
-                ShipDate.Text = order.ShipDate.ToString();// as before
-                DeliveryDate.Text = order.DeliveryDate.ToString();// as before
-                TotelPrice.Text = order.TotelPrice.ToString();// as before
 
             }
             else if (option == "UPDATE_MANAGER")
@@ -88,15 +81,6 @@ namespace PL
                 DeliveryDate.IsEnabled = false;
                 TotelPrice.IsEnabled = false;
 
-                ID.Text = order.ID.ToString(); // we want to display this to the window
-                CustomerName.Text = order.CustomerName;// as before
-                CustomerEmail.Text = order.CustomerEmail;// as before
-                CustomerAddress.Text = order.CustomerAddress;// as before
-                OrderStatusChoise.SelectedItem = order.OrderStatus; // as before
-                PaymentDate.Text = order.PaymentDate.ToString();// as before
-                ShipDate.Text = order.ShipDate.ToString();// as before
-                DeliveryDate.Text = order.DeliveryDate.ToString();// as before
-                TotelPrice.Text = order.TotelPrice.ToString();// as before
             }
             else if (option == "UPDATE_CUSTOMER")
             {
@@ -112,27 +96,20 @@ namespace PL
                 DeliveryDate.IsEnabled = false;
                 TotelPrice.IsEnabled = false;
 
-                ID.Text = order.ID.ToString(); // we want to display this to the window
-                CustomerName.Text = order.CustomerName;// as before
-                CustomerEmail.Text = order.CustomerEmail;// as before
-                CustomerAddress.Text = order.CustomerAddress;// as before
-                OrderStatusChoise.SelectedItem = order.OrderStatus; // as before
-                PaymentDate.Text = order.PaymentDate.ToString();// as before
-                ShipDate.Text = order.ShipDate.ToString();// as before
-                DeliveryDate.Text = order.DeliveryDate.ToString();// as before
-                TotelPrice.Text = order.TotelPrice.ToString();// as before
             }
         }
         private void UpdateManagerOption(object sender, RoutedEventArgs e)
         {
-            order.CustomerName=CustomerName.Text;   
-            order.CustomerEmail = CustomerEmail.Text;   
-            order.CustomerAddress = CustomerAddress.Text;
             blP.Order.UpdateNameEmailAddress(order.CustomerAddress, order.CustomerEmail, order.CustomerAddress, order.ID); // the bonus we addes
-
+            //if (func != null)
+            //{
+            //    (int, int) res = func();
+            //    idOfProduct = res.Item1;
+            //    amount = res.Item2;
+            //}
             try
             {
-                (blP ?? BlApi.Factory.Get()).Order.Update(idOfOrder, idOfProduct, amount);
+                (blP ?? BlApi.Factory.Get()).Order.Update(idOfOrder, idProduct??new int(), amount??new int());
             }
             catch (Exception err)
             {
@@ -148,15 +125,12 @@ namespace PL
 
         private void UpdateCutomerOption(object sender, RoutedEventArgs e)
         {
-            order.CustomerName = CustomerName.Text;
-            order.CustomerEmail = CustomerEmail.Text;
-            order.CustomerAddress = CustomerAddress.Text;
             blP.Order.UpdateNameEmailAddress(order.CustomerAddress, order.CustomerEmail, order.CustomerAddress, order.ID); // the bonus we addes
             this.Close();
         }
         private void showItemsInOrder(object sender, RoutedEventArgs e)
         {
-            new OrderItemsWindow(idOfOrder, option=="UPDATE_MANAGER"?"UPDATE":"WATCH").ShowDialog();
+            new OrderItemsWindow(idOfOrder, option=="UPDATE_MANAGER"?"UPDATE":"WATCH", idProduct, amount).ShowDialog();
             // here i should also give values to amount and idOfProduct
         }
 

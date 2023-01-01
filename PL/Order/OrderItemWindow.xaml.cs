@@ -26,21 +26,17 @@ namespace PL
         string option;
         BO.OrderItem? orderItem;
         int idOrder;
-        public OrderItemWindow(int idOfOrder, int idOfOrderItem, string opt)
+        public OrderItemWindow(int idOfOrder, int idOfOrderItem, string opt, int? idProductFunc = null, int? amountFunc = null)
         {
             InitializeComponent();
             option = opt;
             orderItem = bl.Order.GetOrderManager(idOfOrder).Items.Find(x => x.ID == idOfOrderItem);
             //orderItem = (bl// we only want to update this orderItem.
             idOrder = idOfOrder;
+            DataContext=orderItem;
 
-            ID.Text = (orderItem ?? new BO.OrderItem()).ID.ToString(); // we want to display this to the window
-            ProductID.Text = (orderItem ?? new BO.OrderItem()).ProductID.ToString();// as before
-            Name.Text = (orderItem ?? new BO.OrderItem()).Name;// as before
-            Price.Text = (orderItem ?? new BO.OrderItem()).Price.ToString();// as before
-            Amount.Text = (orderItem ?? new BO.OrderItem()).Amount.ToString();// as before
-            TotalPrice.Text = (orderItem ?? new BO.OrderItem()).TotalPrice.ToString();// as before
-
+            idProductFunc = orderItem.ProductID;
+            amountFunc = orderItem.Amount;
             if (option == "WATCH")
             {
                 Amount.IsEnabled = false;

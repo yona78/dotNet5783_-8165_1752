@@ -1,9 +1,11 @@
-﻿using System;
+﻿using Microsoft.VisualBasic.FileIO;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Automation.Peers;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
@@ -25,8 +27,8 @@ namespace PL
         public CartWindow()
         {
             InitializeComponent();
-            IEnumerable<BO.OrderItem?> listOrderItems = cart.Items;
-            OrderItemsListView.ItemsSource = listOrderItems;  // that in the beginning it will be initialized
+            cart = new BO.Cart();
+            OrderItemsListView.ItemsSource = cart.Items;  // that in the beginning it will be initialized
 
         }
         /*
@@ -37,38 +39,33 @@ namespace PL
     public int Amount { set; get; } // amount of things in the item. eg, i can order 4 items from the winter dress product
     public double TotalPrice { set; get; } // total price of this item
         */
-        private void SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            IEnumerable<BO.OrderItem?> listOrderItems = cart.Items;
-            OrderItemsListView.ItemsSource = listOrderItems; // put all the productItems in the itemSource of the productItemListView
-        }
 
 
-        private void ShowProduct(object sender, MouseButtonEventArgs e)
-        {
-            BO.ProductItem prdct = (BO.ProductItem)OrderItemsListView.SelectedItem; // the product we want to show
-            if (prdct == null)
-                return;
-            new ProductWindow((bl ?? BlApi.Factory.Get()), "WATCH", prdct.ID).ShowDialog(); // can't do anything else until it closed
-        }
 
         private void DeleteItem(object sender, RoutedEventArgs e)
         {
+            new InputIdForAddProductWindow("DELETE", cart).ShowDialog();
 
+            OrderItemsListView.ItemsSource = cart.Items;
         }
         private void UpdateItem(object sender, RoutedEventArgs e)
         {
-            new OrderItemInCartWindow("UPDATE", orderItem.ID, cart).ShowDialog();
+            new InputIdForAddProductWindow("UPDATE", cart).ShowDialog();
+
+            OrderItemsListView.ItemsSource = cart.Items;
         }
-
-        private void MakeOrder(object sender, RoutedEventArgs e)
-        {
-
-        }
-
         private void AddItem(object sender, RoutedEventArgs e)
         {
-            new OrderItemInCartWindow("ADD", orderItem.ID, cart).ShowDialog();
+            new InputIdForAddProductWindow("ADD", cart).ShowDialog();
+            OrderItemsListView.ItemsSource = cart.Items;
         }
+        private void MakeOrder(object sender, RoutedEventArgs e)
+        {
+            new MakeOrderWindow(cart).ShowDialog();
+            this.Close();
+
+        }
+
+
     }
 }

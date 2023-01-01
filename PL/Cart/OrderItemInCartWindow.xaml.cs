@@ -24,50 +24,67 @@ namespace PL
     {
         BlApi.IBl bl = BlApi.Factory.Get()!; // as it was asked...
         string option;
-        BO.OrderItem? orderItem;
+        BO.Product? product;
         BO.Cart cart = new BO.Cart();
-        int idOrder;
-        public OrderItemInCartWindow(string opt, int idOfOrderItem, BO.Cart crt)
+        public OrderItemInCartWindow(string opt, BO.Product prdct, BO.Cart crt)
         {
             InitializeComponent();
             option = opt;
             cart = crt;
-            orderItem = (cart.Items??new List<BO.OrderItem>()).Find(x => x.ID == idOfOrderItem);
+            product = prdct;
             //orderItem = (bl// we only want to update this orderItem.
 
-            ID.Text = (orderItem ?? new BO.OrderItem()).ID.ToString(); // we want to display this to the window
-            ProductID.Text = (orderItem ?? new BO.OrderItem()).ProductID.ToString();// as before
-            Name.Text = (orderItem ?? new BO.OrderItem()).Name;// as before
-            Price.Text = (orderItem ?? new BO.OrderItem()).Price.ToString();// as before
-            Amount.Text = (orderItem ?? new BO.OrderItem()).Amount.ToString();// as before
-            TotalPrice.Text = (orderItem ?? new BO.OrderItem()).TotalPrice.ToString();// as before
 
-            if (option == "WATCH")
+            if (option == "UPDATE")
             {
-                Amount.IsEnabled = false;
+                add.Visibility = Visibility.Hidden;
+                delete.Visibility = Visibility.Hidden;
+
+            }
+            else if (option == "ADD")
+            {
+                update.Visibility = Visibility.Hidden;
+                delete.Visibility = Visibility.Hidden;
+                AmountTextBlock.Visibility = Visibility.Hidden;
+                AmountTextBox.Visibility = Visibility.Hidden;
+            }
+            else if (option == "DELETE")
+            {
                 update.Visibility = Visibility.Hidden;
                 add.Visibility = Visibility.Hidden;
+                AmountTextBlock.Visibility = Visibility.Hidden;
+                AmountTextBox.Visibility = Visibility.Hidden;
             }
-            else if(option == "ADD")
-            {
-                update.Visibility = Visibility.Hidden;
-                new InputIdForAddProductWindow(cart).ShowDialog();
-            }
+
+
         }
 
         private void UpdateOption(object sender, RoutedEventArgs e)
         {
             try
             {
-                int tmp;
-                
-                bool validInput = int.TryParse(Amount.Text, out tmp);// getting the Amount from the TextBox, and insert it into the orderItem
+                int amount;
+
+                bool validInput = int.TryParse(AmountTextBox.Text, out amount);// getting the Amount from the TextBox, and insert it into the orderItem
                 if (!validInput)
                     throw new Exception("amount is invalid");
-                bl.Cart.UpdateAmount(cart, orderItem.ProductID, tmp);
-                (orderItem ?? new BO.OrderItem()).Amount = tmp;
+                cart = bl.Cart.UpdateAmount(cart, (product ?? new BO.Product()).ID, amount);
             }
-
+            catch (Exception err)
+            {
+                MessageBox.Show(err.Message, "Exception", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            finally
+            {
+                this.Close();
+            }
+        }
+        private void DeleteOption(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                cart = bl.Cart.UpdateAmount(cart, (product ?? new BO.Product()).ID, 0);
+            }
             catch (Exception err)
             {
                 MessageBox.Show(err.Message, "Exception", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -80,7 +97,18 @@ namespace PL
 
         private void AddOption(object sender, RoutedEventArgs e)
         {
-
+            try
+            {
+                cart = bl.Cart.AddProduct(cart, (product ?? new BO.Product()).ID);
+            }
+            catch (Exception err)
+            {
+                MessageBox.Show(err.Message, "Exception", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            finally
+            {
+                this.Close();
+            }
         }
     }
 }

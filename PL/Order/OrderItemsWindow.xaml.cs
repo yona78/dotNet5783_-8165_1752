@@ -22,8 +22,12 @@ namespace PL
         BlApi.IBl bl = BlApi.Factory.Get()!; // as it was asked...
         string option;
         int id;
-        public OrderItemsWindow(int idOfOrder, string opt)
+        int? idProduct;
+        int? amount;
+        public OrderItemsWindow(int idOfOrder, string opt,int? idProductFunc=null, int? amountFunc=null)
         {
+            idProduct = idProductFunc;
+            amount = amountFunc;
             id=idOfOrder;
             option = opt;
             InitializeComponent();
@@ -36,7 +40,8 @@ namespace PL
             BO.OrderItem orderItem = (BO.OrderItem)OrderItemsListView.SelectedItem; // the orderItem we want to update
             if (orderItem == null)
                 return;
-            new OrderItemWindow(id, orderItem.ID, option).ShowDialog(); // can't do anything else until it closed
+            new OrderItemWindow(id, orderItem.ID, option, idProduct, amount).ShowDialog(); // can't do anything else until it closed
+           
             OrderItemsListView.ItemsSource = (bl ?? BlApi.Factory.Get()).Order.GetOrderManager(id).Items; // print the new list on the board
         }
     }

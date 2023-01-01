@@ -15,7 +15,7 @@
         </Grid.RowDefinitions>
         <Grid Name="MidGrid" HorizontalAlignment="Stretch" Height="auto" Grid.Row="0" VerticalAlignment="Stretch" Width="auto">
 
-            <ListView x:Name="OrderItemsListView" Margin="10,10,10,10" MouseDoubleClick="ShowProduct">
+            <ListView x:Name="OrderItemsListView" Margin="10,10,10,10" >
                 <!--The Table of the data-->
                 <ListView.View>
                     <GridView>
@@ -35,8 +35,8 @@
                 <ColumnDefinition Width="5*"/>
             </Grid.ColumnDefinitions>
             <Button Name="DeleteItemButton" Click ="DeleteItem" Content="Delete Item" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="377,0,0,10" Padding="5" Grid.Column="1"/>
-            <Button Name="UpdateItemButton" Click ="UpdateItem" Content="Update item" HorizontalAlignment="Left" Margin="264,352,0,0" Padding="5" Height="28" VerticalAlignment="Top" Grid.Column="1"/>
-            <Button Name="MakeOrderButton" Click ="MakeOrder" Content="Make Order" HorizontalAlignment="Left" Padding="5" Height="28" VerticalAlignment="Bottom" Width="83" Grid.ColumnSpan="2" Margin="285,0,0,8" />
+            <Button Name="UpdateItemButton" Click ="UpdateItem" Content="Update item" HorizontalAlignment="Left" Margin="263,0,0,10" Padding="5" Height="28" VerticalAlignment="Bottom" Grid.Column="1"/>
+            <Button Name="MakeOrderButton" Click ="MakeOrder" Content="Make Order" HorizontalAlignment="Left" Padding="5" Height="28" VerticalAlignment="Bottom" Width="83" Grid.ColumnSpan="2" Margin="265,0,0,10" />
             <Button x:Name="AddItemButton" Click ="AddItem" Content="Add item" HorizontalAlignment="Left" Margin="161,352,0,0" Padding="5" Height="28" VerticalAlignment="Top" Grid.Column="1"/>
 
         </Grid>
