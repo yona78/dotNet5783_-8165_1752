@@ -133,7 +133,7 @@ namespace PL
         }
         private void UpdateManagerOption(object sender, RoutedEventArgs e)
         {
-            blP.Order.UpdateNameEmailAddress(order.CustomerAddress, order.CustomerEmail, order.CustomerAddress, order.ID); // the bonus we addes
+            blP.Order.UpdateNameEmailAddress(order.CustomerName, order.CustomerEmail, order.CustomerAddress, order.ID); // the bonus we added
             //if (func != null)
             //{
             //    (int, int) res = func();
@@ -158,7 +158,7 @@ namespace PL
 
         private void UpdateCutomerOption(object sender, RoutedEventArgs e)
         {
-            blP.Order.UpdateNameEmailAddress(order.CustomerAddress, order.CustomerEmail, order.CustomerAddress, order.ID); // the bonus we addes
+            blP.Order.UpdateNameEmailAddress(order.CustomerName, order.CustomerEmail, order.CustomerAddress, order.ID); // the bonus we added
             this.Close();
         }
         private void showItemsInOrder(object sender, RoutedEventArgs e)

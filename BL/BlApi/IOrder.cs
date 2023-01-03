@@ -14,5 +14,5 @@ public interface IOrder
 
     public Order Get(Func<Order?, bool>? func); // func that returns order according to a term it gets.
     public IEnumerable<Order?> GetDataOf(Func<Order?, bool>? predict = null); // func that returns all of the Orders  with the specail condition that is indicate in the predict
-    void UpdateNameEmailAddress(string customerAddress1, string customerEmail, string customerAddress2, int iD);
+    public void UpdateNameEmailAddress(string customerAddress1, string customerEmail, string customerAddress2, int ID); // Bonus func that we addes, for updateOrderCutomer (and also manager)
 }

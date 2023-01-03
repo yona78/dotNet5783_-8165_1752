@@ -44,19 +44,19 @@ namespace PL
 
         private void DeleteItem(object sender, RoutedEventArgs e)
         {
-            new InputIdForAddProductWindow("DELETE", cart).ShowDialog();
+            new InputIdForDealWithProductWindow("DELETE", cart).ShowDialog();
 
             OrderItemsListView.ItemsSource = cart.Items;
         }
         private void UpdateItem(object sender, RoutedEventArgs e)
         {
-            new InputIdForAddProductWindow("UPDATE", cart).ShowDialog();
+            new InputIdForDealWithProductWindow("UPDATE", cart).ShowDialog();
 
             OrderItemsListView.ItemsSource = cart.Items;
         }
         private void AddItem(object sender, RoutedEventArgs e)
         {
-            new InputIdForAddProductWindow("ADD", cart).ShowDialog();
+            new InputIdForDealWithProductWindow("ADD", cart).ShowDialog();
             OrderItemsListView.ItemsSource = cart.Items;
         }
         private void MakeOrder(object sender, RoutedEventArgs e)

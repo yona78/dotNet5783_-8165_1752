@@ -84,7 +84,7 @@ namespace Program
                         customerName = Console.ReadLine();
                         Console.Write("please enter CustomerEmail (format: example@gmail.com): ");
                         customerEmail = Console.ReadLine();
-                        Console.Write("please enter CustomerAdrress (format: (number of apartment) (name of street) Street       (Zip number) (name of city)       Israel): ");
+                        Console.Write("please enter CustomerAddress (format: (number of apartment) (name of street) Street       (Zip number) (name of city)       Israel): ");
                         customerAdrress = Console.ReadLine();
                         orderDate = DateTime.Now;
                         shipDate = DateTime.MinValue;
@@ -92,7 +92,7 @@ namespace Program
                         Order orderToAdd = new Order();
                         orderToAdd.CustomerName = customerName;
                         orderToAdd.CustomerEmail = customerEmail;
-                        orderToAdd.CustomerAdrress = customerAdrress;
+                        orderToAdd.CustomerAddress = customerAdrress;
                         orderToAdd.OrderDate = orderDate;
                         orderToAdd.ShipDate = shipDate;
                         orderToAdd.DeliveryDate = deliveryrDate;
@@ -155,7 +155,7 @@ namespace Program
                         customerName = Console.ReadLine();
                         Console.Write("please enter CustomerEmail (format: example@gmail.com): ");
                         customerEmail = Console.ReadLine();
-                        Console.Write("please enter CustomerAdrress: ");
+                        Console.Write("please enter CustomerAddress: ");
                         customerAdrress = Console.ReadLine();
                         orderDate = DateTime.Now;
                         shipDate = DateTime.MinValue;
@@ -164,7 +164,7 @@ namespace Program
                         orderToUpdate.ID = idToUpdate;
                         orderToUpdate.CustomerName = customerName;
                         orderToUpdate.CustomerEmail = customerEmail;
-                        orderToUpdate.CustomerAdrress = customerAdrress;
+                        orderToUpdate.CustomerAddress = customerAdrress;
                         orderToUpdate.OrderDate = orderDate;
                         orderToUpdate.ShipDate = shipDate;
                         orderToUpdate.DeliveryDate = deliveryrDate;

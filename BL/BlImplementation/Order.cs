@@ -1,7 +1,9 @@
 ﻿
+using BlApi;
 using BO;
 
 using DalApi;
+using DO;
 using System.Data;
 
 namespace BlImplementation;
@@ -53,7 +55,7 @@ internal class Order : BlApi.IOrder  // object of the manager, on a order a clie
             listToReturn.Add(tmp);
             tmp = new BO.OrderForList();
         }
-        return listToReturn; // return the list
+        return listToReturn.OrderBy<BO.OrderForList, int>(x=>x.ID); // return the list, ordered by ID
     }
     /// <summary>
     /// The function returns data about order for menager
@@ -79,7 +81,7 @@ internal class Order : BlApi.IOrder  // object of the manager, on a order a clie
         BO.Order orderToReturn = new BO.Order();
 
         orderToReturn.CustomerName = order.CustomerName;
-        orderToReturn.CustomerAddress = order.CustomerAdrress;
+        orderToReturn.CustomerAddress = order.CustomerAddress;
         orderToReturn.CustomerEmail = order.CustomerEmail;
         orderToReturn.ShipDate = order.ShipDate;
         orderToReturn.DeliveryDate = order.DeliveryDate;
@@ -317,7 +319,7 @@ internal class Order : BlApi.IOrder  // object of the manager, on a order a clie
             IEnumerable<DO.OrderItem?> dO_listOfOrderItems = dal.OrderItem.GetDataOfOrderItem((item ?? new DO.Order()).ID);
 
             order.CustomerName = (item ?? new DO.Order()).CustomerName;
-            order.CustomerAddress = (item ?? new DO.Order()).CustomerAdrress;
+            order.CustomerAddress = (item ?? new DO.Order()).CustomerAddress;
             order.CustomerEmail = (item ?? new DO.Order()).CustomerEmail;
             order.ShipDate = (item ?? new DO.Order()).ShipDate;
             order.DeliveryDate = (item ?? new DO.Order()).DeliveryDate;
@@ -389,7 +391,7 @@ internal class Order : BlApi.IOrder  // object of the manager, on a order a clie
             IEnumerable<DO.OrderItem?> dO_listOfOrderItems = dal.OrderItem.GetDataOfOrderItem((item ?? new DO.Order()).ID);
             order = new BO.Order();
             order.CustomerName = (item ?? new DO.Order()).CustomerName;
-            order.CustomerAddress = (item ?? new DO.Order()).CustomerAdrress;
+            order.CustomerAddress = (item ?? new DO.Order()).CustomerAddress;
             order.CustomerEmail = (item ?? new DO.Order()).CustomerEmail;
             order.ShipDate = (item ?? new DO.Order()).ShipDate;
             order.DeliveryDate = (item ?? new DO.Order()).DeliveryDate;
@@ -446,10 +448,30 @@ internal class Order : BlApi.IOrder  // object of the manager, on a order a clie
     /// <param name="customerName"></param>
     /// <param name="customerEmail"></param>
     /// <param name="customerAddress"></param>
-    /// <param name="id"></param>
-    public void UpdateNameEmailAddress(string customerName, string customerEmail, string customerAddress, int id)
+    /// <param name="ID"></param>
+    public void UpdateNameEmailAddress(string customerName, string customerEmail, string customerAddress, int ID) // Bonus func that we addes, for updateOrderCutomer (and also manager)
     {
-        /// implemention
+        DO.Order order = new DO.Order();
+        try
+        {
+            order = dal.Order.Get(ID);
+        }
+        catch (ExceptionObjectCouldNotBeFound inner)
+        {
+            throw new ExceptionLogicObjectCouldNotBeFound("order", inner);
+        }
+
+        order.CustomerName = customerName; // updating the object
+        order.CustomerEmail = customerEmail; // updating the object
+        order.CustomerAddress = customerAddress; // updating the object
+        try
+        {
+            dal.Order.Update(order);
+        }
+        catch (ExceptionObjectCouldNotBeFound inner)
+        {
+            throw new ExceptionLogicObjectCouldNotBeFound("order", inner);
+        }
     }
 }
 

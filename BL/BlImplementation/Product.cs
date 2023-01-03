@@ -2,6 +2,7 @@
 using BO;
 using DalApi;
 using DO;
+using System.Linq;
 
 namespace BlImplementation;
 /// <summary>
@@ -176,7 +177,7 @@ internal class Product : BlApi.IProduct // class for product, that the manager c
         if (func == null)
             return list;
         IEnumerable<ProductForList?> data = list.Where(x => func(x));
-        return data;
+        return data.OrderBy<BO.ProductForList, int>(x=>x.ID); // return the list, orderred by ID
     }
     /// <summary>
     /// the function update a product in the store
@@ -287,7 +288,7 @@ internal class Product : BlApi.IProduct // class for product, that the manager c
         if (predict == null)
             return productsToReturn;
         IEnumerable<BO.Product?> data = productsToReturn.Where(x => predict(x));
-        return data;
+        return data.OrderBy<BO.Product, int>(x => x.ID); // return the list, orderred by ID
     }
 }
 
