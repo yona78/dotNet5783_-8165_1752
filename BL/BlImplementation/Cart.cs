@@ -116,7 +116,7 @@ internal class Cart : ICart // cart of customer
         if (name == null || address == null || email == null || name == "" || address == "" || email == "") // checks if the string are valids. ### TO ADD - that email and address will be in a specific format.
             throw new ExceptionDataIsInvalid("cart");
         DO.Order order = new DO.Order();
-        order.CustomerAdrress = address;
+        order.CustomerAddress = address;
         order.CustomerEmail = email;
         order.CustomerName = name;
         order.OrderDate = DateTime.Now; // initalize the orderDate to be now.
