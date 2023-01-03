@@ -15,15 +15,15 @@ using System.Windows.Shapes;
 namespace PL
 {
     /// <summary>
-    /// Interaction logic for InputIdForAddProductWindow.xaml
+    /// Interaction logic for InputIdForDealWithProductWindow.xaml
     /// </summary>
-    public partial class InputIdForAddProductWindow : Window
+    public partial class InputIdForDealWithProductWindow : Window
     {
         BlApi.IBl? blP = BlApi.Factory.Get()!;
         BO.Cart cart = new BO.Cart();
         string option;
         int id;
-        public InputIdForAddProductWindow(string opt, BO.Cart crt)
+        public InputIdForDealWithProductWindow(string opt, BO.Cart crt)
         {
             InitializeComponent();
             option = opt;
@@ -46,10 +46,7 @@ namespace PL
             {
                 MessageBox.Show(err.Message, "Exception", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-
             this.Close();
-
-
         }
     }
 }
