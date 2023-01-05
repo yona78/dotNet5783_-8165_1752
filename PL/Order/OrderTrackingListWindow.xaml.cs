@@ -21,12 +21,28 @@ namespace PL
     public partial class OrderTrackingListWindow : Window
     {
         BlApi.IBl bl = BlApi.Factory.Get()!;
-        ObservableCollection<BO.OrderTracking> obsColOrderTraking;
+        public ObservableCollection<BO.OrderTracking> obsColOrderTraking
+        {
+            set
+            {
+                SetValue(ProductsProperty, value);
+            }
+
+            get
+            {
+                return (ObservableCollection<BO.OrderTracking>)GetValue(ProductsProperty);
+            }
+
+        }
+        public static readonly DependencyProperty ProductsProperty = DependencyProperty.Register("obsColOrderTraking", typeof(ObservableCollection<BO.OrderTracking>),
+            typeof(Window), new PropertyMetadata(new ObservableCollection<BO.OrderTracking>()));
+
+        public BO.OrderTracking Select { get; set; }
+
+        IEnumerable<BO.OrderTracking> listOrderTracking = new List<BO.OrderTracking>();
         public OrderTrackingListWindow()
         {
             IEnumerable<BO.Order?> tmpList = new List<BO.Order?>();
-            IEnumerable<BO.OrderTracking> listOrderTracking = new List<BO.OrderTracking>();
-            InitializeComponent();
             try
             {
                 tmpList = bl.Order.GetDataOf(); // that in the beginning it will be initialized
@@ -45,12 +61,12 @@ namespace PL
                 MessageBox.Show(err.Message, "Exception", MessageBoxButton.OK, MessageBoxImage.Error);
 
             }
-            OrderTrackingListView.DataContext = obsColOrderTraking;
-            //OrderTrackingListView.ItemsSource = listOrderTracking;
+            InitializeComponent();
+         
         }
         private void UpdateOrderButton(object sender, MouseButtonEventArgs e)
         {
-            BO.OrderTracking orderTracking = (BO.OrderTracking)OrderTrackingListView.SelectedItem; // the order we want to update
+            BO.OrderTracking orderTracking = Select; // the order we want to update
             if (orderTracking == null)
                 return;
             new OrderWindow("WATCH", orderTracking.ID).ShowDialog(); // can't do anything else until it closed

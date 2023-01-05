@@ -5,11 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
+        DataContext="{Binding RelativeSource={RelativeSource self}}"
         Title="OrderTrackingListWindow" Height="450" Width="800">
     <Grid Name ="MainGrid">
         <!--this is the main grid-->
 
-        <ListView x:Name="OrderTrackingListView" ItemsSource="{Binding}" Margin="10,10,10,10" MouseDoubleClick="UpdateOrderButton">
+        <ListView  SelectedItem ="{Binding Select}" ItemsSource="{Binding obsColOrderTraking}" Margin="10,10,10,10" MouseDoubleClick="UpdateOrderButton">
             <!--The Table of the data-->
             <ListView.View>
                 <GridView>

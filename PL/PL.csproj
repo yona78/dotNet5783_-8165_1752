@@ -14,6 +14,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Remotion.Linq" Version="2.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\BL\BL.csproj" />
     <ProjectReference Include="..\DalFacade\DalFacade.csproj" />
     <ProjectReference Include="..\DalList\DalList.csproj" />

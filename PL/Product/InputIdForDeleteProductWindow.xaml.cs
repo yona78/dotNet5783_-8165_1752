@@ -19,6 +19,7 @@ namespace PL
     /// </summary>
     public partial class InputIdForDeleteProductWindow : Window
     {
+        public string MyProperty { set; get; }
         BlApi.IBl? bl = BlApi.Factory.Get()!;
         public InputIdForDeleteProductWindow()
         {
@@ -34,7 +35,7 @@ namespace PL
             try
             {
                 int id = 0;
-                bool validInput = int.TryParse(TextBoxOfID.Text, out id); // getting the ID from the TextBox
+                bool validInput = int.TryParse(MyProperty, out id); // getting the ID from the TextBox
                 if (!validInput || id < 0)
                     throw new Exception("ID is invalid"); // i need to check whether it is realy int
                 bl.Product.Delete(id);

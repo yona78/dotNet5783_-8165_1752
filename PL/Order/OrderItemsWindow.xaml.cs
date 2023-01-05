@@ -23,23 +23,37 @@ namespace PL
         BlApi.IBl bl = BlApi.Factory.Get()!; // as it was asked...
         string option;
         int id;
-        ObservableCollection<BO.OrderItem> obsColOrderItem;
         int? idProduct;
         int? amount;
+        public BO.OrderItem select { set; get; }
+        public ObservableCollection<BO.OrderItem> obsColOrderItem
+        {
+            set
+            {
+                SetValue(ProductsProperty, value);
+            }
+
+            get
+            {
+                return (ObservableCollection<BO.OrderItem>)GetValue(ProductsProperty);
+            }
+
+        }
+        public static readonly DependencyProperty ProductsProperty = DependencyProperty.Register("obsColOrderItem", typeof(ObservableCollection<BO.OrderItem>),
+            typeof(Window), new PropertyMetadata(new ObservableCollection<BO.OrderItem>()));
         public OrderItemsWindow(int idOfOrder, string opt,int? idProductFunc=null, int? amountFunc=null)
         {
             idProduct = idProductFunc;
             amount = amountFunc;
             id=idOfOrder;
             option = opt;
+            obsColOrderItem= new ObservableCollection<BO.OrderItem>(bl.Order.GetOrderManager(id).Items);
             InitializeComponent();
             this.Left = System.Windows.SystemParameters.PrimaryScreenWidth - Width; // i want that the window will be in the right side of the screen.
-            obsColOrderItem= new ObservableCollection<BO.OrderItem>(bl.Order.GetOrderManager(id).Items);
-            OrderItemsListView.DataContext = obsColOrderItem; // that in the beginning it will be initialized
         }
         private void UpdateOrderItem(object sender, MouseButtonEventArgs e)
         {
-            BO.OrderItem orderItem = (BO.OrderItem)OrderItemsListView.SelectedItem; // the orderItem we want to update
+            BO.OrderItem orderItem = select; // the orderItem we want to update
             if (orderItem == null)
                 return;
             new OrderItemWindow(id, orderItem.ID, option, idProduct, amount).ShowDialog(); // can't do anything else until it closed

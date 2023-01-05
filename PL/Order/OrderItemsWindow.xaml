@@ -5,12 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
+        DataContext="{Binding RelativeSource={RelativeSource self}}"
         Title="OrderItemsWindow" Height="450" Width="800">
     <!--the up Grid-->
 
     <Grid Name="UפGrid" HorizontalAlignment="Stretch" Height="auto" Grid.Row="0" VerticalAlignment="Stretch" Width="auto">
 
-        <ListView x:Name="OrderItemsListView" ItemsSource="{Binding }" Margin="10,10,10,10" MouseDoubleClick="UpdateOrderItem">
+        <ListView  SelectedItem ="{Binding select}" ItemsSource="{Binding obsColOrderItem}" Margin="10,10,10,10" MouseDoubleClick="UpdateOrderItem">
             <!--The Table of the data-->
             <ListView.View>
                 <GridView>

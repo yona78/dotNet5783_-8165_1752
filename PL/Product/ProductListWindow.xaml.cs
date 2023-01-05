@@ -17,48 +17,68 @@ namespace PL
     public partial class ProductListWindow : Window
     {
         BlApi.IBl bl = BlApi.Factory.Get()!; // as it was asked...
-        ObservableCollection<BO.ProductForList> obsColProductForList;
+        public string Select { get; set; }
+        public bool IState { set; get; }
+        public ObservableCollection<BO.ProductForList> obsColProductForList {
+            set
+            {
+                SetValue(ProductsProperty, value);
+            }
+            
+            get
+            {
+                return (ObservableCollection<BO.ProductForList>)GetValue(ProductsProperty);
+            }
+        
+        }
+        public static readonly DependencyProperty ProductsProperty = DependencyProperty.Register("obsColProductForList", typeof(ObservableCollection<BO.ProductForList>),
+            typeof(Window), new PropertyMetadata(new ObservableCollection<BO.ProductForList>()));
+        public Array arr { set; get; }
         IEnumerable<BO.ProductForList> products;
+        public BO.ProductForList prdct { set; get; }
         public ProductListWindow()
         {
-            InitializeComponent();
             products = bl.Product.GetList();
             obsColProductForList = new ObservableCollection<BO.ProductForList>(products);
-            ProductListView.DataContext = obsColProductForList; // that in the beginning it will be initialized
-            CategorySelector.Items.Clear();
-            CategorySelector.ItemsSource = Enum.GetValues(typeof(BO.Enums.Category)); // the itemSource is all of the possible categories 
+            arr = Enum.GetValues(typeof(BO.Enums.Category));
+            InitializeComponent();
         }
 
         private void SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            string? selected = CategorySelector.SelectedItem.ToString(); // the category that was selected in the comboBox
-            ProductListView.DataContext = (bl ?? BlApi.Factory.Get()).Product.GetList(); // put all the products in the itemSource of the productListView
+            //string? selected = CategorySelector.SelectedItem.ToString(); // the category that was selected in the comboBox
+           // ProductListView.DataContext = (bl ?? BlApi.Factory.Get()).Product.GetList(); // put all the products in the itemSource of the productListView
             BO.Enums.Category category;
-            BO.Enums.Category.TryParse(selected, out category); // convert it into a category
+            bool check =BO.Enums.Category.TryParse(Select, out category); // convert it into a category
             Func<BO.ProductForList?, bool>? func = item => (item ?? new BO.ProductForList()).Category == category; // the condition \ predict we create checks if the categories are equal or not
              products = (bl ?? BlApi.Factory.Get()).Product.GetList(func); // get A list with all the products that answer the deserve condition
             obsColProductForList = new ObservableCollection<BO.ProductForList>(products);
-            ProductListView.DataContext = obsColProductForList;
+            //ProductListView.DataContext = obsColProductForList;
         }
 
         private void AddProduct(object sender, RoutedEventArgs e)
         {
             new ProductWindow((bl ?? BlApi.Factory.Get()), "ADD", 0).ShowDialog(); // can't do anything else until it closed
+            products = (bl ?? BlApi.Factory.Get()).Product.GetList(); // get A list with all the products that answer the deserve condition
+            obsColProductForList = new ObservableCollection<BO.ProductForList>(products);
             //ProductListView.DataContext = (bl ?? BlApi.Factory.Get()).Product.GetList(); // print the new list on the board
         }
 
         private void UpdateProductButton(object sender, MouseButtonEventArgs e)
         {
-            BO.ProductForList prdct = (BO.ProductForList)ProductListView.SelectedItem; // the product we want to update
             if (prdct == null)
                 return;
-            new ProductWindow((bl ?? BlApi.Factory.Get()), "UPDATE", prdct.ID).ShowDialog(); // can't do anything else until it closed
+            new ProductWindow((bl ?? BlApi.Factory.Get()), "UPDATE", prdct.ID).ShowDialog();
+            products = (bl ?? BlApi.Factory.Get()).Product.GetList(); // get A list with all the products that answer the deserve condition
+            obsColProductForList = new ObservableCollection<BO.ProductForList>(products);// can't do anything else until it closed
             //ProductListView.DataContext = (bl ?? BlApi.Factory.Get()).Product.GetList(); // print the new list on the board
         }
 
         private void DeleteProduct(object sender, RoutedEventArgs e)
         {
             new InputIdForDeleteProductWindow().ShowDialog();
+            products = (bl ?? BlApi.Factory.Get()).Product.GetList(); // get A list with all the products that answer the deserve condition
+            obsColProductForList = new ObservableCollection<BO.ProductForList>(products);
             //ProductListView.DataContext = (bl ?? BlApi.Factory.Get()).Product.GetList(); // print the new list on the board
         }
     }

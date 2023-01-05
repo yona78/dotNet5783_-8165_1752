@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
+        DataContext="{Binding RelativeSource={RelativeSource self}}"
         Title="ProductWindow" Height="450" Width="800">
     <Grid>
         <Grid.RowDefinitions>
@@ -25,12 +26,12 @@
         <TextBlock Grid.Row="3" Grid.Column="0" Text="name:" HorizontalAlignment="Right" FontSize="13" Width="80" VerticalAlignment="Center"/>
         <TextBlock Grid.Row="4" Grid.Column="0" Text="price:" HorizontalAlignment="Right" FontSize="13"  Width="80" VerticalAlignment="Center"/>
         <TextBlock Grid.Row="5" Grid.Column="0" Text="in stock:" HorizontalAlignment="Right" FontSize="13" Width="80" VerticalAlignment="Center"/>
-        <Button x:Name="add"   Click ="AddOption" Visibility ="{Binding AState}" Content="Add" Grid.Row="7" Grid.Column="0" HorizontalAlignment="Right" Margin="10" Padding="5" Width="60" Height="90"/>
-        <Button x:Name="update" Click ="UpdateOption" Visibility ="{Binding UState}" Content="update" Grid.Row="7" Grid.Column="1" HorizontalAlignment="Left" Margin="10" Padding="5" Width="60" Height="90" />
-        <TextBox x:Name ="ID"  IsEnabled ="{Binding IDState}" HorizontalAlignment="Left"  TextWrapping="Wrap" Text="{Binding IDT,Mode=OneWay}" VerticalAlignment="Center" Width="120" Grid.Row="1" Grid.Column="1" Height="22" />
-        <TextBox x:Name ="name"  IsEnabled ="{Binding Nstate}" HorizontalAlignment="Left"  AcceptsReturn="True" TextWrapping="Wrap" SpellCheck.IsEnabled="True" Language="en-US" Text="{Binding NT,Mode=OneWay}" VerticalAlignment="Center" Width="120" Grid.Row="3" Grid.Column="1" Height="22"/>
-        <TextBox x:Name ="price"  IsEnabled ="{Binding Pstate}" HorizontalAlignment="Left"  TextWrapping="Wrap" Text="{Binding PT,Mode=OneWay}" VerticalAlignment="Center" Width="120" Grid.Row="4" Grid.Column="1" Height="22"/>
-        <TextBox x:Name ="inStock"  IsEnabled ="{Binding ISState}" HorizontalAlignment="Left"  TextWrapping="Wrap" Text="{Binding IST,Mode=OneWay}" VerticalAlignment="Center" Width="120" Grid.Row="5" Grid.Column="1" Height="22"/>
-        <ComboBox x:Name="CatgoryChoise" IsEnabled ="{Binding CState}" HorizontalAlignment="Left" Grid.Row="2" VerticalAlignment="Center" Width="120" Grid.Column="1" Height="22"/>
+        <Button    Click ="AddOption" Visibility ="{Binding seeA}" Content="Add" Grid.Row="7" Grid.Column="0" HorizontalAlignment="Right" Margin="10" Padding="5" Width="60" Height="90"/>
+        <Button  Click ="UpdateOption" Visibility ="{Binding seeU}" Content="update" Grid.Row="7" Grid.Column="1" HorizontalAlignment="Left" Margin="10" Padding="5" Width="60" Height="90" />
+        <TextBox  IsEnabled ="{Binding IDState}" HorizontalAlignment="Left"  TextWrapping="Wrap" Text="{Binding Id}" VerticalAlignment="Center" Width="120" Grid.Row="1" Grid.Column="1" Height="22" />
+        <TextBox  IsEnabled ="{Binding NState}" HorizontalAlignment="Left"  AcceptsReturn="True" TextWrapping="Wrap" SpellCheck.IsEnabled="True" Language="en-US" Text="{Binding Name1}" VerticalAlignment="Center" Width="120" Grid.Row="3" Grid.Column="1" Height="22"/>
+        <TextBox   IsEnabled ="{Binding PState}" HorizontalAlignment="Left"  TextWrapping="Wrap" Text="{Binding Price}" VerticalAlignment="Center" Width="120" Grid.Row="4" Grid.Column="1" Height="22"/>
+        <TextBox   IsEnabled ="{Binding IState}" HorizontalAlignment="Left"  TextWrapping="Wrap" Text="{Binding Amount}" VerticalAlignment="Center" Width="120" Grid.Row="5" Grid.Column="1" Height="22"/>
+        <ComboBox  ItemsSource="{Binding list}" IsEnabled ="{Binding CState}" HorizontalAlignment="Left" Grid.Row="2" SelectedItem ="{Binding Select}" VerticalAlignment="Center" Width="120" Grid.Column="1" Height="22"/>
     </Grid>
 </Window>
