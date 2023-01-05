@@ -44,8 +44,10 @@ namespace PL
             {
                 MessageBox.Show(err.Message, "Exception", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-            this.Close();
-
+            finally
+            {
+                this.Close();
+            }
         }
 
     }

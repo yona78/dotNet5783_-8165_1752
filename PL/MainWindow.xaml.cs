@@ -22,13 +22,8 @@ namespace PL
             new OrderListWindow().ShowDialog(); // if he clicked the button, we want to show him the list of the avilable orders. can't do anything else until it closed
         }
         private void MoveToNewOrderDataWindow(object sender, RoutedEventArgs e)
-        {
-            
-            
-                new ShowProductItemsWindow().ShowDialog();
-          
-
-
+        { 
+              new ShowProductItemsWindow().ShowDialog();
         }
         private void MoveToOrderTrackingDataWindow(object sender, RoutedEventArgs e)
         {
@@ -36,7 +31,7 @@ namespace PL
         }
         private void MoveToBonusWindow(object sender, RoutedEventArgs e)
         {
-           // new OrderTrackingWindow().ShowDialog(); // if he clicked the button, we want to show him the list of the avilable products. can't do anything else until it closed
+            // new OrderTrackingWindow().ShowDialog(); // if he clicked the button, we want to show him the list of the avilable products. can't do anything else until it closed
         }
 
     }

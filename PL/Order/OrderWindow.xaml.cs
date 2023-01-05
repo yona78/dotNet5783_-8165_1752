@@ -56,9 +56,20 @@ namespace PL
             {
                 //updateCustomer.Visibility = Visibility.Hidden; // hiding the update button
                 //updateManager.Visibility = Visibility.Hidden; // hiding the update button
-                DataContext = new { orderObject = order, IDState = false, CNState = false, CEState = false,CAState = false,
-                    OSCState = false, PDStaate = false, SDState = false, DDStates = false, TPState = false,
-                    UCState = Visibility.Hidden,UMState =Visibility.Hidden
+                DataContext = new
+                {
+                    orderObject = order,
+                    IDState = false,
+                    CNState = false,
+                    CEState = false,
+                    CAState = false,
+                    OSCState = false,
+                    PDState = false,
+                    SDState = false,
+                    DDState = false,
+                    TPState = false,
+                    UCState = Visibility.Hidden,
+                    UMState = Visibility.Hidden
                 };
                 //ID.IsEnabled = false;
                 //CustomerName.IsEnabled = false;
@@ -72,7 +83,7 @@ namespace PL
             }
             else if (option == "UPDATE_MANAGER")
             {
-                DataContext = new
+                DataContext = DataContext = new
                 {
                     orderObject = order,
                     IDState = false,
@@ -80,13 +91,14 @@ namespace PL
                     CEState = true,
                     CAState = true,
                     OSCState = false,
-                    PDStaate = false,
+                    PDState = false,
                     SDState = false,
-                    DDStates = false,
+                    DDState = false,
                     TPState = false,
                     UCState = Visibility.Hidden,
                     UMState = Visibility.Visible
                 };
+             
                 //updateCustomer.Visibility = Visibility.Hidden; // hiding the updateCustomer button
 
                 //ID.IsEnabled = false;
@@ -110,9 +122,9 @@ namespace PL
                     CEState = true,
                     CAState = true,
                     OSCState = false,
-                    PDStaate = false,
+                    PDState = false,
                     SDState = false,
-                    DDStates = false,
+                    DDState = false,
                     TPState = false,
                     UCState = Visibility.Visible,
                     UMState = Visibility.Hidden
