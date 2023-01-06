@@ -41,7 +41,38 @@ namespace PL
                 if (!validInput || id < 0)
                     throw new Exception("ID is invalid"); // i need to check whether it is realy int
                 BO.Product product = blP.Product.Get(x => x.ID == idOfProduct);
-                new OrderItemInCartWindow(option, product, cart).ShowDialog();
+                if(option == "ADD")
+                {
+                    try
+                    {
+                        cart = bl.Cart.UpdateAmount(cart, (product ?? new BO.Product()).ID);
+                    }
+                    catch (Exception err)
+                    {
+                        MessageBox.Show(err.Message, "Exception", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                    finally
+                    {
+                        this.Close();
+                    }
+                }
+                else if(option == "DELETE")
+                {
+                    try
+                    {
+                        cart = bl.Cart.AddProduct(cart, (product ?? new BO.Product()).ID,0);
+                    }
+                    catch (Exception err)
+                    {
+                        MessageBox.Show(err.Message, "Exception", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                    finally
+                    {
+                        this.Close();
+                    }
+                }
+                else if(option == "UPDATE")
+                    new OrderItemInCartWindow("UPDATE", product, cart).ShowDialog();
             }
             catch (Exception err)
             {

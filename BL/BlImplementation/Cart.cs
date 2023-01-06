@@ -33,7 +33,7 @@ internal class Cart : ICart // cart of customer
         {
             throw new ExceptionLogicObjectCouldNotBeFound("product", inner);
         }
-        
+
         if (cart.Items != null)
         {
             itemToChange = cart.Items.FirstOrDefault(p => p.ProductID == idProduct);
@@ -60,6 +60,8 @@ internal class Cart : ICart // cart of customer
             item.Price = product.Price;
             item.TotalPrice = product.Price;
             cart.TotelPrice += product.Price;
+
+            item.ID = (cart.Items ?? new List<OrderItem>()).Count();
             if (cart.Items == null)
                 cart.Items = new List<BO.OrderItem>();
             cart.Items.Add(item);
