@@ -65,7 +65,7 @@ namespace PL
             {
                 int amount;
 
-                bool validInput = int.TryParse(AmountTextBox.Text, out amount);// getting the Amount from the TextBox, and insert it into the orderItem
+                bool validInput = int.TryParse(AmountTextBox.Text, out amount);// getting the InStock from the TextBox, and insert it into the orderItem
                 if (!validInput)
                     throw new Exception("amount is invalid");
                 cart = bl.Cart.UpdateAmount(cart, (product ?? new BO.Product()).ID, amount);
