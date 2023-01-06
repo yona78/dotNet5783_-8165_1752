@@ -38,17 +38,17 @@
         <TextBlock Grid.Row="8" Grid.Column="0" Text="deliveryDate:"  HorizontalAlignment="Left" FontSize="13" Width="80" VerticalAlignment="Center" Margin="288,0,0,0"/>
         <TextBlock Grid.Row="9" Grid.Column="0" Text="items:" HorizontalAlignment="Left" FontSize="13" Width="80" VerticalAlignment="Center" Margin="288,0,0,0"/>
         <TextBlock Grid.Row="10" Grid.Column="0" Text="totalPrice:"  HorizontalAlignment="Left" FontSize="13" Width="80" VerticalAlignment="Center" Margin="288,0,0,0"/>
-        <Button x:Name="updateManager" Click ="UpdateManagerOption" Visibility ="{Binding SeeUpdateManager}" Content="update manager" Grid.Row="11" HorizontalAlignment="Left" Margin="288,10,0,10" Padding="5" Width="100" Height="90" />
-        <Button x:Name="updateCustomer" Click ="UpdateCutomerOption" Visibility ="{Binding SeeUpdateCustomer}" Content="update cutomer" Grid.Row="11" Grid.Column="1" HorizontalAlignment="Left" Margin="10,10,0,10" Padding="5" Width="110" Height="90" />
-        <TextBox x:Name ="IDTextBox" HorizontalAlignment="Left"  IsEnabled ="{Binding IDState}" TextWrapping="Wrap" Text="{Binding ID}" VerticalAlignment="Center" Width="120" Grid.Row="1" Grid.Column="1" Height="22" />
-        <TextBox x:Name ="CustomerNameTextBox" IsEnabled ="{Binding CustomerNameState}" HorizontalAlignment="Left"  TextWrapping="Wrap" Text="{Binding CustomerName}" VerticalAlignment="Center" Width="120" Grid.Row="2" Grid.Column="1" Height="22"/>
-        <TextBox x:Name ="CustomerEmailTextBox" IsEnabled ="{Binding CustomerEmailState}" HorizontalAlignment="Left"  TextWrapping="Wrap" Text="{Binding CustomerEmail}" VerticalAlignment="Center" Width="120" Grid.Row="3" Grid.Column="1" Height="22"/>
-        <TextBox x:Name ="CustomerAddressTextBox"  IsEnabled ="{Binding CustomerAddressState}" HorizontalAlignment="Left"  TextWrapping="Wrap" Text="{Binding CustomerAddress}" VerticalAlignment="Center" Width="120" Grid.Row="4" Grid.Column="1" Height="22"/>
-        <ComboBox x:Name="OrderStatusTextBox" ItemsSource="{Binding list}" IsEnabled ="{Binding StatusState}" HorizontalAlignment="Left" Grid.Row="5" SelectedItem="{Binding Status}" VerticalAlignment="Center" Width="120" Grid.Column="1" Height="22" />
-        <TextBox x:Name ="PaymentDateTextBox" IsEnabled ="{Binding PaymentDateState}" HorizontalAlignment="Left"  TextWrapping="Wrap" Text="{Binding PaymentDate}" VerticalAlignment="Center" Width="120" Grid.Row="6" Grid.Column="1" Height="22"/>
-        <TextBox x:Name ="ShipDateTextBox" IsEnabled ="{Binding ShipDateState}" HorizontalAlignment="Left"  TextWrapping="Wrap" Text="{Binding ShipDate}" VerticalAlignment="Center" Width="120" Grid.Row="7" Grid.Column="1" Height="22"/>
-        <TextBox x:Name ="DeliveryDateTextBox" IsEnabled ="{Binding DeliveryDateState}" HorizontalAlignment="Left"  TextWrapping="Wrap" Text="{Binding DeliveryDate}" VerticalAlignment="Center" Width="120" Grid.Row="8" Grid.Column="1" Height="22"/>
-        <Button x:Name ="ItemsTextBox"  HorizontalAlignment="Left"  VerticalAlignment="Center" Click="showItemsInOrder" Width="120" Grid.Row="9" Grid.Column="1" Height="22"/>
-        <TextBox x:Name ="TotelPriceTextBox" IsEnabled ="{Binding TotalPriceState}" HorizontalAlignment="Left"  TextWrapping="Wrap" Text="{Binding TotalPrice}" VerticalAlignment="Center" Width="120" Grid.Row="10" Grid.Column="1" Height="22"/>
+        <Button  Click ="UpdateManagerOption" Visibility ="{Binding SeeUpdateManager}" Content="update manager" Grid.Row="11" HorizontalAlignment="Left" Margin="288,10,0,10" Padding="5" Width="100" Height="90" />
+        <Button  Click ="UpdateCutomerOption" Visibility ="{Binding SeeUpdateCustomer}" Content="update cutomer" Grid.Row="11" Grid.Column="1" HorizontalAlignment="Left" Margin="10,10,0,10" Padding="5" Width="110" Height="90" />
+        <TextBox  HorizontalAlignment="Left"  IsEnabled ="{Binding IDState}" TextWrapping="Wrap" Text="{Binding ID}" VerticalAlignment="Center" Width="120" Grid.Row="1" Grid.Column="1" Height="22" />
+        <TextBox IsEnabled ="{Binding CustomerNameState}" HorizontalAlignment="Left"  TextWrapping="Wrap" Text="{Binding CustomerName}" VerticalAlignment="Center" Width="120" Grid.Row="2" Grid.Column="1" Height="22"/>
+        <TextBox  IsEnabled ="{Binding CustomerEmailState}" HorizontalAlignment="Left"  TextWrapping="Wrap" Text="{Binding CustomerEmail}" VerticalAlignment="Center" Width="120" Grid.Row="3" Grid.Column="1" Height="22"/>
+        <TextBox   IsEnabled ="{Binding CustomerAddressState}" HorizontalAlignment="Left"  TextWrapping="Wrap" Text="{Binding CustomerAddress}" VerticalAlignment="Center" Width="120" Grid.Row="4" Grid.Column="1" Height="22"/>
+        <ComboBox  ItemsSource="{Binding list}" IsEnabled ="{Binding StatusState}" HorizontalAlignment="Left" Grid.Row="5" SelectedItem="{Binding Status}" VerticalAlignment="Center" Width="120" Grid.Column="1" Height="22" />
+        <TextBox  IsEnabled ="{Binding PaymentDateState}" HorizontalAlignment="Left"  TextWrapping="Wrap" Text="{Binding PaymentDate}" VerticalAlignment="Center" Width="120" Grid.Row="6" Grid.Column="1" Height="22"/>
+        <TextBox  IsEnabled ="{Binding ShipDateState}" HorizontalAlignment="Left"  TextWrapping="Wrap" Text="{Binding ShipDate}" VerticalAlignment="Center" Width="120" Grid.Row="7" Grid.Column="1" Height="22"/>
+        <TextBox  IsEnabled ="{Binding DeliveryDateState}" HorizontalAlignment="Left"  TextWrapping="Wrap" Text="{Binding DeliveryDate}" VerticalAlignment="Center" Width="120" Grid.Row="8" Grid.Column="1" Height="22"/>
+        <Button   HorizontalAlignment="Left"  VerticalAlignment="Center" Click="showItemsInOrder" Width="120" Grid.Row="9" Grid.Column="1" Height="22"/>
+        <TextBox  IsEnabled ="{Binding TotalPriceState}" HorizontalAlignment="Left"  TextWrapping="Wrap" Text="{Binding TotalPrice}" VerticalAlignment="Center" Width="120" Grid.Row="10" Grid.Column="1" Height="22"/>
     </Grid>
 </Window>

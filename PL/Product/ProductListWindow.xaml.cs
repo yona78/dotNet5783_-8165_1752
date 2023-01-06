@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -48,9 +49,12 @@ namespace PL
         {
             //string? selected = CategorySelector.SelectedItem.ToString(); // the category that was selected in the comboBox
             // ProductListView.DataContext = (bl ?? BlApi.Factory.Get()).Product.GetList(); // put all the products in the itemSource of the productListView
-            Func<BO.ProductForList?, bool>? func = item => (item ?? new BO.ProductForList()).Category == Select; // the condition \ predict we create checks if the categories are equal or not
-            products = (bl ?? BlApi.Factory.Get()).Product.GetList(func); // get A list with all the products that answer the deserve condition
-            obsColProductForList = new ObservableCollection<BO.ProductForList>(products);
+            //Func<BO.ProductForList?, bool>? func = item => (item ?? new BO.ProductForList()).Category == Select; // the condition \ predict we create checks if the categories are equal or not
+            //products = (bl ?? BlApi.Factory.Get()).Product.GetList(func); // get A list with all the products that answer the deserve condition
+            var prdctList = (from p in products group p by p.Category);
+            var prdctsList = prdctList.FirstOrDefault(p=>p.Key== Select);
+            var ordered = from p in prdctsList orderby p.Price select p;
+            obsColProductForList = new ObservableCollection<BO.ProductForList>(ordered);
             //ProductListView.DataContext = obsColProductForList;
         }
 
