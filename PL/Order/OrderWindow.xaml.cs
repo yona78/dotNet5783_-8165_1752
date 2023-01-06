@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Net.NetworkInformation;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -13,11 +15,13 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Windows.Shell;
+using System.Xml;
 using System.Xml.Linq;
 using BlApi;
 using BO;
 using DalApi;
 using DO;
+using Microsoft.VisualBasic;
 
 namespace PL
 {
@@ -27,41 +31,41 @@ namespace PL
     public partial class OrderWindow : Window
     {
         BlApi.IBl? blP = BlApi.Factory.Get();
-        string option;
-        public BO.Order order {set; get; }
+        private string option;
+        private int? idProduct, amount;
+        public BO.Order Order { set; get; }
         int idOfOrder;
-        int? idProduct;int? amount;
-        public bool StateID { get; set; }
-        public bool StateN { get; set; }
-        public bool StateA { get; set; }
-        public bool StateE { get; set; }
-        public bool StateS { get; set; }
-        public bool StateP { get; set; }
-        public bool StateSD { get; set; }
-        public bool StateD { get; set; }
+        public bool IDState { get; set; }
+        public bool CustomerNameState { get; set; }
+        public bool CustomerAddressState { get; set; }
+        public bool CustomerEmailState { get; set; }
+        public bool ShipDateState { get; set; }
+        public bool PaymentDateState { get; set; }
+        public bool DeliveryDateState { get; set; }
+        public bool StatusState { get; set; }
 
-        public bool StateT { get; set; }
+        public bool TotalPriceState { get; set; }
 
-        public object seeC { get; set; }
-        public object seeU { get; set; }
-        public Array arr { get; set; }
-        public string id { get; set; }
-        public string name { get; set; }
-        public string email { get; set; }
-        public string addr { get; set; }
-        public string ship { get; set; }
-        public string delivery { get; set; }
-        public string pdate { get; set; }
-        public string price { get; set; }
-        public string status { get; set; }
+        public object SeeUpdateManager { get; set; }
+        public object SeeUpdateCustomer { get; set; }
+        public int ID { get; set; }
+        public string CustomerName { get; set; }
+        public string CustomerEmail { get; set; }
+        public string CustomerAddress { get; set; }
+        public DateTime? ShipDate { get; set; }
+        public DateTime? DeliveryDate { get; set; }
+        public DateTime? PaymentDate { get; set; }
+        public double Price { get; set; }
+        public BO.Enums.Status? Status { get; set; }
+        public double TotalPrice { get; set; }
+        public Array list { set; get; }
 
         public OrderWindow(string opt, int id) // idOrder of order, option of action that we want to do
         {
-            arr = Enum.GetValues(typeof(BO.Enums.Status));
-            option = opt; 
+            option = opt;
             try
             {
-                order = blP.Order.GetOrderManager(id); // we only want to update this order.
+                Order = blP.Order.GetOrderManager(id); // we only want to update this order.
             }
             catch (Exception err)
             {
@@ -69,47 +73,30 @@ namespace PL
                 this.Close();
                 return;
             }
-            id = order.ID;
-            idOfOrder = order.ID;
-            if(option=="WATCH")
+        if (option == "WATCH")
             {
-                seeC = Visibility.Hidden;
-                seeU = Visibility.Hidden;
-                StateID = false;
-                StateS = false;
-                StateN = false;
-                StateP = false;
-                StateSD = false;
-                StateD = false;
-                StateT = false;
-                StateE= false;
-                StateA= false;
+                SeeUpdateManager = Visibility.Hidden;
+                SeeUpdateCustomer = Visibility.Hidden;
+                IDState = false;
+                CustomerNameState = false;
+                CustomerEmailState = false;
+                CustomerAddressState = false;
+                PaymentDateState = false;
+                ShipDateState = false;
+                DeliveryDateState = false;
+                StatusState = false;
+                TotalPriceState = false;
 
-            }
-            InitializeComponent();
-            
-            
-         
-            
-            if (option == "WATCH")
-            {
-                //updateCustomer.Visibility = Visibility.Hidden; // hiding the update button
-                //updateManager.Visibility = Visibility.Hidden; // hiding the update button
-                DataContext = new
-                {
-                    orderObject = order,
-                    IDState = false,
-                    CNState = false,
-                    CEState = false,
-                    CAState = false,
-                    OSCState = false,
-                    PDState = false,
-                    SDState = false,
-                    DDState = false,
-                    TPState = false,
-                    UCState = Visibility.Hidden,
-                    UMState = Visibility.Hidden
-                };
+                ID = Order.ID;
+                CustomerName = Order.CustomerName;
+                CustomerEmail = Order.CustomerEmail;
+                CustomerAddress = Order.CustomerAddress;
+                Status = Order.OrderStatus;
+                PaymentDate = Order.PaymentDate;
+                ShipDate = Order.ShipDate;
+                DeliveryDate = Order.DeliveryDate;
+                TotalPrice = Order.TotalPrice;
+
                 //ID.IsEnabled = false;
                 //CustomerName.IsEnabled = false;
                 //CustomerEmail.IsEnabled = false;
@@ -118,26 +105,33 @@ namespace PL
                 //PaymentDate.IsEnabled = false;
                 //ShipDate.IsEnabled = false;
                 //DeliveryDate.IsEnabled = false;
-                //TotelPrice.IsEnabled = false;
+                //TotalPrice.IsEnabled = false;
+
             }
             else if (option == "UPDATE_MANAGER")
             {
-                DataContext = DataContext = new
-                {
-                    orderObject = order,
-                    IDState = false,
-                    CNState = true,
-                    CEState = true,
-                    CAState = true,
-                    OSCState = false,
-                    PDState = false,
-                    SDState = false,
-                    DDState = false,
-                    TPState = false,
-                    UCState = Visibility.Hidden,
-                    UMState = Visibility.Visible
-                };
-             
+                SeeUpdateManager = Visibility.Visible;
+                SeeUpdateCustomer = Visibility.Hidden;
+                IDState = false;
+                CustomerNameState = true;
+                CustomerEmailState = true;
+                CustomerAddressState = true;
+                PaymentDateState = false;
+                ShipDateState = false;
+                DeliveryDateState = false;
+                StatusState = false;
+                TotalPriceState = false;
+
+                ID = Order.ID;
+                CustomerName = Order.CustomerName;
+                CustomerEmail = Order.CustomerEmail;
+                CustomerAddress = Order.CustomerAddress;
+                Status = Order.OrderStatus;
+                PaymentDate = Order.PaymentDate;
+                ShipDate = Order.ShipDate;
+                DeliveryDate = Order.DeliveryDate;
+                TotalPrice = Order.TotalPrice;
+
                 //updateCustomer.Visibility = Visibility.Hidden; // hiding the updateCustomer button
 
                 //ID.IsEnabled = false;
@@ -148,52 +142,59 @@ namespace PL
                 //PaymentDate.IsEnabled = false;
                 //ShipDate.IsEnabled = false;
                 //DeliveryDate.IsEnabled = false;
-                //TotelPrice.IsEnabled = false;
+                //TotalPrice.IsEnabled = false;
 
             }
             else if (option == "UPDATE_CUSTOMER")
             {
-                DataContext = new
-                {
-                    orderObject = order,
-                    IDState = false,
-                    CNState = true,
-                    CEState = true,
-                    CAState = true,
-                    OSCState = false,
-                    PDState = false,
-                    SDState = false,
-                    DDState = false,
-                    TPState = false,
-                    UCState = Visibility.Visible,
-                    UMState = Visibility.Hidden
-                };
+                SeeUpdateManager = Visibility.Hidden;
+                SeeUpdateCustomer = Visibility.Visible;
+                IDState = false;
+                CustomerNameState = true;
+                CustomerEmailState = true;
+                CustomerAddressState = true;
+                PaymentDateState = false;
+                ShipDateState = false;
+                DeliveryDateState = false;
+                StatusState = false;
+                TotalPriceState = false;
+
+                ID = Order.ID;
+                CustomerName = Order.CustomerName;
+                CustomerEmail = Order.CustomerEmail;
+                CustomerAddress = Order.CustomerAddress;
+                Status = Order.OrderStatus;
+                PaymentDate = Order.PaymentDate;
+                ShipDate = Order.ShipDate;
+                DeliveryDate = Order.DeliveryDate;
+                TotalPrice = Order.TotalPrice;
+
                 //updateManager.Visibility = Visibility.Hidden; // hiding the updateManager button
 
                 //ID.IsEnabled = false;
-                ////CustomerName.IsEnabled = false;
-                ////CustomerEmail.IsEnabled = false;
-                ////CustomerAddress.IsEnabled = false;
+                ////CustomerName.IsEnabled = true;
+                ////CustomerEmail.IsEnabled = true;
+                ////CustomerAddress.IsEnabled = true;
                 //OrderStatusChoise.IsEnabled = false;
                 //PaymentDate.IsEnabled = false;
                 //ShipDate.IsEnabled = false;
                 //DeliveryDate.IsEnabled = false;
-                //TotelPrice.IsEnabled = false;
+                //TotalPrice.IsEnabled = false;
+
 
             }
+            list = Enum.GetValues(typeof(BO.Enums.Status)); // in order to print
+            InitializeComponent();
         }
         private void UpdateManagerOption(object sender, RoutedEventArgs e)
         {
-            blP.Order.UpdateNameEmailAddress(order.CustomerName, order.CustomerEmail, order.CustomerAddress, order.ID); // the bonus we added
-            //if (func != null)
-            //{
-            //    (int, int) res = func();
-            //    idOfProduct = res.Item1;
-            //    amount = res.Item2;
-            //}
+            blP.Order.UpdateNameEmailAddress(Order.CustomerName, Order.CustomerEmail, Order.CustomerAddress, Order.ID); // the bonus we added
+            CustomerName = Order.CustomerName;
+            CustomerEmail = Order.CustomerEmail;
+            CustomerAddress = Order.CustomerAddress;
             try
             {
-                (blP ?? BlApi.Factory.Get()).Order.Update(idOfOrder, idProduct??new int(), amount??new int());
+                (blP ?? BlApi.Factory.Get()).Order.Update(idOfOrder, idProduct ?? new int(), amount ?? new int());
             }
             catch (Exception err)
             {
@@ -209,12 +210,15 @@ namespace PL
 
         private void UpdateCutomerOption(object sender, RoutedEventArgs e)
         {
-            blP.Order.UpdateNameEmailAddress(order.CustomerName, order.CustomerEmail, order.CustomerAddress, order.ID); // the bonus we added
+            blP.Order.UpdateNameEmailAddress(Order.CustomerName, Order.CustomerEmail, Order.CustomerAddress, Order.ID); // the bonus we added
+            CustomerName = Order.CustomerName;
+            CustomerEmail = Order.CustomerEmail;
+            CustomerAddress = Order.CustomerAddress;
             this.Close();
         }
         private void showItemsInOrder(object sender, RoutedEventArgs e)
         {
-            new OrderItemsWindow(idOfOrder, option=="UPDATE_MANAGER"?"UPDATE":"WATCH", idProduct, amount).ShowDialog();
+            new OrderItemsWindow(idOfOrder, option == "UPDATE_MANAGER" ? "UPDATE" : "WATCH", idProduct, amount).ShowDialog();
             // here i should also give values to amount and idOfProduct
         }
 

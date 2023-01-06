@@ -24,21 +24,20 @@ namespace PL
     {
         BlApi.IBl? bl = BlApi.Factory.Get()!;
         BO.Cart cart = new BO.Cart();
+        public string EmailInput { get; set; }
+        public string NameInput { get; set; }
+        public string AddressInput { get; set; }
         public MakeOrderWindow(BO.Cart crt)
         {
             InitializeComponent();
             cart = crt;
-
         }
 
         private void ButtonOfAccept_Click(object sender, RoutedEventArgs e)
         {
-            string name = TextBoxOfName.Text;
-            string address = TextBoxOfAddress.Text;
-            string email = TextBoxOfEmail.Text;
             try
             {
-                bl.Cart.MakeOrder(cart, name, address, email);
+                bl.Cart.MakeOrder(cart, NameInput, AddressInput, EmailInput);
             }
             catch (Exception err)
             {

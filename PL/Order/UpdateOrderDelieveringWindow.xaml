@@ -5,9 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
+        DataContext="{Binding RelativeSource={RelativeSource self}}"
         Title="UpdateOrderDelieveringWindow" Height="450" Width="800">
     <Grid>
-        <TextBox Name="TextBoxOfID" HorizontalAlignment="Left" Margin="400,217,0,0" TextWrapping="Wrap" FontSize="20"  VerticalAlignment="Top" Width="120"/>
+        <TextBox Name="TextBoxOfID" Text="{Binding Input}" HorizontalAlignment="Left" Margin="400,217,0,0" TextWrapping="Wrap" FontSize="20"  VerticalAlignment="Top" Width="120"/>
         <TextBlock HorizontalAlignment="Left" Margin="227,217,0,0" TextWrapping="Wrap" FontSize="20" Text="Give me ID please: " VerticalAlignment="Top"/>
         <Button Name="ButtonOfAccept" Content="click for accepting" HorizontalAlignment="Left" Margin="350,300,0,0" Click="ButtonOfAccept_Click"  FontSize="15" VerticalAlignment="Top"/>
 

@@ -23,6 +23,7 @@ namespace PL
         BO.Cart cart = new BO.Cart();
         string option;
         int id;
+        public string Input { get; set; }   
         public InputIdForDealWithProductWindow(string opt, BO.Cart crt)
         {
             InitializeComponent();
@@ -36,7 +37,7 @@ namespace PL
             int idOfProduct = 0;
             try
             {
-                bool validInput = int.TryParse(TextBoxOfID.Text, out idOfProduct); // getting the ID from the TextBox
+                bool validInput = int.TryParse(Input, out idOfProduct); // getting the ID from the TextBox
                 if (!validInput || id < 0)
                     throw new Exception("ID is invalid"); // i need to check whether it is realy int
                 BO.Product product = blP.Product.Get(x => x.ID == idOfProduct);

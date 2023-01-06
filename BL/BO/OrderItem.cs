@@ -23,7 +23,7 @@ public class OrderItem // item in the order, indevidiual item in the order
        Name: {Name}
        Price: {Price}
        Amount: {Amount}
-       TotelPrice: {TotalPrice}
+       TotalPrice: {TotalPrice}
     "; // to string.
 
 }

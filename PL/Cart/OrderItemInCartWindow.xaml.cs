@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Security.RightsManagement;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -26,9 +27,14 @@ namespace PL
         string option;
         BO.Product? product;
         BO.Cart cart = new BO.Cart();
+        public string Amount { get; set; }      
+        public object SeeAmountTextBox { get; set; }
+        public object SeeAmountTextBlock { get; set; }
+        public object SeeAdd { get; set; }
+        public object SeeUpdate { get; set; }
+        public object SeeDelete { get; set; }
         public OrderItemInCartWindow(string opt, BO.Product prdct, BO.Cart crt)
         {
-            InitializeComponent();
             option = opt;
             cart = crt;
             product = prdct;
@@ -37,25 +43,30 @@ namespace PL
 
             if (option == "UPDATE")
             {
-                add.Visibility = Visibility.Hidden;
-                delete.Visibility = Visibility.Hidden;
-
+                SeeAdd = Visibility.Hidden;
+                SeeDelete = Visibility.Hidden;                
+                SeeUpdate = Visibility.Visible;                
+                SeeAmountTextBox = Visibility.Visible;                
+                SeeAmountTextBlock = Visibility.Visible;                
             }
             else if (option == "ADD")
             {
-                update.Visibility = Visibility.Hidden;
-                delete.Visibility = Visibility.Hidden;
-                AmountTextBlock.Visibility = Visibility.Hidden;
-                AmountTextBox.Visibility = Visibility.Hidden;
+                SeeAdd = Visibility.Visible;
+                SeeDelete = Visibility.Hidden;
+                SeeUpdate = Visibility.Hidden;
+                SeeAmountTextBox = Visibility.Hidden;
+                SeeAmountTextBlock = Visibility.Hidden;
             }
             else if (option == "DELETE")
             {
-                update.Visibility = Visibility.Hidden;
-                add.Visibility = Visibility.Hidden;
-                AmountTextBlock.Visibility = Visibility.Hidden;
-                AmountTextBox.Visibility = Visibility.Hidden;
+                SeeAdd = Visibility.Hidden;
+                SeeDelete = Visibility.Visible;
+                SeeUpdate = Visibility.Hidden;
+                SeeAmountTextBox = Visibility.Hidden;
+                SeeAmountTextBlock = Visibility.Hidden;
             }
 
+            InitializeComponent();
 
         }
 
@@ -65,7 +76,7 @@ namespace PL
             {
                 int amount;
 
-                bool validInput = int.TryParse(AmountTextBox.Text, out amount);// getting the InStock from the TextBox, and insert it into the orderItem
+                bool validInput = int.TryParse(Amount, out amount);// getting the InStock from the TextBox, and insert it into the orderItem
                 if (!validInput)
                     throw new Exception("amount is invalid");
                 cart = bl.Cart.UpdateAmount(cart, (product ?? new BO.Product()).ID, amount);

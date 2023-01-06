@@ -16,7 +16,7 @@ namespace PL
     public partial class OrderListWindow : Window
     {
         BlApi.IBl bl = BlApi.Factory.Get()!; // as it was asked...
-        public ObservableCollection<BO.OrderForList?> obsColOrderForList
+        public ObservableCollection<BO.OrderForList> obsColOrderForList
         {
             set
             {
@@ -31,13 +31,13 @@ namespace PL
         }
         public static readonly DependencyProperty ProductsProperty = DependencyProperty.Register("obsColOrderForList", typeof(ObservableCollection<BO.OrderForList>),
             typeof(Window), new PropertyMetadata(new ObservableCollection<BO.OrderForList>()));
-        IEnumerable<BO.OrderForList?> orders;
+        IEnumerable<BO.OrderForList> orders;
 
         public BO.OrderForList Order { set; get; }
         public OrderListWindow()
         {
             orders = bl.Order.GetOrderList();
-            obsColOrderForList = new ObservableCollection<BO.OrderForList?>(orders);
+            obsColOrderForList = new ObservableCollection<BO.OrderForList>(orders);
             InitializeComponent();
             //OrderListView.DataContext = bl.Order.GetOrderList(); // that in the beginning it will be initialized
 
@@ -48,36 +48,41 @@ namespace PL
         private void GetDataOfOrdersButton(object sender, RoutedEventArgs e)
         {
             new InputIdForGetOrderWindow().ShowDialog();
-            obsColOrderForList = (ObservableCollection<BO.OrderForList>)(bl ?? BlApi.Factory.Get()).Order.GetOrderList(); // print the new list on the board
+            orders = bl.Order.GetOrderList();
+            obsColOrderForList = new ObservableCollection<BO.OrderForList>(orders);
         }
         private void UpdateOrderSendButton(object sender, RoutedEventArgs e)
         {
             new UpdateOrderSendingWindow().ShowDialog();
-            obsColOrderForList = (ObservableCollection<BO.OrderForList>)(bl ?? BlApi.Factory.Get()).Order.GetOrderList(); // print the new list on the boards
+            orders = bl.Order.GetOrderList();
+            obsColOrderForList = new ObservableCollection<BO.OrderForList>(orders);
         }
         private void UpdateOrderDelieverdButton(object sender, RoutedEventArgs e)
         {
             new UpdateOrderDelieveringWindow().ShowDialog();
-            obsColOrderForList = (ObservableCollection<BO.OrderForList>)(bl ?? BlApi.Factory.Get()).Order.GetOrderList(); // print the new list on the boards
+            orders = bl.Order.GetOrderList();
+            obsColOrderForList = new ObservableCollection<BO.OrderForList>(orders);
         }
         private void OrderTrackingButton(object sender, RoutedEventArgs e)
         {
             new OrderTrackingWindow().ShowDialog();
-            obsColOrderForList = (ObservableCollection<BO.OrderForList>)(bl ?? BlApi.Factory.Get()).Order.GetOrderList(); // print the new list on the boards                                                                                  
+            orders = bl.Order.GetOrderList();
+            obsColOrderForList = new ObservableCollection<BO.OrderForList>(orders);
         }
         private void UpdateOrderButton(object sender, RoutedEventArgs e)
         {
             new OrderUpdateManagerWindow().ShowDialog();
-            obsColOrderForList = (ObservableCollection<BO.OrderForList>)(bl ?? BlApi.Factory.Get()).Order.GetOrderList(); // print the new list on the boards                                                                                  
+            orders = bl.Order.GetOrderList();
+            obsColOrderForList = new ObservableCollection<BO.OrderForList>(orders);
 
         }
         private void UpdateOrderButton(object sender, MouseButtonEventArgs e)
         {
-            BO.OrderForList order = Order; // the order we want to update
-            if (order == null)
+            if (Order == null)
                 return;
-            new OrderWindow("UPDATE_CUSTOMER", order.ID).ShowDialog(); // can't do anything else until it closed
-            obsColOrderForList = (ObservableCollection<BO.OrderForList>)(bl ?? BlApi.Factory.Get()).Order.GetOrderList(); // print the new list on the board
+            new OrderWindow("UPDATE_CUSTOMER", Order.ID).ShowDialog(); // can't do anything else until it closed
+            orders = bl.Order.GetOrderList();
+            obsColOrderForList = new ObservableCollection<BO.OrderForList>(orders);
         }
 
     }

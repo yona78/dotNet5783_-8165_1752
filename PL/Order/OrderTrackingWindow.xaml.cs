@@ -20,6 +20,8 @@ namespace PL
     public partial class OrderTrackingWindow : Window
     {
         BlApi.IBl? blP = BlApi.Factory.Get()!;
+        public string Input { set; get; }
+
         public OrderTrackingWindow()
         {
             InitializeComponent();
@@ -30,7 +32,7 @@ namespace PL
             try
             {
                 int id = 0;
-                bool validInput = int.TryParse(TextBoxOfID.Text, out id); // getting the ID from the TextBox
+                bool validInput = int.TryParse(Input, out id); // getting the ID from the TextBox
                 if (!validInput || id < 0)
                     throw new Exception("ID is invalid"); // i need to check whether it is realy int
                 new OrderTrackingPresentWindow(id).ShowDialog();
@@ -39,8 +41,6 @@ namespace PL
             {
                 MessageBox.Show(err.Message, "Exception", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-
-
             this.Close();
         }
     }

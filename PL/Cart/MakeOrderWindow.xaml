@@ -5,13 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
+        DataContext="{Binding RelativeSource={RelativeSource self}}"
         Title="MakeOrderWindow" Height="450" Width="800">
     <Grid>
-        <TextBox Name="TextBoxOfName" HorizontalAlignment="Left" Margin="460,227,0,0" TextWrapping="Wrap" FontSize="20"  VerticalAlignment="Top" Width="120"/>
+        <TextBox Name="TextBoxOfName" Text="{Binding NameInput}" HorizontalAlignment="Left" Margin="460,227,0,0" TextWrapping="Wrap" FontSize="20"  VerticalAlignment="Top" Width="120"/>
         <TextBlock HorizontalAlignment="Left" Margin="227,227,0,0" TextWrapping="Wrap" FontSize="20" Text="Give me Name please: " VerticalAlignment="Top"/>
-       <TextBox Name="TextBoxOfAddress" HorizontalAlignment="Left" Margin="460,197,0,0" TextWrapping="Wrap" FontSize="20"  VerticalAlignment="Top" Width="120"/>
+        <TextBox Name="TextBoxOfAddress" Text="{Binding AddressInput}" HorizontalAlignment="Left" Margin="460,197,0,0" TextWrapping="Wrap" FontSize="20"  VerticalAlignment="Top" Width="120"/>
         <TextBlock HorizontalAlignment="Left" Margin="227,197,0,0" TextWrapping="Wrap" FontSize="20" Text="Give me Address please: " VerticalAlignment="Top"/>
-       <TextBox Name="TextBoxOfEmail" HorizontalAlignment="Left" Margin="460,167,0,0" TextWrapping="Wrap" FontSize="20"  VerticalAlignment="Top" Width="120"/>
+        <TextBox Name="TextBoxOfEmail" Text="{Binding EmailInput}" HorizontalAlignment="Left" Margin="460,167,0,0" TextWrapping="Wrap" FontSize="20"  VerticalAlignment="Top" Width="120"/>
         <TextBlock HorizontalAlignment="Left" Margin="227,167,0,0" TextWrapping="Wrap" FontSize="20" Text="Give me Email please: " VerticalAlignment="Top"/>
         <Button Name="ButtonOfAccept" Content="click for accepting" HorizontalAlignment="Left" Margin="350,300,0,0" Click="ButtonOfAccept_Click"  FontSize="15" VerticalAlignment="Top"/>
     </Grid>

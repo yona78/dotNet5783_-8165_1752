@@ -11,7 +11,7 @@
 
     <Grid Name="UפGrid" HorizontalAlignment="Stretch" Height="auto" Grid.Row="0" VerticalAlignment="Stretch" Width="auto">
 
-        <ListView  SelectedItem ="{Binding select}" ItemsSource="{Binding obsColOrderItem}" Margin="10,10,10,10" MouseDoubleClick="UpdateOrderItem">
+        <ListView ItemsSource="{Binding obsColOrderItem}" SelectedItem ="{Binding OrderItem}"  Margin="10,10,10,10" MouseDoubleClick="UpdateOrderItem">
             <!--The Table of the data-->
             <ListView.View>
                 <GridView>

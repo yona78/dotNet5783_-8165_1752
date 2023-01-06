@@ -47,7 +47,6 @@
             <Button Content="OrderTracking" Click="OrderTrackingButton" Margin="20,20,20,20" HorizontalAlignment="Center"   Grid.Column="4" VerticalAlignment="Top"/>
             <Button Content="UpdateOrder" Click="UpdateOrderButton" Margin="20,20,20,20" HorizontalAlignment="Center"  Grid.Column="5" VerticalAlignment="Top"/>
 
-            <!--Button Click ="AddProductButton" Content="Add new Product" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="5" Padding="5"/-->
 
         </Grid>
     </Grid>

@@ -20,11 +20,11 @@ namespace PL
     public partial class InputIdForGetOrderWindow : Window
     {
         BlApi.IBl? blP = BlApi.Factory.Get()!;
-        public string Name { set; get; }
+        public string Input { set; get; }
         public InputIdForGetOrderWindow()
-        {
-            InitializeComponent();
+        {    
             this.Left = System.Windows.SystemParameters.PrimaryScreenWidth - Width; // i want that the window will be in the right side of the screen.
+            InitializeComponent();
 
         }
         private void ButtonOfAccept_Click(object sender, RoutedEventArgs e)
@@ -32,7 +32,7 @@ namespace PL
             try
             {
                 int id = 0;
-                bool validInput = int.TryParse(Name, out id); // getting the ID from the TextBox
+                bool validInput = int.TryParse(Input, out id); // getting the ID from the TextBox
                 if (!validInput || id < 0)
                     throw new Exception("ID is invalid"); // i need to check whether it is realy int
                 blP.Order.GetOrderManager(id);

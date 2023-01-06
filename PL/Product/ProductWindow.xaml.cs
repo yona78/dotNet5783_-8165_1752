@@ -66,7 +66,7 @@ namespace PL
                 Price = prdct.Price.ToString();
                 InStock = prdct.InStock.ToString();
                 Select = prdct.Category;
-                idTmp = prdct.ID; // we want to have in our hands the old id, in order he wouldn't be able to replace it
+                idTmp = prdct.ID; // we want to have in our hands the old ID, in order he wouldn't be able to replace it
                                   //add.Visibility = Visibility.Hidden; // hiding the add button
 
 
@@ -101,14 +101,14 @@ namespace PL
 
                 //ID.Text = Prdct.ID.ToString(); // we want to display this to the window
                 //CatgoryChoise.SelectedItem = Prdct.Category; // as before
-                //name.Text = Prdct.Name1; // as before
-                //price.Text = Prdct.Price.ToString(); // as before
+                //CustomerName.Text = Prdct.Name1; // as before
+                //Price.Text = Prdct.Price.ToString(); // as before
                 //inStock.Text = Prdct.InStock.ToString(); // as before
 
                 //ID.IsEnabled = false;
                 //CatgoryChoise.IsEnabled = false;
-                //name.IsEnabled = false;
-                //price.IsEnabled = false;
+                //CustomerName.IsEnabled = false;
+                //Price.IsEnabled = false;
                 //inStock.IsEnabled = false;
             }
             list = Enum.GetValues(typeof(BO.Enums.Category)); // in order to print
@@ -129,9 +129,9 @@ namespace PL
                 if (!validInput)
                     throw new Exception("idOrder is invalid"); // i need to check whether it is realy int
                 prdct.ID = tmp;
-                validInput = double.TryParse(Price, out tmpPrice); // getting the price from the TextBox, and insert it into the product
+                validInput = double.TryParse(Price, out tmpPrice); // getting the Price from the TextBox, and insert it into the product
                 if (!validInput)
-                    throw new Exception("price is invalid");
+                    throw new Exception("Price is invalid");
                 prdct.Price = tmpPrice;
                 validInput = int.TryParse(InStock, out tmp);// getting the inStock from the TextBox, and insert it into the product
                 if (!validInput)
@@ -163,9 +163,9 @@ namespace PL
                 double tmpPrice;
 
                 prdct.ID = idTmp; // the ID stays the same 
-                bool validInput = double.TryParse(Price, out tmpPrice); // getting the price from the TextBox, and insert it into the product
+                bool validInput = double.TryParse(Price, out tmpPrice); // getting the Price from the TextBox, and insert it into the product
                 if (!validInput)
-                    throw new Exception("price is invalid");
+                    throw new Exception("Price is invalid");
                 prdct.Price = tmpPrice;
                 validInput = int.TryParse(InStock, out tmp);// getting the inStock from the TextBox, and insert it into the product
                 if (!validInput)

@@ -21,7 +21,7 @@ public class Cart // cart of customer
        CustomerEmail: {CustomerEmail}
        CustomerAddress: {CustomerAddress}
        Items: {Items}
-       TotelPrice: {TotelPrice}
+       TotalPrice: {TotelPrice}
     "; // to string.
 
 }

@@ -20,18 +20,28 @@ namespace PL
     public partial class OrderTrackingPresentWindow : Window
     {
         BlApi.IBl blP = BlApi.Factory.Get()!;
+        public string ID { get; set; }
+        public BO.Enums.Status? Status { get; set; }
+        public string OrderStatus { get; set; }
+        public bool IDState { get; set; }
+        public bool StatusState { get; set; }
+        public bool OrderStatusState { get; set; }
+        public Array list { get; set; }
         public OrderTrackingPresentWindow(int id)
         {
-            InitializeComponent();
             this.Left = System.Windows.SystemParameters.PrimaryScreenWidth - Width; // i want that the window will be in the right side of the screen.
-
-            OrderStatusChoise.Items.Clear();
-            OrderStatusChoise.ItemsSource = Enum.GetValues(typeof(BO.Enums.Status)); // in order to print 
-
             BO.OrderTracking orderTracking = blP.Order.TrackOrder(id);
-            ID.Text = orderTracking.ID.ToString();
-            OrderStatusChoise.SelectedItem = orderTracking.OrderStatus;
-            Status.Text = orderTracking.status[0].ToString()+"\n"+ orderTracking.status[1].ToString() + "\n"+orderTracking.status[2].ToString() + "\n";
-        }
+            ID = orderTracking.ID.ToString();
+            Status = orderTracking.OrderStatus;
+            OrderStatus = orderTracking.status[0].ToString() + "\n" + orderTracking.status[1].ToString() + "\n" + orderTracking.status[2].ToString() + "\n";
+            list = Enum.GetValues(typeof(BO.Enums.Status)); // in order to print 
+
+            IDState = false;
+            StatusState = false;
+            OrderStatusState = false;
+            
+            InitializeComponent();
+
+           }
     }
 }

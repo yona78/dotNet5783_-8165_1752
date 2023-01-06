@@ -112,7 +112,7 @@ internal class Order : BlApi.IOrder  // object of the manager, on a order a clie
             orderItemTmp = new BO.OrderItem();
             price += ((item ?? new DO.OrderItem()).Amount * (item ?? new DO.OrderItem()).Price);
         }
-        orderToReturn.TotelPrice = price; // the total price of the order
+        orderToReturn.TotalPrice = price; // the total price of the order
         orderToReturn.Items = bO_listOfOrderItems; // giving the Items property a value
 
         // now i will check the status of the order, by comparing the current time, and the time in the data.
@@ -350,7 +350,7 @@ internal class Order : BlApi.IOrder  // object of the manager, on a order a clie
                 orderItemTmp = new BO.OrderItem();
                 price += ((orderItem ?? new DO.OrderItem()).Amount * (orderItem ?? new DO.OrderItem()).Price);
             }
-            order.TotelPrice = price; // the total price of the order
+            order.TotalPrice = price; // the total price of the order
             order.Items = bO_listOfOrderItems; // giving the Items property a value
 
             // now i will check the status of the order, by comparing the current time, and the time in the data.
@@ -422,7 +422,7 @@ internal class Order : BlApi.IOrder  // object of the manager, on a order a clie
                 orderItemTmp = new BO.OrderItem();
                 price += ((orderItem ?? new DO.OrderItem()).Amount * (orderItem ?? new DO.OrderItem()).Price);
             }
-            order.TotelPrice = price; // the total price of the order
+            order.TotalPrice = price; // the total price of the order
             order.Items = bO_listOfOrderItems; // giving the Items property a value
 
             // now i will check the status of the order, by comparing the current time, and the time in the data.

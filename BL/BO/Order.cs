@@ -13,7 +13,7 @@ public class Order // object of the manager, on a order a client had asked for
     public DateTime? ShipDate { set; get; } // when did you send the order
     public DateTime? DeliveryDate { set; get; } // when did the order actually arrived
     public List<OrderItem>? Items { set; get; } // items in order
-    public double TotelPrice { set; get; } // total price of order
+    public double TotalPrice { set; get; } // total price of order
 
     /// <summary>
     /// override to string function to order
@@ -41,7 +41,7 @@ public class Order // object of the manager, on a order a client had asked for
        ShipDate {ShipDate}
        DeliveryDate: {DeliveryDate}
        Items: {sum}
-       TotelPrice: {TotelPrice}
+       TotalPrice: {TotalPrice}
     "; // to string.
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,55 +23,70 @@ namespace PL
         BlApi.IBl bl = BlApi.Factory.Get()!;
         BO.Product product = new BO.Product();
         BO.Cart cart = new BO.Cart();
+        public BO.Enums.Category? Select { get; set; }
+        public ObservableCollection<BO.ProductItem> obsColProductItem
+        {
+            set
+            {
+                SetValue(ProductsProperty, value);
+            }
+
+            get
+            {
+                return (ObservableCollection<BO.ProductItem>)GetValue(ProductsProperty);
+            }
+
+        }
+        public static readonly DependencyProperty ProductsProperty = DependencyProperty.Register("obsColProductItem", typeof(ObservableCollection<BO.ProductItem>),
+            typeof(Window), new PropertyMetadata(new ObservableCollection<BO.ProductItem>()));
+        public Array listCategory { set; get; }
+        IEnumerable<BO.ProductItem> productItems;
+        public BO.ProductItem PrdctItem { set; get; }
+
         public ShowProductItemsWindow()
         {
-            InitializeComponent();
+
             IEnumerable<BO.Product?> listProduct = (bl ?? BlApi.Factory.Get()).Product.GetDataOf();
-            List<BO.ProductItem> listProductItems = new List<BO.ProductItem>();
+            IEnumerable<BO.ProductItem> listProductItems = new List<BO.ProductItem>();
             try
             {
-                foreach (BO.Product? item in listProduct)
-                    listProductItems.Add(bl.Product.GetForCustomer(item.ID, cart));
+                listProductItems = (from p in listProduct select bl.Product.GetForCustomer(p.ID, cart));
+                obsColProductItem = new ObservableCollection<BO.ProductItem>(listProductItems);
             }
             catch (Exception err)
             {
                 MessageBox.Show(err.Message, "Exception", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-            ProductItemListView.ItemsSource = listProductItems;  // that in the beginning it will be initialized
+            listCategory = Enum.GetValues(typeof(BO.Enums.Category)); // the itemSource is all of the possible      
+            InitializeComponent();
 
-            CategorySelector.Items.Clear();
-            CategorySelector.ItemsSource = Enum.GetValues(typeof(BO.Enums.Category)); // the itemSource is all of the possible categories 
         }
-        /*public int ID { set; get; } // id of product
-        public string? Name1 { set; get; } // name of product
-        public double Price { set; get; } // price of product
+        /*public int ID { set; get; } // ID of product
+        public string? Name1 { set; get; } // CustomerName of product
+        public double Price { set; get; } // Price of product
         public Enums.Category? Category { set; get; } // category of product
         public bool InStock { set; get; } // is the product has enugh in the Dbase
         public int InStock { set; get; } // amount of items from this product in the cart*/
         private void SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            string? selected = CategorySelector.SelectedItem.ToString(); // the category that was selected in the comboBox
             IEnumerable<BO.Product?> listProduct = (bl ?? BlApi.Factory.Get()).Product.GetDataOf();
-            List<BO.ProductItem> listProductItems = new List<BO.ProductItem>();
+            IEnumerable<BO.ProductItem> listProductItems = new List<BO.ProductItem>();
             try
             {
-                foreach (BO.Product? item in listProduct)
-                    listProductItems.Add(bl.Product.GetForCustomer(item.ID, cart));
+                listProductItems = (from p in listProduct select bl.Product.GetForCustomer(p.ID, cart));
+                obsColProductItem = new ObservableCollection<BO.ProductItem>(listProductItems);
+
             }
             catch (Exception err)
             {
                 MessageBox.Show(err.Message, "Exception", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-            ProductItemListView.ItemsSource = listProductItems; // put all the productItems in the itemSource of the productItemListView
-            BO.Enums.Category category;
-            BO.Enums.Category.TryParse(selected, out category); // convert it into a category
-            Func<BO.Product?, bool>? func = item => (item ?? new BO.Product()).Category == category; // the condition \ predict we create checks if the categories are equal or not
-            listProduct = (bl ?? BlApi.Factory.Get()).Product.GetDataOf(func); // get A list with all the products that answer the deserve condition
-            listProductItems.Clear();
-            foreach (BO.Product? item in listProduct)
-                listProductItems.Add(bl.Product.GetForCustomer(item.ID, cart));
+            Func<BO.Product?, bool>? func = item => (item ?? new BO.Product()).Category == Select; // the condition \ predict we create checks if the categories are equal or not
 
-            ProductItemListView.ItemsSource = listProductItems;// get A list with all the productItems that answer the deserve condition
+            listProduct = (bl ?? BlApi.Factory.Get()).Product.GetDataOf(func); // get A list with all the products that answer the deserve condition
+            listProductItems = (from p in listProduct select bl.Product.GetForCustomer(p.ID, cart));
+            obsColProductItem = new ObservableCollection<BO.ProductItem>(listProductItems);
+
         }
 
         private void MoveToCart(object sender, RoutedEventArgs e)
@@ -81,10 +97,10 @@ namespace PL
 
         private void ShowProduct(object sender, MouseButtonEventArgs e)
         {
-            BO.ProductItem prdct = (BO.ProductItem)ProductItemListView.SelectedItem; // the product we want to show
-            if (prdct == null)
+            BO.ProductItem prdctItem = PrdctItem; // the product we want to show
+            if (prdctItem == null)
                 return;
-            new ProductWindow((bl ?? BlApi.Factory.Get()), "WATCH", prdct.ID).ShowDialog(); // can't do anything else until it closed
+            new ProductWindow((bl ?? BlApi.Factory.Get()), "WATCH", prdctItem.ID).ShowDialog(); // can't do anything else until it closed
         }
     }
 }

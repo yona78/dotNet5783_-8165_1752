@@ -21,11 +21,7 @@ namespace PL
     public partial class OrderItemsWindow : Window
     {
         BlApi.IBl bl = BlApi.Factory.Get()!; // as it was asked...
-        string option;
-        int id;
-        int? idProduct;
-        int? amount;
-        public BO.OrderItem select { set; get; }
+
         public ObservableCollection<BO.OrderItem> obsColOrderItem
         {
             set
@@ -35,29 +31,41 @@ namespace PL
 
             get
             {
-                return (ObservableCollection<BO.OrderItem>)GetValue(ProductsProperty);
+                return (ObservableCollection<BO.OrderItem?>)GetValue(ProductsProperty);
             }
 
         }
         public static readonly DependencyProperty ProductsProperty = DependencyProperty.Register("obsColOrderItem", typeof(ObservableCollection<BO.OrderItem>),
             typeof(Window), new PropertyMetadata(new ObservableCollection<BO.OrderItem>()));
-        public OrderItemsWindow(int idOfOrder, string opt,int? idProductFunc=null, int? amountFunc=null)
+        IEnumerable<BO.OrderItem> orderItems;
+
+        public BO.OrderItem OrderItem { set; get; }
+
+
+        string option;
+        int id;
+        int? idProduct;
+        int? amount;
+        public OrderItemsWindow(int idOfOrder, string opt, int? idProductFunc = null, int? amountFunc = null)
         {
             idProduct = idProductFunc;
             amount = amountFunc;
-            id=idOfOrder;
+            id = idOfOrder;
             option = opt;
-            obsColOrderItem= new ObservableCollection<BO.OrderItem>(bl.Order.GetOrderManager(id).Items);
-            InitializeComponent();
             this.Left = System.Windows.SystemParameters.PrimaryScreenWidth - Width; // i want that the window will be in the right side of the screen.
+            orderItems = bl.Order.GetOrderManager(id).Items;
+            obsColOrderItem = new ObservableCollection<BO.OrderItem>(orderItems);
+
+            InitializeComponent();
+
         }
         private void UpdateOrderItem(object sender, MouseButtonEventArgs e)
         {
-            BO.OrderItem orderItem = select; // the orderItem we want to update
-            if (orderItem == null)
+            if (OrderItem == null)
                 return;
-            new OrderItemWindow(id, orderItem.ID, option, idProduct, amount).ShowDialog(); // can't do anything else until it closed
-            //OrderItemsListView.DataContext = (bl ?? BlApi.Factory.Get()).Order.GetOrderManager(id).Items; // print the new list on the board
+            new OrderItemWindow(id, OrderItem.ID, option, idProduct, amount).ShowDialog(); // can't do anything else until it closed
+            orderItems = bl.Order.GetOrderManager(id).Items;
+            obsColOrderItem = new ObservableCollection<BO.OrderItem>(orderItems);
         }
     }
 }

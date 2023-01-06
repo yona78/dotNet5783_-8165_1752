@@ -21,7 +21,7 @@ public class OrderForList // logic object for dealing with the orders. we doens'
        CustomerName: {CustomerName}
        Status: {OrderStatus}
        Amount of Items: {AmountOfItems}
-       TotelPrice: {TotelPrice}
+       TotalPrice: {TotelPrice}
     "; // to string.
 
 }
