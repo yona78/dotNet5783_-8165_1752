@@ -28,17 +28,37 @@ namespace PL
     {
         BlApi.IBl? blP = BlApi.Factory.Get();
         string option;
-        BO.Order order = new BO.Order();
+        public BO.Order order {set; get; }
         int idOfOrder;
         int? idProduct;int? amount;
+        public bool StateID { get; set; }
+        public bool StateN { get; set; }
+        public bool StateA { get; set; }
+        public bool StateE { get; set; }
+        public bool StateS { get; set; }
+        public bool StateP { get; set; }
+        public bool StateSD { get; set; }
+        public bool StateD { get; set; }
 
+        public bool StateT { get; set; }
+
+        public object seeC { get; set; }
+        public object seeU { get; set; }
+        public Array arr { get; set; }
+        public string id { get; set; }
+        public string name { get; set; }
+        public string email { get; set; }
+        public string addr { get; set; }
+        public string ship { get; set; }
+        public string delivery { get; set; }
+        public string pdate { get; set; }
+        public string price { get; set; }
+        public string status { get; set; }
 
         public OrderWindow(string opt, int id) // idOrder of order, option of action that we want to do
         {
-            InitializeComponent();
-            option = opt;
-            OrderStatusChoise.Items.Clear();
-            OrderStatusChoise.ItemsSource = Enum.GetValues(typeof(BO.Enums.Status)); // in order to print 
+            arr = Enum.GetValues(typeof(BO.Enums.Status));
+            option = opt; 
             try
             {
                 order = blP.Order.GetOrderManager(id); // we only want to update this order.
@@ -49,9 +69,28 @@ namespace PL
                 this.Close();
                 return;
             }
-         
             id = order.ID;
             idOfOrder = order.ID;
+            if(option=="WATCH")
+            {
+                seeC = Visibility.Hidden;
+                seeU = Visibility.Hidden;
+                StateID = false;
+                StateS = false;
+                StateN = false;
+                StateP = false;
+                StateSD = false;
+                StateD = false;
+                StateT = false;
+                StateE= false;
+                StateA= false;
+
+            }
+            InitializeComponent();
+            
+            
+         
+            
             if (option == "WATCH")
             {
                 //updateCustomer.Visibility = Visibility.Hidden; // hiding the update button
