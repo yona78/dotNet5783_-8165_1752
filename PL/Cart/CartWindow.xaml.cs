@@ -23,7 +23,7 @@ namespace PL
     public partial class CartWindow : Window
     {
         BlApi.IBl bl = BlApi.Factory.Get()!;
-        public ObservableCollection<BO.OrderItem> obsColOrderItem
+        public ObservableCollection<BO.OrderItem> obsColOrderItemInCart
         {
             set
             {
@@ -36,14 +36,14 @@ namespace PL
             }
 
         }
-        public static readonly DependencyProperty ProductsProperty = DependencyProperty.Register("obsColOrderItem", typeof(ObservableCollection<BO.OrderItem>),
+        public static readonly DependencyProperty ProductsProperty = DependencyProperty.Register("obsColOrderItemInCart", typeof(ObservableCollection<BO.OrderItem>),
             typeof(Window), new PropertyMetadata(new ObservableCollection<BO.OrderItem>()));
 
         BO.Cart? cart = new BO.Cart();
         public CartWindow()
         {
             cart = new BO.Cart();
-            obsColOrderItem = new ObservableCollection<BO.OrderItem>(cart.Items??new List<BO.OrderItem>());// that in the beginning it will be initialized
+            obsColOrderItemInCart = new ObservableCollection<BO.OrderItem>(cart.Items??new List<BO.OrderItem>());// that in the beginning it will be initialized
             InitializeComponent();
 
         }
@@ -52,18 +52,18 @@ namespace PL
         {
             new InputIdForDealWithProductWindow("DELETE", cart).ShowDialog();
 
-            obsColOrderItem = new ObservableCollection<BO.OrderItem>(cart.Items ?? new List<BO.OrderItem>());
+            obsColOrderItemInCart = new ObservableCollection<BO.OrderItem>(cart.Items ?? new List<BO.OrderItem>());
         }
         private void UpdateItem(object sender, RoutedEventArgs e)
         {
             new InputIdForDealWithProductWindow("UPDATE", cart).ShowDialog();
 
-            obsColOrderItem = new ObservableCollection<BO.OrderItem>(cart.Items ?? new List<BO.OrderItem>());
+            obsColOrderItemInCart = new ObservableCollection<BO.OrderItem>(cart.Items ?? new List<BO.OrderItem>());
         }
         private void AddItem(object sender, RoutedEventArgs e)
         {
             new InputIdForDealWithProductWindow("ADD", cart).ShowDialog();
-            obsColOrderItem = new ObservableCollection<BO.OrderItem>(cart.Items ?? new List<BO.OrderItem>());
+            obsColOrderItemInCart = new ObservableCollection<BO.OrderItem>(cart.Items ?? new List<BO.OrderItem>());
         }
         private void MakeOrder(object sender, RoutedEventArgs e)
         {

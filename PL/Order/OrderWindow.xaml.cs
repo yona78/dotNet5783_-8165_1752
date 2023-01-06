@@ -188,10 +188,7 @@ namespace PL
         }
         private void UpdateManagerOption(object sender, RoutedEventArgs e)
         {
-            blP.Order.UpdateNameEmailAddress(Order.CustomerName, Order.CustomerEmail, Order.CustomerAddress, Order.ID); // the bonus we added
-            CustomerName = Order.CustomerName;
-            CustomerEmail = Order.CustomerEmail;
-            CustomerAddress = Order.CustomerAddress;
+            blP.Order.UpdateNameEmailAddress(CustomerName, CustomerEmail, CustomerAddress, ID); // the bonus we added
             try
             {
                 (blP ?? BlApi.Factory.Get()).Order.Update(idOfOrder, idProduct ?? new int(), amount ?? new int());
@@ -210,10 +207,7 @@ namespace PL
 
         private void UpdateCutomerOption(object sender, RoutedEventArgs e)
         {
-            blP.Order.UpdateNameEmailAddress(Order.CustomerName, Order.CustomerEmail, Order.CustomerAddress, Order.ID); // the bonus we added
-            CustomerName = Order.CustomerName;
-            CustomerEmail = Order.CustomerEmail;
-            CustomerAddress = Order.CustomerAddress;
+            blP.Order.UpdateNameEmailAddress(CustomerName, CustomerEmail, CustomerAddress, ID); // the bonus we added
             this.Close();
         }
         private void showItemsInOrder(object sender, RoutedEventArgs e)

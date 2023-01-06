@@ -16,7 +16,7 @@
         </Grid.RowDefinitions>
         <Grid Name="MidGrid" HorizontalAlignment="Stretch" Height="auto" Grid.Row="0" VerticalAlignment="Stretch" Width="auto">
 
-            <ListView  ItemsSource="{Binding obsColOrderItem}"  Margin="10,10,10,10" >
+            <ListView x:Name="OrderItemsListView" ItemsSource="{Binding obsColOrderItemInCart}"  Margin="10,10,10,10" >
                 <!--The Table of the data-->
                 <ListView.View>
                     <GridView>
@@ -31,10 +31,10 @@
             </ListView>
         </Grid>
         <Grid Name="DownGrid" HorizontalAlignment="Stretch" Height="auto" Grid.Row="1" VerticalAlignment="Stretch" Width="auto">
-            <Button  Click ="DeleteItem" Content="Delete Item" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,10,10" Padding="5" />
-            <Button  Click ="UpdateItem" Content="Update item" HorizontalAlignment="Right" Margin="0,0,100,10" Padding="5" Height="28" VerticalAlignment="Bottom" Grid.Column="1"/>
-            <Button  Click ="MakeOrder" Content="Make Order" HorizontalAlignment="Right" Padding="5" Height="28" VerticalAlignment="Bottom" Width="83"  Margin="0,0,200,10" />
-            <Button  Click ="AddItem" Content="Add item" HorizontalAlignment="Right" Margin="0,0,300,10" Padding="5" Height="28" VerticalAlignment="Bottom" />
+            <Button Name="DeleteItemButton" Click ="DeleteItem" Content="Delete Item" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,10,10" Padding="5" />
+            <Button Name="UpdateItemButton" Click ="UpdateItem" Content="Update item" HorizontalAlignment="Right" Margin="0,0,100,10" Padding="5" Height="28" VerticalAlignment="Bottom" Grid.Column="1"/>
+            <Button Name="MakeOrderButton" Click ="MakeOrder" Content="Make Order" HorizontalAlignment="Right" Padding="5" Height="28" VerticalAlignment="Bottom" Width="83"  Margin="0,0,200,10" />
+            <Button x:Name="AddItemButton" Click ="AddItem" Content="Add item" HorizontalAlignment="Right" Margin="0,0,300,10" Padding="5" Height="28" VerticalAlignment="Bottom" />
 
         </Grid>
 
