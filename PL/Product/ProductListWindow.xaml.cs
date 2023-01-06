@@ -17,25 +17,25 @@ namespace PL
     public partial class ProductListWindow : Window
     {
         BlApi.IBl bl = BlApi.Factory.Get()!; // as it was asked...
-        public string Select { get; set; }
-        public bool IState { set; get; }
-        public ObservableCollection<BO.ProductForList> obsColProductForList {
+        public BO.Enums.Category? Select { get; set; }
+        public ObservableCollection<BO.ProductForList> obsColProductForList
+        {
             set
             {
                 SetValue(ProductsProperty, value);
             }
-            
+
             get
             {
                 return (ObservableCollection<BO.ProductForList>)GetValue(ProductsProperty);
             }
-        
+
         }
         public static readonly DependencyProperty ProductsProperty = DependencyProperty.Register("obsColProductForList", typeof(ObservableCollection<BO.ProductForList>),
             typeof(Window), new PropertyMetadata(new ObservableCollection<BO.ProductForList>()));
         public Array arr { set; get; }
         IEnumerable<BO.ProductForList> products;
-        public BO.ProductForList prdct { set; get; }
+        public BO.ProductForList Prdct { set; get; }
         public ProductListWindow()
         {
             products = bl.Product.GetList();
@@ -47,11 +47,9 @@ namespace PL
         private void SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             //string? selected = CategorySelector.SelectedItem.ToString(); // the category that was selected in the comboBox
-           // ProductListView.DataContext = (bl ?? BlApi.Factory.Get()).Product.GetList(); // put all the products in the itemSource of the productListView
-            BO.Enums.Category category;
-            bool check =BO.Enums.Category.TryParse(Select, out category); // convert it into a category
-            Func<BO.ProductForList?, bool>? func = item => (item ?? new BO.ProductForList()).Category == category; // the condition \ predict we create checks if the categories are equal or not
-             products = (bl ?? BlApi.Factory.Get()).Product.GetList(func); // get A list with all the products that answer the deserve condition
+            // ProductListView.DataContext = (bl ?? BlApi.Factory.Get()).Product.GetList(); // put all the products in the itemSource of the productListView
+            Func<BO.ProductForList?, bool>? func = item => (item ?? new BO.ProductForList()).Category == Select; // the condition \ predict we create checks if the categories are equal or not
+            products = (bl ?? BlApi.Factory.Get()).Product.GetList(func); // get A list with all the products that answer the deserve condition
             obsColProductForList = new ObservableCollection<BO.ProductForList>(products);
             //ProductListView.DataContext = obsColProductForList;
         }
@@ -66,9 +64,9 @@ namespace PL
 
         private void UpdateProductButton(object sender, MouseButtonEventArgs e)
         {
-            if (prdct == null)
+            if (Prdct == null)
                 return;
-            new ProductWindow((bl ?? BlApi.Factory.Get()), "UPDATE", prdct.ID).ShowDialog();
+            new ProductWindow((bl ?? BlApi.Factory.Get()), "UPDATE", Prdct.ID).ShowDialog();
             products = (bl ?? BlApi.Factory.Get()).Product.GetList(); // get A list with all the products that answer the deserve condition
             obsColProductForList = new ObservableCollection<BO.ProductForList>(products);// can't do anything else until it closed
             //ProductListView.DataContext = (bl ?? BlApi.Factory.Get()).Product.GetList(); // print the new list on the board

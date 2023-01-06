@@ -26,9 +26,6 @@ namespace PL
         string option;
         BO.OrderItem? orderItem;
         int idOrder;
-        public string AmountT { get; set; }
-        public bool AState { get; set; }
-        public Object seeU { get; set; }
         public OrderItemWindow(int idOfOrder, int idOfOrderItem, string opt, int? idProductFunc = null, int? amountFunc = null)
         {
             InitializeComponent();
@@ -41,10 +38,9 @@ namespace PL
             amountFunc = orderItem.Amount;
             if (option == "WATCH")
             {
-                AState = false;
-                seeU = Visibility.Hidden;
+                Amount.IsEnabled = false;
+                update.Visibility = Visibility.Hidden;
             }
-            else { AState= true; seeU = Visibility.Visible; }
         }
 
         private void UpdateOption(object sender, RoutedEventArgs e)
@@ -54,11 +50,12 @@ namespace PL
 
                 int tmp;
 
-                bool validInput = int.TryParse(AmountT, out tmp);// getting the Amount from the TextBox, and insert it into the orderItem
+                bool validInput = int.TryParse(Amount.Text, out tmp);// getting the InStock from the TextBox, and insert it into the orderItem
                 if (!validInput)
                     throw new Exception("amount is invalid");
                 (orderItem ?? new BO.OrderItem()).Amount = tmp;
             }
+
             catch (Exception err)
             {
 

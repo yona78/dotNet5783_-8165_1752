@@ -42,11 +42,11 @@ namespace PL
             CategorySelector.ItemsSource = Enum.GetValues(typeof(BO.Enums.Category)); // the itemSource is all of the possible categories 
         }
         /*public int ID { set; get; } // id of product
-        public string? Name { set; get; } // name of product
+        public string? Name1 { set; get; } // name of product
         public double Price { set; get; } // price of product
         public Enums.Category? Category { set; get; } // category of product
         public bool InStock { set; get; } // is the product has enugh in the Dbase
-        public int Amount { set; get; } // amount of items from this product in the cart*/
+        public int InStock { set; get; } // amount of items from this product in the cart*/
         private void SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             string? selected = CategorySelector.SelectedItem.ToString(); // the category that was selected in the comboBox
