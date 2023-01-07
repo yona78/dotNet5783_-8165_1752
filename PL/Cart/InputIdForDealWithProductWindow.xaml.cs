@@ -45,7 +45,7 @@ namespace PL
                 {
                     try
                     {
-                        cart = bl.Cart.UpdateAmount(cart, (product ?? new BO.Product()).ID);
+                        cart = blP.Cart.AddProduct(cart, (product ?? new BO.Product()).ID);
                     }
                     catch (Exception err)
                     {
@@ -60,7 +60,7 @@ namespace PL
                 {
                     try
                     {
-                        cart = bl.Cart.AddProduct(cart, (product ?? new BO.Product()).ID,0);
+                        cart = blP.Cart.UpdateAmount(cart, (product ?? new BO.Product()).ID,0);
                     }
                     catch (Exception err)
                     {
