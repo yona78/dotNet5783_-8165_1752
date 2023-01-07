@@ -51,7 +51,8 @@ namespace PL
             try
             {
                 listProductItems = (from p in listProduct select bl.Product.GetForCustomer(p.ID, cart));
-                obsColProductItem = new ObservableCollection<BO.ProductItem>(listProductItems);
+                var lst = from p in listProductItems let eval = p.InStock where eval ==true select p;
+                obsColProductItem = new ObservableCollection<BO.ProductItem>(lst);
             }
             catch (Exception err)
             {
