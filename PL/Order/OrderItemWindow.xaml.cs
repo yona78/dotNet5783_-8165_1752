@@ -43,8 +43,11 @@ namespace PL
         public string Amount { get; set; }
         public string TotalPrice { get; set; }
 
-        public OrderItemWindow(int idOfOrder, int idOfOrderItem, string opt, int? idProductFunc = null, int? amountFunc = null)
+        OrderWindow.Bonus bonus = new OrderWindow.Bonus();
+
+        public OrderItemWindow(int idOfOrder, int idOfOrderItem, string opt, OrderWindow.Bonus bns)
         {
+            bonus = bns;
             option = opt;
             orderItem = bl.Order.GetOrderManager(idOfOrder).Items.Find(x => x.ID == idOfOrderItem);
             //orderItem = (bl// we only want to update this orderItem.
@@ -57,8 +60,8 @@ namespace PL
             TotalPrice = orderItem.TotalPrice.ToString();
 
             idOrder = idOfOrder;
-            idProductFunc = orderItem.ProductID;
-            amountFunc = orderItem.Amount;
+            bns.ProductID = orderItem.ProductID;
+            bns.Amount = orderItem.Amount;
             if (option == "WATCH")
             {
                 IDState = false;
@@ -93,7 +96,7 @@ namespace PL
                 bool validInput = int.TryParse(Amount, out tmp);// getting the InStock from the TextBox, and insert it into the orderItem
                 if (!validInput)
                     throw new Exception("amount is invalid");
-                (orderItem ?? new BO.OrderItem()).Amount = tmp;
+                bonus.Amount = tmp; // here i put the new amount that theb manager has asked for
             }
 
             catch (Exception err)

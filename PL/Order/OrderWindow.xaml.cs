@@ -6,6 +6,7 @@ using System.Net.NetworkInformation;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Automation;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Data;
@@ -60,6 +61,14 @@ namespace PL
         public double TotalPrice { get; set; }
         public Array list { set; get; }
 
+         public class Bonus
+        {
+             public int ProductID { get; set; }
+             public int Amount { get; set; }
+            
+        }
+
+        Bonus bonus = new Bonus();
         public OrderWindow(string opt, int id) // idOrder of order, option of action that we want to do
         {
             option = opt;
@@ -191,7 +200,7 @@ namespace PL
             blP.Order.UpdateNameEmailAddress(CustomerName, CustomerEmail, CustomerAddress, ID); // the bonus we added
             try
             {
-                (blP ?? BlApi.Factory.Get()).Order.Update(idOfOrder, idProduct ?? new int(), amount ?? new int());
+                (blP ?? BlApi.Factory.Get()).Order.Update(ID, bonus.ProductID, bonus.Amount);
             }
             catch (Exception err)
             {
@@ -212,7 +221,7 @@ namespace PL
         }
         private void showItemsInOrder(object sender, RoutedEventArgs e)
         {
-            new OrderItemsWindow(idOfOrder, option == "UPDATE_MANAGER" ? "UPDATE" : "WATCH", idProduct, amount).ShowDialog();
+            new OrderItemsWindow(ID, option == "UPDATE_MANAGER" ? "UPDATE" : "WATCH", bonus).ShowDialog();
             // here i should also give values to amount and idOfProduct
         }
 
