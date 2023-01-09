@@ -41,15 +41,16 @@ namespace PL
 
         public BO.OrderItem OrderItem { set; get; }
 
+  
 
+       OrderWindow.Bonus bonus = new OrderWindow.Bonus();
         string option;
         int id;
         int? idProduct;
         int? amount;
-        public OrderItemsWindow(int idOfOrder, string opt, int? idProductFunc = null, int? amountFunc = null)
+        public OrderItemsWindow(int idOfOrder, string opt, OrderWindow.Bonus bns)
         {
-            idProduct = idProductFunc;
-            amount = amountFunc;
+            bonus = bns;
             id = idOfOrder;
             option = opt;
             this.Left = System.Windows.SystemParameters.PrimaryScreenWidth - Width; // i want that the window will be in the right side of the screen.
@@ -63,7 +64,7 @@ namespace PL
         {
             if (OrderItem == null)
                 return;
-            new OrderItemWindow(id, OrderItem.ID, option, idProduct, amount).ShowDialog(); // can't do anything else until it closed
+            new OrderItemWindow(id, OrderItem.ID, option, bonus).ShowDialog(); // can't do anything else until it closed
             orderItems = bl.Order.GetOrderManager(id).Items;
             obsColOrderItem = new ObservableCollection<BO.OrderItem>(orderItems);
         }
