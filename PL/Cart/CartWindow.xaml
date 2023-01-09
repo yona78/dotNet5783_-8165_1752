@@ -16,7 +16,7 @@
         </Grid.RowDefinitions>
         <Grid Name="MidGrid" HorizontalAlignment="Stretch" Height="auto" Grid.Row="0" VerticalAlignment="Stretch" Width="auto">
 
-            <ListView  ItemsSource="{Binding obsColOrderItem}"  Margin="10,10,10,10" >
+            <ListView  ItemsSource="{Binding obsColOrderItemInCart}"  Margin="10,10,10,10" >
                 <!--The Table of the data-->
                 <ListView.View>
                     <GridView>
