@@ -27,9 +27,6 @@ namespace PL
             this.Left = System.Windows.SystemParameters.PrimaryScreenWidth - Width; // i want that the window will be in the right side of the screen.
 
         }
-
-
-
         private void ButtonOfAccept_Click(object sender, RoutedEventArgs e)
         {
             try

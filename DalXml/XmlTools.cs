@@ -4,7 +4,7 @@ using System.Xml.Serialization;
 
 namespace DL
 {
-    internal class XMLTools
+    public class XMLTools
     {
         static string dir = @"..\xml\";
         //static XMLTools()

@@ -96,7 +96,7 @@ namespace PL
                 bool validInput = int.TryParse(Amount, out tmp);// getting the InStock from the TextBox, and insert it into the orderItem
                 if (!validInput)
                     throw new Exception("amount is invalid");
-                bonus.Amount = tmp; // here i put the new amount that theb manager has asked for
+                bonus.Amount = tmp; // here i put the new amount that theb manager has asked for`
             }
 
             catch (Exception err)
