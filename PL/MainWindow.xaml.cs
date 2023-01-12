@@ -20,18 +20,11 @@ namespace PL
         {
             new LoginWindow().ShowDialog(); // i send him to a login window
         }
-        private void MoveToNewOrderDataWindow(object sender, RoutedEventArgs e)
+        private void MoveToCustomerDataWindow(object sender, RoutedEventArgs e)
         {
-            new ShowProductItemsWindow().ShowDialog();
+            new CustomerWindow().ShowDialog(); // i send him to a login window
         }
-        private void MoveToOrderTrackingDataWindow(object sender, RoutedEventArgs e)
-        {
-            new OrderTrackingListWindow().ShowDialog(); // if he clicked the button, we want to show him the list of the avilable products. can't do anything else until it closed
-        }
-        private void MoveToBonusWindow(object sender, RoutedEventArgs e)
-        {
-            // new OrderTrackingWindow().ShowDialog(); // if he clicked the button, we want to show him the list of the avilable products. can't do anything else until it closed
-        }
+      
 
     }
 }

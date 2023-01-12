@@ -14,7 +14,7 @@ using System.Windows.Shapes;
 
 namespace PL
 {
-    
+
     /// <summary>
     /// Interaction logic for AdminWindow.xaml
     /// </summary>
@@ -48,7 +48,12 @@ namespace PL
         {
             new RemoveAdminWindow().ShowDialog();
         }
+        private void MoveToOrderTrackingDataWindow(object sender, RoutedEventArgs e)
+        {
+            new OrderTrackingListWindow().ShowDialog(); // if he clicked the button, we want to show him the list of the avilable products. can't do anything else until it closed
+        }
     }
+
 }
 
 ///////////////////////////////////////

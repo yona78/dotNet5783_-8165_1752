@@ -10,10 +10,7 @@
 
 
         <Button x:Name="ManagerView" Click="MoveToManagerDataWindow" Content="Admin" Width="150" Height="80" FontSize="30" Background="#FF00C5FF" Margin="132,83,518,271" />
-        <Button x:Name="NewOrderView" Click="MoveToNewOrderDataWindow" Content ="New Order" Width="150" Height="80" FontSize="26" Background="#FF0045FF" Margin="132,295,518,59" >
-        </Button>
-        <Button x:Name="OrderTraackingView" Click="MoveToOrderTrackingDataWindow" Content="Order Tracking" Width="150" Height="80" FontSize="22" Background="#FF00F5FF" Margin="516,83,134,271" />
-        <Button x:Name="Bonus" Click="MoveToBonusWindow" Content="Bonus" Width="150" Height="80" FontSize="30" Background="#FF0005FF" Margin="516,295,134,59" />
+        <Button x:Name="CustomerView" Click="MoveToCustomerDataWindow" Content="User" Width="150" Height="80" FontSize="30" Background="#FF00C5FF" Margin="516,83,134,271" />
         <!--when pressing it, you move to the ProductList window-->
 
     </Grid>
