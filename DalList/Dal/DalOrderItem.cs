@@ -1,12 +1,15 @@
 ﻿using DalApi;
 using DO;
 namespace Dal;
+using System.Runtime.CompilerServices;
+
 /// <summary>
 /// public class for implemention of orderItem
 /// </summary>
 internal class DalOrderItem : IOrderItem
 {
     public DalOrderItem() { }
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public int Add(OrderItem newOrderItem) // func that adds an orderItem to the array of orderItems, and return its id
     {
         if (DataSource._orderItems.Count == DataSource.maxOrderItems) // checks if the arr is full
@@ -56,10 +59,12 @@ internal class DalOrderItem : IOrderItem
         //DataSource._orderItems.Add(newOrderItem);
         //return newOrderItem.OrderItemID; // return the id of the orderItem we added
     }
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public OrderItem Get(int id) // func that return orderItem by its id 
     {
         return Get(orderItem => (orderItem ?? new OrderItem()).OrderItemID == id);
     }
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public IEnumerable<OrderItem?> GetDataOf(Func<OrderItem?, bool>? predict = null) // func that returns all of the orderItems
     {
         if (predict == null)
@@ -67,6 +72,7 @@ internal class DalOrderItem : IOrderItem
         IEnumerable<OrderItem?> data = DataSource._orderItems.Where(x => predict(x));
         return data;
     }
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Delete(int idOrderItem) // func that deletes orderItem from the array
     {
         if (DataSource._orderItems.RemoveAll(o => o?.OrderItemID == idOrderItem) == 0)
@@ -83,6 +89,7 @@ internal class DalOrderItem : IOrderItem
         //if (!found)
         //    throw new ExceptionObjectCouldNotBeFound("orderItem");
     }
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Update(OrderItem newOrderItem) // func that updates an orderItem in his array
     {
         bool found = false;
@@ -139,12 +146,14 @@ internal class DalOrderItem : IOrderItem
             //    throw new ExceptionObjectCouldNotBeFound("orderItem");
         }
     }
+    [MethodImpl(MethodImplOptions.Synchronized)]
 
     // The special functions we were asked to add
     public OrderItem GetOrderItem(int idOrder, int idProduct) // func that reutrns orderItem by its order and product ids
     {
         return Get(orderItem => ((orderItem ?? new OrderItem()).OrderID == idOrder) && ((orderItem ?? new OrderItem()).ProductID == idProduct));
     }
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public IEnumerable<OrderItem?> GetDataOfOrderItem(int idOfOrder) // func that returns all the orderItems from the specific order
     {
         return GetDataOf(product => (product ?? new OrderItem()).OrderID == idOfOrder);
@@ -158,7 +167,7 @@ internal class DalOrderItem : IOrderItem
         //}
         //return ret;
     }
-
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public OrderItem Get(Func<OrderItem?, bool>? func) // func that returns an orderItem by a term it gets.
     {
         OrderItem? oi = DataSource._orderItems?.FirstOrDefault(ot => func(ot));

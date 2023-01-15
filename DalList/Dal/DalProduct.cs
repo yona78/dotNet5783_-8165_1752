@@ -1,12 +1,15 @@
 ﻿using DalApi;
 using DO;
 namespace Dal;
+using System.Runtime.CompilerServices;
+
 /// <summary>
 /// public class for implemention of product 
 /// </summary>
 internal class DalProduct : IProduct
 {
     public DalProduct() { }
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public int Add(Product newProduct) // func that adds an product to the array of products, and return its id
     {
         if (DataSource._products.Count() == DataSource.maxProducts)
@@ -30,10 +33,12 @@ internal class DalProduct : IProduct
         //DataSource._products.Add(newProduct);
 
     }
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public Product Get(int id) // func that reutrns product by its id
     {
         return Get(product => (product ?? new Product()).ID == id);
     }
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public IEnumerable<Product?> GetDataOf(Func<Product?, bool>? predict = null) // func that returns all of the products
     {
         if (predict == null)
@@ -41,6 +46,7 @@ internal class DalProduct : IProduct
         IEnumerable<Product?> data = DataSource._products.Where(x => predict(x));
         return data;
     }
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Delete(int id) // func that deletes product from the array
     {
         if (DataSource._products.RemoveAll(o => o?.ID == id) == 0)
@@ -57,6 +63,7 @@ internal class DalProduct : IProduct
         //if (!found) // if the product isn't exist throw an exception
         //    throw new ExceptionObjectCouldNotBeFound("product");
     }
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Update(Product newProduct) // func that updates product in his array
     {
         try
@@ -84,6 +91,7 @@ internal class DalProduct : IProduct
         //    throw new ExceptionObjectCouldNotBeFound("product");
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public Product Get(Func<Product?, bool>? func) // func that returns an proudct by a term it gets.
     {
         Product? p = DataSource._products?.FirstOrDefault(x => func(x));

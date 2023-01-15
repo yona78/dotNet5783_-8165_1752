@@ -1,5 +1,7 @@
 ﻿using DalApi;
 using DO;
+using System.Runtime.CompilerServices;
+
 
 namespace Dal;
 /// <summary>
@@ -8,6 +10,7 @@ namespace Dal;
 internal class DalOrder : IOrder
 {
     public DalOrder() { }
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public int Add(Order newOrder) // func that adds an order to the array of orders, and return its id 
     {
         int curEmptyOrder = (DataSource._orders).Count(); // check whether it is possible to add this new order
@@ -33,10 +36,12 @@ internal class DalOrder : IOrder
         }
         throw new ExceptionObjectAlreadyExist("order");
     }
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public Order Get(int id) // func that reutrns order by its id
     {
         return Get(order => (order ?? new Order()).ID == id);
     }
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public IEnumerable<Order?> GetDataOf(Func<Order?, bool>? predict = null) // func that returns all of the orders
     {
         if (predict == null)
@@ -44,6 +49,7 @@ internal class DalOrder : IOrder
         IEnumerable<Order?> data = DataSource._orders.Where(x => predict(x));
         return data;
     }
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Delete(int id) // func that deletes order from the array
     {
         if(DataSource._orders.RemoveAll(o => o?.ID == id)==0)
@@ -62,6 +68,7 @@ internal class DalOrder : IOrder
 
 
     }
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Update(Order newOrder) // func that updates an order in his array
     {
         //bool found = false;
@@ -88,7 +95,7 @@ internal class DalOrder : IOrder
         //if (!found)
         //    throw new ExceptionObjectCouldNotBeFound("order"); // checks if the speicifed order was found 
     }
-
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public Order Get(Func<Order?, bool>? func) // func that returns an order by a term it gets.
     {
         Order? order = DataSource._orders.FirstOrDefault(o => func(o));

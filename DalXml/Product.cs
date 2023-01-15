@@ -5,6 +5,8 @@ using System.Diagnostics;
 using System.Linq;
 using System.Xml.Linq;
 using static DO.Enums;
+using System.Runtime.CompilerServices;
+
 
 namespace Dal;
 internal class Product : IProduct
@@ -12,6 +14,7 @@ internal class Product : IProduct
     
     string FPath = "Product.xml";
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public int Add(DO.Product toAdd)
     {
         XElement ProductRoot = XMLTools.LoadListFromXMLElement(FPath);
@@ -36,6 +39,7 @@ internal class Product : IProduct
         return toAdd.ID;
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Delete(int id)
     {
         XElement ProductRoot = XMLTools.LoadListFromXMLElement(FPath);
@@ -53,6 +57,7 @@ internal class Product : IProduct
         }
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public DO.Product Get(Func<DO.Product?, bool>? func)
     {
         IEnumerable<DO.Product?> lst = GetDataOf();
@@ -70,11 +75,13 @@ internal class Product : IProduct
         return (p ?? new DO.Product());
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public DO.Product Get(int id)
     {
         return Get(product => (product ?? new DO.Product()).ID == id);
 
     }
+    [MethodImpl(MethodImplOptions.Synchronized)]
 
     public IEnumerable<DO.Product?> GetDataOf(Func<DO.Product?, bool>? predict = null)
     {
@@ -91,7 +98,7 @@ internal class Product : IProduct
                 }).Where(product => predict is null ? true : predict(product));
 
     }
-
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Update(DO.Product toUpdate)
     {
         XElement ProductRoot = XMLTools.LoadListFromXMLElement(FPath);

@@ -1,6 +1,8 @@
 ﻿using DalApi;
 using DL;
 using System.Xml.Linq;
+using System.Runtime.CompilerServices;
+
 
 namespace Dal
 {
@@ -10,6 +12,7 @@ namespace Dal
         private const string ordersFileName = "orders.xml";
         private const string productsFileName = "Product.xml";
         string FPath_n = @"..\xml\config.xml";
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public int Add(DO.OrderItem toAdd)
         {
             List<DO.OrderItem?> orders = XMLTools.LoadListFromXMLSerializer<DO.OrderItem?>(orderItemFileName);
@@ -62,7 +65,7 @@ namespace Dal
             }
             throw new ExceptionObjectAlreadyExist("orderItem");
         }
-
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void Delete(int id)
         {
             List<DO.OrderItem> orders = XMLTools.LoadListFromXMLSerializer<DO.OrderItem>(orderItemFileName);
@@ -77,7 +80,7 @@ namespace Dal
             }
             XMLTools.SaveListToXMLSerializer<DO.OrderItem>(orders, orderItemFileName);
         }
-
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public DO.OrderItem Get(Func<DO.OrderItem?, bool>? func)
         {
             List<DO.OrderItem?> orders = XMLTools.LoadListFromXMLSerializer<DO.OrderItem?>(orderItemFileName);
@@ -92,12 +95,12 @@ namespace Dal
             //}
             //throw new ExceptionObjectCouldNotBeFound("orderItem"); // else, if i couldn't have found this order, i will throw an exception
         }
-
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public DO.OrderItem Get(int id)
         {
             return Get(orderItem => (orderItem ?? new DO.OrderItem()).OrderItemID == id);
         }
-
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<DO.OrderItem?> GetDataOf(Func<DO.OrderItem?, bool>? predict = null)
         {
             List<DO.OrderItem?> orders = XMLTools.LoadListFromXMLSerializer<DO.OrderItem?>(orderItemFileName);
@@ -106,7 +109,7 @@ namespace Dal
             IEnumerable<DO.OrderItem?> data = orders.Where(x => predict(x));
             return data;
         }
-
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<DO.OrderItem?> GetDataOfOrderItem(int idOfOrder)
         {
             //List<DO.OrderItem?> orders = XMLTools.LoadListFromXMLSerializer<DO.OrderItem?>(orderItemFileName);
@@ -121,12 +124,12 @@ namespace Dal
             //return ret;
             return GetDataOf(product => (product ?? new DO.OrderItem()).OrderID == idOfOrder);
         }
-
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public DO.OrderItem GetOrderItem(int idOrder, int idProduct)
         {
             return Get(orderItem => ((orderItem ?? new DO.OrderItem()).OrderID == idOrder) && ((orderItem ?? new DO.OrderItem()).ProductID == idProduct));
         }
-
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void Update(DO.OrderItem toUpdate)
         {
             List<DO.OrderItem?> orders = XMLTools.LoadListFromXMLSerializer<DO.OrderItem?>(orderItemFileName);

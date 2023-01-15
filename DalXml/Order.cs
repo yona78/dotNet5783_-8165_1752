@@ -3,6 +3,8 @@ using DL;
 using DO;
 using System;
 using System.Xml.Linq;
+using System.Runtime.CompilerServices;
+
 
 namespace Dal
 {
@@ -10,6 +12,7 @@ namespace Dal
     {
         private const string ordersFileName = "orders.xml";
         string FPath_n = @"..\xml\config.xml";
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public int Add(DO.Order toAdd)
         {
             List<DO.Order> orders = XMLTools.LoadListFromXMLSerializer<DO.Order>(ordersFileName);
@@ -22,6 +25,7 @@ namespace Dal
             return toAdd.ID;
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void Delete(int id)
         {
             List<DO.Order> orders = XMLTools.LoadListFromXMLSerializer<DO.Order>(ordersFileName);
@@ -37,6 +41,7 @@ namespace Dal
             XMLTools.SaveListToXMLSerializer<DO.Order>(orders, ordersFileName);
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public DO.Order Get(Func<DO.Order?, bool>? func)
         {
             List<DO.Order?> orders = XMLTools.LoadListFromXMLSerializer<DO.Order?>(ordersFileName);
@@ -54,10 +59,12 @@ namespace Dal
             return (o?? new DO.Order());
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public DO.Order Get(int id)
         {
             return Get(order => (order ?? new DO.Order()).ID == id);
         }
+        [MethodImpl(MethodImplOptions.Synchronized)]
 
         public IEnumerable<DO.Order?> GetDataOf(Func<DO.Order?, bool>? predict = null)
         {
@@ -70,6 +77,7 @@ namespace Dal
             return data;
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void Update(DO.Order toUpdate)
         {
             List<DO.Order> orders = XMLTools.LoadListFromXMLSerializer<DO.Order>(ordersFileName);
