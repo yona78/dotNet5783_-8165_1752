@@ -24,7 +24,11 @@ namespace PL
         {
             new CustomerWindow().ShowDialog(); // i send him to a login window
         }
-      
+        
+        private void StartSimulator(object sender, RoutedEventArgs e)
+        {
+            new simulator().Show();
+        }
 
     }
 }

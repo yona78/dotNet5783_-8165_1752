@@ -493,7 +493,7 @@ internal class Order : BlApi.IOrder  // object of the manager, on a order a clie
         {
             if(o?.DeliveryDate == null || o?.DeliveryDate == DateTime.MinValue)
             {
-                if(o?.ShipDate==null || o?.ShipDate==DateTime.MaxValue)
+                if(o?.ShipDate==null || o?.ShipDate==DateTime.MinValue)
                 {
                     if(o?.OrderDate<oldest)
                     {
