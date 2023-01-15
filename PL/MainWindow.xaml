@@ -6,6 +6,9 @@
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
+    <Window.Icon>
+        <BitmapImage UriSource="C:\Users\yonao\source\repos\dotNet5783_-8165_1752\icon.png.png" DecodePixelWidth="32" DecodePixelHeight="32"/>
+    </Window.Icon>
     <Grid>
 
 
