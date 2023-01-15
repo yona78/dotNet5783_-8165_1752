@@ -1,7 +1,7 @@
 ﻿
 using BlApi;
 using BO;
-
+using System.Runtime.CompilerServices;
 using DalApi;
 using DO;
 using System.Data;
@@ -18,6 +18,7 @@ internal class Order : BlApi.IOrder  // object of the manager, on a order a clie
     /// The functions returns data about all the orders
     /// </summary>
     /// <returns>list with data of all the orders</returns>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public IEnumerable<BO.OrderForList?> GetOrderList() // returns a list of the orders in the dBase to present on the screen to the customer
     {
         List<BO.OrderForList?> listToReturn = new List<BO.OrderForList?>();
@@ -64,6 +65,7 @@ internal class Order : BlApi.IOrder  // object of the manager, on a order a clie
     /// <returns>the data of order</returns>
     /// <exception cref="ExceptionDataIsInvalid"></exception>
     /// <exception cref="ExceptionLogicObjectCouldNotBeFound"></exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public BO.Order GetOrderManager(int idOrder) // func that returns an order from the dBase to the using of the manager
     {
         if (idOrder < 0) // throw exception if the id isn't positive
@@ -132,6 +134,7 @@ internal class Order : BlApi.IOrder  // object of the manager, on a order a clie
     /// <param name="idOrder">id of the order the menager wants</param>
     /// <returns>list with all the statues the order was with the date</returns>
     /// <exception cref="ExceptionLogicObjectCouldNotBeFound"></exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public BO.OrderTracking TrackOrder(int idOrder) // func that help me to track an order, by creating and sending a entity that is adjusted for working with orders
     {
         BO.OrderTracking orderTracking = new BO.OrderTracking();
@@ -174,6 +177,7 @@ internal class Order : BlApi.IOrder  // object of the manager, on a order a clie
     /// <param name="amount">the new amount </param>
     ///  <param name="idOfProduct">the product to update </param>
     /// <exception cref="NotImplementedException"></exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Update(int idOrder, int idOfProduct, int amount) // update for the manager, to update an order
     {
         DO.Order order = new DO.Order();
@@ -238,6 +242,7 @@ internal class Order : BlApi.IOrder  // object of the manager, on a order a clie
     /// <returns>the new order after the change</returns>
     /// <exception cref="ExceptionLogicObjectCouldNotBeFound"></exception>
     /// <exception cref="ExceptionObjectIsNotAviliable"></exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public BO.Order UpdateArrived(int idOrder) // update that this order is know been delivering (Arrived)
     {
         DO.Order order = new DO.Order();
@@ -273,6 +278,7 @@ internal class Order : BlApi.IOrder  // object of the manager, on a order a clie
     /// <returns>the new order</returns>
     /// <exception cref="ExceptionLogicObjectCouldNotBeFound"></exception>
     /// <exception cref="ExceptionObjectIsNotAviliable"></exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public BO.Order UpdateSent(int idOrder) // update that this order in know been sending. (Sent)
     {
         DO.Order order = new DO.Order();
@@ -308,6 +314,7 @@ internal class Order : BlApi.IOrder  // object of the manager, on a order a clie
     /// <param name="func"></param>the predict, the specific condition
     /// <returns>the order ti return</returns>
     /// <exception cref="ExceptionObjectCouldNotBeFound"></exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public BO.Order Get(Func<BO.Order?, bool>? func) // func that returns an order by a term it gets.
     {
         IEnumerable<DO.Order?> orders = dal.Order.GetDataOf();
@@ -381,6 +388,7 @@ internal class Order : BlApi.IOrder  // object of the manager, on a order a clie
     /// </summary>
     /// <param name="predict"></param>the condition we get
     /// <returns>the order to return</returns>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public IEnumerable<BO.Order?> GetDataOf(Func<BO.Order?, bool>? predict = null) // func that returns all of the orders    
     {
         IEnumerable<DO.Order?> orders = dal.Order.GetDataOf();
@@ -449,6 +457,7 @@ internal class Order : BlApi.IOrder  // object of the manager, on a order a clie
     /// <param name="customerEmail"></param>
     /// <param name="customerAddress"></param>
     /// <param name="ID"></param>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void UpdateNameEmailAddress(string customerName, string customerEmail, string customerAddress, int ID) // Bonus func that we addes, for updateOrderCutomer (and also manager)
     {
         DO.Order order = new DO.Order();
@@ -472,6 +481,37 @@ internal class Order : BlApi.IOrder  // object of the manager, on a order a clie
         {
             throw new ExceptionLogicObjectCouldNotBeFound("order", inner);
         }
+    }
+
+    [MethodImpl(MethodImplOptions.Synchronized)]
+    public int? idOrderUpdateNow()
+    {
+        IEnumerable<DO.Order?> orders = dal.Order.GetDataOf();
+        int? id = null;
+        DateTime? oldest = null;
+        foreach (var o in orders) 
+        {
+            if(o?.DeliveryDate == null || o?.DeliveryDate == DateTime.MinValue)
+            {
+                if(o?.ShipDate==null || o?.ShipDate==DateTime.MaxValue)
+                {
+                    if(o?.OrderDate<oldest)
+                    {
+                        oldest = o?.OrderDate;
+                        id = o?.ID;
+                    }
+                }
+                else
+                {
+                    if(o?.ShipDate<oldest)
+                    {
+                        oldest = o?.ShipDate;
+                        id = o?.ID;
+                    }
+                }
+            }
+        }
+        return id;
     }
 }
 

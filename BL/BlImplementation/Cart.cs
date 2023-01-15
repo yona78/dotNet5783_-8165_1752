@@ -1,6 +1,7 @@
 ﻿using BlApi;
 using BO;
 using DalApi;
+using System.Runtime.CompilerServices;
 
 
 
@@ -20,6 +21,7 @@ internal class Cart : ICart // cart of customer
     /// <exception cref="ExceptionLogicObjectCouldNotBeFound"></exception>
     /// <exception cref="ExceptionObjectIsNotAviliable"></exception>
     /// <exception cref="ExceptionNotEnoughInDataBase"></exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public BO.Cart AddProduct(BO.Cart cart, int idProduct) // add a product to the cart of the customer. The customer will use this func
     {
         bool productExistInCart = false;
@@ -93,6 +95,7 @@ internal class Cart : ICart // cart of customer
     /// <exception cref="ExceptionNotEnoughInDataBase"></exception>
     /// <exception cref="ExceptionLogicObjectAlreadyExist"></exception>
     /// <exception cref="ExceptionLogicObjectCouldNotBeFound"></exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void MakeOrder(BO.Cart cart, string name, string address, string email) // func that take the customer cart and make it into a real order in the dBase
     {
         // checks if all the data in the cart is valid
@@ -181,6 +184,7 @@ internal class Cart : ICart // cart of customer
     /// <exception cref="ExceptionDataIsInvalid"></exception>
     /// <exception cref="ExceptionLogicObjectCouldNotBeFound"></exception>
     /// <exception cref="ExceptionObjectIsNotAviliable"></exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public BO.Cart UpdateAmount(BO.Cart cart, int idProduct, int amount) // func that updates the amount of a product in the cart
     {
         if (cart.Items == null || cart.Items.Count == 0)

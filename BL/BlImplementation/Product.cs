@@ -3,6 +3,7 @@ using BO;
 using DalApi;
 using DO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 
 namespace BlImplementation;
 /// <summary>
@@ -19,6 +20,7 @@ internal class Product : BlApi.IProduct // class for product, that the manager c
     /// <exception cref="ExceptionDataIsInvalid"></exception>
     /// <exception cref="ExceptionLogicObjectCouldNotBeFound"></exception>
     /// <exception cref="ExceptionLogicObjectAlreadyExist"></exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Add(BO.Product product) // func that gets a proudct, and add it into the dBase
     {
         if (product.ID <= 0 || product.Name == null || product.Price <= 0 || product.InStock < 0)
@@ -48,6 +50,7 @@ internal class Product : BlApi.IProduct // class for product, that the manager c
     /// <param name="idProduct">the id of product to delete</param>
     /// <exception cref="ExceptionLogicObjectAlreadyExist"></exception>
     /// <exception cref="ExceptionLogicObjectCouldNotBeFound"></exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Delete(int idProduct) // func that gets and id of product, and deletes him from the dBase. The only that can use this func is the manager
     {
         IEnumerable<DO.Order?> listOfOrders = dal.Order.GetDataOf();
@@ -76,6 +79,7 @@ internal class Product : BlApi.IProduct // class for product, that the manager c
     /// <returns>the data of the product in cart</returns>
     /// <exception cref="ExceptionDataIsInvalid"></exception>
     /// <exception cref="ExceptionLogicObjectCouldNotBeFound"></exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public ProductItem GetForCustomer(int idProduct, BO.Cart cart) // func that gets an id of product in the client's cart, and his cart, and return the data of the specific product and the cart, as an item in the cart. 
     {
         DO.Product product = new DO.Product(); // i want to get the specific product from the dBase
@@ -125,6 +129,7 @@ internal class Product : BlApi.IProduct // class for product, that the manager c
     /// <returns>the product the user wants</returns>
     /// <exception cref="ExceptionLogicObjectCouldNotBeFound"></exception>
     /// <exception cref="ExceptionDataIsInvalid"></exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public BO.Product GetForManager(int idProduct) // func that gets an id of product, and returns the product from this specific id. The manager will use this logic object, in oppsite from the last func, when the customer is going to use it, as it will be printed to the screen
     {
         DO.Product product = new DO.Product();
@@ -153,6 +158,7 @@ internal class Product : BlApi.IProduct // class for product, that the manager c
     /// The function return all the products in the store
     /// </summary>
     /// <returns>the list with all the products</returns>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public IEnumerable<ProductForList?> GetList(Func<BO.ProductForList?, bool>? func = null) // func that returns all the products in a special logic object, which either the manager can use it or it will be printed to the customer screen
     {
         IEnumerable<DO.Product?> listOfProducts = dal.Product.GetDataOf();
@@ -185,6 +191,7 @@ internal class Product : BlApi.IProduct // class for product, that the manager c
     /// <param name="product">the new product</param>
     /// <exception cref="ExceptionDataIsInvalid"></exception>
     /// <exception cref="ExceptionLogicObjectCouldNotBeFound"></exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Update(BO.Product product) // func that gets a proudct, and update him in the dBase
     {
 
@@ -211,6 +218,7 @@ internal class Product : BlApi.IProduct // class for product, that the manager c
     /// <param name="func"></param>the predict, the specific condition
     /// <returns>the specified product</returns>
     /// <exception cref="ExceptionObjectCouldNotBeFound"></exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public BO.Product Get(Func<BO.Product?, bool>? func) // func that returns proudct by a term it gets.
     {
         IEnumerable<DO.Product?> products = dal.Product.GetDataOf();
@@ -257,6 +265,7 @@ internal class Product : BlApi.IProduct // class for product, that the manager c
     /// </summary>
     /// <param name="predict"></param>the condition we get
     /// <returns>the specified product</returns>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public IEnumerable<BO.Product?> GetDataOf(Func<BO.Product?, bool>? predict = null) // func that returns all of the products
     {
         IEnumerable<DO.Product?> products = dal.Product.GetDataOf();
