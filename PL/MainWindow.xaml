@@ -7,11 +7,10 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Window.Icon>
-        <BitmapImage UriSource="C:\Users\yonao\source\repos\dotNet5783_-8165_1752\icon.png.png" DecodePixelWidth="32" DecodePixelHeight="32"/>
+        <BitmapImage UriSource="C:\Users\avish\source\repos\dotNet5783_-8165_1752\Resources\Pictures\icon.png.png" DecodePixelWidth="32" DecodePixelHeight="32"/>
     </Window.Icon>
+    
     <Grid>
-
-
         <Button x:Name="ManagerView" Click="MoveToManagerDataWindow" Content="Admin" Width="150" Height="80" FontSize="30" Background="#FF00C5FF" Margin="132,83,518,271" />
         <Button x:Name="CustomerView" Click="MoveToCustomerDataWindow" Content="User" Width="150" Height="80" FontSize="30" Background="#FF00C5FF" Margin="516,83,134,271" />
         <Button Click="StartSimulator" Content="simulator" Width="150" Height="80" FontSize="30"  Margin="325,263,325,91" />
