@@ -7,6 +7,9 @@
         mc:Ignorable="d"
         DataContext="{Binding RelativeSource={RelativeSource self}}"
         Title="MakeOrderWindow" Height="450" Width="800">
+    <Window.Icon>
+        <BitmapImage UriSource="/images/iconShop.png" DecodePixelWidth="32" DecodePixelHeight="32"/>
+    </Window.Icon>
     <Grid>
         <TextBox  Text="{Binding NameInput}" HorizontalAlignment="Left" Margin="460,227,0,0" TextWrapping="Wrap" FontSize="20"  VerticalAlignment="Top" Width="120"/>
         <TextBlock HorizontalAlignment="Left" Margin="227,227,0,0" TextWrapping="Wrap" FontSize="20" Text="Give me Name please: " VerticalAlignment="Top"/>

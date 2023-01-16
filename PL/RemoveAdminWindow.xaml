@@ -7,6 +7,9 @@
         mc:Ignorable="d"
         DataContext="{Binding RelativeSource={RelativeSource self}}"
         Title="RemoveAdminWindow" Height="450" Width="800">
+    <Window.Icon>
+        <BitmapImage UriSource="/images/iconShop.png" DecodePixelWidth="32" DecodePixelHeight="32"/>
+    </Window.Icon>
     <Grid>
         <TextBox  Text ="{Binding Username}" HorizontalAlignment="Left" Margin="468,217,0,0" TextWrapping="Wrap" FontSize="20"  VerticalAlignment="Top" Width="120"/>
         <TextBlock HorizontalAlignment="Left" Margin="227,217,0,0" TextWrapping="Wrap" FontSize="20" Text="Give me username please: " VerticalAlignment="Top"/>

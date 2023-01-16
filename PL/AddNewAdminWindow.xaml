@@ -7,6 +7,9 @@
         mc:Ignorable="d"
         DataContext="{Binding RelativeSource={RelativeSource self}}"
         Title="AddNewAdminWindow" Height="450" Width="800">
+    <Window.Icon>
+        <BitmapImage UriSource="/images/iconShop.png" DecodePixelWidth="32" DecodePixelHeight="32"/>
+    </Window.Icon>
     <Grid>
         <Button Content="register" Click="RegisterFunc"  HorizontalAlignment="Center" Margin="0,334,0,0" VerticalAlignment="Top" />
         <TextBlock HorizontalAlignment="Left" Margin="272,157,0,0" TextWrapping="Wrap" Text="username:" VerticalAlignment="Top" Height="18" Width="73"/>

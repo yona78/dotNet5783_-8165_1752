@@ -6,6 +6,9 @@
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
         Title="simulator" Height="450" Width="800">
+    <Window.Icon>
+        <BitmapImage UriSource="/images/iconShop.png" DecodePixelWidth="32" DecodePixelHeight="32"/>
+    </Window.Icon>
     <Grid>
         
     </Grid>
