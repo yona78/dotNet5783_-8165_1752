@@ -47,9 +47,9 @@ internal class Order : BlApi.IOrder  // object of the manager, on a order a clie
             price = 0;
             amountOfItems = 0;
             DateTime now = DateTime.Now;
-            if (now > (order ?? new DO.Order()).DeliveryDate && (order ?? new DO.Order()).DeliveryDate != null) // it means the order has already arrived. 
+            if (now > (order ?? new DO.Order()).DeliveryDate && (order ?? new DO.Order()).DeliveryDate != null && (order ?? new DO.Order()).DeliveryDate != DateTime.MinValue) // it means the order has already arrived. 
                 tmp.OrderStatus = BO.Enums.Status.Arrived;
-            else if (now > (order ?? new DO.Order()).ShipDate && (order ?? new DO.Order()).ShipDate != null) // it means it has been sent, but hasn't arrived yet
+            else if (now > (order ?? new DO.Order()).ShipDate && (order ?? new DO.Order()).ShipDate != null&&(order ?? new DO.Order()).ShipDate != DateTime.MinValue) // it means it has been sent, but hasn't arrived yet
                 tmp.OrderStatus = BO.Enums.Status.Sent;
             else
                 tmp.OrderStatus = BO.Enums.Status.Confirmed; // it must be confirmed, otherwise it wasn't an order in the dBase
@@ -152,13 +152,13 @@ internal class Order : BlApi.IOrder  // object of the manager, on a order a clie
         DateTime now = DateTime.Now;
         List<(DateTime, BO.Enums.Status)?> lst = new List<(DateTime, BO.Enums.Status)?>();
         lst.Add(((DateTime, BO.Enums.Status)?)(order.OrderDate ?? new DateTime(), BO.Enums.Status.Confirmed));
-        if (now > order.DeliveryDate && order.DeliveryDate != null) // it means the order has already arrived. 
+        if (now > order.DeliveryDate && order.DeliveryDate != null && order.DeliveryDate >DateTime.MinValue) // it means the order has already arrived. 
         {
             orderTracking.OrderStatus = BO.Enums.Status.Arrived;
             lst.Add(((DateTime, BO.Enums.Status)?)(order.ShipDate ?? new DateTime(), BO.Enums.Status.Sent));
             lst.Add(((DateTime, BO.Enums.Status)?)(order.DeliveryDate, BO.Enums.Status.Arrived));
         }
-        else if (now > order.ShipDate && order.ShipDate != null)
+        else if (now > order.ShipDate && order.ShipDate != null&& order.ShipDate>DateTime.MinValue)
         {// it means it has been sent, but hasn't arrived yet
             lst.Add(((DateTime, BO.Enums.Status)?)(order.ShipDate ?? new DateTime(), BO.Enums.Status.Sent));
             orderTracking.OrderStatus = BO.Enums.Status.Sent;
@@ -362,9 +362,9 @@ internal class Order : BlApi.IOrder  // object of the manager, on a order a clie
 
             // now i will check the status of the order, by comparing the current time, and the time in the data.
             DateTime now = DateTime.Now;
-            if (now > order.DeliveryDate && order.DeliveryDate != null) // it means the order has already arrived. 
+            if (now > order.DeliveryDate && order.DeliveryDate != null && order.DeliveryDate > DateTime.MinValue) // it means the order has already arrived. 
                 order.OrderStatus = BO.Enums.Status.Arrived;
-            else if (now > order.ShipDate && order.ShipDate != null) // it means it has been sent, but hasn't arrived yet
+            else if (now > order.ShipDate && order.ShipDate != null && order.ShipDate > DateTime.MinValue) // it means it has been sent, but hasn't arrived yet
                 order.OrderStatus = BO.Enums.Status.Sent;
             else
                 order.OrderStatus = BO.Enums.Status.Confirmed; // it must be confirmed, otherwise it wasn't an order in the dBase
@@ -435,9 +435,9 @@ internal class Order : BlApi.IOrder  // object of the manager, on a order a clie
 
             // now i will check the status of the order, by comparing the current time, and the time in the data.
             DateTime now = DateTime.Now;
-            if (now > order.DeliveryDate && order.DeliveryDate != null) // it means the order has already arrived. 
+            if (now > order.DeliveryDate && order.DeliveryDate != null && order.DeliveryDate > DateTime.MinValue) // it means the order has already arrived. 
                 order.OrderStatus = BO.Enums.Status.Arrived;
-            else if (now > order.ShipDate && order.ShipDate != null) // it means it has been sent, but hasn't arrived yet
+            else if (now > order.ShipDate && order.ShipDate != null && order.ShipDate > DateTime.MinValue) // it means it has been sent, but hasn't arrived yet
                 order.OrderStatus = BO.Enums.Status.Sent;
             else
                 order.OrderStatus = BO.Enums.Status.Confirmed; // it must be confirmed, otherwise it wasn't an order in the dBase
