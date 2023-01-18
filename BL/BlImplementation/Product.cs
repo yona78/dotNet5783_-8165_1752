@@ -33,7 +33,10 @@ internal class Product : BlApi.IProduct // class for product, that the manager c
         prod.Category = (DO.Enums.Category?)product.Category;
         try
         {
-            dal.Product.Add(prod);
+            lock (dal)
+            {
+                dal.Product.Add(prod);
+            }
         }
         catch (ExceptionObjectCouldNotBeFound inner)
         {
@@ -53,22 +56,25 @@ internal class Product : BlApi.IProduct // class for product, that the manager c
     [MethodImpl(MethodImplOptions.Synchronized)]
     public void Delete(int idProduct) // func that gets and id of product, and deletes him from the dBase. The only that can use this func is the manager
     {
-        IEnumerable<DO.Order?> listOfOrders = dal.Order.GetDataOf();
-        IEnumerable<DO.OrderItem?> listOfItemOrders;
-        foreach (DO.Order? item in listOfOrders) // foreach order in the dBase
+        lock (dal)
         {
-            listOfItemOrders = dal.OrderItem.GetDataOfOrderItem((item ?? new DO.Order()).ID);
-            foreach (DO.OrderItem? item2 in listOfItemOrders) // foreach orderItem in order we are looking now
-                if ((item2 ?? new DO.OrderItem()).ProductID == idProduct) // if the product of this specific orderItem is equal to the idProduct, it means this product already found in one order at least, and we can't delete him.
-                    throw new ExceptionLogicObjectAlreadyExist("product");
-        }
-        try
-        {
-            dal.Product.Delete(idProduct);
-        }
-        catch (ExceptionObjectCouldNotBeFound inner)
-        {
-            throw new ExceptionLogicObjectCouldNotBeFound("product", inner);
+            IEnumerable<DO.Order?> listOfOrders = dal.Order.GetDataOf();
+            IEnumerable<DO.OrderItem?> listOfItemOrders;
+            foreach (DO.Order? item in listOfOrders) // foreach order in the dBase
+            {
+                listOfItemOrders = dal.OrderItem.GetDataOfOrderItem((item ?? new DO.Order()).ID);
+                foreach (DO.OrderItem? item2 in listOfItemOrders) // foreach orderItem in order we are looking now
+                    if ((item2 ?? new DO.OrderItem()).ProductID == idProduct) // if the product of this specific orderItem is equal to the idProduct, it means this product already found in one order at least, and we can't delete him.
+                        throw new ExceptionLogicObjectAlreadyExist("product");
+            }
+            try
+            {
+                dal.Product.Delete(idProduct);
+            }
+            catch (ExceptionObjectCouldNotBeFound inner)
+            {
+                throw new ExceptionLogicObjectCouldNotBeFound("product", inner);
+            }
         }
     }
     /// <summary>
@@ -87,7 +93,10 @@ internal class Product : BlApi.IProduct // class for product, that the manager c
         {
             try
             {
-                product = dal.Product.Get(idProduct);
+                lock (dal)
+                {
+                    product = dal.Product.Get(idProduct);
+                }
             }
             catch (ExceptionObjectCouldNotBeFound inner)
             {
@@ -137,7 +146,9 @@ internal class Product : BlApi.IProduct // class for product, that the manager c
         {
             try
             {
-                product = dal.Product.Get(idProduct);
+                lock(dal) {
+                    product = dal.Product.Get(idProduct);
+                }
             }
             catch (ExceptionObjectCouldNotBeFound inner)
             {
@@ -161,7 +172,11 @@ internal class Product : BlApi.IProduct // class for product, that the manager c
     [MethodImpl(MethodImplOptions.Synchronized)]
     public IEnumerable<ProductForList?> GetList(Func<BO.ProductForList?, bool>? func = null) // func that returns all the products in a special logic object, which either the manager can use it or it will be printed to the customer screen
     {
-        IEnumerable<DO.Product?> listOfProducts = dal.Product.GetDataOf();
+        IEnumerable<DO.Product?> listOfProducts;
+        lock (dal) 
+        { 
+            listOfProducts = dal.Product.GetDataOf();
+        }
         IEnumerable<BO.ProductForList> list = from product in listOfProducts select new BO.ProductForList
         {
             ID = (product ?? new DO.Product()).ID,
@@ -205,7 +220,10 @@ internal class Product : BlApi.IProduct // class for product, that the manager c
         prod.Category = (DO.Enums.Category?)product.Category;
         try
         {
-            dal.Product.Update(prod);
+            lock (dal)
+            {
+                dal.Product.Update(prod);
+            }
         }
         catch (ExceptionObjectCouldNotBeFound inner)
         {
@@ -221,7 +239,8 @@ internal class Product : BlApi.IProduct // class for product, that the manager c
     [MethodImpl(MethodImplOptions.Synchronized)]
     public BO.Product Get(Func<BO.Product?, bool>? func) // func that returns proudct by a term it gets.
     {
-        IEnumerable<DO.Product?> products = dal.Product.GetDataOf();
+        IEnumerable<DO.Product?> products;
+        lock(dal) { products = dal.Product.GetDataOf(); }
         //List<BO.Product?> listOfLogicEntities = new List<BO.Product?>();
         //BO.Product product = new BO.Product();
         IEnumerable<BO.Product?> listOfLogicEntities = from product in products
@@ -268,7 +287,9 @@ internal class Product : BlApi.IProduct // class for product, that the manager c
     [MethodImpl(MethodImplOptions.Synchronized)]
     public IEnumerable<BO.Product?> GetDataOf(Func<BO.Product?, bool>? predict = null) // func that returns all of the products
     {
-        IEnumerable<DO.Product?> products = dal.Product.GetDataOf();
+
+        IEnumerable<DO.Product?> products;
+        lock(dal) { products = dal.Product.GetDataOf(); }
         IEnumerable<BO.Product> productsToReturn = from product in products
                                                    select new BO.Product
                                                    {

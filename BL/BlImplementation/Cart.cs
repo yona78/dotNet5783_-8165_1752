@@ -29,7 +29,10 @@ internal class Cart : ICart // cart of customer
         DO.Product product = new DO.Product();
         try
         {
-            product = dal.Product.Get(idProduct);
+            lock (dal)
+            {
+                product = dal.Product.Get(idProduct);
+            }
         }
         catch (ExceptionObjectCouldNotBeFound inner) // the product isn't exist in the dBase
         {
@@ -102,75 +105,78 @@ internal class Cart : ICart // cart of customer
         if (cart.Items == null || cart.Items.Count == 0)
             throw new ExceptionDataIsInvalid("cart is empty");
         DO.Product product = new DO.Product();
-        foreach (var item in cart.Items) // checks if all the items are realy exist, if the amounts are positive
+        lock (dal)
         {
+            foreach (var item in cart.Items) // checks if all the items are realy exist, if the amounts are positive
+            {
+                try
+                {
+                    product = dal.Product.Get(item.ProductID);
+                }
+                catch (ExceptionObjectCouldNotBeFound) // the product isn't exist in the dBase
+                {
+                    cart.Items.Remove(item);
+                    break;
+                }
+                if (item.Amount < 0) // amount negative
+                    throw new ExceptionDataIsInvalid("orderItem");
+                if (product.InStock < item.Amount) // not enough in dBase
+                    throw new ExceptionNotEnoughInDataBase("orderItem");
+            }
+            if (name == null || address == null || email == null || name == "" || address == "" || email == "") // checks if the string are valids. ### TO ADD - that email and address will be in a specific format.
+                throw new ExceptionDataIsInvalid("cart");
+            DO.Order order = new DO.Order();
+            order.CustomerAddress = address;
+            order.CustomerEmail = email;
+            order.CustomerName = name;
+            order.OrderDate = DateTime.Now; // initalize the orderDate to be now.
+            int id;
             try
             {
-                product = dal.Product.Get(item.ProductID);
-            }
-            catch (ExceptionObjectCouldNotBeFound) // the product isn't exist in the dBase
-            {
-                cart.Items.Remove(item);
-                break;
-            }
-            if (item.Amount < 0) // amount negative
-                throw new ExceptionDataIsInvalid("orderItem");
-            if (product.InStock < item.Amount) // not enough in dBase
-                throw new ExceptionNotEnoughInDataBase("orderItem");
-        }
-        if (name == null || address == null || email == null || name == "" || address == "" || email == "") // checks if the string are valids. ### TO ADD - that email and address will be in a specific format.
-            throw new ExceptionDataIsInvalid("cart");
-        DO.Order order = new DO.Order();
-        order.CustomerAddress = address;
-        order.CustomerEmail = email;
-        order.CustomerName = name;
-        order.OrderDate = DateTime.Now; // initalize the orderDate to be now.
-        int id;
-        try
-        {
-            id = dal.Order.Add(order);
-        }
-        catch (ExceptionObjectAlreadyExist inner)
-        {
-            throw new ExceptionLogicObjectAlreadyExist("orderItem", inner);
-        }
-        DO.OrderItem orderItem = new DO.OrderItem();
-        foreach (var item in cart.Items)
-        {
-            orderItem.OrderID = id;
-            orderItem.Price = item.Price;
-            orderItem.ProductID = item.ProductID;
-            orderItem.Amount = item.Amount;
-            try
-            {
-                dal.OrderItem.Add(orderItem);
-            }
-            catch (ExceptionObjectCouldNotBeFound inner)
-            {
-                throw new ExceptionLogicObjectCouldNotBeFound("orderItem", inner);
+                id = dal.Order.Add(order);
             }
             catch (ExceptionObjectAlreadyExist inner)
             {
                 throw new ExceptionLogicObjectAlreadyExist("orderItem", inner);
             }
-            try
+            DO.OrderItem orderItem = new DO.OrderItem();
+            foreach (var item in cart.Items)
             {
-                product = dal.Product.Get(orderItem.ProductID);
-            }
-            catch (ExceptionObjectCouldNotBeFound inner)
-            {
-                throw new ExceptionLogicObjectCouldNotBeFound("product", inner);
-            }
-            product.InStock -= orderItem.Amount;
-            try
-            {
-                dal.Product.Update(product);
-            }
-            catch (ExceptionObjectCouldNotBeFound inner)
-            {
-                throw new ExceptionLogicObjectCouldNotBeFound("product", inner);
-            }
+                orderItem.OrderID = id;
+                orderItem.Price = item.Price;
+                orderItem.ProductID = item.ProductID;
+                orderItem.Amount = item.Amount;
+                try
+                {
+                    dal.OrderItem.Add(orderItem);
+                }
+                catch (ExceptionObjectCouldNotBeFound inner)
+                {
+                    throw new ExceptionLogicObjectCouldNotBeFound("orderItem", inner);
+                }
+                catch (ExceptionObjectAlreadyExist inner)
+                {
+                    throw new ExceptionLogicObjectAlreadyExist("orderItem", inner);
+                }
+                try
+                {
+                    product = dal.Product.Get(orderItem.ProductID);
+                }
+                catch (ExceptionObjectCouldNotBeFound inner)
+                {
+                    throw new ExceptionLogicObjectCouldNotBeFound("product", inner);
+                }
+                product.InStock -= orderItem.Amount;
+                try
+                {
+                    dal.Product.Update(product);
+                }
+                catch (ExceptionObjectCouldNotBeFound inner)
+                {
+                    throw new ExceptionLogicObjectCouldNotBeFound("product", inner);
+                }
 
+            }
         }
     }
 
@@ -216,7 +222,10 @@ internal class Cart : ICart // cart of customer
         {
             try
             {
-                product = dal.Product.Get(idProduct);
+                lock (dal)
+                {
+                    product = dal.Product.Get(idProduct);
+                }
             }
             catch (ExceptionObjectCouldNotBeFound inner)
             {
