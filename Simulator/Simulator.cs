@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Tracing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,10 +13,18 @@ namespace Simulator
         private static volatile bool stopRequested = false;
         private static Random random = new Random();
         private static Thread simulationThread;
-        public delegate void SimulationEvent();
-        public static event SimulationEvent OnSimulationCompleted;
-        public static event SimulationEvent OnObjectUpdate;
-        public static event SimulationEvent OnSimulationStopped;
+        private static event Action? stop;
+        public static event Action? Stop
+        {
+            add => stop += value;
+            remove =>stop-=value;
+        }
+        private static event Action<int, object?>? update;
+        public static event Action<int,object?>? Update
+        {
+            add => update += value;
+            remove => update -= value;
+        }
         static BlApi.IBl? bl = BlApi.Factory.Get();
 
         public static void RunSimulation()
@@ -34,7 +43,7 @@ namespace Simulator
                     }
                     var order = bl.Order.GetOrderManager((int)treatment);
                     // Report treatment to the presentation layer
-                    OnObjectUpdate?.Invoke();
+                    
                     BO.Enums.Status status = (BO.Enums.Status)order.OrderStatus;
                     BO.Enums.Status next;
                     if (status == BO.Enums.Status.Confirmed)
@@ -45,12 +54,11 @@ namespace Simulator
                     {
                         next = BO.Enums.Status.Arrived;
                     }
+                    update?.Invoke(order.ID, order);
                     // Calculate treatment time
                     int treatmentTime = 3 + (int)(7 * random.NextDouble());
                     Thread.Sleep(treatmentTime * 1000);
 
-                    // Report treatment completion
-                    OnSimulationCompleted?.Invoke();
 
                     // Request status update from BL layer
                     bl.Order.UpdateStatus((int)treatment);
@@ -59,7 +67,7 @@ namespace Simulator
                     if (stopRequested)
                     {
                         isRunning = false;
-                        OnSimulationStopped?.Invoke();
+                        stop?.Invoke();
                     }
                 }
             });
@@ -71,36 +79,5 @@ namespace Simulator
             stopRequested = true;
             simulationThread.Join();
         }
-
-        public static void RegisterOnSimulationCompleted(SimulationEvent method)
-        {
-            OnSimulationCompleted += method;
-        }
-
-        public static void UnregisterOnSimulationCompleted(SimulationEvent method)
-        {
-            OnSimulationCompleted -= method;
-        }
-
-        public static void RegisterOnObjectUpdate(SimulationEvent method)
-        {
-            OnObjectUpdate += method;
-        }
-
-        public static void UnregisterOnObjectUpdate(SimulationEvent method)
-        {
-            OnObjectUpdate -= method;
-        }
-
-        public static void RegisterOnSimulationStopped(SimulationEvent method)
-        {
-            OnSimulationStopped += method;
-        }
-
-        public static void UnregisterOnSimulationStopped(SimulationEvent method)
-        {
-            OnSimulationStopped -= method;
-        }
-
     }
 }
