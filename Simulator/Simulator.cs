@@ -4,6 +4,7 @@ using System.Diagnostics.Tracing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace Simulator
 {
@@ -19,8 +20,8 @@ namespace Simulator
             add => stop += value;
             remove =>stop-=value;
         }
-        private static event Action<int, object?>? update;
-        public static event Action<int,object?>? Update
+        private static event Action<int, object?, object?, object?, object?, object?>? update;
+        public static event Action<int, object?, object?, object?, object?, object?>? Update
         {
             add => update += value;
             remove => update -= value;
@@ -54,9 +55,9 @@ namespace Simulator
                     {
                         next = BO.Enums.Status.Arrived;
                     }
-                    update?.Invoke(order.ID, order);
-                    // Calculate treatment time
                     int treatmentTime = 3 + (int)(7 * random.NextDouble());
+                    update?.Invoke(order.ID, order,status,next,DateTime.Now.Second,DateTime.Now.Second+treatmentTime);
+                    // Calculate treatment time
                     Thread.Sleep(treatmentTime * 1000);
 
 
