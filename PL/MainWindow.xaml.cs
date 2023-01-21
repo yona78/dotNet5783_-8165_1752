@@ -27,7 +27,7 @@ namespace PL
         
         private void StartSimulator(object sender, RoutedEventArgs e)
         {
-            new simulator().Show();
+            new Simulator().Show();
         }
 
     }
