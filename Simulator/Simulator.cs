@@ -11,7 +11,6 @@ namespace Simulator
     public static class Simulator
     {
         private static volatile bool isRunning = true;
-        private static volatile bool stopRequested = false;
         private static Random random = new Random();
         private static Thread simulationThread;
         private static event Action? stop;
@@ -20,8 +19,8 @@ namespace Simulator
             add => stop += value;
             remove =>stop-=value;
         }
-        private static event Action<int, object?, object?, object?, object?, object?>? update;
-        public static event Action<int, object?, object?, object?, object?, object?>? Update
+        private static event Action<int, object?>? update;
+        public static event Action<int, object?>? Update
         {
             add => update += value;
             remove => update -= value;
@@ -44,7 +43,7 @@ namespace Simulator
                     }
                     var order = bl.Order.GetOrderManager((int)treatment);
                     // Report treatment to the presentation layer
-                    
+
                     BO.Enums.Status status = (BO.Enums.Status)order.OrderStatus;
                     BO.Enums.Status next;
                     if (status == BO.Enums.Status.Confirmed)
@@ -56,7 +55,8 @@ namespace Simulator
                         next = BO.Enums.Status.Arrived;
                     }
                     int treatmentTime = 3 + (int)(7 * random.NextDouble());
-                    update?.Invoke(order.ID, order,status,next,DateTime.Now.Second,DateTime.Now.Second+treatmentTime);
+                    DateTime now = DateTime.Now;
+                    update?.Invoke(order.ID, new sendTo { CurrentOrder = order, Next = next, start = now, done = now.AddSeconds(treatmentTime) });
                     // Calculate treatment time
                     Thread.Sleep(treatmentTime * 1000);
 
@@ -64,12 +64,6 @@ namespace Simulator
                     // Request status update from BL layer
                     bl.Order.UpdateStatus((int)treatment);
                     Thread.Sleep(1000);
-                    //Check if stop is requested
-                    if (stopRequested)
-                    {
-                        isRunning = false;
-                        stop?.Invoke();
-                    }
                 }
             });
             simulationThread.Start();
@@ -77,8 +71,17 @@ namespace Simulator
 
         public static void StopSimulation()
         {
-            stopRequested = true;
-            simulationThread.Join();
+            isRunning = false;
+            stop?.Invoke();
         }
+
     }
+    public  class sendTo
+       {
+    public BO.Order? CurrentOrder { get; set; }
+    public BO.Enums.Status? Next { get; set; }
+    public DateTime? start { get; set; }
+    public DateTime? done { get; set; }
 }
+}
+

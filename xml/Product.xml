@@ -1,70 +1,70 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <ArrayOfProduct xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Product>
-    <ID>640789</ID>
+    <ID>959756</ID>
     <Name>Black coat</Name>
     <Price>399.99</Price>
     <Category>Coats</Category>
-    <InStock>42</InStock>
+    <InStock>50</InStock>
   </Product>
   <Product>
-    <ID>118069</ID>
+    <ID>341147</ID>
     <Name>Winter dress</Name>
     <Price>150</Price>
     <Category>Dresses</Category>
     <InStock>30</InStock>
   </Product>
   <Product>
-    <ID>841729</ID>
+    <ID>429989</ID>
     <Name>Cowboy hat</Name>
     <Price>30.99</Price>
     <Category>Hats</Category>
     <InStock>20</InStock>
   </Product>
   <Product>
-    <ID>277618</ID>
+    <ID>795269</ID>
     <Name>Sport shoes</Name>
     <Price>299.99</Price>
     <Category>Shoes</Category>
-    <InStock>41</InStock>
+    <InStock>39</InStock>
   </Product>
   <Product>
-    <ID>926930</ID>
+    <ID>468455</ID>
     <Name>White socks</Name>
     <Price>15</Price>
     <Category>Socks</Category>
     <InStock>24</InStock>
   </Product>
   <Product>
-    <ID>392541</ID>
+    <ID>415289</ID>
     <Name>Striped skirt</Name>
     <Price>70.99</Price>
     <Category>Skirts</Category>
     <InStock>0</InStock>
   </Product>
   <Product>
-    <ID>982083</ID>
+    <ID>657374</ID>
     <Name>Blue shirt</Name>
     <Price>35</Price>
     <Category>Shirts</Category>
     <InStock>12</InStock>
   </Product>
   <Product>
-    <ID>895296</ID>
+    <ID>868602</ID>
     <Name>Red shirt</Name>
     <Price>35</Price>
     <Category>Shirts</Category>
     <InStock>61</InStock>
   </Product>
   <Product>
-    <ID>456431</ID>
+    <ID>884323</ID>
     <Name>Sha'abeth shoes</Name>
     <Price>200</Price>
     <Category>Shoes</Category>
     <InStock>17</InStock>
   </Product>
   <Product>
-    <ID>617617</ID>
+    <ID>631511</ID>
     <Name>Goofy hat</Name>
     <Price>25.99</Price>
     <Category>Hats</Category>
