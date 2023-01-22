@@ -34,7 +34,7 @@ namespace Simulator
                 while (isRunning)
                 {
                     // Request next treatment from logical layer
-                    var treatment = bl.Order.idOrderUpdateNow();
+                    int? treatment = bl.Order.idOrderUpdateNow();
                     if (treatment == null)
                     {
                         // Wait for a moment before checking again

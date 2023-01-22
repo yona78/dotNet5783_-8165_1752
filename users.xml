@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfUsers xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<User>
+		<Username>admin</Username>
+		<Salt>273411205</Salt>
+		<HashedPassword>pE1+BqsLe5ckgZE9nR6sJx2Nc5brQQ5KpCR7adGRzjrCeOvDToYTZQWLhJtjPWNE+k0ltXGP3byLlOvCtM8A2Q==</HashedPassword>
+	</User>
+	
+</ArrayOfUsers>

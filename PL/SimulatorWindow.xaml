@@ -1,0 +1,21 @@
+﻿<Window x:Class="PL.SimulatorWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PL"
+        mc:Ignorable="d"
+        Title="SimulatorWindow" Height="450" Width="800"
+        Closing="window_Closing"
+        DataContext="{Binding RelativeSource={RelativeSource Self}}">
+    <Window.Icon>
+        <BitmapImage UriSource="/images/iconShop.png" DecodePixelWidth="32" DecodePixelHeight="32"/>
+    </Window.Icon>
+    <Grid>
+        <Label x:Name="Clock" Content="{Binding ClockContent}" Height="148" HorizontalAlignment="Left" Margin="0,46,0,0" VerticalAlignment="Top" Width="378" FontSize="60" FontFamily="Forte" />
+        <Button Content="End Simulator" HorizontalAlignment="Left" Padding="20" FontSize="20" Margin="593,336,0,0" VerticalAlignment="Top" Click="CloseButton_Click"/>
+        <Label Content="{Binding CurrentID}" HorizontalAlignment="Left" Margin="494,120,0,0" VerticalAlignment="Top"/>
+        <Label Content="{Binding OldStat}" HorizontalAlignment="Left" Margin="474,120,0,0" VerticalAlignment="Top"/>
+        <Label Content="{Binding NewStat}" HorizontalAlignment="Left" Margin="454,120,0,0" VerticalAlignment="Top"/>
+    </Grid>
+</Window>
