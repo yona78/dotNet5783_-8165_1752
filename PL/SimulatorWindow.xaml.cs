@@ -27,9 +27,14 @@ namespace PL
         bool _myClosing = false;
         private Stopwatch stopWatch;
         private bool isTimerRun;
-        public string CurrentID { get; set; }
-        public string OldStat { get; set; }
-        public string NewStat { get; set; }
+        public string CurrentID { get { return (string)GetValue(CurrentIDProperty); } set { SetValue(CurrentIDProperty, value); } }
+        public static readonly DependencyProperty CurrentIDProperty = DependencyProperty.Register("currentID", typeof(string), typeof(SimulatorWindow));
+        public string OldStat { get { return (string)GetValue(OldStatProperty); } set { SetValue(OldStatProperty, value); } }
+        public static readonly DependencyProperty OldStatProperty = DependencyProperty.Register("oldStat", typeof(string), typeof(SimulatorWindow));
+        public string NewStat { get { return (string)GetValue(NewStatProperty); } set { SetValue(NewStatProperty, value); } }
+        public static readonly DependencyProperty NewStatProperty = DependencyProperty.Register("newStat", typeof(string), typeof(SimulatorWindow));
+       // public string OldStat { get; set; }
+       // public string NewStat { get; set; }
         BackgroundWorker worker;
         public SimulatorWindow()
         {
@@ -49,7 +54,7 @@ namespace PL
 
             stopWatch.Restart();
             isTimerRun = true;
-            worker.RunWorkerAsync("argument");
+            worker.RunWorkerAsync();
 
 
         }
@@ -77,19 +82,21 @@ namespace PL
                 worker.ReportProgress(1);
                 System.Threading.Thread.Sleep(1000);
             }
-
         }
         private void Worker_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
             if (e.ProgressPercentage == 0) // it means we need to update the order
             {
                 var tuple= ((Tuple<int, object?, object?, object?, object?, object?>)e.UserState);
-                CurrentID = tuple.Item1.ToString();
+                 CurrentID = tuple.Item1.ToString();
+              //  lab1.Content = tuple.Item1.ToString();
                 OldStat = String.Format(@"{0}, The time of the begining: {1}", ((BO.Enums.Status)tuple.Item3).ToString(), ((DateTime)tuple.Item5).ToString("hh/:mm/:ss"));
+              //  lab2.Content = String.Format(@"{0}, The time of the begining: {1}", ((BO.Enums.Status)tuple.Item3).ToString(), ((DateTime)tuple.Item5).ToString("hh/:mm/:ss"));
                 NewStat = String.Format(@"{0}, The time of the begining: {1}", ((BO.Enums.Status)tuple.Item4).ToString(), ((DateTime)tuple.Item6).ToString("hh/:mm/:ss"));
-
+                // lab3.Content = String.Format(@"{0}, The time of the begining: {1}", ((BO.Enums.Status)tuple.Item4).ToString(), ((DateTime)tuple.Item6).ToString("hh/:mm/:ss"));
+                System.Threading.Thread.Sleep(1000);
             }
-            else if (e.ProgressPercentage == 1) // it means we need to update the clock
+           else if (e.ProgressPercentage == 1) // it means we need to update the clock
             {
                 string timerText = stopWatch.Elapsed.ToString();
                 timerText = timerText.Substring(0, 8);

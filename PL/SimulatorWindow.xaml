@@ -7,12 +7,12 @@
         mc:Ignorable="d"
         DataContext="{Binding RelativeSource={RelativeSource Self}}"
         Closing="window_Closing"
-        Title="SimulatorWindow" Height="450" Width="800"
-        
-        >
+        Title="SimulatorWindow" Height="450" Width="800">
     <Window.Icon>
         <BitmapImage UriSource="/images/iconShop.png" DecodePixelWidth="32" DecodePixelHeight="32"/>
     </Window.Icon>
+
+
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
@@ -27,13 +27,13 @@
         <TextBlock x:Name="timerTextBlock"  Text="00:00:00" 
                    Grid.ColumnSpan="2" FontSize="96" TextAlignment="Center" Foreground="#FF37F10E"/>
 
-       
+
         <Button Content="End Simulator" HorizontalAlignment="Right" Margin="5" Padding="20" FontSize="20" Grid.Row="3" Grid.Column="1"  VerticalAlignment="Bottom" Click="CloseButton_Click"/>
         <Label Content="Current ID: " Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" FontSize="20"/>
         <Label Content="OldStatus: " Grid.Row="2" Grid.Column="0" HorizontalAlignment="Right" FontSize="20"/>
         <Label Content="NewStatus: " Grid.Row="3" Grid.Column="0" HorizontalAlignment="Right" FontSize="20"/>
-        <Label Content="{Binding CurrentID}" Grid.Row="1" Grid.Column="1" FontSize="20" HorizontalAlignment="Left" Width="350"/>
-        <Label Content="{Binding OldStat}" Grid.Row="2" Grid.Column="1" FontSize="20"  HorizontalAlignment="Left" Width="350"/>
-        <Label Content="{Binding NewStat}" Grid.Row="3" Grid.Column="1" FontSize="20"  HorizontalAlignment="Left" Width="350"/>
+        <Label x:Name="lab1" Content="{Binding CurrentID}" Grid.Row="1" Grid.Column="1" FontSize="20" HorizontalAlignment="Left" Width="350"/>
+        <Label x:Name="lab2" Content="{Binding OldStat}" Grid.Row="2" Grid.Column="1" FontSize="20"  HorizontalAlignment="Left" Width="350"/>
+        <Label x:Name="lab3" Content="{Binding NewStat}" Grid.Row="3" Grid.Column="1" FontSize="20"  HorizontalAlignment="Left" Width="258"/>
     </Grid>
 </Window>
