@@ -73,6 +73,7 @@ namespace PL
             {
                 MessageBox.Show("wrong password", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+            this.Close();
         }
         private static string hashPassword(string passwordWithSalt)
         {

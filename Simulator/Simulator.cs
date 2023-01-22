@@ -10,7 +10,7 @@ namespace Simulator
 {
     public static class Simulator
     {
-        private static volatile bool isRunning;
+        private static volatile bool isRunning=true;
         private static Random random = new Random();
         private static Thread simulationThread;
         private static event Action? stop;

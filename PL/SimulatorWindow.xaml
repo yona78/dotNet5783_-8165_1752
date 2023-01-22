@@ -12,10 +12,26 @@
         <BitmapImage UriSource="/images/iconShop.png" DecodePixelWidth="32" DecodePixelHeight="32"/>
     </Window.Icon>
     <Grid>
-        <Label x:Name="Clock" Content="{Binding ClockContent}" Height="148" HorizontalAlignment="Left" Margin="0,46,0,0" VerticalAlignment="Top" Width="378" FontSize="60" FontFamily="Forte" />
-        <Button Content="End Simulator" HorizontalAlignment="Left" Padding="20" FontSize="20" Margin="593,336,0,0" VerticalAlignment="Top" Click="CloseButton_Click"/>
-        <Label Content="{Binding CurrentID}" HorizontalAlignment="Left" Margin="494,120,0,0" VerticalAlignment="Top"/>
-        <Label Content="{Binding OldStat}" HorizontalAlignment="Left" Margin="474,120,0,0" VerticalAlignment="Top"/>
-        <Label Content="{Binding NewStat}" HorizontalAlignment="Left" Margin="454,120,0,0" VerticalAlignment="Top"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="12*"/>
+            <RowDefinition Height="10*"/>
+            <RowDefinition Height="10*"/>
+            <RowDefinition Height="10*"/>
+        </Grid.RowDefinitions>
+        <TextBlock x:Name="timerTextBlock"  Text="00:00:00" 
+                   Grid.ColumnSpan="2" FontSize="96" TextAlignment="Center" Foreground="#FF37F10E"/>
+
+       
+        <Button Content="End Simulator" HorizontalAlignment="Right" Margin="5" Padding="20" FontSize="20" Grid.Row="3" Grid.Column="1"  VerticalAlignment="Bottom" Click="CloseButton_Click"/>
+        <Label Content="Current ID: " Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" FontSize="20"/>
+        <Label Content="OldStatus: " Grid.Row="2" Grid.Column="0" HorizontalAlignment="Right" FontSize="20"/>
+        <Label Content="NewStatus: " Grid.Row="3" Grid.Column="0" HorizontalAlignment="Right" FontSize="20"/>
+        <Label Content="{Binding CurrentID}" Grid.Row="1" Grid.Column="1" FontSize="20" HorizontalAlignment="Left" Width="350"/>
+        <Label Content="{Binding OldStat}" Grid.Row="2" Grid.Column="1" FontSize="20"  HorizontalAlignment="Left" Width="350"/>
+        <Label Content="{Binding NewStat}" Grid.Row="3" Grid.Column="1" FontSize="20"  HorizontalAlignment="Left" Width="350"/>
     </Grid>
 </Window>

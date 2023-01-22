@@ -32,16 +32,16 @@ namespace PL
         {
             set
             {
-                SetValue(ProductsProperty, value);
+                SetValue(UserNameProperty, value);
             }
 
             get
             {
-                return (ObservableCollection<User>)GetValue(ProductsProperty);
+                return (ObservableCollection<User>)GetValue(UserNameProperty);
             }
 
         }
-        public static readonly DependencyProperty ProductsProperty = DependencyProperty.Register("obsColAdmins", typeof(ObservableCollection<User>),
+        public static readonly DependencyProperty UserNameProperty = DependencyProperty.Register("obsColAdmins", typeof(ObservableCollection<User>),
             typeof(Window), new PropertyMetadata(new ObservableCollection<User>()));
 
         public string Admin { get; set; }
@@ -66,16 +66,16 @@ namespace PL
         {
             set
             {
-                SetValue(ProductsProperty, value);
+                SetValue(UserNameProperty, value);
             }
 
             get
             {
-                return (ObservableCollection<BO.OrderItem?>)GetValue(ProductsProperty);
+                return (ObservableCollection<BO.OrderItem?>)GetValue(UserNameProperty);
             }
 
         }
-        public static readonly DependencyProperty ProductsProperty = DependencyProperty.Register("obsColOrderItem", typeof(ObservableCollection<BO.OrderItem>),
+        public static readonly DependencyProperty UserNameProperty = DependencyProperty.Register("obsColOrderItem", typeof(ObservableCollection<BO.OrderItem>),
             typeof(Window), new PropertyMetadata(new ObservableCollection<BO.OrderItem>()));
         IEnumerable<BO.OrderItem> orderItems;
 

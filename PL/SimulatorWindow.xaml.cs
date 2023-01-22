@@ -25,8 +25,8 @@ namespace PL
     public partial class SimulatorWindow : Window
     {
         bool _myClosing = false;
-        DispatcherTimer Timer = new DispatcherTimer();
-        public string ClockContent { get; set; }
+        private Stopwatch stopWatch;
+        private bool isTimerRun;
         public string CurrentID { get; set; }
         public string OldStat { get; set; }
         public string NewStat { get; set; }
@@ -41,57 +41,65 @@ namespace PL
 
             worker.WorkerReportsProgress = true;
             worker.WorkerSupportsCancellation = true;
+
+            stopWatch = new Stopwatch();
+
+            stopWatch.Restart();
+            isTimerRun = true;
             worker.RunWorkerAsync("argument");
-            
-            Timer.Tick += new EventHandler(Timer_Click);
-            Timer.Interval = new TimeSpan(0, 0, 1);
-            Timer.Start();
+
 
         }
         private void UpdateFunc(int ID, object? order, object? oldStatus, object? newStatus, object? beginTime, object? finishTime)
         {
-            CurrentID = String.Format("CurrentID is: {0}", ID);
-            OldStat = String.Format(@"Old Status is: {0}, 
-                                      The time of the begining: {1}", ((BO.Enums.Status)oldStatus).ToString(), ((DateTime)beginTime).ToString("hh/:mm/:ss"));
-            NewStat = String.Format(@"New Status is: {0}, 
-                                      The time of the begining: {1}", ((BO.Enums.Status)newStatus).ToString(), ((DateTime)finishTime).ToString("hh/:mm/:ss"));
+            var t = new Tuple<int, object?, object?, object?, object?, object?>(ID, order, oldStatus, newStatus, beginTime, finishTime);
+            worker.ReportProgress(0, t);
         }
         private void StopFunc()
         {
-
+            _myClosing = true;
+            Simulator.Simulator.Update -= UpdateFunc;
+            Simulator.Simulator.Stop -= StopFunc;
         }
         private void Worker_DoWork(object sender, DoWorkEventArgs e)
         {
             // metodot mashkifot
             Simulator.Simulator.Update += UpdateFunc;
             Simulator.Simulator.Stop += StopFunc;
-            
+
 
             Simulator.Simulator.RunSimulation();
-            while (!worker.CancellationPending) 
+            while (!worker.CancellationPending)
             {
                 worker.ReportProgress(1);
                 System.Threading.Thread.Sleep(1000);
             }
 
         }
-
-
-
         private void Worker_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
+            if (e.ProgressPercentage == 0) // it means we need to update the order
+            {
+                var tuple= ((Tuple<int, object?, object?, object?, object?, object?>)e.UserState);
+                CurrentID = tuple.Item1.ToString();
+                OldStat = String.Format(@"{0}, The time of the begining: {1}", ((BO.Enums.Status)tuple.Item3).ToString(), ((DateTime)tuple.Item5).ToString("hh/:mm/:ss"));
+                NewStat = String.Format(@"{0}, The time of the begining: {1}", ((BO.Enums.Status)tuple.Item4).ToString(), ((DateTime)tuple.Item6).ToString("hh/:mm/:ss"));
+
+            }
+            else if (e.ProgressPercentage == 1) // it means we need to update the clock
+            {
+                string timerText = stopWatch.Elapsed.ToString();
+                timerText = timerText.Substring(0, 8);
+                this.timerTextBlock.Text = timerText;
+            }
         }
         private void Worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             
+            Simulator.Simulator.StopSimulation();
+            this.Close();
         }
-        private void Timer_Click(object sender, EventArgs e)
-        { 
-            DateTime d;
-       //     ClockContent = DateTime.Now.ToString(@"hh\:mm\:ss");  
-       /// Problem!!!! FIXXX!!!
-           Clock.Content = DateTime.Now.ToString(@"hh\:mm\:ss");
-        }
+
 
         // Example for avoiding closing the window...
         void window_Closing(object sender, System.ComponentModel.CancelEventArgs e)

@@ -537,7 +537,7 @@ internal class Order : BlApi.IOrder  // object of the manager, on a order a clie
             orders = dal.Order.GetDataOf();
         }
         int? id = null;
-        DateTime? oldest = null;
+        DateTime? oldest = DateTime.MaxValue;
         foreach (var o in orders) 
         {
             if(o?.DeliveryDate == null || o?.DeliveryDate == DateTime.MinValue)
