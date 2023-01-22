@@ -17,10 +17,10 @@ namespace Simulator
         public static event Action? Stop
         {
             add => stop += value;
-            remove =>stop-=value;
+            remove => stop -= value;
         }
-        private static event Action<int, object?>? update;
-        public static event Action<int, object?>? Update
+        private static event Action<int, object?, object?, object?, object?, object?>? update;
+        public static event Action<int, object?, object?, object?, object?, object?>? Update
         {
             add => update += value;
             remove => update -= value;
@@ -56,7 +56,7 @@ namespace Simulator
                     }
                     int treatmentTime = 3 + (int)(7 * random.NextDouble());
                     DateTime now = DateTime.Now;
-                    update?.Invoke(order.ID, new sendTo { CurrentOrder = order, Next = next, start = now, done = now.AddSeconds(treatmentTime) });
+                    update?.Invoke(order.ID, order, status, next, now, now.AddSeconds(treatmentTime));
                     // Calculate treatment time
                     Thread.Sleep(treatmentTime * 1000);
 
@@ -76,12 +76,13 @@ namespace Simulator
         }
 
     }
-    public  class sendTo
-       {
-    public BO.Order? CurrentOrder { get; set; }
-    public BO.Enums.Status? Next { get; set; }
-    public DateTime? start { get; set; }
-    public DateTime? done { get; set; }
-}
+
+//    public class sendTo
+//    {
+//        public BO.Order? CurrentOrder { get; set; }
+//        public BO.Enums.Status? Next { get; set; }
+//        public DateTime? start { get; set; }
+//        public DateTime? done { get; set; }
+//    }
 }
 
