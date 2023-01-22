@@ -33,6 +33,9 @@ namespace PL
         BackgroundWorker worker;
         public SimulatorWindow()
         {
+            CurrentID = "";
+            OldStat = "";
+            NewStat = "";
             InitializeComponent();
             worker = new BackgroundWorker();
             worker.DoWork += Worker_DoWork;
