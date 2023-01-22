@@ -1,4 +1,5 @@
-﻿using DL;
+﻿
+using DL;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -32,16 +33,16 @@ namespace PL
         {
             set
             {
-                SetValue(UserNameProperty, value);
+                SetValue(ProductsProperty, value);
             }
 
             get
             {
-                return (ObservableCollection<User>)GetValue(UserNameProperty);
+                return (ObservableCollection<User>)GetValue(ProductsProperty);
             }
 
         }
-        public static readonly DependencyProperty UserNameProperty = DependencyProperty.Register("obsColAdmins", typeof(ObservableCollection<User>),
+        public static readonly DependencyProperty ProductsProperty = DependencyProperty.Register("obsColAdmins", typeof(ObservableCollection<User>),
             typeof(Window), new PropertyMetadata(new ObservableCollection<User>()));
 
         public string Admin { get; set; }
@@ -66,16 +67,16 @@ namespace PL
         {
             set
             {
-                SetValue(UserNameProperty, value);
+                SetValue(ProductsProperty, value);
             }
 
             get
             {
-                return (ObservableCollection<BO.OrderItem?>)GetValue(UserNameProperty);
+                return (ObservableCollection<BO.OrderItem?>)GetValue(ProductsProperty);
             }
 
         }
-        public static readonly DependencyProperty UserNameProperty = DependencyProperty.Register("obsColOrderItem", typeof(ObservableCollection<BO.OrderItem>),
+        public static readonly DependencyProperty ProductsProperty = DependencyProperty.Register("obsColOrderItem", typeof(ObservableCollection<BO.OrderItem>),
             typeof(Window), new PropertyMetadata(new ObservableCollection<BO.OrderItem>()));
         IEnumerable<BO.OrderItem> orderItems;
 

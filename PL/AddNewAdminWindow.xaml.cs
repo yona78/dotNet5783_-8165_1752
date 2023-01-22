@@ -19,7 +19,6 @@ using DL;
 using System.Configuration;
 using System.Xml.Linq;
 
-
 namespace PL
 {
     /// <summary>
@@ -73,7 +72,6 @@ namespace PL
             {
                 MessageBox.Show("wrong password", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-            this.Close();
         }
         private static string hashPassword(string passwordWithSalt)
         {

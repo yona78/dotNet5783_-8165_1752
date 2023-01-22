@@ -56,7 +56,7 @@ namespace Simulator
                     }
                     int treatmentTime = 3 + (int)(7 * random.NextDouble());
                     DateTime now = DateTime.Now;
-                    update?.Invoke(order.ID, order, status, next, now, now.AddSeconds(treatmentTime));
+                    update?.Invoke(0, order, status, next, now, now.AddSeconds(treatmentTime));
                     // Calculate treatment time
                     Thread.Sleep(treatmentTime * 1000);
 

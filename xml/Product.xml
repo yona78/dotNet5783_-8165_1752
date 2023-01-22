@@ -1,70 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ArrayOfProduct xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Product>
-    <ID>959756</ID>
+    <ID>796209</ID>
     <Name>Black coat</Name>
     <Price>399.99</Price>
     <Category>Coats</Category>
     <InStock>50</InStock>
   </Product>
   <Product>
-    <ID>341147</ID>
+    <ID>446662</ID>
     <Name>Winter dress</Name>
     <Price>150</Price>
     <Category>Dresses</Category>
     <InStock>30</InStock>
   </Product>
   <Product>
-    <ID>429989</ID>
+    <ID>239756</ID>
     <Name>Cowboy hat</Name>
     <Price>30.99</Price>
     <Category>Hats</Category>
     <InStock>20</InStock>
   </Product>
   <Product>
-    <ID>795269</ID>
+    <ID>555300</ID>
     <Name>Sport shoes</Name>
     <Price>299.99</Price>
     <Category>Shoes</Category>
     <InStock>39</InStock>
   </Product>
   <Product>
-    <ID>468455</ID>
+    <ID>430909</ID>
     <Name>White socks</Name>
     <Price>15</Price>
     <Category>Socks</Category>
     <InStock>24</InStock>
   </Product>
   <Product>
-    <ID>415289</ID>
+    <ID>611488</ID>
     <Name>Striped skirt</Name>
     <Price>70.99</Price>
     <Category>Skirts</Category>
     <InStock>0</InStock>
   </Product>
   <Product>
-    <ID>657374</ID>
+    <ID>319780</ID>
     <Name>Blue shirt</Name>
     <Price>35</Price>
     <Category>Shirts</Category>
     <InStock>12</InStock>
   </Product>
   <Product>
-    <ID>868602</ID>
+    <ID>434136</ID>
     <Name>Red shirt</Name>
     <Price>35</Price>
     <Category>Shirts</Category>
     <InStock>61</InStock>
   </Product>
   <Product>
-    <ID>884323</ID>
+    <ID>900763</ID>
     <Name>Sha'abeth shoes</Name>
     <Price>200</Price>
     <Category>Shoes</Category>
     <InStock>17</InStock>
   </Product>
   <Product>
-    <ID>631511</ID>
+    <ID>744423</ID>
     <Name>Goofy hat</Name>
     <Price>25.99</Price>
     <Category>Hats</Category>
