@@ -10,7 +10,7 @@ namespace Simulator
 {
     public static class Simulator
     {
-        private static volatile bool isRunning = true;
+        private static volatile bool isRunning;
         private static Random random = new Random();
         private static Thread simulationThread;
         private static event Action? stop;
@@ -65,6 +65,7 @@ namespace Simulator
                     bl.Order.UpdateStatus((int)treatment);
                     Thread.Sleep(1000);
                 }
+                isRunning = true;
             });
             simulationThread.Start();
         }
