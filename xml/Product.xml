@@ -1,1 +1,73 @@
-﻿<?xml version="1.0" encoding="utf-8"?><ArrayOfProduct xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><Product><ID>821636</ID><Name>Black coat</Name><Price>399.99</Price><Category>Coats</Category><InStock>50</InStock></Product><Product><ID>594399</ID><Name>Winter dress</Name><Price>150</Price><Category>Dresses</Category><InStock>30</InStock></Product><Product><ID>407141</ID><Name>Cowboy hat</Name><Price>30.99</Price><Category>Hats</Category><InStock>20</InStock></Product><Product><ID>354091</ID><Name>Sport shoes</Name><Price>299.99</Price><Category>Shoes</Category><InStock>39</InStock></Product><Product><ID>111685</ID><Name>White socks</Name><Price>15</Price><Category>Socks</Category><InStock>24</InStock></Product><Product><ID>405657</ID><Name>Striped skirt</Name><Price>70.99</Price><Category>Skirts</Category><InStock>0</InStock></Product><Product><ID>525636</ID><Name>Blue shirt</Name><Price>35</Price><Category>Shirts</Category><InStock>12</InStock></Product><Product><ID>184674</ID><Name>Red shirt</Name><Price>35</Price><Category>Shirts</Category><InStock>61</InStock></Product><Product><ID>157866</ID><Name>Sha'abeth shoes</Name><Price>200</Price><Category>Shoes</Category><InStock>17</InStock></Product><Product><ID>482137</ID><Name>Goofy hat</Name><Price>25.99</Price><Category>Hats</Category><InStock>28</InStock></Product></ArrayOfProduct>
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfProduct xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Product>
+    <ID>128862</ID>
+    <Name>Black coat</Name>
+    <Price>399.99</Price>
+    <Category>Coats</Category>
+    <InStock>50</InStock>
+  </Product>
+  <Product>
+    <ID>176502</ID>
+    <Name>Winter dress</Name>
+    <Price>150</Price>
+    <Category>Dresses</Category>
+    <InStock>30</InStock>
+  </Product>
+  <Product>
+    <ID>711134</ID>
+    <Name>Cowboy hat</Name>
+    <Price>30.99</Price>
+    <Category>Hats</Category>
+    <InStock>20</InStock>
+  </Product>
+  <Product>
+    <ID>195389</ID>
+    <Name>Sport shoes</Name>
+    <Price>299.99</Price>
+    <Category>Shoes</Category>
+    <InStock>39</InStock>
+  </Product>
+  <Product>
+    <ID>929592</ID>
+    <Name>White socks</Name>
+    <Price>15</Price>
+    <Category>Socks</Category>
+    <InStock>24</InStock>
+  </Product>
+  <Product>
+    <ID>474092</ID>
+    <Name>Striped skirt</Name>
+    <Price>70.99</Price>
+    <Category>Skirts</Category>
+    <InStock>0</InStock>
+  </Product>
+  <Product>
+    <ID>990415</ID>
+    <Name>Blue shirt</Name>
+    <Price>35</Price>
+    <Category>Shirts</Category>
+    <InStock>12</InStock>
+  </Product>
+  <Product>
+    <ID>726599</ID>
+    <Name>Red shirt</Name>
+    <Price>35</Price>
+    <Category>Shirts</Category>
+    <InStock>61</InStock>
+  </Product>
+  <Product>
+    <ID>270900</ID>
+    <Name>Sha'abeth shoes</Name>
+    <Price>200</Price>
+    <Category>Shoes</Category>
+    <InStock>17</InStock>
+  </Product>
+  <Product>
+    <ID>626824</ID>
+    <Name>Goofy hat</Name>
+    <Price>25.99</Price>
+    <Category>Hats</Category>
+    <InStock>28</InStock>
+  </Product>
+</ArrayOfProduct>
