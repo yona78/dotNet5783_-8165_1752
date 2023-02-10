@@ -72,7 +72,7 @@ namespace PL
                     }
                 }
                 else if(option == "UPDATE")
-                    new OrderItemInCartWindow("UPDATE", product, cart).ShowDialog();
+                    new OrderItemInCartWindow("UPDATE", product, cart).Show();
             }
             catch (Exception err)
             {

@@ -69,7 +69,7 @@ namespace PL
             BO.OrderTracking orderTracking = Select; // the order we want to update
             if (orderTracking == null)
                 return;
-            new OrderWindow("WATCH", orderTracking.ID).ShowDialog(); // can't do anything else until it closed
+            new OrderWindow("WATCH", orderTracking.ID).Show(); // can't do anything else until it closed
         }
     }
 }

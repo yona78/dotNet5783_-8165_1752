@@ -92,7 +92,7 @@ namespace PL
 
         private void MoveToCart(object sender, RoutedEventArgs e)
         {
-            new CartWindow().ShowDialog();
+            new CartWindow().Show();
             // move to cart staff
         }
 
@@ -101,7 +101,7 @@ namespace PL
             BO.ProductItem prdctItem = PrdctItem; // the product we want to show
             if (prdctItem == null)
                 return;
-            new ProductWindow((bl ?? BlApi.Factory.Get()), "WATCH", prdctItem.ID).ShowDialog(); // can't do anything else until it closed
+            new ProductWindow((bl ?? BlApi.Factory.Get()), "WATCH", prdctItem.ID).Show(); // can't do anything else until it closed
         }
     }
 }

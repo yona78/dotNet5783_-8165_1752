@@ -27,30 +27,30 @@ namespace PL
 
         private void MoveToAddNewAdmin(object sender, RoutedEventArgs e)
         {
-            new AddNewAdminWindow().ShowDialog();
+            new AddNewAdminWindow().Show();
         }
 
         private void MoveToProductsWindow(object sender, RoutedEventArgs e)
         {
-            new ProductListWindow().ShowDialog(); // if he clicked the button, we want to show him the list of the avilable products. can't do anything else until it closed
+            new ProductListWindow().Show(); // if he clicked the button, we want to show him the list of the avilable products. can't do anything else until it closed
         }
         private void MoveToOrdersWindow(object sender, RoutedEventArgs e)
         {
-            new OrderListWindow().ShowDialog(); // if he clicked the button, we want to show him the list of the avilable orders. can't do anything else until it closed
+            new OrderListWindow().Show(); // if he clicked the button, we want to show him the list of the avilable orders. can't do anything else until it closed
         }
 
         private void ShowAdminsWindow(object sender, RoutedEventArgs e)
         {
-            new ShowAdminsWindow().ShowDialog();
+            new ShowAdminsWindow().Show();
         }
 
         private void MoveToRemoveAdmin(object sender, RoutedEventArgs e)
         {
-            new RemoveAdminWindow().ShowDialog();
+            new RemoveAdminWindow().Show();
         }
         private void MoveToOrderTrackingDataWindow(object sender, RoutedEventArgs e)
         {
-            new OrderTrackingListWindow().ShowDialog(); // if he clicked the button, we want to show him the list of the avilable products. can't do anything else until it closed
+            new OrderTrackingListWindow().Show(); // if he clicked the button, we want to show him the list of the avilable products. can't do anything else until it closed
         }
     }
 

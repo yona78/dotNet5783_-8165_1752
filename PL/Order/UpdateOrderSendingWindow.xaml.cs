@@ -36,7 +36,7 @@ namespace PL
                 if (!validInput || id < 0)
                     throw new Exception("ID is invalid"); // i need to check whether it is realy int
                 blP.Order.UpdateSent(id);
-                new OrderWindow("WATCH", id).ShowDialog();
+                new OrderWindow("WATCH", id).Show();
             }
             catch (Exception err)
             {

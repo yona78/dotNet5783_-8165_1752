@@ -10,12 +10,12 @@
         <BitmapImage UriSource="/images/iconShop.png" DecodePixelWidth="32" DecodePixelHeight="32"/>
     </Window.Icon>
     <Grid>
-        <Button Content="Add new Admin" Click="MoveToAddNewAdmin" HorizontalAlignment="Center" Margin="0,328,0,0" VerticalAlignment="Top" Width="207" Height="80" FontSize="22" Background="#FF00F5FF"/>
+        <Button Content="Add new Admin" Click="MoveToAddNewAdmin" HorizontalAlignment="Center" Margin="0,328,0,0" VerticalAlignment="Top" Width="207" Height="80" FontSize="22" Background="#FF0082AA"/>
         <Button Content="move to products window" HorizontalAlignment="Left" Margin="51,62,0,0" VerticalAlignment="Top" Click="MoveToProductsWindow" Width="266" Height="80" FontSize="22" Background="#FF00F5FF"/>
         <Button Content="move to orders window" HorizontalAlignment="Left" Margin="499,62,0,0" VerticalAlignment="Top" Click="MoveToOrdersWindow" Width="261" Height="80" FontSize="22" Background="#FF00F5FF"/>
-        <Button Content="Show admins" Click="ShowAdminsWindow" HorizontalAlignment="Left" Margin="79,328,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.163,2.542" Width="150" Height="80" FontSize="22" Background="#FF00F5FF"/>
-        <Button Content="Remove admins" Click="MoveToRemoveAdmin" HorizontalAlignment="Left" Margin="574,328,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.163,2.542" Width="150" Height="80" FontSize="22" Background="#FF00F5FF"/>
-        <Button x:Name="OrderTraackingView" Click="MoveToOrderTrackingDataWindow" Content="Order Tracking" Width="150" Height="80" FontSize="22" Background="#FF00F5FF" Margin="297,217,353,137" />
+        <Button Content="Show admins" Click="ShowAdminsWindow" HorizontalAlignment="Left" Margin="79,328,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.163,2.542" Width="150" Height="80" FontSize="22" Background="#FF0082AA"/>
+        <Button Content="Remove admins" Click="MoveToRemoveAdmin" HorizontalAlignment="Left" Margin="574,328,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.163,2.542" Width="170" Height="80" FontSize="22" Background="#FF0082AA"/>
+        <Button x:Name="OrderTraackingView" Click="MoveToOrderTrackingDataWindow" Content="Order Tracking" Width="150" Height="80" FontSize="22" Background="#FF00F1AA" Margin="325,193,325,161" />
 
     </Grid>
 </Window>

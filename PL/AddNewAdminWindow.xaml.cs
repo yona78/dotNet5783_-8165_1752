@@ -65,7 +65,7 @@ namespace PL
             
             if (hashPassword(Password + user.Salt) == user.HashedPassword)
             {
-                new AdminWindow().ShowDialog();
+                new AdminWindow().Show();
                 Close();
             }
             else

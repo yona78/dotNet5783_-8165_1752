@@ -18,11 +18,11 @@ namespace PL
 
         private void MoveToManagerDataWindow(object sender, RoutedEventArgs e)
         {
-            new LoginWindow().ShowDialog(); // i send him to a login window
+            new LoginAdminWindow().Show(); // i send him to a login window
         }
         private void MoveToCustomerDataWindow(object sender, RoutedEventArgs e)
         {
-            new CustomerWindow().ShowDialog(); // i send him to a login window
+            new ShowProductItemsWindow().Show(); // i send him to the window where he can see all the productItems
         }
         
         private void StartSimulator(object sender, RoutedEventArgs e)

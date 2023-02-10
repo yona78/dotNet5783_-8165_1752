@@ -221,7 +221,7 @@ namespace PL
         }
         private void showItemsInOrder(object sender, RoutedEventArgs e)
         {
-            new OrderItemsWindow(ID, option == "UPDATE_MANAGER" ? "UPDATE" : "WATCH", bonus).ShowDialog();
+            new OrderItemsWindow(ID, option == "UPDATE_MANAGER" ? "UPDATE" : "WATCH", bonus).Show();
             // here i should also give values to amount and idOfProduct
         }
 

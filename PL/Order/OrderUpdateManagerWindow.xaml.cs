@@ -35,7 +35,7 @@ namespace PL
                 bool validInput = int.TryParse(Input, out id); // getting the ID from the TextBox
                 if (!validInput || id < 0)
                     throw new Exception("ID is invalid"); // i need to check whether it is realy int
-                new OrderWindow("UPDATE_MANAGER", id).ShowDialog();
+                new OrderWindow("UPDATE_MANAGER", id).Show();
             }
             catch (Exception err)
             {

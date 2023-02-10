@@ -54,7 +54,7 @@
             </ListView>
         </Grid>
         <Grid Name="DownGrid" HorizontalAlignment="Stretch" Height="auto" Grid.Row="2" VerticalAlignment="Stretch" Width="auto">
-            <Button Click ="MoveToCart" Content="Move To Cart" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="5" Padding="5"/>
+            <Button Click ="MoveToCart" Content="Move To Cart" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="5" FontSize="15" Padding="10" Background="AliceBlue" />
 
         </Grid>
     </Grid>

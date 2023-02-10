@@ -17,6 +17,6 @@
         <TextBlock HorizontalAlignment="Left" Margin="227,197,0,0" TextWrapping="Wrap" FontSize="20" Text="Give me Address please: " VerticalAlignment="Top"/>
         <TextBox  Text="{Binding EmailInput}" HorizontalAlignment="Left" Margin="460,167,0,0" TextWrapping="Wrap" FontSize="20"  VerticalAlignment="Top" Width="120"/>
         <TextBlock HorizontalAlignment="Left" Margin="227,167,0,0" TextWrapping="Wrap" FontSize="20" Text="Give me Email please: " VerticalAlignment="Top"/>
-        <Button  Content="click for accepting" HorizontalAlignment="Left" Margin="350,300,0,0" Click="ButtonOfAccept_Click"  FontSize="15" VerticalAlignment="Top"/>
+        <Button  Content="click for accepting" Click="ButtonOfAccept_Click"  HorizontalAlignment="Center" Margin="0,0,0,70" FontSize="25" VerticalAlignment="Bottom" Background="#2B03A1AA" Padding="10"/>
     </Grid>
 </Window>

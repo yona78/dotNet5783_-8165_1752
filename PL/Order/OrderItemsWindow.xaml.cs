@@ -64,7 +64,7 @@ namespace PL
         {
             if (OrderItem == null)
                 return;
-            new OrderItemWindow(id, OrderItem.ID, option, bonus).ShowDialog(); // can't do anything else until it closed
+            new OrderItemWindow(id, OrderItem.ID, option, bonus).Show(); // can't do anything else until it closed
             orderItems = bl.Order.GetOrderManager(id).Items;
             obsColOrderItem = new ObservableCollection<BO.OrderItem>(orderItems);
         }

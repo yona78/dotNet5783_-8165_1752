@@ -25,15 +25,15 @@
             <RowDefinition Height="10*"/>
         </Grid.RowDefinitions>
         <TextBlock x:Name="timerTextBlock"  Text="00:00:00" 
-                   Grid.ColumnSpan="2" FontSize="96" TextAlignment="Center" Foreground="#FF37F10E"/>
+                   Grid.ColumnSpan="2" FontSize="96" TextAlignment="Center" Foreground="#FF37F10E" FontFamily="Times"/>
 
 
-        <Button Content="End Simulator" HorizontalAlignment="Right" Margin="5" Padding="20" FontSize="20" Grid.Row="3" Grid.Column="1"  VerticalAlignment="Bottom" Click="CloseButton_Click"/>
-        <Label Content="Current ID: " Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" FontSize="20"/>
-        <Label Content="OldStatus: " Grid.Row="2" Grid.Column="0" HorizontalAlignment="Right" FontSize="20"/>
-        <Label Content="NewStatus: " Grid.Row="3" Grid.Column="0" HorizontalAlignment="Right" FontSize="20"/>
-        <Label x:Name="lab1" Content="{Binding CurrentID}" Grid.Row="1" Grid.Column="1" FontSize="20" HorizontalAlignment="Left" Width="350"/>
-        <Label x:Name="lab2" Content="{Binding OldStat}" Grid.Row="2" Grid.Column="1" FontSize="20"  HorizontalAlignment="Left" Width="350"/>
-        <Label x:Name="lab3" Content="{Binding NewStat}" Grid.Row="3" Grid.Column="1" FontSize="20"  HorizontalAlignment="Left" Width="258"/>
+        <Button Content="End Simulator" HorizontalAlignment="Right" Margin="5" Padding="15" FontSize="22" Grid.Row="3" Grid.Column="1"  VerticalAlignment="Bottom" Click="CloseButton_Click" Background="Red"/>
+        <Label Content="Current ID: " Grid.Column="0" HorizontalAlignment="Left" FontSize="20" Margin="161,124,0,0" Grid.RowSpan="2" Foreground="Navy" FontStyle="Italic"/>
+        <Label Content="OldStatus: " Grid.Row="1" Grid.Column="0" HorizontalAlignment="Left" FontSize="20" Margin="167,103,0,103" Grid.RowSpan="3" Foreground="Navy" FontStyle="Italic"/>
+        <Label Content="NewStatus: " Grid.Row="3" Grid.Column="0" HorizontalAlignment="Left" FontSize="20" Margin="159,0,0,0" Grid.RowSpan="4" Foreground="Navy" FontStyle="Italic"/>
+        <Label x:Name="lab1" Content="{Binding CurrentID}" FontSize="10" HorizontalAlignment="Left" Width="350" Grid.ColumnSpan="2" Margin="272,124,0,0" Grid.RowSpan="2"/>
+        <Label x:Name="lab2" Content="{Binding OldStat}" Grid.Row="1" FontSize="10"  HorizontalAlignment="Left" Width="350" Grid.ColumnSpan="2" Margin="272,103,0,103" Grid.RowSpan="3"/>
+        <Label x:Name="lab3" Content="{Binding NewStat}" Grid.Row="3" FontSize="10"  HorizontalAlignment="Left" Width="350" Grid.ColumnSpan="2" Margin="272,0,0,0"/>
     </Grid>
 </Window>

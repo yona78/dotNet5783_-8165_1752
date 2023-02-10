@@ -47,31 +47,31 @@ namespace PL
         }
         private void GetDataOfOrdersButton(object sender, RoutedEventArgs e)
         {
-            new InputIdForGetOrderWindow().ShowDialog();
+            new InputIdForGetOrderWindow().Show();
             orders = bl.Order.GetOrderList();
             obsColOrderForList = new ObservableCollection<BO.OrderForList>(orders);
         }
         private void UpdateOrderSendButton(object sender, RoutedEventArgs e)
         {
-            new UpdateOrderSendingWindow().ShowDialog();
+            new UpdateOrderSendingWindow().Show();
             orders = bl.Order.GetOrderList();
             obsColOrderForList = new ObservableCollection<BO.OrderForList>(orders);
         }
         private void UpdateOrderDelieverdButton(object sender, RoutedEventArgs e)
         {
-            new UpdateOrderDelieveringWindow().ShowDialog();
+            new UpdateOrderDelieveringWindow().Show();
             orders = bl.Order.GetOrderList();
             obsColOrderForList = new ObservableCollection<BO.OrderForList>(orders);
         }
         private void OrderTrackingButton(object sender, RoutedEventArgs e)
         {
-            new OrderTrackingWindow().ShowDialog();
+            new OrderTrackingWindow().Show();
             orders = bl.Order.GetOrderList();
             obsColOrderForList = new ObservableCollection<BO.OrderForList>(orders);
         }
         private void UpdateOrderButton(object sender, RoutedEventArgs e)
         {
-            new OrderUpdateManagerWindow().ShowDialog();
+            new OrderUpdateManagerWindow().Show();
             orders = bl.Order.GetOrderList();
             obsColOrderForList = new ObservableCollection<BO.OrderForList>(orders);
 
@@ -80,7 +80,7 @@ namespace PL
         {
             if (Order == null)
                 return;
-            new OrderWindow("UPDATE_CUSTOMER", Order.ID).ShowDialog(); // can't do anything else until it closed
+            new OrderWindow("UPDATE_CUSTOMER", Order.ID).Show(); // can't do anything else until it closed
             orders = bl.Order.GetOrderList();
             obsColOrderForList = new ObservableCollection<BO.OrderForList>(orders);
         }

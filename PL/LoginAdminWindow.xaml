@@ -11,11 +11,11 @@
         <BitmapImage UriSource="/images/iconShop.png" DecodePixelWidth="32" DecodePixelHeight="32"/>
     </Window.Icon>
     <Grid>
-        <Button Content="Login" Click="LoginFunc" HorizontalAlignment="Center" Margin="0,0,0,80" VerticalAlignment="Bottom" />
-        <TextBlock HorizontalAlignment="Left" Margin="272,157,0,0" TextWrapping="Wrap" Text="username:" VerticalAlignment="Top" Height="18" Width="73"/>
-        <TextBlock HorizontalAlignment="Left" Margin="272,178,0,0" TextWrapping="Wrap" Text="password:" VerticalAlignment="Top" Height="18" Width="73"/>
-        <TextBox HorizontalAlignment="Center" Margin="0,157,0,0" TextWrapping="Wrap" Text="{Binding Username}" VerticalAlignment="Top" Width="124"/>
-        <TextBox HorizontalAlignment="Center" Margin="0,178,0,0" TextWrapping="Wrap" Text="{Binding Password}" VerticalAlignment="Top" Width="124"/>
+        <Button Content="Login" Click="LoginFunc"   HorizontalAlignment="Center" Margin="0,0,0,70" FontSize="25" VerticalAlignment="Bottom" Background="Pink" Padding="10"/>
+        <TextBlock HorizontalAlignment="Left" Margin="295,187,0,0" TextWrapping="Wrap" FontSize="20" Text="username: " VerticalAlignment="Top"/>
+        <TextBlock HorizontalAlignment="Left" Margin="295,217,0,0" TextWrapping="Wrap" FontSize="20" Text="password: " VerticalAlignment="Top" />
+        <TextBox HorizontalAlignment="Left" Margin="400,187,0,0" TextWrapping="Wrap" FontSize="20" Text="{Binding Username}" VerticalAlignment="Top" Width="120"/>
+        <TextBox HorizontalAlignment="Left" Margin="400,217,0,0" TextWrapping="Wrap" FontSize="20" Text="{Binding Password}" VerticalAlignment="Top" Width="120"/>
 
     </Grid>
 </Window>
