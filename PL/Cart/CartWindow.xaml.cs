@@ -62,7 +62,7 @@ namespace PL
         }
         private void AddItem(object sender, RoutedEventArgs e)
         {
-            new InputIdForDealWithProductWindow("ADD", cart).Show();
+            new InputIdForDealWithProductWindow("ADD", cart).ShowDialog();
             obsColOrderItemInCart = new ObservableCollection<BO.OrderItem>(cart.Items ?? new List<BO.OrderItem>());
         }
         private void MakeOrder(object sender, RoutedEventArgs e)

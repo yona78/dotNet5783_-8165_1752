@@ -5,7 +5,7 @@
     <Name>Black coat</Name>
     <Price>399.99</Price>
     <Category>Coats</Category>
-    <InStock>48</InStock>
+    <InStock>47</InStock>
   </Product>
   <Product>
     <ID>517797</ID>
@@ -47,7 +47,7 @@
     <Name>Blue shirt</Name>
     <Price>35</Price>
     <Category>Shirts</Category>
-    <InStock>12</InStock>
+    <InStock>11</InStock>
   </Product>
   <Product>
     <ID>172801</ID>

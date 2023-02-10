@@ -1,1 +1,192 @@
-﻿<?xml version="1.0" encoding="utf-8"?><ArrayOfOrder xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><Order><ID>0</ID><CustomerName>David</CustomerName><CustomerEmail>Ori732@gmail.com</CustomerEmail><CustomerAddress>28 Ben Gurion Street 	1297677 Petah Tiqwa	 Israel</CustomerAddress><OrderDate>2022-07-30T00:01:13.104627+03:00</OrderDate><ShipDate>2022-08-19T13:10:58.104627+03:00</ShipDate><DeliveryDate>2022-09-03T12:50:02.104627+03:00</DeliveryDate></Order><Order><ID>1</ID><CustomerName>Yossi</CustomerName><CustomerEmail>Ariel734@gmail.com</CustomerEmail><CustomerAddress>68 Ben Yehuda Street 	6567737 Petah Tiqwa	 Israel</CustomerAddress><OrderDate>2022-10-18T13:35:54.1429056+03:00</OrderDate><ShipDate>2022-12-11T11:44:57.1429056+02:00</ShipDate><DeliveryDate>0001-01-01T00:00:00</DeliveryDate></Order><Order><ID>2</ID><CustomerName>Moshe</CustomerName><CustomerEmail>Avishai880@gmail.com</CustomerEmail><CustomerAddress>5 Ben Yehuda Street 	2987531 Petah Tiqwa	 Israel</CustomerAddress><OrderDate>2022-08-06T13:22:13.1429127+03:00</OrderDate><ShipDate>2022-10-19T07:18:18.1429127+03:00</ShipDate><DeliveryDate>0001-01-01T00:00:00</DeliveryDate></Order><Order><ID>3</ID><CustomerName>Avishai</CustomerName><CustomerEmail>Binyamin476@gmail.com</CustomerEmail><CustomerAddress>6 HaTe'ena Street 	2405554 Tel Aviv	 Israel</CustomerAddress><OrderDate>2022-09-04T02:59:43.1429139+03:00</OrderDate><ShipDate>2022-11-27T04:58:10.1429139+02:00</ShipDate><DeliveryDate>2022-12-05T18:47:34.1429139+02:00</DeliveryDate></Order><Order><ID>4</ID><CustomerName>Ori</CustomerName><CustomerEmail>Yossi527@gmail.com</CustomerEmail><CustomerAddress>27 Begin Street 	4372717 Jerusalem	 Israel</CustomerAddress><OrderDate>2022-10-01T21:34:30.1429151+03:00</OrderDate><ShipDate>2022-11-21T04:48:06.1429151+02:00</ShipDate><DeliveryDate>2022-11-25T12:21:07.1429151+02:00</DeliveryDate></Order><Order><ID>5</ID><CustomerName>Noam</CustomerName><CustomerEmail>Yona584@gmail.com</CustomerEmail><CustomerAddress>49 Balfour Street 	9272557 Beer Sheva	 Israel</CustomerAddress><OrderDate>2022-12-20T01:42:37.1429593+02:00</OrderDate><ShipDate>2023-01-16T20:32:37.1429593+02:00</ShipDate><DeliveryDate>2023-01-22T23:59:52.1429593+02:00</DeliveryDate></Order><Order><ID>6</ID><CustomerName>Noam</CustomerName><CustomerEmail>Binyamin823@gmail.com</CustomerEmail><CustomerAddress>48 Ben Gurion Street 	8017413 Petah Tiqwa	 Israel</CustomerAddress><OrderDate>2022-09-08T18:18:54.1429625+03:00</OrderDate><ShipDate>2022-10-14T03:53:49.1429625+03:00</ShipDate><DeliveryDate>2022-10-23T00:27:55.1429625+03:00</DeliveryDate></Order><Order><ID>7</ID><CustomerName>Binyamin</CustomerName><CustomerEmail>Noam605@gmail.com</CustomerEmail><CustomerAddress>41 Ben Gurion Street 	4562861 Petah Tiqwa	 Israel</CustomerAddress><OrderDate>2022-09-12T14:58:44.1429638+03:00</OrderDate><ShipDate>2022-12-19T19:05:27.1429638+02:00</ShipDate><DeliveryDate>0001-01-01T00:00:00</DeliveryDate></Order><Order><ID>8</ID><CustomerName>Yossi</CustomerName><CustomerEmail>Yona254@gmail.com</CustomerEmail><CustomerAddress>62 Begin Street 	1101053 Petah Tiqwa	 Israel</CustomerAddress><OrderDate>2022-10-03T19:04:18.1429648+03:00</OrderDate><ShipDate>2022-12-13T08:14:02.1429648+02:00</ShipDate><DeliveryDate>2022-12-25T14:25:03.1429648+02:00</DeliveryDate></Order><Order><ID>9</ID><CustomerName>Ariel</CustomerName><CustomerEmail>Yona766@gmail.com</CustomerEmail><CustomerAddress>30 Balfour Street 	4409338 Jerusalem	 Israel</CustomerAddress><OrderDate>2022-08-15T11:25:10.142966+03:00</OrderDate><ShipDate>2022-10-03T11:27:13.142966+03:00</ShipDate><DeliveryDate>2022-10-21T00:42:40.142966+03:00</DeliveryDate></Order><Order><ID>10</ID><CustomerName>Chaim</CustomerName><CustomerEmail>Moshe824@gmail.com</CustomerEmail><CustomerAddress>72 Balfour Street 	5134195 Jerusalem	 Israel</CustomerAddress><OrderDate>2022-08-03T01:41:34.1429671+03:00</OrderDate><ShipDate>2022-09-25T02:26:42.1429671+03:00</ShipDate><DeliveryDate>2022-10-14T01:03:15.1429671+03:00</DeliveryDate></Order><Order><ID>11</ID><CustomerName>David</CustomerName><CustomerEmail>Moshe743@gmail.com</CustomerEmail><CustomerAddress>93 Ibn Gabirol Street 	8900476 Tel Aviv	 Israel</CustomerAddress><OrderDate>2022-10-19T11:15:04.1429681+03:00</OrderDate><ShipDate>2022-12-01T17:17:24.1429681+02:00</ShipDate><DeliveryDate>0001-01-01T00:00:00</DeliveryDate></Order><Order><ID>12</ID><CustomerName>Yossi</CustomerName><CustomerEmail>Binyamin796@gmail.com</CustomerEmail><CustomerAddress>13 Herzl Street 	6037047 Petah Tiqwa	 Israel</CustomerAddress><OrderDate>2022-08-22T05:56:53.1429689+03:00</OrderDate><ShipDate>2022-10-03T00:54:12.1429689+03:00</ShipDate><DeliveryDate>2022-10-21T11:55:24.1429689+03:00</DeliveryDate></Order><Order><ID>13</ID><CustomerName>Yona</CustomerName><CustomerEmail>Moshe619@gmail.com</CustomerEmail><CustomerAddress>85 Ibn Gabirol Street 	6616118 Jerusalem	 Israel</CustomerAddress><OrderDate>2022-12-21T12:00:53.1429701+02:00</OrderDate><ShipDate>2023-01-28T13:47:39.1429701+02:00</ShipDate><DeliveryDate>0001-01-01T00:00:00</DeliveryDate></Order><Order><ID>14</ID><CustomerName>Moshe</CustomerName><CustomerEmail>Ariel445@gmail.com</CustomerEmail><CustomerAddress>83 HaTe'ena Street 	6118386 Petah Tiqwa	 Israel</CustomerAddress><OrderDate>2022-09-10T22:24:47.1429709+03:00</OrderDate><ShipDate>2022-11-09T00:26:21.1429709+02:00</ShipDate><DeliveryDate>0001-01-01T00:00:00</DeliveryDate></Order><Order><ID>15</ID><CustomerName>Yona</CustomerName><CustomerEmail>David226@gmail.com</CustomerEmail><CustomerAddress>0 Herzl Street 	8601226 Tel Aviv	 Israel</CustomerAddress><OrderDate>2022-10-21T22:47:51.1429715+03:00</OrderDate><ShipDate>2022-12-13T22:18:10.1429715+02:00</ShipDate><DeliveryDate>2023-01-02T15:55:28.1429715+02:00</DeliveryDate></Order><Order><ID>16</ID><CustomerName>Binyamin</CustomerName><CustomerEmail>David405@gmail.com</CustomerEmail><CustomerAddress>13 Herzl Street 	9120198 Beer Sheva	 Israel</CustomerAddress><OrderDate>2022-12-08T02:33:13.1429724+02:00</OrderDate><ShipDate>0001-01-01T00:00:00</ShipDate><DeliveryDate>0001-01-01T00:00:00</DeliveryDate></Order><Order><ID>17</ID><CustomerName>Binyamin</CustomerName><CustomerEmail>Binyamin483@gmail.com</CustomerEmail><CustomerAddress>30 Ben Yehuda Street 	7620872 Haifa	 Israel</CustomerAddress><OrderDate>2022-09-07T00:30:24.1429734+03:00</OrderDate><ShipDate>2023-02-10T12:06:55.0965025+02:00</ShipDate><DeliveryDate>0001-01-01T00:00:00</DeliveryDate></Order><Order><ID>18</ID><CustomerName>Ori</CustomerName><CustomerEmail>Moshe345@gmail.com</CustomerEmail><CustomerAddress>49 HaTe'ena Street 	5796601 Petah Tiqwa	 Israel</CustomerAddress><OrderDate>2022-08-18T20:15:49.1429742+03:00</OrderDate><ShipDate>2022-11-14T05:44:15.1429742+02:00</ShipDate><DeliveryDate>2022-11-28T14:28:30.1429742+02:00</DeliveryDate></Order><Order><ID>19</ID><CustomerName>Chaim</CustomerName><CustomerEmail>David957@gmail.com</CustomerEmail><CustomerAddress>4 Bialik Street 	2934192 Tel Aviv	 Israel</CustomerAddress><OrderDate>2022-11-20T03:02:33.1429752+02:00</OrderDate><ShipDate>2023-02-10T23:14:02.1429752+02:00</ShipDate><DeliveryDate>0001-01-01T00:00:00</DeliveryDate></Order></ArrayOfOrder>
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfOrder xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Order>
+    <ID>0</ID>
+    <CustomerName>David</CustomerName>
+    <CustomerEmail>Ori732@gmail.com</CustomerEmail>
+    <CustomerAddress>28 Ben Gurion Street 	1297677 Petah Tiqwa	 Israel</CustomerAddress>
+    <OrderDate>2022-07-30T00:01:13.104627+03:00</OrderDate>
+    <ShipDate>2022-08-19T13:10:58.104627+03:00</ShipDate>
+    <DeliveryDate>2022-09-03T12:50:02.104627+03:00</DeliveryDate>
+  </Order>
+  <Order>
+    <ID>1</ID>
+    <CustomerName>Yossi</CustomerName>
+    <CustomerEmail>Ariel734@gmail.com</CustomerEmail>
+    <CustomerAddress>68 Ben Yehuda Street 	6567737 Petah Tiqwa	 Israel</CustomerAddress>
+    <OrderDate>2022-10-18T13:35:54.1429056+03:00</OrderDate>
+    <ShipDate>2022-12-11T11:44:57.1429056+02:00</ShipDate>
+    <DeliveryDate>2023-02-10T13:21:05.2759044+02:00</DeliveryDate>
+  </Order>
+  <Order>
+    <ID>2</ID>
+    <CustomerName>Moshe</CustomerName>
+    <CustomerEmail>Avishai880@gmail.com</CustomerEmail>
+    <CustomerAddress>5 Ben Yehuda Street 	2987531 Petah Tiqwa	 Israel</CustomerAddress>
+    <OrderDate>2022-08-06T13:22:13.1429127+03:00</OrderDate>
+    <ShipDate>2022-10-19T07:18:18.1429127+03:00</ShipDate>
+    <DeliveryDate>2023-02-10T13:19:21.3321306+02:00</DeliveryDate>
+  </Order>
+  <Order>
+    <ID>3</ID>
+    <CustomerName>Avishai</CustomerName>
+    <CustomerEmail>Binyamin476@gmail.com</CustomerEmail>
+    <CustomerAddress>6 HaTe'ena Street 	2405554 Tel Aviv	 Israel</CustomerAddress>
+    <OrderDate>2022-09-04T02:59:43.1429139+03:00</OrderDate>
+    <ShipDate>2022-11-27T04:58:10.1429139+02:00</ShipDate>
+    <DeliveryDate>2022-12-05T18:47:34.1429139+02:00</DeliveryDate>
+  </Order>
+  <Order>
+    <ID>4</ID>
+    <CustomerName>Ori</CustomerName>
+    <CustomerEmail>Yossi527@gmail.com</CustomerEmail>
+    <CustomerAddress>27 Begin Street 	4372717 Jerusalem	 Israel</CustomerAddress>
+    <OrderDate>2022-10-01T21:34:30.1429151+03:00</OrderDate>
+    <ShipDate>2022-11-21T04:48:06.1429151+02:00</ShipDate>
+    <DeliveryDate>2022-11-25T12:21:07.1429151+02:00</DeliveryDate>
+  </Order>
+  <Order>
+    <ID>5</ID>
+    <CustomerName>Noam</CustomerName>
+    <CustomerEmail>Yona584@gmail.com</CustomerEmail>
+    <CustomerAddress>49 Balfour Street 	9272557 Beer Sheva	 Israel</CustomerAddress>
+    <OrderDate>2022-12-20T01:42:37.1429593+02:00</OrderDate>
+    <ShipDate>2023-01-16T20:32:37.1429593+02:00</ShipDate>
+    <DeliveryDate>2023-01-22T23:59:52.1429593+02:00</DeliveryDate>
+  </Order>
+  <Order>
+    <ID>6</ID>
+    <CustomerName>Noam</CustomerName>
+    <CustomerEmail>Binyamin823@gmail.com</CustomerEmail>
+    <CustomerAddress>48 Ben Gurion Street 	8017413 Petah Tiqwa	 Israel</CustomerAddress>
+    <OrderDate>2022-09-08T18:18:54.1429625+03:00</OrderDate>
+    <ShipDate>2022-10-14T03:53:49.1429625+03:00</ShipDate>
+    <DeliveryDate>2022-10-23T00:27:55.1429625+03:00</DeliveryDate>
+  </Order>
+  <Order>
+    <ID>7</ID>
+    <CustomerName>Binyamin</CustomerName>
+    <CustomerEmail>Noam605@gmail.com</CustomerEmail>
+    <CustomerAddress>41 Ben Gurion Street 	4562861 Petah Tiqwa	 Israel</CustomerAddress>
+    <OrderDate>2022-09-12T14:58:44.1429638+03:00</OrderDate>
+    <ShipDate>2022-12-19T19:05:27.1429638+02:00</ShipDate>
+    <DeliveryDate>2023-02-10T13:21:12.2811292+02:00</DeliveryDate>
+  </Order>
+  <Order>
+    <ID>8</ID>
+    <CustomerName>Yossi</CustomerName>
+    <CustomerEmail>Yona254@gmail.com</CustomerEmail>
+    <CustomerAddress>62 Begin Street 	1101053 Petah Tiqwa	 Israel</CustomerAddress>
+    <OrderDate>2022-10-03T19:04:18.1429648+03:00</OrderDate>
+    <ShipDate>2022-12-13T08:14:02.1429648+02:00</ShipDate>
+    <DeliveryDate>2022-12-25T14:25:03.1429648+02:00</DeliveryDate>
+  </Order>
+  <Order>
+    <ID>9</ID>
+    <CustomerName>Ariel</CustomerName>
+    <CustomerEmail>Yona766@gmail.com</CustomerEmail>
+    <CustomerAddress>30 Balfour Street 	4409338 Jerusalem	 Israel</CustomerAddress>
+    <OrderDate>2022-08-15T11:25:10.142966+03:00</OrderDate>
+    <ShipDate>2022-10-03T11:27:13.142966+03:00</ShipDate>
+    <DeliveryDate>2022-10-21T00:42:40.142966+03:00</DeliveryDate>
+  </Order>
+  <Order>
+    <ID>10</ID>
+    <CustomerName>Chaim</CustomerName>
+    <CustomerEmail>Moshe824@gmail.com</CustomerEmail>
+    <CustomerAddress>72 Balfour Street 	5134195 Jerusalem	 Israel</CustomerAddress>
+    <OrderDate>2022-08-03T01:41:34.1429671+03:00</OrderDate>
+    <ShipDate>2022-09-25T02:26:42.1429671+03:00</ShipDate>
+    <DeliveryDate>2022-10-14T01:03:15.1429671+03:00</DeliveryDate>
+  </Order>
+  <Order>
+    <ID>11</ID>
+    <CustomerName>David</CustomerName>
+    <CustomerEmail>Moshe743@gmail.com</CustomerEmail>
+    <CustomerAddress>93 Ibn Gabirol Street 	8900476 Tel Aviv	 Israel</CustomerAddress>
+    <OrderDate>2022-10-19T11:15:04.1429681+03:00</OrderDate>
+    <ShipDate>2022-12-01T17:17:24.1429681+02:00</ShipDate>
+    <DeliveryDate>2023-02-10T13:19:35.3487306+02:00</DeliveryDate>
+  </Order>
+  <Order>
+    <ID>12</ID>
+    <CustomerName>Yossi</CustomerName>
+    <CustomerEmail>Binyamin796@gmail.com</CustomerEmail>
+    <CustomerAddress>13 Herzl Street 	6037047 Petah Tiqwa	 Israel</CustomerAddress>
+    <OrderDate>2022-08-22T05:56:53.1429689+03:00</OrderDate>
+    <ShipDate>2022-10-03T00:54:12.1429689+03:00</ShipDate>
+    <DeliveryDate>2022-10-21T11:55:24.1429689+03:00</DeliveryDate>
+  </Order>
+  <Order>
+    <ID>13</ID>
+    <CustomerName>Yona</CustomerName>
+    <CustomerEmail>Moshe619@gmail.com</CustomerEmail>
+    <CustomerAddress>85 Ibn Gabirol Street 	6616118 Jerusalem	 Israel</CustomerAddress>
+    <OrderDate>2022-12-21T12:00:53.1429701+02:00</OrderDate>
+    <ShipDate>2023-01-28T13:47:39.1429701+02:00</ShipDate>
+    <DeliveryDate>2023-02-10T13:21:21.288174+02:00</DeliveryDate>
+  </Order>
+  <Order>
+    <ID>14</ID>
+    <CustomerName>Moshe</CustomerName>
+    <CustomerEmail>Ariel445@gmail.com</CustomerEmail>
+    <CustomerAddress>83 HaTe'ena Street 	6118386 Petah Tiqwa	 Israel</CustomerAddress>
+    <OrderDate>2022-09-10T22:24:47.1429709+03:00</OrderDate>
+    <ShipDate>2022-11-09T00:26:21.1429709+02:00</ShipDate>
+    <DeliveryDate>2023-02-10T13:19:28.3411241+02:00</DeliveryDate>
+  </Order>
+  <Order>
+    <ID>15</ID>
+    <CustomerName>Yona</CustomerName>
+    <CustomerEmail>David226@gmail.com</CustomerEmail>
+    <CustomerAddress>0 Herzl Street 	8601226 Tel Aviv	 Israel</CustomerAddress>
+    <OrderDate>2022-10-21T22:47:51.1429715+03:00</OrderDate>
+    <ShipDate>2022-12-13T22:18:10.1429715+02:00</ShipDate>
+    <DeliveryDate>2023-01-02T15:55:28.1429715+02:00</DeliveryDate>
+  </Order>
+  <Order>
+    <ID>16</ID>
+    <CustomerName>Binyamin</CustomerName>
+    <CustomerEmail>David405@gmail.com</CustomerEmail>
+    <CustomerAddress>13 Herzl Street 	9120198 Beer Sheva	 Israel</CustomerAddress>
+    <OrderDate>2022-12-08T02:33:13.1429724+02:00</OrderDate>
+    <ShipDate>2023-02-10T13:21:01.2672499+02:00</ShipDate>
+    <DeliveryDate>0001-01-01T00:00:00</DeliveryDate>
+  </Order>
+  <Order>
+    <ID>17</ID>
+    <CustomerName>Binyamin</CustomerName>
+    <CustomerEmail>Binyamin483@gmail.com</CustomerEmail>
+    <CustomerAddress>30 Ben Yehuda Street 	7620872 Haifa	 Israel</CustomerAddress>
+    <OrderDate>2022-09-07T00:30:24.1429734+03:00</OrderDate>
+    <ShipDate>2023-02-10T13:19:11.2925286+02:00</ShipDate>
+    <DeliveryDate>2023-02-10T13:21:25.2961235+02:00</DeliveryDate>
+  </Order>
+  <Order>
+    <ID>18</ID>
+    <CustomerName>Ori</CustomerName>
+    <CustomerEmail>Moshe345@gmail.com</CustomerEmail>
+    <CustomerAddress>49 HaTe'ena Street 	5796601 Petah Tiqwa	 Israel</CustomerAddress>
+    <OrderDate>2022-08-18T20:15:49.1429742+03:00</OrderDate>
+    <ShipDate>2022-11-14T05:44:15.1429742+02:00</ShipDate>
+    <DeliveryDate>2022-11-28T14:28:30.1429742+02:00</DeliveryDate>
+  </Order>
+  <Order>
+    <ID>19</ID>
+    <CustomerName>Chaim</CustomerName>
+    <CustomerEmail>David957@gmail.com</CustomerEmail>
+    <CustomerAddress>4 Bialik Street 	2934192 Tel Aviv	 Israel</CustomerAddress>
+    <OrderDate>2022-11-20T03:02:33.1429752+02:00</OrderDate>
+    <ShipDate>2023-02-10T23:14:02.1429752+02:00</ShipDate>
+    <DeliveryDate>0001-01-01T00:00:00</DeliveryDate>
+  </Order>
+  <Order>
+    <ID>23</ID>
+    <CustomerName>1</CustomerName>
+    <CustomerEmail>1</CustomerEmail>
+    <CustomerAddress>1</CustomerAddress>
+    <OrderDate>2023-02-10T13:20:34.2553742+02:00</OrderDate>
+    <ShipDate>2023-02-10T13:21:33.3194352+02:00</ShipDate>
+    <DeliveryDate xsi:nil="true" />
+  </Order>
+</ArrayOfOrder>
