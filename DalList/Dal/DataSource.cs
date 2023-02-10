@@ -107,14 +107,18 @@ internal static class DataSource
         {
             TimeSpan duration = new TimeSpan(-_rnd.Next(50, 200), _rnd.Next(24), _rnd.Next(60), _rnd.Next(60)); // taking random duration between 50 to 200 days from now
             orderDates[i] = DateTime.Now.Add(duration); // the day of the add of the order, it's from now to 50-200 day ago
-            duration = new TimeSpan(_rnd.Next(20, 100), _rnd.Next(24), _rnd.Next(60), _rnd.Next(60)); // taking random duration between 20 to 45 days from now
-            shipDateDates[i] = orderDates[i].Add(duration); // the day of the ship of the order, it's from now to 20-45 day ago
-            if (i % 5 == 0 || i % 4 == 0 || i % 3 == 0) // thats equal to 60% from all of the orders
+            duration = new TimeSpan(-_rnd.Next(20, 100), _rnd.Next(24), _rnd.Next(60), _rnd.Next(60)); // taking random duration between 20 to 45 days from now
+            if (i % 2 == 0) // we want that we also have confirmed
             {
-                duration = new TimeSpan(_rnd.Next(4, 25), _rnd.Next(24), _rnd.Next(60), _rnd.Next(60)); // taking random duration between 2 to 18 days from now
-                deliveryDateDates[i] = shipDateDates[i].Add(duration); // the day of the delivery of the order, it's from now to 2-18 day ago
+                shipDateDates[i] = orderDates[i].Add(duration); // the day of the ship of the order, it's from now to 20-45 day ago
+                if (i % 5 == 0 || i % 4 == 0 || i % 3 == 0) // thats equal to 60% from all of the orders
+                {
+                    duration = new TimeSpan(-_rnd.Next(4, 25), _rnd.Next(24), _rnd.Next(60), _rnd.Next(60)); // taking random duration between 2 to 18 days from now
+                    deliveryDateDates[i] = shipDateDates[i].Add(duration); // the day of the delivery of the order, it's from now to 2-18 day ago
+                }
             }
         }
+        
         for (int i = 0; i < orderInit; i++)
         {
             Order order = new Order { ID = Config.GetLastIndexOrder, CustomerName = customerNames[_rnd.Next(10)], CustomerEmail = customerNames[_rnd.Next(10)] + _rnd.Next(1000) + "@gmail.com", CustomerAddress = _rnd.Next(100) + " " + streets[_rnd.Next(10)] + " Street \t" + _rnd.Next(1000000, 9999999) + " " + cities[_rnd.Next(5)] + "\t Israel", OrderDate = orderDates[i], ShipDate = shipDateDates[i], DeliveryDate = deliveryDateDates[i] }; // we use a clean format

@@ -32,7 +32,7 @@
         <Label Content="Current ID: " Grid.Column="0" HorizontalAlignment="Left" FontSize="20" Margin="161,124,0,0" Grid.RowSpan="2" Foreground="Navy" FontStyle="Italic"/>
         <Label Content="OldStatus: " Grid.Row="1" Grid.Column="0" HorizontalAlignment="Left" FontSize="20" Margin="167,103,0,103" Grid.RowSpan="3" Foreground="Navy" FontStyle="Italic"/>
         <Label Content="NewStatus: " Grid.Row="3" Grid.Column="0" HorizontalAlignment="Left" FontSize="20" Margin="159,0,0,0" Grid.RowSpan="4" Foreground="Navy" FontStyle="Italic"/>
-        <Label x:Name="lab1" Content="{Binding CurrentID}" FontSize="10" HorizontalAlignment="Left" Width="350" Grid.ColumnSpan="2" Margin="272,124,0,0" Grid.RowSpan="2"/>
+        <Label x:Name="lab1" Content="{Binding CurrentID}" FontSize="20" HorizontalAlignment="Left" Width="350" Grid.ColumnSpan="2" Margin="272,124,0,0" Grid.RowSpan="2"/>
         <Label x:Name="lab2" Content="{Binding OldStat}" Grid.Row="1" FontSize="10"  HorizontalAlignment="Left" Width="350" Grid.ColumnSpan="2" Margin="272,103,0,103" Grid.RowSpan="3"/>
         <Label x:Name="lab3" Content="{Binding NewStat}" Grid.Row="3" FontSize="10"  HorizontalAlignment="Left" Width="350" Grid.ColumnSpan="2" Margin="272,0,0,0"/>
     </Grid>

@@ -11,9 +11,9 @@
         <BitmapImage UriSource="/images/iconShop.png" DecodePixelWidth="32" DecodePixelHeight="32"/>
     </Window.Icon>
     <Grid>
-        <TextBlock x:Name="AmountTextBlock" Text="amount:" HorizontalAlignment="Left" FontSize="13" Width="68" Margin="328,166,0,240"/>
-        <TextBox x:Name ="AmountTextBox" Text="{Binding Amount}"  HorizontalAlignment="Left"  TextWrapping="Wrap" VerticalAlignment="Top" Width="120"  Height="22" Margin="400,168,0,0" />
-        <Button x:Name="update" Click ="UpdateOption" Content="update" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,312,0,0" Padding="5" Width="60" Height="90" />
+        <Button x:Name="update" Click ="UpdateOption" Content="update" HorizontalAlignment="Center" Margin="0,0,0,70" FontSize="25" VerticalAlignment="Bottom" Background="#0FFF4CAA" Padding="10"/>
+        <TextBox  Text="{Binding Amount}" HorizontalAlignment="Left" Margin="400,167,0,0" TextWrapping="Wrap" FontSize="20"  VerticalAlignment="Top" Width="120"/>
+        <TextBlock HorizontalAlignment="Left" Margin="317,167,0,0" TextWrapping="Wrap" FontSize="20" Text="Amount: " VerticalAlignment="Top"/>
 
     </Grid>
 
