@@ -67,7 +67,7 @@ namespace PL
         }
         private void MakeOrder(object sender, RoutedEventArgs e)
         {
-            new MakeOrderWindow(cart).Show();
+            new MakeOrderWindow(cart).ShowDialog();
             this.Close();
         }
     }
