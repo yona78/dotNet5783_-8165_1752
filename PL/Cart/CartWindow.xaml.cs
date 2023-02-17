@@ -50,19 +50,19 @@ namespace PL
 
         private void DeleteItem(object sender, RoutedEventArgs e)
         {
-            new InputIdForDealWithProductWindow("DELETE", cart).Show();
+            new InputIdForDealWithProductWindow("DELETE", cart).ShowDialog();
 
             obsColOrderItemInCart = new ObservableCollection<BO.OrderItem>(cart.Items ?? new List<BO.OrderItem>());
         }
         private void UpdateItem(object sender, RoutedEventArgs e)
         {
-            new InputIdForDealWithProductWindow("UPDATE", cart).Show();
+            new InputIdForDealWithProductWindow("UPDATE", cart).ShowDialog();
 
             obsColOrderItemInCart = new ObservableCollection<BO.OrderItem>(cart.Items ?? new List<BO.OrderItem>());
         }
         private void AddItem(object sender, RoutedEventArgs e)
         {
-            new InputIdForDealWithProductWindow("ADD", cart).Show();
+            new InputIdForDealWithProductWindow("ADD", cart).ShowDialog();
             obsColOrderItemInCart = new ObservableCollection<BO.OrderItem>(cart.Items ?? new List<BO.OrderItem>());
         }
         private void MakeOrder(object sender, RoutedEventArgs e)
