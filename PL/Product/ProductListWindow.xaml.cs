@@ -70,7 +70,7 @@ namespace PL
         {
             if (Prdct == null)
                 return;
-            new ProductWindow((bl ?? BlApi.Factory.Get()), "UPDATE", Prdct.ID).Show();
+            new ProductWindow((bl ?? BlApi.Factory.Get()), "UPDATE", Prdct.ID).ShowDialog();
             products = (bl ?? BlApi.Factory.Get()).Product.GetList(); // get A list with all the products that answer the deserve condition
             obsColProductForList = new ObservableCollection<BO.ProductForList>(products);// can't do anything else until it closed
             //ProductListView.DataContext = (bl ?? BlApi.Factory.Get()).Product.GetList(); // print the new list on the board
@@ -78,7 +78,7 @@ namespace PL
 
         private void DeleteProduct(object sender, RoutedEventArgs e)
         {
-            new InputIdForDeleteProductWindow().Show();
+            new InputIdForDeleteProductWindow().ShowDialog();
             products = (bl ?? BlApi.Factory.Get()).Product.GetList(); // get A list with all the products that answer the deserve condition
             obsColProductForList = new ObservableCollection<BO.ProductForList>(products);
             //ProductListView.DataContext = (bl ?? BlApi.Factory.Get()).Product.GetList(); // print the new list on the board
