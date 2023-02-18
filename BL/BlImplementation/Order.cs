@@ -237,6 +237,10 @@ internal class Order : BlApi.IOrder  // object of the manager, on a order a clie
             {
                 throw new ExceptionNotEnoughInDataBase("order");
             }
+            if(amount<=0|| idOfProduct<=0)
+            {
+                throw new ExceptionDataIsInvalid("order");
+            }
             if (it1.Amount < amount)
                 product.InStock -= (amount - it1.Amount);
             else

@@ -42,7 +42,7 @@ namespace PL
         private void LoginFunc(object sender, RoutedEventArgs e)
         {
             const string usersFileName = "users.xml";
-
+            
             string FPath_n = @"..\xml\config.xml";
             IEnumerable<User?> users = XMLTools.LoadListFromXMLSerializer<User?>(usersFileName);
             User? user = users?.FirstOrDefault(x => x.Username == Username);

@@ -200,6 +200,7 @@ namespace PL
             blP.Order.UpdateNameEmailAddress(CustomerName, CustomerEmail, CustomerAddress, ID); // the bonus we added
             try
             {
+                
                 (blP ?? BlApi.Factory.Get()).Order.Update(ID, bonus.ProductID, bonus.Amount);
             }
             catch (Exception err)
